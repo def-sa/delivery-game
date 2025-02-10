@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2oj7vt0nuk6f"]
+
+[ext_resource type="PackedScene" uid="uid://d0dymr70087q8" path="res://scenes/player.tscn" id="1_digji"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_pngop"]
+[ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_ysq55"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fdro7"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ap3r5"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_pngop")
+
+[node name="pause_menu" parent="." instance=ExtResource("2_ysq55")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.433659, -0.150271, 0.888458, 0, 0.985996, 0.166769, -0.901077, 0.0723208, -0.427586, 0, 0, 0)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("PlaneMesh_fdro7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ap3r5")
+
+[node name="Entities" type="Node3D" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("1_digji")]
