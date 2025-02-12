@@ -1,55 +1,29 @@
 extends CharacterBody3D
 
-
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
-var camera_mode = "first"
 
+@onready var camera_pivot = $camera_pivot
+@onready var spring_arm = $camera_pivot/spring_arm_3d
+@onready var spring_position = $camera_pivot/spring_arm_3d/spring_position
+@onready var camera = $camera_pivot/spring_arm_3d/camera
 
-@onready var player := $"."
-@onready var pivot := $camerapivot
-@onready var camera := $camerapivot/Camera3D
-
-
-func _process(delta: float) -> void:
-	
-	camera.fov = Settings.camera_fov
-	
-	if Input.is_action_just_pressed("perspective"):
-		match camera_mode:
-			"first":
-				print("first")
-				$camerapivot.position.y = 0
-				$camerapivot.position.z = 0
-				camera_mode = "second"
-			"second":
-				print("second")
-				$camerapivot.position.y = 3
-				$camerapivot.position.z = -3
-				camera.look_at(player.global_transform.origin)
-				camera_mode = "third"
-			"third":
-				print("third")
-				$camerapivot.position.y = 3
-				$camerapivot.position.z = 3
-				camera.look_at(player.global_transform.origin)
-				camera_mode = "first"
-
+#
+## mouse properties
+#var mouse_control = false
+#var mouse_sensitivity = 0.005
+#var invert_y = false
+#var invert_x = false
+#
+## zoom settings
+#var max_zoom = 3.0
+#var min_zoom = 0.4
+#var zoom_speed = 0.09
+#
+#var zoom = 1.5
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-
-func _unhandled_input(event: InputEvent) -> void:
-		if event is InputEventMouseMotion:
-			#if event.relative.x != 0:
-				#pivot.rotate_object_local(Vector3.UP, event.relative.x * Settings.sensitivity)
-			#if event.relative.y != 0:
-				#pivot.rotate_object_local(Vector3.RIGHT, event.relative.y * Settings.sensitivity)
-			pivot.rotate_y(-event.relative.x * Settings.sensitivity/5000)
-			camera.rotate_x(-event.relative.y * Settings.sensitivity/5000)
-			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-85), deg_to_rad(85))
-			
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -59,11 +33,12 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+	
+	#handle mmovement
 	var input_dir := Input.get_vector("left", "right", "forward", "back")
-	var direction = (pivot.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
+	direction = direction.rotated(Vector3.UP, camera.global_rotation.y)
+	
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -72,3 +47,30 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+
+
+func _process(delta: float) -> void:
+	camera.fov = Settings.camera_fov
+
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		
+		camera_pivot.rotation.y -= event.relative.x * Settings.sensitivity/10000.0
+		camera_pivot.rotation.y = wrapf(camera_pivot.rotation.y, 0.0, TAU)
+		
+		camera_pivot.rotation.x -= event.relative.y * Settings.sensitivity/10000.0
+		# -PI/2 = min vertical angle, PI/4 = max vertical angle
+		camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, -PI/2, PI/4)
+	if event.is_action_pressed("cam_zoom_in"):
+		spring_arm.spring_length -= 1
+	if event.is_action_pressed("cam_zoom_out"):
+		spring_arm.spring_length += 1
+		 
+		if event.is_action_pressed("perspective_toggle"):
+			if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			else:
+				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

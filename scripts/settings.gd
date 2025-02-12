@@ -3,7 +3,7 @@ extends Node
 var camera_fov:int = 100
 var default_camera_fov
 
-var sensitivity = 50
+var sensitivity:float = 50.0
 var default_sensitivity 
 
 func _ready() -> void:
@@ -17,7 +17,6 @@ func init_fov():
 	default_camera_fov = camera_fov
 
 func _update_fov(is_default, value):
-	print(is_default, value)
 	if is_default:
 		camera_fov = default_camera_fov
 	else:
@@ -30,7 +29,6 @@ func init_sensitivity():
 	default_sensitivity = sensitivity
 		
 func _update_sensitivity(is_default, value):
-	print(is_default, value)
 	if is_default:
 		sensitivity = default_sensitivity
 	else:
