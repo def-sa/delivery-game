@@ -1,9 +1,9 @@
 extends Node
 
-var camera_fov:int = 100
+var camera_fov:int = 90
 var default_camera_fov
 
-var sensitivity:float = 50.0
+var sensitivity:float = 44.0
 var default_sensitivity 
 
 func _ready() -> void:
