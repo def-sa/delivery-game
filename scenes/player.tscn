@@ -1,6 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=8 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_v666e"]
+[ext_resource type="Texture2D" uid="uid://cjfiw60kceco1" path="res://assets/grab_buffer_icon.png" id="2_k86f7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ce1ts"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_261lf"]
+bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4dx4g"]
 
@@ -15,26 +22,76 @@ script = ExtResource("1_v666e")
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 588.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
-[node name="speed_bar" type="ProgressBar" parent="GUI"]
+[node name="buffer_timer_display" type="TextureProgressBar" parent="GUI"]
+texture_repeat = 3
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -9.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 582.0
+offset_top = 276.0
+offset_right = -475.0
+offset_bottom = -274.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+max_value = 2.0
+step = 0.01
+value = 1.24
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("2_k86f7")
+texture_progress = ExtResource("2_k86f7")
+tint_under = Color(1, 1, 1, 0.27451)
+
+[node name="obj_speed_text" type="RichTextLabel" parent="GUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.012
+anchor_top = 1.55
+anchor_right = 1.012
+anchor_bottom = 1.55
+offset_left = -174.824
+offset_top = -334.0
+offset_right = -40.824
+offset_bottom = -284.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center]drag power
+(CTRL + SCROLL)
+[/center]
+"
+scroll_active = false
+
+[node name="obj_speed_bar" type="ProgressBar" parent="GUI"]
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 612.0
-offset_top = 265.0
-offset_right = 616.0
-offset_bottom = 342.0
+offset_left = 552.0
+offset_top = -331.0
+offset_right = 556.0
+offset_bottom = -155.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 mouse_filter = 2
-value = 50.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ce1ts")
+theme_override_styles/fill = SubResource("StyleBoxFlat_261lf")
+min_value = 4.0
+max_value = 25.0
+step = 1.0
+value = 25.0
 fill_mode = 3
 show_percentage = false
 

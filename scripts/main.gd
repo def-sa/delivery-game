@@ -2,40 +2,69 @@ extends Node3D
 
 @onready var ray_interaction = $Player/camera_pivot/spring_arm_3d/camera/ray_interaction
 @onready var player_hand = $Player/camera_pivot/spring_arm_3d/camera/hand
-@onready var gui_speed_bar = $Player/GUI/speed_bar
+@onready var gui_obj_speed_bar = $Player/GUI/obj_speed_bar
+@onready var gui_obj_speed_text = $Player/GUI/obj_speed_text
 @onready var grab_buffer_timer = $Player/camera_pivot/spring_arm_3d/camera/grab_buffer_timer
+@onready var grab_buffer_display = $Player/GUI/buffer_timer_display
 
 var last_obj_hovered: RigidBody3D
 var holding_object:bool = false
-var pull_power = 10
-var max_obj_speed = 4
+var raycast_found_obj:bool = false
+
+@export var pull_power:float = 10.0
+@export var max_obj_speed:float = 10.0:
+	set(value):
+		value = clamp(value, 4.0, 25.0)
+		gui_obj_speed_bar.value = value
+		max_obj_speed = value
+	
+@export var grab_buffer_cooldown:float = 2.0:
+	set(value):
+		grab_buffer_timer.set_wait_time(value)
+		grab_buffer_display.max_value = value
+@export var obj_speed_step:float = 1
 
 func _ready() -> void:
-	gui_speed_bar.value = max_obj_speed
 	Signalbus.grab_buffer_expired.connect(_grab_buffer_expired)
+	gui_obj_speed_bar.value = max_obj_speed
+
+
 
 func _process(delta: float) -> void:
+	
+	if holding_object:
+		#make display go up in value instead of down
+		var buffer_value = -(grab_buffer_timer.time_left - grab_buffer_timer.wait_time)
+		grab_buffer_display.value = buffer_value
+		
+	elif holding_object == false:
+		grab_buffer_display.value = 0
+	
+		
 	#handle object outline & holding objects
 	var object = ray_find_obj()
-	print(grab_buffer_timer.time_left)
-	
+	#print(grab_buffer_timer.time_left)
 	#hovering
 	if object != null:
-		object.outline_visible = true
+		raycast_found_obj = true
 		last_obj_hovered = object
-		
 		if holding_object:
+			object.outline_visible = true
 			#reset timer jank ass method (?)
 			grab_buffer_timer.start()
-		#if hovering and holding
+			grab_buffer_display.value = 0
 	#not hovering
 	else:
-		#holding but not hovering, wait 2 seconds
+		raycast_found_obj = false
+		#holding but not hovering, activate 2 second buffer
 		if holding_object:
 			start_buffer_timer()
-		if last_obj_hovered:
 			last_obj_hovered.outline_visible = false
-			
+			_obj_speed_gui_visible(true)
+		else:
+			_obj_speed_gui_visible(false)
+	
+	#handle grabbing
 	if last_obj_hovered:
 		if holding_object:
 			var a = last_obj_hovered.global_transform.origin
@@ -46,13 +75,16 @@ func _process(delta: float) -> void:
 			var movement_speed = clamp(distance * pull_power, 0, max_obj_speed)
 			last_obj_hovered.linear_velocity = direction * movement_speed
 
+func _obj_speed_gui_visible(valueBool):
+	gui_obj_speed_text.visible = valueBool
+	gui_obj_speed_bar.visible = valueBool
+	grab_buffer_display.visible = valueBool
+
 var timer_played_once = false
 func start_buffer_timer():
 	if timer_played_once == false:
 		grab_buffer_timer.start()
 	timer_played_once = true
-
-
 
 #raycast that returns whatever RigidBody3d it collides with
 func ray_find_obj():
@@ -62,26 +94,32 @@ func ray_find_obj():
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("lmb"):
-			holding_object = true
+		_handle_lmb_pressed()
+	if event.is_action_released("lmb"):
+		_handle_lmb_released()
+	if event.is_action_pressed("control_grip_in"):
+		max_obj_speed += obj_speed_step
+	if event.is_action_pressed("control_grip_out"):
+		max_obj_speed -= obj_speed_step
+
+func _handle_lmb_pressed():
+	#grab_buffer_timer.paused = false
+	if raycast_found_obj == true:
+		holding_object = true
+		if grab_buffer_timer.time_left > 0:
 			if last_obj_hovered:
 				last_obj_hovered.outline_visible = true
-			
-	if event.is_action_released("lmb"):
-		holding_object = false
-		if last_obj_hovered:
-			last_obj_hovered.outline_visible = false
-	
-	if event.is_action_pressed("control_grip_in"):
-		max_obj_speed += 1
-		gui_speed_bar.value = max_obj_speed
-	if event.is_action_pressed("control_grip_out"):
-		max_obj_speed -= 1
-		gui_speed_bar.value = max_obj_speed
+
+func _handle_lmb_released():
+	#grab_buffer_timer.paused = true
+	holding_object = false
+	if last_obj_hovered:
+		last_obj_hovered.outline_visible = false
 
 func _grab_buffer_expired():
 	timer_played_once = false #reset timer
 	
 	if holding_object == true:
 		holding_object = false
-	if last_obj_hovered:
-		last_obj_hovered.outline_visible = false
+	#if last_obj_hovered:
+		#last_obj_hovered.outline_visible = false
