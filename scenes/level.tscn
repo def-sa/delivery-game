@@ -1,10 +1,8 @@
-[gd_scene load_steps=23 format=4 uid="uid://c2oj7vt0nuk6f"]
+[gd_scene load_steps=20 format=4 uid="uid://c2oj7vt0nuk6f"]
 
 [ext_resource type="PackedScene" uid="uid://d0dymr70087q8" path="res://scenes/player.tscn" id="1_digji"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_pngop"]
-[ext_resource type="Script" path="res://scripts/terrain.gd" id="2_nugd0"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_ysq55"]
-[ext_resource type="PackedScene" uid="uid://c6d5gcni7htt6" path="res://scenes/terrainchunk.tscn" id="3_wp8cq"]
 [ext_resource type="Texture2D" uid="uid://didyvg2e8xup8" path="res://assets/icon.svg" id="4_a653a"]
 [ext_resource type="Script" path="res://scripts/cube.gd" id="4_djsnp"]
 
@@ -38,10 +36,6 @@ _surfaces = [{
 }]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ucvms"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_825v6"]
-noise_type = 2
-frequency = 0.007
 
 [sub_resource type="BoxMesh" id="BoxMesh_s5fei"]
 size = Vector3(4.41, 0.375, 2.845)
@@ -81,16 +75,35 @@ script = ExtResource("1_pngop")
 transform = Transform3D(24.9777, 0, 0, 0, 1, 0, 0, 0, -25.8834, -1, 4, -2)
 mesh = SubResource("BoxMesh_pwfbr")
 skeleton = NodePath("")
+metadata/grabbable = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="floor_debug"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="floor_debug/StaticBody3D"]
 shape = SubResource("BoxShape3D_t4502")
 
+[node name="Cube2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71125, 10.4473, -4.9004)
+mass = 0.055
+script = ExtResource("4_djsnp")
+metadata/grabbable = false
+
+[node name="Mesh" type="MeshInstance3D" parent="Cube2"]
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_dp0hk")
+skeleton = NodePath("../../Cube2")
+
+[node name="Outline" type="MeshInstance3D" parent="Cube2/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_yqh2u")
+
+[node name="Collision" type="CollisionShape3D" parent="Cube2"]
+shape = SubResource("BoxShape3D_ucvms")
+
 [node name="Cube" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -5.13971)
 mass = 0.055
-script = ExtResource("4_djsnp")
+metadata/grabbable = true
 
 [node name="Mesh" type="MeshInstance3D" parent="Cube"]
 material_override = SubResource("StandardMaterial3D_uqk2a")
@@ -108,26 +121,18 @@ shape = SubResource("BoxShape3D_ucvms")
 [node name="Player" parent="." instance=ExtResource("1_digji")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00941372, 6.29247, 0.000599861)
 
-[node name="Terrain" type="Node3D" parent="." node_paths=PackedStringArray("viewer")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00261164, 0.0101373, -0.0118788)
-script = ExtResource("2_nugd0")
-chunkSize = 700
-terrain_height = 15
-view_distance = 2100
-viewer = NodePath("../Player")
-chunk_mesh_scene = ExtResource("3_wp8cq")
-noise = SubResource("FastNoiseLite_825v6")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.433659, -0.150271, 0.888458, 0, 0.985996, 0.166768, -0.901077, 0.0723206, -0.427586, 0, 0, 0)
 light_energy = 2.0
 shadow_enabled = true
 
 [node name="cart" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -14.746, 0)
 
 [node name="cart_base" type="RigidBody3D" parent="cart"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8763, -10.2794)
 mass = 0.055
+metadata/grabbable = false
 
 [node name="Mesh" type="MeshInstance3D" parent="cart/cart_base"]
 material_override = SubResource("StandardMaterial3D_uqk2a")
@@ -139,6 +144,7 @@ shape = SubResource("ConvexPolygonShape3D_fe7nw")
 [node name="cart_handle_bar" type="RigidBody3D" parent="cart"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8763, -10.2794)
 mass = 0.055
+metadata/grabbable = false
 
 [node name="Mesh" type="MeshInstance3D" parent="cart/cart_handle_bar"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.10125, -0.0586891, 0.0364609)
@@ -153,6 +159,7 @@ shape = SubResource("ConvexPolygonShape3D_lob0c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8763, -10.2794)
 mass = 0.055
 script = ExtResource("4_djsnp")
+metadata/grabbable = true
 
 [node name="Mesh" type="MeshInstance3D" parent="cart/cart_handle_grip"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.52991, -0.0586891, 0.0334768)
