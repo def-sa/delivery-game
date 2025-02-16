@@ -6,32 +6,30 @@ extends Node3D
 @onready var gui_obj_speed_text = $Player/GUI/obj_speed_text
 @onready var grab_buffer_timer = $Player/camera_pivot/spring_arm_3d/camera/grab_buffer_timer
 @onready var grab_buffer_display = $Player/GUI/buffer_timer_display
+#@onready var grab_buffer_slider = $"pause_menu/MarginContainer/AspectRatioContainer/TabContainer/gameplay/VBoxContainer2/Grab Buffer Cooldown/grab_buffer_slider"
 
 var last_obj_hovered: RigidBody3D
 var holding_object:bool = false
 var raycast_found_obj:bool = false
-
-@export var pull_power:float = 10.0
-@export var max_obj_speed:float = 10.0:
+var pull_power:float = 10.0
+var obj_speed_step:float = 1
+var max_obj_speed:float = 10.0:
 	set(value):
 		value = clamp(value, 4.0, 25.0)
 		gui_obj_speed_bar.value = value
 		max_obj_speed = value
-	
-@export var grab_buffer_cooldown:float = 2.0:
-	set(value):
-		grab_buffer_timer.set_wait_time(value)
-		grab_buffer_display.max_value = value
-@export var obj_speed_step:float = 1
+		
 
+# TODO: refactor to input manager
 func _ready() -> void:
 	Signalbus.grab_buffer_expired.connect(_grab_buffer_expired)
+	Signalbus.grab_buffer_cooldown_updated.connect(_grab_buffer_updated)
+	#grab_buffer_slider.value_changed.connect(_on_grab_buffer_slider_value_changed)
 	gui_obj_speed_bar.value = max_obj_speed
 
-
-
+# BUG: prefer last object held if interacting with new obj, so dragging over multiple isnt impossible
+# BUG: create component for each obj that is grabbable instead of using object.outline_visible
 func _process(delta: float) -> void:
-	
 	if holding_object:
 		#make display go up in value instead of down
 		var buffer_value = -(grab_buffer_timer.time_left - grab_buffer_timer.wait_time)
@@ -115,6 +113,11 @@ func _handle_lmb_released():
 	holding_object = false
 	if last_obj_hovered:
 		last_obj_hovered.outline_visible = false
+
+
+func _grab_buffer_updated(is_default, value):
+	grab_buffer_timer.set_wait_time(value)
+	grab_buffer_display.max_value = value
 
 func _grab_buffer_expired():
 	timer_played_once = false #reset timer

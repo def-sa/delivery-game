@@ -45,7 +45,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
-	camera.fov = Settings.camera_fov
+	camera.fov = Settings.fov
+	#Signalbus.grab_buffer_cooldown_updated.connect(_grab_buffer_updated)
 	
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -81,8 +82,8 @@ func perspective_toggle():
 		
 	match perspective:
 		"first":
-			camera_pivot.rotation.y = rad_to_deg(180)
 			if spring_arm.spring_length >= 1:
+				camera_pivot.rotation.y = rad_to_deg(180)
 				perspective = "third"
 				return
 			spring_arm.spring_length = spring_arm_length

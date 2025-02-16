@@ -1,6 +1,9 @@
 extends Node
 
-signal fov_updated(is_default, value)
-signal sensitivity_updated(is_default, value)
+signal fov_updated(is_default:bool, value:int)
+signal sensitivity_updated(is_default:bool, value:int)
+signal grab_buffer_cooldown_updated(is_default:bool, value:float)
 
 signal grab_buffer_expired()
+
+signal settings_slider(slider_name:String, is_default:bool, value:float)

@@ -1,16 +1,16 @@
-[gd_scene load_steps=14 format=4 uid="uid://c2oj7vt0nuk6f"]
+[gd_scene load_steps=23 format=4 uid="uid://c2oj7vt0nuk6f"]
 
 [ext_resource type="PackedScene" uid="uid://d0dymr70087q8" path="res://scenes/player.tscn" id="1_digji"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_pngop"]
-[ext_resource type="Script" path="res://scenes/terrain.gd" id="2_nugd0"]
+[ext_resource type="Script" path="res://scripts/terrain.gd" id="2_nugd0"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_ysq55"]
 [ext_resource type="PackedScene" uid="uid://c6d5gcni7htt6" path="res://scenes/terrainchunk.tscn" id="3_wp8cq"]
 [ext_resource type="Texture2D" uid="uid://didyvg2e8xup8" path="res://assets/icon.svg" id="4_a653a"]
-[ext_resource type="Script" path="res://scenes/cube.gd" id="4_djsnp"]
+[ext_resource type="Script" path="res://scripts/cube.gd" id="4_djsnp"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_825v6"]
-noise_type = 2
-frequency = 0.007
+[sub_resource type="BoxMesh" id="BoxMesh_pwfbr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t4502"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uqk2a"]
 albedo_texture = ExtResource("4_a653a")
@@ -39,28 +39,53 @@ _surfaces = [{
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ucvms"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_825v6"]
+noise_type = 2
+frequency = 0.007
+
+[sub_resource type="BoxMesh" id="BoxMesh_s5fei"]
+size = Vector3(4.41, 0.375, 2.845)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fe7nw"]
+points = PackedVector3Array(2.13333, 0.1875, 1.4125, -2.24, -0.2225, -1.4575, -2.13333, 0.1875, -1.3875, 2.24, -0.2225, -1.4575, -2.24, -0.2225, 1.4825, 2.24, -0.2225, 1.4825, 2.13333, 0.1875, -1.3875, -2.13333, 0.1875, 1.4125)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wngyu"]
+size = Vector3(3.65, 0.255, 0.765)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lob0c"]
+points = PackedVector3Array(1.7756, 0.127092, 0.3825, -1.85397, -0.156468, -0.411468, -1.72154, 0.122868, -0.3825, -1.85397, -0.156468, 0.399643, 1.85397, -0.156468, -0.411468, 1.85397, -0.156468, 0.399643, -1.7756, 0.127092, 0.3825, 1.72154, 0.122868, -0.3825)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xc7bm"]
+size = Vector3(0.895, 0.19, 2.185)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_0qh0f"]
+_surfaces = [{
+"aabb": AABB(-0.476368, -0.123868, -1.12137, 0.952735, 0.247735, 2.24273),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("cebzvkCu/T34iI8/cebzPkCu/T34iI+/cebzPkCu/T34iI8/cebzvkCu/T34iI+/cebzvkCu/b34iI8/cebzPkCu/b34iI+/cebzPkCu/b34iI8/cebzvkCu/b34iI+/cebzPkCu/T34iI8/cebzvkCu/T34iI+/cebzPkCu/T34iI+/cebzvkCu/T34iI8/cebzPkCu/b34iI8/cebzvkCu/b34iI+/cebzPkCu/b34iI+/cebzvkCu/b34iI8/cebzPkCu/T34iI8/cebzvkCu/b34iI8/cebzvkCu/T34iI8/cebzPkCu/b34iI8/cebzPkCu/T34iI+/cebzvkCu/b34iI+/cebzvkCu/T34iI+/cebzPkCu/b34iI+//3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_c41bo"]
+points = PackedVector3Array(-0.464841, -0.112341, -1.10984, 0.4475, 0.0904012, 1.05275, 0.471587, -0.112341, 1.10984, -0.464841, -0.112341, 1.10984, 0.471587, -0.112341, -1.10984, -0.4475, 0.0919004, -1.06874, -0.4475, 0.0919004, 1.06874, 0.4475, 0.0904012, -1.05275)
+
 [node name="main" type="Node3D"]
 script = ExtResource("1_pngop")
 
-[node name="Terrain" type="Node3D" parent="." node_paths=PackedStringArray("viewer")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00261164, 0.0101373, -0.0118788)
-script = ExtResource("2_nugd0")
-chunkSize = 700
-terrain_height = 15
-view_distance = 2100
-viewer = NodePath("../Player")
-chunk_mesh_scene = ExtResource("3_wp8cq")
-noise = SubResource("FastNoiseLite_825v6")
+[node name="floor_debug" type="MeshInstance3D" parent="."]
+transform = Transform3D(24.9777, 0, 0, 0, 1, 0, 0, 0, -25.8834, -1, 4, -2)
+mesh = SubResource("BoxMesh_pwfbr")
+skeleton = NodePath("")
 
-[node name="pause_menu" parent="." instance=ExtResource("2_ysq55")]
+[node name="StaticBody3D" type="StaticBody3D" parent="floor_debug"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.433659, -0.150271, 0.888458, 0, 0.985996, 0.166769, -0.901077, 0.0723208, -0.427586, 0, 0, 0)
-light_energy = 2.0
-shadow_enabled = true
-
-[node name="Player" parent="." instance=ExtResource("1_digji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00941372, 6.29247, 0.000599861)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor_debug/StaticBody3D"]
+shape = SubResource("BoxShape3D_t4502")
 
 [node name="Cube" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -5.13971)
@@ -77,3 +102,82 @@ mesh = SubResource("ArrayMesh_yqh2u")
 
 [node name="Collision" type="CollisionShape3D" parent="Cube"]
 shape = SubResource("BoxShape3D_ucvms")
+
+[node name="pause_menu" parent="." instance=ExtResource("2_ysq55")]
+
+[node name="Player" parent="." instance=ExtResource("1_digji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00941372, 6.29247, 0.000599861)
+
+[node name="Terrain" type="Node3D" parent="." node_paths=PackedStringArray("viewer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00261164, 0.0101373, -0.0118788)
+script = ExtResource("2_nugd0")
+chunkSize = 700
+terrain_height = 15
+view_distance = 2100
+viewer = NodePath("../Player")
+chunk_mesh_scene = ExtResource("3_wp8cq")
+noise = SubResource("FastNoiseLite_825v6")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.433659, -0.150271, 0.888458, 0, 0.985996, 0.166768, -0.901077, 0.0723206, -0.427586, 0, 0, 0)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="cart" type="Node3D" parent="."]
+
+[node name="cart_base" type="RigidBody3D" parent="cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8763, -10.2794)
+mass = 0.055
+
+[node name="Mesh" type="MeshInstance3D" parent="cart/cart_base"]
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_s5fei")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cart/cart_base"]
+shape = SubResource("ConvexPolygonShape3D_fe7nw")
+
+[node name="cart_handle_bar" type="RigidBody3D" parent="cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8763, -10.2794)
+mass = 0.055
+
+[node name="Mesh" type="MeshInstance3D" parent="cart/cart_handle_bar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.10125, -0.0586891, 0.0364609)
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_wngyu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cart/cart_handle_bar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.10125, -0.0586891, 0.0364609)
+shape = SubResource("ConvexPolygonShape3D_lob0c")
+
+[node name="cart_handle_grip" type="RigidBody3D" parent="cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8763, -10.2794)
+mass = 0.055
+script = ExtResource("4_djsnp")
+
+[node name="Mesh" type="MeshInstance3D" parent="cart/cart_handle_grip"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.52991, -0.0586891, 0.0334768)
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_xc7bm")
+
+[node name="Outline" type="MeshInstance3D" parent="cart/cart_handle_grip/Mesh"]
+mesh = SubResource("ArrayMesh_0qh0f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cart/cart_handle_grip"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.52991, -0.0586891, 0.0334768)
+shape = SubResource("ConvexPolygonShape3D_c41bo")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25182, 19.7857, -10.2944)
+node_a = NodePath("../cart_base")
+node_b = NodePath("../cart_handle_bar")
+exclude_nodes_from_collision = false
+params/bias = 0.99
+angular_limit/enable = true
+
+[node name="HingeJoint3D2" type="HingeJoint3D" parent="cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.99829, 19.8121, -10.222)
+node_a = NodePath("../cart_handle_bar")
+node_b = NodePath("../cart_handle_grip")
+exclude_nodes_from_collision = false
+params/bias = 0.99
+angular_limit/enable = true

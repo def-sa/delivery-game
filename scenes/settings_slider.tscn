@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://cl0ygjsp2yih7"]
+
+[ext_resource type="Script" path="res://scenes/settings_slider.gd" id="1_d3yen"]
+[ext_resource type="Texture2D" uid="uid://nptv6fq0n1qk" path="res://assets/reset_arrow.png" id="1_iusgf"]
+
+[node name="settings_slider" type="HBoxContainer"]
+script = ExtResource("1_d3yen")
+
+[node name="slider_value_txt" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 28
+vertical_alignment = 1
+
+[node name="slider_text" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 2
+
+[node name="slider" type="HSlider" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 1
+min_value = 1.0
+step = 0.001
+value = 50.0
+rounded = true
+
+[node name="default_btn" type="TextureButton" parent="."]
+modulate = Color(0.764706, 0.764706, 0.764706, 1)
+show_behind_parent = true
+clip_children = 2
+custom_minimum_size = Vector2(35, 35)
+layout_direction = 1
+layout_mode = 2
+texture_normal = ExtResource("1_iusgf")
+ignore_texture_size = true
+stretch_mode = 5
+flip_h = true
+
+[connection signal="value_changed" from="slider" to="." method="_on_slider_value_changed"]
+[connection signal="pressed" from="default_btn" to="." method="_on_default_btn_pressed"]

@@ -23,6 +23,11 @@ func _ready() -> void:
 		config.set_value("audio", "sfx_volume", 1.0)
 		config.set_value("audio", "dialogue_volume", 1.0)
 		
+		config.set_value("controls", "FOV", Settings.fov)
+		config.set_value("controls", "Sensitivity", Settings.sensitivity)
+		
+		config.set_value("gameplay", "Sensitivity", Settings.grab_buffer)
+		
 		config.save(SETTINGS_FILE_PATH)
 	else:
 		config.load(SETTINGS_FILE_PATH)
