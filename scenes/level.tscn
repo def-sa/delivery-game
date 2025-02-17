@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=4 uid="uid://c2oj7vt0nuk6f"]
+[gd_scene load_steps=14 format=4 uid="uid://c2oj7vt0nuk6f"]
 
 [ext_resource type="PackedScene" uid="uid://d0dymr70087q8" path="res://scenes/player.tscn" id="1_digji"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_pngop"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_ysq55"]
-[ext_resource type="Texture2D" uid="uid://didyvg2e8xup8" path="res://assets/icon.svg" id="4_a653a"]
+[ext_resource type="Texture2D" uid="uid://d2otqs5qr30eq" path="res://assets/icon.svg" id="4_a653a"]
 [ext_resource type="Script" path="res://scripts/cube.gd" id="4_djsnp"]
+[ext_resource type="PackedScene" uid="uid://ciloivtii61u6" path="res://scenes/cart.tscn" id="6_rflao"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_pwfbr"]
 
@@ -37,37 +38,6 @@ _surfaces = [{
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ucvms"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_s5fei"]
-size = Vector3(4.41, 0.375, 2.845)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fe7nw"]
-points = PackedVector3Array(2.13333, 0.1875, 1.4125, -2.24, -0.2225, -1.4575, -2.13333, 0.1875, -1.3875, 2.24, -0.2225, -1.4575, -2.24, -0.2225, 1.4825, 2.24, -0.2225, 1.4825, 2.13333, 0.1875, -1.3875, -2.13333, 0.1875, 1.4125)
-
-[sub_resource type="BoxMesh" id="BoxMesh_wngyu"]
-size = Vector3(3.65, 0.255, 0.765)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lob0c"]
-points = PackedVector3Array(1.7756, 0.127092, 0.3825, -1.85397, -0.156468, -0.411468, -1.72154, 0.122868, -0.3825, -1.85397, -0.156468, 0.399643, 1.85397, -0.156468, -0.411468, 1.85397, -0.156468, 0.399643, -1.7756, 0.127092, 0.3825, 1.72154, 0.122868, -0.3825)
-
-[sub_resource type="BoxMesh" id="BoxMesh_xc7bm"]
-size = Vector3(0.895, 0.19, 2.185)
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_0qh0f"]
-_surfaces = [{
-"aabb": AABB(-0.476368, -0.123868, -1.12137, 0.952735, 0.247735, 2.24273),
-"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
-"format": 34359742487,
-"index_count": 36,
-"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 24,
-"vertex_data": PackedByteArray("cebzvkCu/T34iI8/cebzPkCu/T34iI+/cebzPkCu/T34iI8/cebzvkCu/T34iI+/cebzvkCu/b34iI8/cebzPkCu/b34iI+/cebzPkCu/b34iI8/cebzvkCu/b34iI+/cebzPkCu/T34iI8/cebzvkCu/T34iI+/cebzPkCu/T34iI+/cebzvkCu/T34iI8/cebzPkCu/b34iI8/cebzvkCu/b34iI+/cebzPkCu/b34iI+/cebzvkCu/b34iI8/cebzPkCu/T34iI8/cebzvkCu/b34iI8/cebzvkCu/T34iI8/cebzPkCu/b34iI8/cebzPkCu/T34iI+/cebzvkCu/b34iI+/cebzvkCu/T34iI+/cebzPkCu/b34iI+//3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
-}]
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_c41bo"]
-points = PackedVector3Array(-0.464841, -0.112341, -1.10984, 0.4475, 0.0904012, 1.05275, 0.471587, -0.112341, 1.10984, -0.464841, -0.112341, 1.10984, 0.471587, -0.112341, -1.10984, -0.4475, 0.0919004, -1.06874, -0.4475, 0.0919004, 1.06874, 0.4475, 0.0904012, -1.05275)
-
 [node name="main" type="Node3D"]
 script = ExtResource("1_pngop")
 
@@ -82,38 +52,50 @@ metadata/grabbable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="floor_debug/StaticBody3D"]
 shape = SubResource("BoxShape3D_t4502")
 
-[node name="Cube2" type="RigidBody3D" parent="."]
+[node name="cube" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71125, 10.4473, -4.9004)
 mass = 0.055
 script = ExtResource("4_djsnp")
-metadata/grabbable = false
 
-[node name="Mesh" type="MeshInstance3D" parent="Cube2"]
+[node name="Mesh" type="MeshInstance3D" parent="cube"]
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_dp0hk")
-skeleton = NodePath("../../Cube2")
 
-[node name="Outline" type="MeshInstance3D" parent="Cube2/Mesh"]
+[node name="Outline" type="MeshInstance3D" parent="cube/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_yqh2u")
 
-[node name="Collision" type="CollisionShape3D" parent="Cube2"]
+[node name="Collision" type="CollisionShape3D" parent="cube"]
 shape = SubResource("BoxShape3D_ucvms")
 
-[node name="Cube" type="RigidBody3D" parent="."]
+[node name="cube_grabbable" type="RigidBody3D" parent="." groups=["grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -5.13971)
 mass = 0.055
-metadata/grabbable = true
 
-[node name="Mesh" type="MeshInstance3D" parent="Cube"]
+[node name="Mesh" type="MeshInstance3D" parent="cube_grabbable"]
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_dp0hk")
 
-[node name="Outline" type="MeshInstance3D" parent="Cube/Mesh"]
+[node name="Outline" type="MeshInstance3D" parent="cube_grabbable/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_yqh2u")
 
-[node name="Collision" type="CollisionShape3D" parent="Cube"]
+[node name="Collision" type="CollisionShape3D" parent="cube_grabbable"]
+shape = SubResource("BoxShape3D_ucvms")
+
+[node name="cube_grabbable2" type="RigidBody3D" parent="." groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -9.21466)
+mass = 0.055
+
+[node name="Mesh" type="MeshInstance3D" parent="cube_grabbable2"]
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_dp0hk")
+
+[node name="Outline" type="MeshInstance3D" parent="cube_grabbable2/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_yqh2u")
+
+[node name="Collision" type="CollisionShape3D" parent="cube_grabbable2"]
 shape = SubResource("BoxShape3D_ucvms")
 
 [node name="pause_menu" parent="." instance=ExtResource("2_ysq55")]
@@ -126,65 +108,5 @@ transform = Transform3D(-0.433659, -0.150271, 0.888458, 0, 0.985996, 0.166768, -
 light_energy = 2.0
 shadow_enabled = true
 
-[node name="cart" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -14.746, 0)
-
-[node name="cart_base" type="RigidBody3D" parent="cart"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8763, -10.2794)
-mass = 0.055
-metadata/grabbable = false
-
-[node name="Mesh" type="MeshInstance3D" parent="cart/cart_base"]
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_s5fei")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="cart/cart_base"]
-shape = SubResource("ConvexPolygonShape3D_fe7nw")
-
-[node name="cart_handle_bar" type="RigidBody3D" parent="cart"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8763, -10.2794)
-mass = 0.055
-metadata/grabbable = false
-
-[node name="Mesh" type="MeshInstance3D" parent="cart/cart_handle_bar"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.10125, -0.0586891, 0.0364609)
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_wngyu")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="cart/cart_handle_bar"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.10125, -0.0586891, 0.0364609)
-shape = SubResource("ConvexPolygonShape3D_lob0c")
-
-[node name="cart_handle_grip" type="RigidBody3D" parent="cart"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8763, -10.2794)
-mass = 0.055
-script = ExtResource("4_djsnp")
-metadata/grabbable = true
-
-[node name="Mesh" type="MeshInstance3D" parent="cart/cart_handle_grip"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.52991, -0.0586891, 0.0334768)
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_xc7bm")
-
-[node name="Outline" type="MeshInstance3D" parent="cart/cart_handle_grip/Mesh"]
-mesh = SubResource("ArrayMesh_0qh0f")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="cart/cart_handle_grip"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.52991, -0.0586891, 0.0334768)
-shape = SubResource("ConvexPolygonShape3D_c41bo")
-
-[node name="HingeJoint3D" type="HingeJoint3D" parent="cart"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25182, 19.7857, -10.2944)
-node_a = NodePath("../cart_base")
-node_b = NodePath("../cart_handle_bar")
-exclude_nodes_from_collision = false
-params/bias = 0.99
-angular_limit/enable = true
-
-[node name="HingeJoint3D2" type="HingeJoint3D" parent="cart"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.99829, 19.8121, -10.222)
-node_a = NodePath("../cart_handle_bar")
-node_b = NodePath("../cart_handle_grip")
-exclude_nodes_from_collision = false
-params/bias = 0.99
-angular_limit/enable = true
+[node name="cart" parent="." instance=ExtResource("6_rflao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.16101, 14.1551, 4.18226)

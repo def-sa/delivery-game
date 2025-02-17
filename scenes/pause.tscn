@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/pause.gd" id="1_1s7ya"]
 [ext_resource type="Script" path="res://scripts/controls.gd" id="2_8kx3x"]
-[ext_resource type="Texture2D" uid="uid://nptv6fq0n1qk" path="res://assets/reset_arrow.png" id="3_6s7j8"]
+[ext_resource type="Texture2D" uid="uid://b48s5e5atkyxk" path="res://assets/reset_arrow.png" id="3_6s7j8"]
 [ext_resource type="Script" path="res://scripts/gameplay.gd" id="3_whtt8"]
 [ext_resource type="PackedScene" uid="uid://cl0ygjsp2yih7" path="res://scenes/settings_slider.tscn" id="4_6ctfw"]
 

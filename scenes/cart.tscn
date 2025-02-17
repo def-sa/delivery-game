@@ -1,0 +1,291 @@
+[gd_scene load_steps=18 format=4 uid="uid://ciloivtii61u6"]
+
+[ext_resource type="Texture2D" uid="uid://d2otqs5qr30eq" path="res://assets/icon.svg" id="1_1cd1f"]
+[ext_resource type="Script" path="res://scripts/cube.gd" id="2_46cn3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uqk2a"]
+albedo_texture = ExtResource("1_1cd1f")
+emission_energy_multiplier = 6.74
+
+[sub_resource type="BoxMesh" id="BoxMesh_s5fei"]
+size = Vector3(4.41, 0.375, 2.845)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_j3cc0"]
+_surfaces = [{
+"aabb": AABB(-2.23387, -0.216368, -1.45137, 4.46773, 0.432735, 2.90273),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("r/cOwHKPXT5pxrk/r/cOQHKPXT5pxrm/r/cOQHKPXT5pxrk/r/cOwHKPXT5pxrm/r/cOwHKPXb5pxrk/r/cOQHKPXb5pxrm/r/cOQHKPXb5pxrk/r/cOwHKPXb5pxrm/r/cOQHKPXT5pxrk/r/cOwHKPXT5pxrm/r/cOQHKPXT5pxrm/r/cOwHKPXT5pxrk/r/cOQHKPXb5pxrk/r/cOwHKPXb5pxrm/r/cOQHKPXb5pxrm/r/cOwHKPXb5pxrk/r/cOQHKPXT5pxrk/r/cOwHKPXb5pxrk/r/cOwHKPXT5pxrk/r/cOQHKPXb5pxrk/r/cOQHKPXT5pxrm/r/cOwHKPXb5pxrm/r/cOwHKPXT5pxrm/r/cOQHKPXb5pxrm//3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
+
+[sub_resource type="BoxMesh" id="BoxMesh_75tv1"]
+size = Vector3(3.145, 0.375, 1.815)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kyl2l"]
+size = Vector3(0.345, 0.323, 3.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i8vy7"]
+size = Vector3(0.345, 0.323, 3.18)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wwvuy"]
+points = PackedVector3Array(-2.205, -0.1875, -1.4225, -2.205, 0.1875, -1.4225, 2.205, -0.1875, -1.4225, -2.205, -0.1875, 1.42222, -2.205, 0.1875, 1.42222, 2.205, 0.1875, -1.4225, 2.205, -0.1875, 1.42222, 2.205, 0.1875, 1.42222)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cldtm"]
+points = PackedVector3Array(-1.5725, -0.1875, -0.9075, -1.5725, 0.1875, -0.9075, 1.5725, -0.1875, -0.9075, -1.5725, -0.1875, 0.9075, -1.5725, 0.1875, 0.9075, 1.5725, 0.1875, -0.9075, 1.5725, -0.1875, 0.9075, 1.5725, 0.1875, 0.9075)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wngyu"]
+size = Vector3(3.435, 0.255, 0.22)
+
+[sub_resource type="TorusMesh" id="TorusMesh_opqes"]
+inner_radius = 0.548
+rings = 4
+ring_segments = 3
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_tpk73"]
+_surfaces = [{
+"aabb": AABB(-0.796349, -0.244692, -0.907917, 1.60679, 0.4678, 1.38396),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAAAAq6qqPgAAAACrqio/AAAAAAAAgD+rqqo+AAAAAKuqqj6rqqo+q6qqPquqKj+rqqo+AACAP6uqKj8AAAAAq6oqP6uqqj6rqio/q6oqP6uqKj8AAIA/AACAPwAAAAAAAIA/q6qqPgAAgD+rqio/AACAPwAAgD8="),
+"format": 34359742487,
+"index_count": 54,
+"index_data": PackedByteArray("BAAAAAEABAABAAUABQABAAIABQACAAYABgACAAMABgADAAcACAAEAAUACAAFAAkACQAFAAYACQAGAAoACgAGAAcACgAHAAsADAAIAAkADAAJAA0ADQAJAAoADQAKAA4ADgAKAAsADgALAA8A"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("thIGPbQSBj02cwe/SGQUvWN2ZD44bWi/C09CPEqpeb6xUWG/txIGPagSBr02cwe/ExPnvkL4MD02YIc+gd1Lv890Yj4UvPM+wa5Cv3+Qer6WbOY+ExPnvjb4ML01YIc+ssboPkL4MD2wbYQ+C3lPP850Yj7UPOc+Lh5FP3+Qer70/N0+ssboPjb4ML2wbYQ+zxIGvbQSBj02cwe/HWQUPWN2ZD44bWi/rk9CvEqpeb6xUWG/0RIGvagSBr02cwe//3//fwAA/7/Zrv//AAD/v9muAAAAAP+//3//fwAA/7///9mu2a7/vzdcjsfZrv+/N1xwONmu/7/+/9mu2a7/vwAA2a7//5Lox6OOx///kujHo3A4//+S6AAA2a7//5Lo/3//fwAA/7/arv//AAD/v9quAAAAAP+//3//fwAA/78=")
+}]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3npaa"]
+points = PackedVector3Array(-0.000150383, -0.195722, -0.887, -0.768165, -0.195722, 0.4435, -0.000150383, 0.195683, -0.887, 0, -0.195722, -0.887, -0.768165, 0.195683, 0.4435, 0.768165, -0.195722, 0.44337, 0, 0.195683, -0.887, 0.768165, 0.195683, 0.44337)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7yyw1"]
+albedo_texture = ExtResource("1_1cd1f")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v3d4t"]
+lightmap_size_hint = Vector2i(17, 11)
+uv2_padding = 0.0
+height = 0.275
+radial_segments = 9
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_n7y86"]
+points = PackedVector3Array(-0.171011, -0.1375, -0.469846, -0.433022, -0.1375, -0.250074, -0.171011, 0.1375, -0.469846, 0.170915, -0.1375, -0.469846, -0.492404, -0.1375, 0.0867521, -0.433022, 0.1375, -0.250074, 0.170915, 0.1375, -0.469846, 0.432926, -0.1375, -0.250074, -0.492404, 0.1375, 0.0867521, -0.321489, -0.1375, 0.382946, 0.432926, 0.1375, -0.250074, 0.492404, -0.1375, 0.0867521, -0.321489, 0.1375, 0.382946, 0, -0.1375, 0.5, 0.492404, 0.1375, 0.0867521, 0.321393, -0.1375, 0.382946, 0, 0.1375, 0.5, 0.321393, 0.1375, 0.382946)
+
+[node name="cart" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.64187, 0)
+
+[node name="cart_base" type="RigidBody3D" parent="." groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.433628, -2.77099)
+mass = 1.12
+
+[node name="Mesh" type="MeshInstance3D" parent="cart_base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3137, 1.55951)
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_s5fei")
+
+[node name="Outline" type="MeshInstance3D" parent="cart_base/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_j3cc0")
+
+[node name="base_under" type="MeshInstance3D" parent="cart_base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11112, -0.534478, 1.55595)
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_75tv1")
+
+[node name="back_wheel_axel" type="MeshInstance3D" parent="cart_base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.18486, -0.733267, 1.56224)
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_kyl2l")
+skeleton = NodePath("../base_under")
+
+[node name="front_wheel_axel" type="MeshInstance3D" parent="cart_base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.40131, -0.733267, 1.56224)
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_i8vy7")
+skeleton = NodePath("../base_under")
+
+[node name="base_collision" type="CollisionShape3D" parent="cart_base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3137, 1.55951)
+shape = SubResource("ConvexPolygonShape3D_wwvuy")
+
+[node name="base_under_collision" type="CollisionShape3D" parent="cart_base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11112, -0.534478, 1.55595)
+shape = SubResource("ConvexPolygonShape3D_cldtm")
+
+[node name="hinge_base_to_bar" type="HingeJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25182, -0.820835, -1.30985)
+node_a = NodePath("../cart_base")
+node_b = NodePath("../cart_handle_bar")
+exclude_nodes_from_collision = false
+params/bias = 0.99
+angular_limit/enable = true
+
+[node name="cart_handle_bar" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.35962, -0.939746, -1.64061)
+mass = 0.001
+gravity_scale = 0.5
+
+[node name="Mesh" type="MeshInstance3D" parent="cart_handle_bar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77976, 0.224056, 0.504124)
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_wngyu")
+
+[node name="hinge_bar_to_grip" type="HingeJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.99829, -0.794437, -1.23745)
+node_a = NodePath("../cart_handle_bar")
+node_b = NodePath("../cart_handle_grip")
+exclude_nodes_from_collision = false
+params/bias = 0.99
+angular_limit/enable = true
+
+[node name="cart_handle_grip" type="RigidBody3D" parent="." groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.99891, -0.665109, -1.95604)
+mass = 0.34
+script = ExtResource("2_46cn3")
+
+[node name="Mesh" type="MeshInstance3D" parent="cart_handle_grip"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0.5975, -0.00479746, 0.797852)
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("TorusMesh_opqes")
+skeleton = NodePath("")
+
+[node name="Outline" type="MeshInstance3D" parent="cart_handle_grip/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_tpk73")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cart_handle_grip"]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0.516563, -0.00479746, 0.797852)
+shape = SubResource("ConvexPolygonShape3D_3npaa")
+
+[node name="cart_wheels" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45254, -1.44975, -2.82345)
+
+[node name="wheel_l_b" type="RigidBody3D" parent="cart_wheels"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.460731, 0.285832, -0.352913)
+mass = 0.001
+gravity_scale = 0.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="cart_wheels/wheel_l_b"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.203869, 0.0168295, -0.114023)
+material_override = SubResource("StandardMaterial3D_7yyw1")
+mesh = SubResource("CylinderMesh_v3d4t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cart_wheels/wheel_l_b"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.203869, 0.0168295, -0.114023)
+shape = SubResource("ConvexPolygonShape3D_n7y86")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="cart_wheels/wheel_l_b"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19422, 0.0058136, 0.0258379)
+node_a = NodePath("..")
+node_b = NodePath("../../../cart_base")
+exclude_nodes_from_collision = false
+params/bias = 0.99
+angular_limit/enable = true
+angular_limit/upper = 3.14159
+angular_limit/lower = -3.14159
+angular_limit/bias = 0.99
+
+[node name="PinJoint3D" type="PinJoint3D" parent="cart_wheels/wheel_l_b"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.194519, 0, 0.0233638)
+node_a = NodePath("..")
+node_b = NodePath("../../../cart_base")
+exclude_nodes_from_collision = false
+
+[node name="wheel_r_b" type="RigidBody3D" parent="cart_wheels"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.460731, 0.285832, 3.80981)
+mass = 0.001
+gravity_scale = 0.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="cart_wheels/wheel_r_b"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.203869, 0.0168295, -0.114023)
+material_override = SubResource("StandardMaterial3D_7yyw1")
+mesh = SubResource("CylinderMesh_v3d4t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cart_wheels/wheel_r_b"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.203869, 0.0168295, -0.114023)
+shape = SubResource("ConvexPolygonShape3D_n7y86")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="cart_wheels/wheel_r_b"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.182416, 0.0265164, -0.285993)
+node_a = NodePath("..")
+node_b = NodePath("../../../cart_base")
+exclude_nodes_from_collision = false
+params/bias = 0.99
+angular_limit/enable = true
+angular_limit/upper = 3.14159
+angular_limit/lower = -3.14159
+angular_limit/bias = 0.99
+
+[node name="PinJoint3D" type="PinJoint3D" parent="cart_wheels/wheel_r_b"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.194519, 0, -0.290895)
+node_a = NodePath("..")
+node_b = NodePath("../../../cart_base")
+exclude_nodes_from_collision = false
+
+[node name="wheel_l_f" type="RigidBody3D" parent="cart_wheels"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.04843, 0.285832, -0.352913)
+mass = 0.001
+gravity_scale = 0.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="cart_wheels/wheel_l_f"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.203869, 0.0168295, -0.114023)
+material_override = SubResource("StandardMaterial3D_7yyw1")
+mesh = SubResource("CylinderMesh_v3d4t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cart_wheels/wheel_l_f"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.203869, 0.0168295, -0.114023)
+shape = SubResource("ConvexPolygonShape3D_n7y86")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="cart_wheels/wheel_l_f"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19422, 0.0058136, 0.0258379)
+node_a = NodePath("..")
+node_b = NodePath("../../../cart_base")
+exclude_nodes_from_collision = false
+params/bias = 0.99
+angular_limit/enable = true
+angular_limit/upper = 3.14159
+angular_limit/lower = -3.14159
+angular_limit/bias = 0.99
+
+[node name="PinJoint3D" type="PinJoint3D" parent="cart_wheels/wheel_l_f"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.194519, 0, 0.0233638)
+visible = false
+node_a = NodePath("..")
+node_b = NodePath("../../../cart_base")
+exclude_nodes_from_collision = false
+
+[node name="wheel_r_f" type="RigidBody3D" parent="cart_wheels"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.04992, 0.285832, 3.80574)
+mass = 0.001
+gravity_scale = 0.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="cart_wheels/wheel_r_f"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.203869, 0.0168295, -0.114023)
+material_override = SubResource("StandardMaterial3D_7yyw1")
+mesh = SubResource("CylinderMesh_v3d4t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cart_wheels/wheel_r_f"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.203869, 0.0168295, -0.114023)
+shape = SubResource("ConvexPolygonShape3D_n7y86")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="cart_wheels/wheel_r_f"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.189414, 0.0200772, -0.270583)
+node_a = NodePath("..")
+node_b = NodePath("../../../cart_base")
+exclude_nodes_from_collision = false
+params/bias = 0.0
+angular_limit/enable = true
+angular_limit/upper = 3.14159
+angular_limit/lower = -3.14159
+angular_limit/bias = 0.99
+angular_limit/relaxation = 1.72
+
+[node name="PinJoint3D" type="PinJoint3D" parent="cart_wheels/wheel_r_f"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.194519, 0, -0.290895)
+visible = false
+node_a = NodePath("..")
+node_b = NodePath("../../../cart_base")
+exclude_nodes_from_collision = false

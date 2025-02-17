@@ -25,6 +25,11 @@ Configfilehandler="*res://scripts/configfilehandler.gd"
 
 window/vsync/vsync_mode=0
 
+[global_group]
+
+grabbable="object is grabbable"
+destroyable="object is destructable"
+
 [input]
 
 left={
