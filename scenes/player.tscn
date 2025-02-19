@@ -31,6 +31,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="buffer_timer_display" type="TextureProgressBar" parent="GUI"]
+visible = false
 texture_repeat = 3
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
@@ -56,6 +57,7 @@ texture_progress = ExtResource("2_k86f7")
 tint_under = Color(1, 1, 1, 0.27451)
 
 [node name="obj_speed_text" type="RichTextLabel" parent="GUI"]
+visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -77,6 +79,7 @@ text = "[center]drag power
 scroll_active = false
 
 [node name="obj_speed_bar" type="ProgressBar" parent="GUI"]
+visible = false
 custom_minimum_size = Vector2(15, 350)
 layout_mode = 1
 anchors_preset = 6
@@ -123,6 +126,10 @@ grow_vertical = 2
 size_flags_horizontal = 4
 mouse_filter = 2
 
+[node name="gui_cooldown" type="Timer" parent="GUI"]
+wait_time = 2.0
+one_shot = true
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_xqg4r")
 
@@ -150,4 +157,5 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.055, -3.5)
 wait_time = 2.0
 one_shot = true
 
+[connection signal="timeout" from="GUI/gui_cooldown" to="." method="_on_gui_cooldown_timeout"]
 [connection signal="timeout" from="camera_pivot/spring_arm_3d/camera/grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]

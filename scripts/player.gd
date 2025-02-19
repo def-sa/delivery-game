@@ -99,3 +99,7 @@ func perspective_toggle():
 
 func _on_grab_buffer_timer_timeout() -> void:
 	Signalbus.grab_buffer_expired.emit()
+
+
+func _on_gui_cooldown_timeout() -> void:
+	Signalbus.gui_cooldown.emit()

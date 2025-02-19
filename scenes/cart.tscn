@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=4 uid="uid://ciloivtii61u6"]
+[gd_scene load_steps=19 format=4 uid="uid://ciloivtii61u6"]
 
 [ext_resource type="Texture2D" uid="uid://d2otqs5qr30eq" path="res://assets/icon.svg" id="1_1cd1f"]
+[ext_resource type="Script" path="res://scripts/cart.gd" id="1_kvflj"]
 [ext_resource type="Script" path="res://scripts/cube.gd" id="2_46cn3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uqk2a"]
@@ -80,6 +81,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.64187, 0)
 [node name="cart_base" type="RigidBody3D" parent="." groups=["grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.433628, -2.77099)
 mass = 1.12
+script = ExtResource("1_kvflj")
 
 [node name="Mesh" type="MeshInstance3D" parent="cart_base"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3137, 1.55951)
