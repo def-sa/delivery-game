@@ -98,6 +98,10 @@ control_grip_out={
 ]
 }
 
+[physics]
+
+3d/physics_engine="JoltPhysics3D"
+
 [rendering]
 
 occlusion_culling/bvh_build_quality=0

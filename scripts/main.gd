@@ -28,13 +28,14 @@ func _ready():
 	
 func _physics_process(delta):
 	if carrying:
+		grab_buffer_display.value = grab_buffer_timer.time_left
 		var a = carrying.global_transform.origin
 		var b = player_hand.global_transform.origin
-		var direction = (b - a).normalized()
+		var direction = (b - a)
 		var distance = (b - a).length()
+		#prints(direction, distance)
 		var movement_speed = clamp(distance * pull_power, 0, max_obj_speed)
 		carrying.linear_velocity = direction * movement_speed
-	handle_input()
 	check_hover()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -43,17 +44,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		gui_obj_speed_text.visible = true
 		gui_obj_speed_bar.visible = true
 		max_obj_speed += obj_speed_step
+		
 	if event.is_action_pressed("control_grip_out"):
 		gui_cooldown.start()
 		gui_obj_speed_text.visible = true
 		gui_obj_speed_bar.visible = true
 		max_obj_speed -= obj_speed_step
-
-func handle_input():
-	if Input.is_action_just_pressed("lmb"):
+		
+	if event.is_action_pressed("lmb"):
 		if not carrying:
 			pick_up_object()
-	elif Input.is_action_just_released("lmb"):
+			
+	elif event.is_action_released("lmb"):
 		if carrying:
 			drop_object()
 			obj_speed_gui_visible(false)
@@ -62,10 +64,16 @@ func handle_input():
 func check_hover():
 	if carrying:
 		toggle_outline(carrying, true)
+		#if not hovering over carryable, start timer
+		if ray_interaction.is_colliding():
+			var obj = ray_interaction.get_collider()
+			if obj.is_in_group("grabbable"):
+				grab_buffer_timer.start()
 	else:
 		if ray_interaction.is_colliding():
 			var obj = ray_interaction.get_collider()
 			if obj.is_in_group("grabbable"):
+				
 				if obj != hovered_obj:
 					#for previously hovered object
 					if hovered_obj:
@@ -73,6 +81,7 @@ func check_hover():
 					#for the new hovered object
 					hovered_obj = obj
 					toggle_outline(hovered_obj, true)
+					
 			else:
 				#turn off outline if not hovering over grabbable object
 				if hovered_obj:
@@ -88,7 +97,6 @@ func pick_up_object():
 	if ray_interaction.is_colliding():
 		var obj = ray_interaction.get_collider()
 		if obj.is_in_group("grabbable"):
-			last_obj_carrying = obj
 			carrying = obj
 			start_buffer_timer()
 			obj_speed_gui_visible(true)
@@ -98,9 +106,9 @@ func pick_up_object():
 				hovered_obj = null
 
 func drop_object():
+	carrying = null
 	if carrying:
 		toggle_outline(carrying, false)
-		carrying = null
 
 func toggle_outline(obj, toggle: bool):
 	if obj:
@@ -125,9 +133,7 @@ func _grab_buffer_updated(is_default, value):
 
 func _grab_buffer_expired():
 	timer_played_once = false #reset timer
-	toggle_outline(carrying, false)
-	carrying = false
-	last_obj_carrying = null
+	drop_object()
 	obj_speed_gui_visible(false)
 	grab_buffer_display.hide()
 
