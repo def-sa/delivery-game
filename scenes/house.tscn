@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq6ruq4ukkfuo"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_indkv"]
+size = Vector3(12, 3, 12)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_iwfta"]
+points = PackedVector3Array(0.163415, 1.41829, 5.24879, -5.73557, -1.5, -5.73557, -5.73557, -1.5, 5.73557, 5.73557, -1.5, -5.73557, 5.73557, -1.5, 5.73557, -0.164385, 1.41781, -5.24697, 5.90431, -1.21393, -6.09405, -5.90431, -1.21393, 6.09405, 5.90431, -1.21393, 6.09405, -5.90431, -1.21393, -6.09405, 0.163415, 1.41829, -5.24879, -0.164385, 1.41781, 5.24697)
+
+[node name="house" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.70243, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.12958, 0)
+mesh = SubResource("PrismMesh_indkv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.12958, 0)
+shape = SubResource("ConvexPolygonShape3D_iwfta")

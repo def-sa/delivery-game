@@ -19,6 +19,7 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33627, 0)
 script = ExtResource("1_v666e")
+speed = 38.365
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3

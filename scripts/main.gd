@@ -15,7 +15,6 @@ var max_obj_speed:float = 10.0:
 		gui_obj_speed_bar.value = value
 		max_obj_speed = value
 var obj_speed_step:float = 1
-var last_obj_carrying = null
 var carrying = null
 var hovered_obj = null
 
@@ -73,7 +72,6 @@ func check_hover():
 		if ray_interaction.is_colliding():
 			var obj = ray_interaction.get_collider()
 			if obj.is_in_group("grabbable"):
-				
 				if obj != hovered_obj:
 					#for previously hovered object
 					if hovered_obj:

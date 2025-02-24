@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dq8antafkidtd"]
+
+[ext_resource type="Texture2D" uid="uid://d2otqs5qr30eq" path="res://assets/icon.svg" id="1_xshds"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7yyw1"]
+albedo_texture = ExtResource("1_xshds")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v3d4t"]
+lightmap_size_hint = Vector2i(17, 11)
+uv2_padding = 0.0
+height = 0.275
+radial_segments = 9
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7ijdh"]
+points = PackedVector3Array(0.0705921, 0.1375, 0.44593, -0.177569, -0.1375, -0.4517, -0.169527, 0.1375, -0.430574, 0.429357, -0.1375, -0.214622, -0.325729, -0.1375, 0.362638, -0.452427, 0.1375, 0.0923817, 0.395829, 0.1375, -0.246694, 0.325729, -0.1375, 0.36273, -0.42945, -0.1375, -0.214714, 0.452427, 0.1375, 0.0924689, 0.177569, -0.1375, -0.4517, -0.296806, 0.1375, 0.361096, -0.0295949, -0.1375, 0.481268, -0.395741, 0.1375, -0.246694, 0.169527, 0.1375, -0.430574, 0.473889, -0.1375, 0.096154, -0.473889, -0.1375, 0.0960627, 0.296894, 0.1375, 0.361096, -0.0282546, 0.1375, 0.460142, 0.0295021, -0.1375, 0.481268, 0.414606, -0.1375, -0.259097, -0.414514, -0.1375, -0.259097, 0.452427, 0.1375, 0.0358837, -0.452427, 0.1375, 0.0358837, 0.236852, -0.1375, 0.407204, -0.236852, -0.1375, 0.407204, -0.410001, 0.1375, 0.177216, 0.409912, 0.1375, 0.177303, 0.473889, -0.1375, 0.0368846, -0.473889, -0.1375, 0.0368846, 0.424084, 0.1375, -0.13361, -0.424084, 0.1375, -0.13361)
+
+[node name="wheel" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.460731, 0.285832, -0.352913)
+mass = 0.001
+gravity_scale = 0.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.203869, 0.0168295, 0.178557)
+material_override = SubResource("StandardMaterial3D_7yyw1")
+mesh = SubResource("CylinderMesh_v3d4t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.203869, 0.0168295, 0.178557)
+shape = SubResource("ConvexPolygonShape3D_7ijdh")
+
+[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.203869, 0.178557, -0.0168294)
