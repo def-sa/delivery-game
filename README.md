@@ -7,6 +7,9 @@ Features:
 - perspective change via keybind and/or zoom
 - grabbing objects (with hold buffer)
 - adjustable grab power
+- infinite terrain in -z axis
+- basic random structure generation
+- the fog (came)
 - more ?
 
 todo:
