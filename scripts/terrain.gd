@@ -2,9 +2,9 @@ extends Node3D
 
 @export var chunk_scene: PackedScene
 @export var chunk_size: float = 50.0
-@export var view_distance: int = 3
+@export var view_distance: int = 32
 @export var structure_scenes: Array[PackedScene]
-@export var structure_chance: float = 0.5
+@export var structure_chance: float = 0.25
 
 @onready var player = $"../Player"
 var chunks = {}
@@ -46,9 +46,15 @@ func _free_outside_chunks():
 		if abs(position.z - player_z) > view_distance * chunk_size:
 			positions_to_remove.append(position)
 	for position in positions_to_remove:
-		chunks[position].queue_free()
-		print("/REMOVED/ chunk removed : ", position)
-		chunks.erase(position)
+		
+		if position != Vector3(0,0,0): #is not spawn
+			if position != Vector3(-50,0,0):
+				if position != Vector3(50,0,0): 
+					
+					chunks[position].queue_free()
+					print("/REMOVED/ chunk removed : ", position)
+					chunks.erase(position)
+
 
 func _create_chunk(position: Vector3):
 	var chunk = chunk_scene.instantiate()
@@ -57,12 +63,15 @@ func _create_chunk(position: Vector3):
 	chunks[position] = chunk
 	print("/ADDED/ chunk created : ", chunk.position)
 	
-	#add structures to the rightmost chunk
-	if position.x > 0:
-		#print("Spawning Structures in Chunk: ", position)
-		for i in range(0, int(randf() * 10)):
-			if randf() < structure_chance:
-				var structure = structure_scenes[randi() % structure_scenes.size()].instantiate()
-				#structure.global_transform.origin = Vector3(position.x + randf_range(-chunk_size / 2, chunk_size / 2), 0, position.z + randf_range(-chunk_size / 2, chunk_size / 2))
-				chunk.add_child(structure)
-				#print("Structure Spawned at: ", structure.global_transform.origin)
+	if position != Vector3(0,0,0): #is not spawn
+			if position != Vector3(-50,0,0):
+				if position != Vector3(50,0,0): 
+					
+					if position.x > 0: #add structures to the rightmost chunk
+						#print("Spawning Structures in Chunk: ", position)
+						for i in range(0, int(randf() * 10)):
+							if randf() < structure_chance:
+								var structure = structure_scenes[randi() % structure_scenes.size()].instantiate()
+								#structure.global_transform.origin = Vector3(position.x + randf_range(-chunk_size / 2, chunk_size / 2), 0, position.z + randf_range(-chunk_size / 2, chunk_size / 2))
+								chunk.add_child(structure)
+								#print("Structure Spawned at: ", structure.global_transform.origin)

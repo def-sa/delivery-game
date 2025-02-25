@@ -6,6 +6,7 @@ func _ready():
 	_generate_terrain()
 
 func _generate_terrain():
+	
 	var mesh = MeshInstance3D.new()
 	# TODO: use noise texture 
 	var temp = BoxMesh.new()

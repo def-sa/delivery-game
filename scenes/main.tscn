@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=32 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_0glii"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_rhc0n"]
@@ -10,6 +10,12 @@
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="8_efkc1"]
 [ext_resource type="PackedScene" uid="uid://ogltphnc1i0n" path="res://scenes/chunk.tscn" id="9_q8xru"]
 [ext_resource type="PackedScene" uid="uid://bq6ruq4ukkfuo" path="res://scenes/house.tscn" id="10_6tcb2"]
+
+[sub_resource type="Environment" id="Environment_0xlil"]
+fog_enabled = true
+fog_light_color = Color(0.605046, 0.427548, 0.26688, 1)
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uqk2a"]
 albedo_texture = ExtResource("5_0r61a")
@@ -107,20 +113,20 @@ _surfaces = [{
 [node name="main" type="Node3D"]
 script = ExtResource("1_0glii")
 
-[node name="pause_menu" parent="." instance=ExtResource("2_rhc0n")]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0574767, -0.166493, 0.984366, -3.44373e-09, 0.985996, 0.166769, -0.998347, 0.00958531, -0.0566718, 0, 16.3024, 0)
+shadow_enabled = true
+shadow_blur = 10.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xlil")
 
 [node name="Player" parent="." instance=ExtResource("3_a6xwp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00941372, 6.29247, 0.000599861)
 
-[node name="World" type="Node3D" parent="."]
+[node name="pause_menu" parent="." instance=ExtResource("2_rhc0n")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
-transform = Transform3D(-0.433659, -0.150271, 0.888458, 0, 0.985996, 0.166768, -0.901077, 0.0723206, -0.427586, 0, 16.3024, 0)
-light_color = Color(0.975608, 0.909085, 0.845013, 1)
-light_energy = 2.368
-light_volumetric_fog_energy = 4.868
-shadow_enabled = true
-shadow_blur = 10.0
+[node name="World" type="Node3D" parent="."]
 
 [node name="cart" parent="World" instance=ExtResource("4_uxqny")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.16101, 14.1551, 4.18226)
@@ -223,6 +229,7 @@ angular_limit/relaxation = 16.0
 
 [node name="floor_debug" type="MeshInstance3D" parent="World"]
 transform = Transform3D(24.9777, 0, 0, 0, 1, 0, 0, 0, -25.8834, -1, 4, -2)
+visible = false
 mesh = SubResource("BoxMesh_pwfbr")
 skeleton = NodePath("")
 metadata/grabbable = false

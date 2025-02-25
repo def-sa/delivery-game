@@ -1,7 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=9 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_v666e"]
 [ext_resource type="Texture2D" uid="uid://cjfiw60kceco1" path="res://assets/grab_buffer_icon.png" id="2_k86f7"]
+
+[sub_resource type="FogMaterial" id="FogMaterial_20bdx"]
+density = 0.0383
+emission = Color(0.617493, 0.474562, 0.392049, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ce1ts"]
 bg_color = Color(0, 0, 0, 1)
@@ -19,7 +23,12 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33627, 0)
 script = ExtResource("1_v666e")
-speed = 38.365
+speed = 35.0
+
+[node name="FogVolume" type="FogVolume" parent="."]
+size = Vector3(75, 75, 75)
+shape = 0
+material = SubResource("FogMaterial_20bdx")
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3
