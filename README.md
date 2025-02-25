@@ -2,6 +2,8 @@
  
 haiiiiii    this is my pill game for now
 
+thx https://kenney.nl/ for placeholder assets
+
 Features:
 - pause menu with Three (3) settings
 - perspective change via keybind and/or zoom
