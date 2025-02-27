@@ -110,9 +110,16 @@ func drop_object():
 
 func toggle_outline(obj, toggle: bool):
 	if obj:
-		var outline = obj.get_node("Mesh/Outline")
-		if outline:
-			outline.visible = toggle
+		
+		var mesh
+		for child in obj.get_children():
+			#looks very specifically for any "mesh" children nodes
+			if str(child.name.to_lower()).find("mesh") != -1:
+				mesh = child
+		if mesh:
+			var outline = mesh.get_node("./outline")
+			if outline:
+				outline.visible = toggle
 
 func obj_speed_gui_visible(valueBool):
 	gui_obj_speed_text.visible = valueBool

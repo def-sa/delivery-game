@@ -100,7 +100,10 @@ control_grip_out={
 
 [physics]
 
+3d/run_on_separate_thread=true
 3d/physics_engine="JoltPhysics3D"
+2d/solver/default_constraint_bias=1.0
+jolt_3d/continuous_cd/movement_threshold=30.0
 
 [rendering]
 

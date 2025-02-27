@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_0glii"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_rhc0n"]
 [ext_resource type="PackedScene" uid="uid://d0dymr70087q8" path="res://scenes/player.tscn" id="3_a6xwp"]
-[ext_resource type="PackedScene" uid="uid://ciloivtii61u6" path="res://scenes/cart.tscn" id="4_uxqny"]
+[ext_resource type="PackedScene" uid="uid://ng6tbx7od80u" path="res://scenes/cart.tscn" id="4_uxqny"]
 [ext_resource type="Texture2D" uid="uid://dmlsfhbaxl5et" path="res://assets/placeholder.jpg" id="5_0r61a"]
 [ext_resource type="Script" path="res://scripts/cube.gd" id="6_ivu44"]
 [ext_resource type="Texture2D" uid="uid://d2otqs5qr30eq" path="res://assets/icon.svg" id="7_whtws"]
@@ -124,14 +124,10 @@ environment = SubResource("Environment_0xlil")
 
 [node name="Player" parent="." instance=ExtResource("3_a6xwp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00941372, 6.29247, 0.000599861)
-speed = 10.0
 
 [node name="pause_menu" parent="." instance=ExtResource("2_rhc0n")]
 
 [node name="World" type="Node3D" parent="."]
-
-[node name="cart" parent="World" instance=ExtResource("4_uxqny")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.16101, 14.1551, 4.18226)
 
 [node name="cube_grabbable3" type="RigidBody3D" parent="World" groups=["grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -9.21466)
@@ -141,7 +137,7 @@ mass = 0.055
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_8478l")
 
-[node name="Outline" type="MeshInstance3D" parent="World/cube_grabbable3/Mesh"]
+[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable3/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_edwin")
 
@@ -156,7 +152,7 @@ mass = 0.055
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_8478l")
 
-[node name="Outline" type="MeshInstance3D" parent="World/cube_grabbable4/Mesh"]
+[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable4/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_edwin")
 
@@ -171,7 +167,7 @@ mass = 0.055
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_8478l")
 
-[node name="Outline" type="MeshInstance3D" parent="World/cube_grabbable5/Mesh"]
+[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable5/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_edwin")
 
@@ -231,7 +227,6 @@ angular_limit/relaxation = 16.0
 
 [node name="floor_debug" type="MeshInstance3D" parent="World"]
 transform = Transform3D(24.9777, 0, 0, 0, 1, 0, 0, 0, -25.8834, -1, 4, -2)
-visible = false
 mesh = SubResource("BoxMesh_pwfbr")
 skeleton = NodePath("")
 metadata/grabbable = false
@@ -252,7 +247,7 @@ material_override = SubResource("StandardMaterial3D_uqk2a")
 transparency = 0.36
 mesh = SubResource("BoxMesh_ha6k4")
 
-[node name="Outline" type="MeshInstance3D" parent="World/cube_transparent/Mesh"]
+[node name="outline" type="MeshInstance3D" parent="World/cube_transparent/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_2i2m3")
 
@@ -269,7 +264,7 @@ script = ExtResource("6_ivu44")
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_dp0hk")
 
-[node name="Outline" type="MeshInstance3D" parent="World/cube/Mesh"]
+[node name="outline" type="MeshInstance3D" parent="World/cube/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_yqh2u")
 
@@ -284,7 +279,7 @@ mass = 0.055
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_dp0hk")
 
-[node name="Outline" type="MeshInstance3D" parent="World/cube_grabbable/Mesh"]
+[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_yqh2u")
 
@@ -299,7 +294,7 @@ mass = 0.055
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_dp0hk")
 
-[node name="Outline" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable2/Mesh"]
+[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable2/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_yqh2u")
 
@@ -314,7 +309,7 @@ mass = 0.055
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_dp0hk")
 
-[node name="Outline" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable3/Mesh"]
+[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable3/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_yqh2u")
 
@@ -329,7 +324,7 @@ mass = 0.055
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_dp0hk")
 
-[node name="Outline" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable4/Mesh"]
+[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable4/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_yqh2u")
 
@@ -344,12 +339,15 @@ mass = 0.055
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_dp0hk")
 
-[node name="Outline" type="MeshInstance3D" parent="World/cube_grabbable2/Mesh"]
+[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable2/Mesh"]
 visible = false
 mesh = SubResource("ArrayMesh_yqh2u")
 
 [node name="Collision" type="CollisionShape3D" parent="World/cube_grabbable2"]
 shape = SubResource("BoxShape3D_ucvms")
+
+[node name="cart" parent="World" instance=ExtResource("4_uxqny")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -7.74168, 10.7628, 0.62746)
 
 [node name="Terrain" type="Node3D" parent="."]
 script = ExtResource("8_efkc1")
