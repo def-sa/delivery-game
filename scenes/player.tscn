@@ -23,6 +23,7 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33627, 0)
 script = ExtResource("1_v666e")
+speed = 25.0
 
 [node name="FogVolume" type="FogVolume" parent="."]
 visible = false
@@ -166,6 +167,17 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.055, -3.5)
 [node name="grab_buffer_timer" type="Timer" parent="camera_pivot/spring_arm_3d/camera"]
 wait_time = 2.0
 one_shot = true
+
+[node name="flashlight" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.916443, 0)
+visible = false
+light_color = Color(0.79903, 0.707115, 0.61987, 1)
+light_energy = 16.0
+light_indirect_energy = 1.84
+light_volumetric_fog_energy = 6.59
+light_size = 1.0
+spot_range = 11.065
+spot_angle = 55.21
 
 [connection signal="timeout" from="GUI/gui_cooldown" to="." method="_on_gui_cooldown_timeout"]
 [connection signal="timeout" from="camera_pivot/spring_arm_3d/camera/grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]

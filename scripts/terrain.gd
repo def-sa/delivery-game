@@ -2,8 +2,14 @@ extends Node3D
 
 @export var chunk_scene: PackedScene
 @export var chunk_size: float = 50.0
-@export var view_distance: int = 6
+@export var view_distance: int = 8
 @export var block_size: int = 12
+
+@export var room_scenes : Array[PackedScene] = []
+## The corridor room is a special room scene which must be a 1x1x1 (in voxels) scene inheriting DungeonRoom which is used to connect all the placed rooms.
+@export var corridor_room_scene : PackedScene
+@export var dungeon_size := Vector3i(10,10,10)
+
 
 @export var right_structures: Array[PackedScene]
 var house_structure_chance:float = 0.50
@@ -21,7 +27,10 @@ var current_fog_color_index = 0:
 		var clamped_value = value % block_fog_color.size()
 		current_fog_color_index = clamped_value
 		
+var initial = null
+
 func _ready():
+	initial = true
 	_generate_initial_chunks()
 
 func _process(delta):
@@ -33,6 +42,7 @@ func _generate_initial_chunks():
 			var z = -i * chunk_size
 			var x = j * chunk_size
 			_create_chunk(Vector3(x, 0, z))
+	initial = false
 
 func _update_chunks():
 	var player_z = player.global_transform.origin.z
@@ -89,26 +99,30 @@ func _create_chunk(position: Vector3):
 					#print("block index : ",(position.z / chunk_size) / -block_size)
 					#if (position.z / chunk_size) / block_size <= -2:
 						#$"../WorldEnvironment".environment.set_fog_light_color(Color("#000000"))
+					var structure_pool
 					if position.x > 0: #add structures to the rightmost chunk
 						#add houses, debris, objectives, ect
-						_create_houses(chunk, position) # 50% chance
+						_create_structure(chunk, house_structure_chance, right_structures)
 					if position.x < 0: #add structures to the leftmost chunk
 						#add shops, refill stations, abandoned warehouse, ect
+						
 						#if last chunk before new block
 						if current_block_index == block_size - 1:
-							_create_shops(chunk, position) # 100% chance
+							#shop
+							_create_structure(chunk, shop_structure_chance, left_structures)
 
 
-func _create_houses(chunk, position: Vector3):
+func _create_structure(chunk, chance, structure_pool):
 	for i in range(0, int(randf() * 10)):
-		if randf() < house_structure_chance:
-			var structure = right_structures[randi() % right_structures.size()].instantiate()
-			#structure.global_transform.origin = Vector3(position.x + randf_range(-chunk_size / 2, chunk_size / 2), 0, position.z + randf_range(-chunk_size / 2, chunk_size / 2))
-			chunk.add_child(structure)
-
-func _create_shops(chunk, position: Vector3):
-	for i in range(0, int(randf() * 10)):
-		if randf() < shop_structure_chance:
-			var structure = left_structures[randi() % left_structures.size()].instantiate()
-			#structure.global_transform.origin = Vector3(position.x + randf_range(-chunk_size / 2, chunk_size / 2), 0, position.z + randf_range(-chunk_size / 2, chunk_size / 2))
-			chunk.add_child(structure)
+		if randf() < chance:
+			var structure = structure_pool[randi() % structure_pool.size()].instantiate()
+			# Assuming you're in a script attached to a parent node (e.g., "Spatial")
+			var dungeon_generator = DungeonGenerator3D.new()  # Create the custom node
+			dungeon_generator.position = Vector3(1, 15, 1)
+			if initial == false:
+				dungeon_generator.visualize_generation_progress = true
+				dungeon_generator.visualize_generation_wait_between_iterations = 350
+			dungeon_generator.room_scenes = room_scenes  # Replace with the actual variable name
+			dungeon_generator.corridor_room_scene = corridor_room_scene
+			dungeon_generator.dungeon_size = dungeon_size
+			chunk.add_child(dungeon_generator)  # Add it to the current scene tree

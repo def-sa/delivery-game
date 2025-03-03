@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvi5av1kb0m5a"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8apig"]
+
+[node name="box" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+freeze = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_8apig")

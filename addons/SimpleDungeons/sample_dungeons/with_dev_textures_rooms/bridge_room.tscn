@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://c74pq22tm4lts"]
+
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_xaivw"]
+[ext_resource type="Texture2D" uid="uid://djhy80eyqjqpv" path="res://addons/SimpleDungeons/sample_assets/kenney-dark-grey-checkboard-cc0.png" id="2_n22k3"]
+[ext_resource type="Texture2D" uid="uid://dqvyc0ok7chld" path="res://addons/SimpleDungeons/sample_assets/kenney-grey-checkerboard-cc0.png" id="3_x6cl1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jbl8u"]
+albedo_texture = ExtResource("2_n22k3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p3xxc"]
+albedo_texture = ExtResource("3_x6cl1")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[node name="BridgeRoom" type="Node3D"]
+script = ExtResource("1_xaivw")
+size_in_voxels = Vector3i(1, 1, 2)
+
+[node name="bridge" type="CSGBox3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -4.775, 0)
+material_override = SubResource("StandardMaterial3D_jbl8u")
+operation = 2
+use_collision = true
+size = Vector3(2, 0.1, 19.5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_p3xxc")
+use_collision = true
+size = Vector3(10, 10, 20)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+operation = 2
+size = Vector3(9.5, 9, 19.5)
+
+[node name="DOOR_B_CUT" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27374e-13, -2.75, 9.75)
+operation = 2
+size = Vector3(2, 4, 1)
+
+[node name="DOOR_F_CUT" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.75, -10.25)
+operation = 2
+size = Vector3(2, 4, 1)

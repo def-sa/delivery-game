@@ -7,6 +7,7 @@ extends CharacterBody3D
 @onready var spring_arm = $camera_pivot/spring_arm_3d
 @onready var spring_position = $camera_pivot/spring_arm_3d/spring_position
 @onready var camera = $camera_pivot/spring_arm_3d/camera
+@onready var flashlight = $flashlight
 
 var min_zoom_in: int = 0
 var max_zoom_out: int = 30
@@ -14,6 +15,10 @@ var max_zoom_out: int = 30
 var perspective = "first"
 var spring_arm_length = min_zoom_in
 
+var flashlight_toggle:bool = false:
+	set(value):
+		flashlight_toggle = value
+		flashlight.visible = flashlight_toggle
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -53,7 +58,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("r"):
 		perspective_toggle()
-
+	
+	if event.is_action_pressed("f"):
+		if flashlight_toggle:
+			flashlight_toggle = false
+		else:
+			flashlight_toggle = true
+			
+	
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		
 		camera_pivot.rotation.y -= event.relative.x * Settings.sensitivity/10000.0
@@ -62,6 +74,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera_pivot.rotation.x -= event.relative.y * Settings.sensitivity/10000.0
 		# -PI/2 = min vertical angle, PI/4 = max vertical angle
 		camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, -PI/2, PI/1.75)
+		 
+		flashlight.rotation.y = camera_pivot.rotation.y
+		flashlight.rotation.x = camera_pivot.rotation.x
+		
 	if not event.is_action_pressed("control_grip_in"):
 		if event.is_action_pressed("cam_zoom_in"):
 			if spring_arm.spring_length >= min_zoom_in:
