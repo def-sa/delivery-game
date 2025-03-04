@@ -1,10 +1,13 @@
 extends TabBar
 
 # Name, Default, Min, Max, Step
-var fov_settings = Settings.fov_settings
-var sensitivity_settings = Settings.sensitivity_settings
+#var fov_settings = 
+#var sensitivity_settings = 
 
-var slider_controls :Array= [fov_settings,sensitivity_settings]
+var slider_controls :Array= [
+	Settings.fov_settings,
+	Settings.sensitivity_settings
+	]
 
 func _ready() -> void:
 	#for each array of settings, create sliders
@@ -19,12 +22,12 @@ func _handle_slider_changed(slider_name,is_default,value):
 	match slider_name:
 		"FOV":
 			if is_default == true:
-				Settings.fov = fov_settings[1]
+				Settings.fov = Settings.fov_settings[1]
 			else:
 				Settings.fov = value
 		"Sensitivity":
 			if is_default == true:
-				Settings.sensitivity = sensitivity_settings[1]
+				Settings.sensitivity = Settings.sensitivity_settings[1]
 			else:
 				Settings.sensitivity = value
 		"Placeholder":

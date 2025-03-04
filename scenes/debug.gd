@@ -1,12 +1,8 @@
 extends TabBar
 
-## Name, Default, Min, Max, Step
-#var grab_buffer_settings = Settings.grab_buffer_settings
-#var grab_buffer = Settings.grab_buffer
-
 var slider_controls :Array= [
-	Settings.grab_buffer_settings,
-	Settings.render_distance_settings
+	Settings.player_speed_settings,
+	Settings.player_jump_settings
 	]
 
 func _ready() -> void:
@@ -16,20 +12,22 @@ func _ready() -> void:
 		#relies on node name to be the same as in the settings arrays , probably bad but whatever
 		set_slider_settings(setting, get_node("VBoxContainer/"+setting[0]))
 	Signalbus.settings_slider.connect(_handle_slider_changed)
-	
 
 func _handle_slider_changed(slider_name,is_default,value):
 	match slider_name:
-		"Grab Buffer":
+		"Player Speed":
 			if is_default == true:
-				Settings.grab_buffer = Settings.grab_buffer_settings[1]
+				Settings.player_speed = Settings.player_speed_settings[1]
 			else:
-				Settings.grab_buffer = value
-		"Render Distance":
+				Settings.player_speed = value
+		"Player Jump":
 			if is_default == true:
-				Settings.render_distance = Settings.render_distance_settings[1]
+				Settings.player_jump = Settings.player_jump_settings[1]
 			else:
-				Settings.render_distance = value
+				Settings.player_jump = value
+				
+				
+				
 		"Placeholder":
 			pass
 

@@ -181,7 +181,7 @@ func generate(seed : int = int(generate_seed) if generate_seed.is_valid_int() el
 	
 	rng = RandomNumberGenerator.new()
 	rng.seed = seed
-	print("DungeonGenerator3D generate(): Using seed ", seed)
+	#print("DungeonGenerator3D generate(): Using seed ", seed)
 	
 	cleanup_and_reset_dungeon_generator()
 	create_or_recreate_rooms_container()
@@ -339,7 +339,7 @@ func _emit_done_signals():
 		room.dungeon_done_generating.emit()
 	for preplaced_room in find_children("*", "DungeonRoom3D", false):
 		preplaced_room.dungeon_done_generating.emit()
-	print("DungeonGenerator3D finished generating.")
+	#print("DungeonGenerator3D finished generating.")
 	for room in room_instances:
 		room.queue_free()
 	done_generating.emit()

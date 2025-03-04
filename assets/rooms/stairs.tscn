@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_d810l"]
 
-[node name="DungeonRoom3D" type="Node3D"]
+[node name="stairs" type="Node3D"]
 script = ExtResource("1_d810l")
 size_in_voxels = Vector3i(2, 2, 1)
 is_stair_room = true
@@ -16,11 +16,15 @@ operation = 2
 size = Vector3(19, 18, 9)
 
 [node name="DOOR_NEGX" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -7, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -6, 0)
 operation = 2
 size = Vector3(1, 6, 5)
 
 [node name="DOOR_POSX" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(0.997048, 0, 0, 0, 0.997048, 0, 0, 0, 0.997048, 9.79468, 6.52826, 0)
+transform = Transform3D(0.997048, 0, 0, 0, 0.997048, 0, 0, 0, 0.997048, 9.79468, 3.52826, 0)
 operation = 2
 size = Vector3(1, 6, 5)
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGBox3D"]
+transform = Transform3D(10.8, 0, 0, 0, 9.126, 0, 0, 0, 7.5, -1, -9, 4)
+polygon = PackedVector2Array(0, 0, 1, 1, 1, 0, 0.801457, 0.0437677)

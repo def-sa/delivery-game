@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
-@export var speed = 5.0
-@export var jump_velocity = 4.5
+@export var speed:int = 5.0
+@export var jump_velocity:float = 4.5
 
 @onready var camera_pivot = $camera_pivot
 @onready var spring_arm = $camera_pivot/spring_arm_3d
@@ -21,6 +21,8 @@ var flashlight_toggle:bool = false:
 		flashlight.visible = flashlight_toggle
 
 func _ready() -> void:
+	Signalbus.player_speed_updated.connect(_player_speed_updated)
+	Signalbus.player_jump_updated.connect(_player_jump_updated)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	spring_arm.spring_length = -1
 	#Signalbus.grab_buffer_expired.connect(_on_grab_buffer_timer_timeout)
@@ -112,10 +114,15 @@ func perspective_toggle():
 			spring_arm.spring_length = -1
 			perspective = "first"
 
-
 func _on_grab_buffer_timer_timeout() -> void:
 	Signalbus.grab_buffer_expired.emit()
 
 
 func _on_gui_cooldown_timeout() -> void:
 	Signalbus.gui_cooldown.emit()
+
+func _player_speed_updated(is_default, value):
+	speed = value
+
+func _player_jump_updated(is_default, value):
+	jump_velocity = value

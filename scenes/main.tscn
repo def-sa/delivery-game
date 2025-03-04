@@ -9,14 +9,14 @@
 [ext_resource type="Texture2D" uid="uid://d2otqs5qr30eq" path="res://assets/icon.svg" id="7_whtws"]
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="8_efkc1"]
 [ext_resource type="PackedScene" uid="uid://ogltphnc1i0n" path="res://scenes/chunk.tscn" id="9_q8xru"]
-[ext_resource type="PackedScene" uid="uid://bq6ruq4ukkfuo" path="res://scenes/house.tscn" id="10_6tcb2"]
-[ext_resource type="PackedScene" uid="uid://dwp61866tqv8i" path="res://scenes/shop.tscn" id="11_ajufs"]
+[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="12_c4p3y"]
+[ext_resource type="PackedScene" uid="uid://b53i8gkefhj0f" path="res://assets/rooms/door_no_wall.tscn" id="12_dplet"]
 [ext_resource type="PackedScene" uid="uid://bk5nsjwlc622e" path="res://assets/rooms/stairs.tscn" id="13_op4av"]
 [ext_resource type="PackedScene" uid="uid://bqeis521kwxjl" path="res://assets/rooms/room_no_wall.tscn" id="13_tqmlw"]
 
 [sub_resource type="Environment" id="Environment_0xlil"]
 fog_enabled = true
-fog_light_color = Color(0.605046, 0.427548, 0.26688, 1)
+fog_light_color = Color(0.844796, 0.839208, 0.949784, 1)
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 
@@ -126,8 +126,7 @@ environment = SubResource("Environment_0xlil")
 
 [node name="Player" parent="." instance=ExtResource("3_a6xwp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0816736, 6.29247, 0.000599861)
-speed = 50.0
-jump_velocity = 30.0
+speed = 5
 
 [node name="pause_menu" parent="." instance=ExtResource("2_rhc0n")]
 
@@ -358,7 +357,19 @@ script = ExtResource("8_efkc1")
 chunk_scene = ExtResource("9_q8xru")
 room_scenes = Array[PackedScene]([ExtResource("13_tqmlw"), ExtResource("13_op4av")])
 corridor_room_scene = ExtResource("13_tqmlw")
-dungeon_size = Vector3i(5, 2, 5)
-right_structures = Array[PackedScene]([ExtResource("10_6tcb2")])
-left_structures = Array[PackedScene]([ExtResource("11_ajufs")])
-block_fog_color = Array[Color]([Color(0.709804, 0.756863, 0.686275, 1), Color(0.54902, 0.537255, 0.317647, 1), Color(0.807843, 0.643137, 0.494118, 1), Color(0.768627, 0.584314, 0.298039, 1), Color(0.788235, 0.513726, 0.380392, 1), Color(0.72549, 0.360784, 0.286275, 1), Color(0.490196, 0.227451, 0.192157, 1), Color(0.270588, 0.290196, 0.392157, 1)])
+
+[node name="DungeonGenerator3D" type="Node3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 34, 0)
+script = ExtResource("12_c4p3y")
+room_scenes = Array[PackedScene]([ExtResource("13_tqmlw"), ExtResource("13_op4av")])
+corridor_room_scene = ExtResource("13_tqmlw")
+dungeon_size = Vector3i(5, 5, 5)
+max_retries = 3
+generate_threaded = true
+astar_heuristic = 0
+room_cost_multiplier = 1.0
+room_cost_at_end_for_required_doors = 4.0
+show_debug_in_game = true
+
+[node name="DungeonRoom3D" parent="Terrain/DungeonGenerator3D" instance=ExtResource("12_dplet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -25, 0)

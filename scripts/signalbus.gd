@@ -1,12 +1,18 @@
 extends Node
-
+##Display Settings
 signal settings_slider(slider_name:String, is_default:bool, value:float)
-
 signal fov_updated(is_default:bool, value:int)
 
+##Control Settings
 signal sensitivity_updated(is_default:bool, value:int)
 
+##Gameplay Settings
+signal render_distance_updated(is_default:bool, value:float)
 signal grab_buffer_cooldown_updated(is_default:bool, value:float)
 signal grab_buffer_expired()
+
+##Debug Settings
+signal player_speed_updated(is_default:bool, value:int)
+signal player_jump_updated(is_default:bool, value:float)
 
 signal gui_cooldown()
