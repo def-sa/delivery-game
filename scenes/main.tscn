@@ -126,7 +126,6 @@ environment = SubResource("Environment_0xlil")
 
 [node name="Player" parent="." instance=ExtResource("3_a6xwp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0816736, 6.29247, 0.000599861)
-speed = 5
 
 [node name="pause_menu" parent="." instance=ExtResource("2_rhc0n")]
 

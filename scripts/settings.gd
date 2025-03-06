@@ -57,7 +57,7 @@ var sensitivity:int = sensitivity_settings[1]:
 ##Debug
 
 # Name, Default, Min, Max, Step
-var player_speed_settings:Array = ["Player Speed", 25, 1, 1000, 1]
+var player_speed_settings:Array = ["Player Speed", 8, 1, 1000, 1]
 #value
 var player_speed:int = player_speed_settings[1]:
 	set(value): 

@@ -140,6 +140,20 @@ mouse_filter = 2
 wait_time = 2.0
 one_shot = true
 
+[node name="interact_tip_text" type="Label" parent="GUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -88.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "press E to pickup"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_xqg4r")
 
@@ -166,6 +180,15 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.055, -3.5)
 [node name="grab_buffer_timer" type="Timer" parent="camera_pivot/spring_arm_3d/camera"]
 wait_time = 2.0
 one_shot = true
+
+[node name="rotate_to_player_joint" type="JoltGeneric6DOFJoint3D" parent="camera_pivot/spring_arm_3d/camera"]
+linear_limit_x/enabled = false
+linear_limit_y/enabled = false
+linear_limit_z/enabled = false
+node_a = NodePath("../StaticBody3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="camera_pivot/spring_arm_3d/camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.50045)
 
 [node name="flashlight" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.916443, 0)

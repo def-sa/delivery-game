@@ -8,8 +8,8 @@ extends VehicleBody3D
 @onready var handle = $handle
 
 
-func _process(delta: float):
-	steering = lerp(steering, Input.get_axis("ui_right", "ui_left") * max_steering, delta * 10)
-	engine_force = Input.get_axis("ui_down", "ui_up") * engine_power
-	if $"../..".carrying == handle:
-		print("dragging cart")
+#func _process(delta: float):
+	#steering = lerp(steering, Input.get_axis("ui_right", "ui_left") * max_steering, delta * 10)
+	#engine_force = Input.get_axis("ui_down", "ui_up") * engine_power
+	#if $"../..".carrying == handle:
+		#print("dragging cart")
