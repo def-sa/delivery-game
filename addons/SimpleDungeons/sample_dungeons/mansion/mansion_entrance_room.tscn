@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://b3tl36squaoel"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_1qelf"]
+[ext_resource type="Script" uid="uid://d4noqaw33ekc5" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_1qelf"]
 [ext_resource type="Texture2D" uid="uid://wvh1xmoax4ok" path="res://addons/SimpleDungeons/sample_assets/kenney-dark-grey-grid-cc0.png" id="7_x4518"]
 [ext_resource type="PackedScene" uid="uid://bak8ltrhbmlv5" path="res://addons/SimpleDungeons/utils/CSGStairMaker3D.tscn" id="8_tpxey"]
 [ext_resource type="Texture2D" uid="uid://dydd6x64uxryr" path="res://addons/SimpleDungeons/sample_assets/kenney-red-checkerboard-cc0.png" id="9_68bqd"]

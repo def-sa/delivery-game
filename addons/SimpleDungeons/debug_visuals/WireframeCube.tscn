@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://cfch5o0wphv4r"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/debug_visuals/WireframeCube.gd" id="1_unksl"]
-[ext_resource type="Shader" path="res://addons/SimpleDungeons/debug_visuals/WireframeCube.gdshader" id="2_hwi17"]
+[ext_resource type="Script" uid="uid://dqoscy08cb8wk" path="res://addons/SimpleDungeons/debug_visuals/WireframeCube.gd" id="1_unksl"]
+[ext_resource type="Shader" uid="uid://byh3axcdhv2el" path="res://addons/SimpleDungeons/debug_visuals/WireframeCube.gdshader" id="2_hwi17"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jymxj"]
 resource_local_to_scene = true

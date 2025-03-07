@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cdffbslc7qhgi"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_13awt"]
+[ext_resource type="Script" uid="uid://d4noqaw33ekc5" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_13awt"]
 [ext_resource type="Texture2D" uid="uid://i7rtr0ewxm5j" path="res://addons/SimpleDungeons/sample_assets/blue-checkerboard-cc0.png" id="2_tjfvs"]
 [ext_resource type="PackedScene" uid="uid://bak8ltrhbmlv5" path="res://addons/SimpleDungeons/utils/CSGStairMaker3D.tscn" id="3_ldwg4"]
 

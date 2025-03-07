@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bsvhllycm8t4i"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_8cd2g"]
+[ext_resource type="Script" uid="uid://d4noqaw33ekc5" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_8cd2g"]
 [ext_resource type="Texture2D" uid="uid://bwe02yta75ooa" path="res://addons/SimpleDungeons/sample_assets/kenney-green-checkerboar-cc0.png" id="2_ylbpf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_orb45"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bn6lta2vs6qh8"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_m0wvh"]
+[ext_resource type="Script" uid="uid://d4noqaw33ekc5" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_m0wvh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8tlf5"]
 albedo_color = Color(0, 0, 0, 1)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bnxjj8dpefmfd"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_vbc11"]
+[ext_resource type="Script" uid="uid://d4noqaw33ekc5" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_vbc11"]
 [ext_resource type="Texture2D" uid="uid://i7rtr0ewxm5j" path="res://addons/SimpleDungeons/sample_assets/blue-checkerboard-cc0.png" id="2_1ufaf"]
 
 [sub_resource type="Shader" id="Shader_vq8fj"]
@@ -78,9 +78,10 @@ noise = SubResource("FastNoiseLite_fe7vc")
 render_priority = 0
 shader = SubResource("Shader_vq8fj")
 shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = SubResource("NoiseTexture2D_bispe")
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = null
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
 shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
 shader_parameter/uv1_blend_sharpness = 1.0
@@ -88,7 +89,6 @@ shader_parameter/uv1_scale = Vector3(0.08, 0.08, 0.08)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
-shader_parameter/texture_albedo = SubResource("NoiseTexture2D_bispe")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_07mhj"]
 albedo_texture = ExtResource("2_1ufaf")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://najwcu57f6bc"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_ht4j3"]
+[ext_resource type="Script" uid="uid://d4noqaw33ekc5" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_ht4j3"]
 [ext_resource type="PackedScene" uid="uid://bak8ltrhbmlv5" path="res://addons/SimpleDungeons/utils/CSGStairMaker3D.tscn" id="3_1hkio"]
 
 [sub_resource type="Gradient" id="Gradient_n7jmt"]

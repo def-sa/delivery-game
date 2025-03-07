@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://d1k8jtivamexj"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/sample_dungeons/custom_random_room_function_example/dungeon_generator_3d_custom.gd" id="1_smyj4"]
+[ext_resource type="Script" uid="uid://dbtpsxhip5hff" path="res://addons/SimpleDungeons/sample_dungeons/custom_random_room_function_example/dungeon_generator_3d_custom.gd" id="1_smyj4"]
 [ext_resource type="PackedScene" uid="uid://cq6rrn2gpph6y" path="res://addons/SimpleDungeons/sample_dungeons/custom_random_room_function_example/blue_room.tscn" id="2_rfqbn"]
 [ext_resource type="PackedScene" uid="uid://dh2i3dk3g0icv" path="res://addons/SimpleDungeons/sample_dungeons/custom_random_room_function_example/red_room.tscn" id="3_hfdry"]
 [ext_resource type="PackedScene" uid="uid://br3pjd5mcjj11" path="res://addons/SimpleDungeons/sample_dungeons/custom_random_room_function_example/stairs.tscn" id="4_2jnyt"]

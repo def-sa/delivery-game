@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bv23twweurssv"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/sample_dungeons/mansion/house_exterior.gd" id="1_d4jd8"]
+[ext_resource type="Script" uid="uid://bcm5fg60lvf68" path="res://addons/SimpleDungeons/sample_dungeons/mansion/house_exterior.gd" id="1_d4jd8"]
 [ext_resource type="PackedScene" uid="uid://bak8ltrhbmlv5" path="res://addons/SimpleDungeons/utils/CSGStairMaker3D.tscn" id="1_wv7fx"]
 [ext_resource type="Texture2D" uid="uid://bwe02yta75ooa" path="res://addons/SimpleDungeons/sample_assets/kenney-green-checkerboar-cc0.png" id="2_dgnpe"]
 

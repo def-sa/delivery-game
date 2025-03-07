@@ -1,23 +1,26 @@
-[gd_scene load_steps=35 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=34 format=4 uid="uid://dcpt5m6we4os2"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_0glii"]
+[ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/main.gd" id="1_0glii"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_rhc0n"]
 [ext_resource type="PackedScene" uid="uid://d0dymr70087q8" path="res://scenes/player.tscn" id="3_a6xwp"]
 [ext_resource type="PackedScene" uid="uid://ng6tbx7od80u" path="res://scenes/cart.tscn" id="4_uxqny"]
 [ext_resource type="Texture2D" uid="uid://dmlsfhbaxl5et" path="res://assets/placeholder.jpg" id="5_0r61a"]
-[ext_resource type="Script" path="res://scripts/cube.gd" id="6_ivu44"]
-[ext_resource type="Texture2D" uid="uid://d2otqs5qr30eq" path="res://assets/icon.svg" id="7_whtws"]
-[ext_resource type="Script" path="res://scripts/terrain.gd" id="8_efkc1"]
+[ext_resource type="PackedScene" uid="uid://crjnsvxwoco1w" path="res://assets/carton_box_04_closed.glb" id="5_a8y0u"]
+[ext_resource type="Texture2D" uid="uid://dbloleksleayn" path="res://assets/carton_box_04_closed_0.jpg" id="5_jkv2x"]
+[ext_resource type="Script" uid="uid://b50y6bdd4kbvh" path="res://scripts/cube.gd" id="6_ivu44"]
+[ext_resource type="Script" uid="uid://dq8ehoakomj04" path="res://scripts/terrain.gd" id="8_efkc1"]
+[ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/box_spanwer.gd" id="8_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://ogltphnc1i0n" path="res://scenes/chunk.tscn" id="9_q8xru"]
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="12_c4p3y"]
+[ext_resource type="Script" uid="uid://c8cag65gdoiyl" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="12_c4p3y"]
 [ext_resource type="PackedScene" uid="uid://b53i8gkefhj0f" path="res://assets/rooms/door_no_wall.tscn" id="12_dplet"]
 [ext_resource type="PackedScene" uid="uid://bk5nsjwlc622e" path="res://assets/rooms/stairs.tscn" id="13_op4av"]
 [ext_resource type="PackedScene" uid="uid://bqeis521kwxjl" path="res://assets/rooms/room_no_wall.tscn" id="13_tqmlw"]
+[ext_resource type="PackedScene" uid="uid://ca867pya5p5p" path="res://assets/rooms/item_room.tscn" id="14_jbj1t"]
 
 [sub_resource type="Environment" id="Environment_0xlil"]
+background_mode = 3
 fog_enabled = true
 fog_light_color = Color(0.844796, 0.839208, 0.949784, 1)
-volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uqk2a"]
@@ -43,29 +46,46 @@ _surfaces = [{
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_80mxe"]
 points = PackedVector3Array(-0.17499, -0.175, -0.175, 0.175, 0.175, 0.175, 0.175, 0.175, -0.175, -0.17499, 0.175, 0.175, 0.175, -0.175, 0.175, -0.17499, 0.175, -0.175, -0.17499, -0.175, 0.175, 0.175, -0.175, -0.175)
 
-[sub_resource type="BoxMesh" id="BoxMesh_v5ynu"]
-size = Vector3(6.632, 7.855, 5.211)
+[sub_resource type="BoxMesh" id="BoxMesh_dp0hk"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lk6ky"]
-points = PackedVector3Array(3.24399, 3.85885, 2.6055, -3.30005, -3.89705, -2.6055, 3.27558, -3.89705, -2.6055, -3.30005, 3.89705, -2.6055, -3.26846, -3.85961, 2.6055, 3.27558, 3.89705, -2.6055, -3.26846, 3.85961, 2.6055, 3.24399, -3.85961, 2.6055, 3.316, 3.82065, -2.26727)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jtpeg"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 16.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_wmtfa"]
-size = Vector3(0.357, 0.39, 2.756)
+[sub_resource type="ArrayMesh" id="ArrayMesh_yqh2u"]
+_surfaces = [{
+"aabb": AABB(-0.528867, -0.528867, -0.528867, 1.05773, 1.05773, 1.05773),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"material": SubResource("StandardMaterial3D_jtpeg"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("3GMHv9xjBz/cYwc/3GMHP9xjBz/cYwe/3GMHP9xjBz/cYwc/3GMHv9xjBz/cYwe/3GMHv9xjB7/cYwc/3GMHP9xjB7/cYwe/3GMHP9xjB7/cYwc/3GMHv9xjB7/cYwe/3GMHP9xjBz/cYwc/3GMHv9xjBz/cYwe/3GMHP9xjBz/cYwe/3GMHv9xjBz/cYwc/3GMHP9xjB7/cYwc/3GMHv9xjB7/cYwe/3GMHP9xjB7/cYwe/3GMHv9xjB7/cYwc/3GMHP9xjBz/cYwc/3GMHv9xjB7/cYwc/3GMHv9xjBz/cYwc/3GMHP9xjB7/cYwc/3GMHP9xjBz/cYwe/3GMHv9xjB7/cYwe/3GMHv9xjBz/cYwe/3GMHP9xjB7/cYwe//3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rcr8j"]
-points = PackedVector3Array(0.193341, 0.220587, 1.39987, -0.200373, -0.216873, -1.39987, 0.173656, -0.195, -1.25989, -0.200373, 0.220587, -1.39987, -0.200373, -0.216873, 1.39987, 0.193341, 0.220587, -1.39987, -0.200373, 0.220587, 1.39987, 0.173656, -0.195, 1.25989)
+[sub_resource type="BoxShape3D" id="BoxShape3D_ucvms"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phtt7"]
-albedo_texture = ExtResource("7_whtws")
+[sub_resource type="ArrayMesh" id="ArrayMesh_4hf22"]
+_surfaces = [{
+"aabb": AABB(-0.176155, -0.176155, -0.176155, 0.352309, 0.352309, 0.352309),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("5mE0vuZhND7mYTQ+5mE0PuZhND7mYTS+5mE0PuZhND7mYTQ+5mE0vuZhND7mYTS+5mE0vuZhNL7mYTQ+5mE0PuZhNL7mYTS+5mE0PuZhNL7mYTQ+5mE0vuZhNL7mYTS+5mE0PuZhND7mYTQ+5mE0vuZhND7mYTS+5mE0PuZhND7mYTS+5mE0vuZhND7mYTQ+5mE0PuZhNL7mYTQ+5mE0vuZhNL7mYTS+5mE0PuZhNL7mYTS+5mE0vuZhNL7mYTQ+5mE0PuZhND7mYTQ+5mE0vuZhNL7mYTQ+5mE0vuZhND7mYTQ+5mE0PuZhNL7mYTQ+5mE0PuZhND7mYTS+5mE0vuZhNL7mYTS+5mE0vuZhND7mYTS+5mE0PuZhNL7mYTS+/3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_v8e5w"]
-top_radius = 1.5
-bottom_radius = 1.5
-height = 0.335
-radial_segments = 7
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_b2kjq"]
+points = PackedVector3Array(-0.17499, -0.175, -0.175, 0.175, 0.175, 0.175, 0.175, 0.175, -0.175, -0.17499, 0.175, 0.175, 0.175, -0.175, 0.175, -0.17499, 0.175, -0.175, -0.17499, -0.175, 0.175, 0.175, -0.175, -0.175)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_547wj"]
-points = PackedVector3Array(0.086188, 0.1675, 1.40144, -0.609238, -0.1675, -1.19481, -0.649956, -0.1675, -1.15414, 1.0154, -0.1675, 0.8768, 0.733003, 0.1675, -1.18611, -1.38009, 0.1675, -0.193861, -1.05611, -0.1675, 0.836122, 1.29991, -0.1675, -0.341318, 1.20744, 0.1675, 0.581932, -0.646815, 0.1675, -1.27249, -1.12125, 0.1675, 0.883717, 0.609238, -0.1675, -1.19481, -1.29991, -0.1675, -0.341318, -0.0811808, -0.1675, 1.32376, 1.38009, 0.1675, -0.366347, 1.07803, 0.1675, 0.926903, -1.38009, 0.1675, -0.366347, -0.301793, 0.1675, 1.31506, 0.646815, 0.1675, -1.27249, 0.28426, -0.1675, 1.24241, 1.29991, -0.1675, -0.178853, 1.09658, -0.1675, 0.714335, -1.13729, -0.1675, 0.55187, -1.0154, -0.1675, 0.8768, 1.38009, 0.1675, -0.193861, -1.29991, -0.1675, -0.178853, -0.733003, 0.1675, -1.18611, -1.07803, 0.1675, 0.926903, 0.301793, 0.1675, 1.31506, -0.086188, 0.1675, 1.40144, -0.28426, -0.1675, 1.24241, -1.20744, 0.1675, 0.581932)
+[sub_resource type="BoxShape3D" id="BoxShape3D_jbj1t"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_pwfbr"]
 
@@ -90,29 +110,6 @@ _surfaces = [{
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1cmnq"]
 points = PackedVector3Array(-2.98667, -1.49667, -0.231667, 2.98667, 1.49, 0.235, 2.98667, 1.49, -0.231667, -2.98667, 1.49, 0.235, 2.98667, -1.49667, 0.235, 2.98667, -1.49667, -0.231667, -2.98667, 1.49, -0.231667, -2.98667, -1.49667, 0.235)
 
-[sub_resource type="BoxMesh" id="BoxMesh_dp0hk"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jtpeg"]
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 16.0
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_yqh2u"]
-_surfaces = [{
-"aabb": AABB(-0.528867, -0.528867, -0.528867, 1.05773, 1.05773, 1.05773),
-"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
-"format": 34359742487,
-"index_count": 36,
-"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
-"material": SubResource("StandardMaterial3D_jtpeg"),
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 24,
-"vertex_data": PackedByteArray("3GMHv9xjBz/cYwc/3GMHP9xjBz/cYwe/3GMHP9xjBz/cYwc/3GMHv9xjBz/cYwe/3GMHv9xjB7/cYwc/3GMHP9xjB7/cYwe/3GMHP9xjB7/cYwc/3GMHv9xjB7/cYwe/3GMHP9xjBz/cYwc/3GMHv9xjBz/cYwe/3GMHP9xjBz/cYwe/3GMHv9xjBz/cYwc/3GMHP9xjB7/cYwc/3GMHv9xjB7/cYwe/3GMHP9xjB7/cYwe/3GMHv9xjB7/cYwc/3GMHP9xjBz/cYwc/3GMHv9xjB7/cYwc/3GMHv9xjBz/cYwc/3GMHP9xjB7/cYwc/3GMHP9xjBz/cYwe/3GMHv9xjB7/cYwe/3GMHv9xjBz/cYwe/3GMHP9xjB7/cYwe//3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
-}]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ucvms"]
-
 [node name="main" type="Node3D"]
 script = ExtResource("1_0glii")
 
@@ -131,111 +128,169 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0816736, 6.29247, 0.000599
 
 [node name="World" type="Node3D" parent="."]
 
-[node name="cube_grabbable3" type="RigidBody3D" parent="World" groups=["grabbable"]]
+[node name="box_spawner" type="Node3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
+script = ExtResource("8_jkv2x")
+box_texture = ExtResource("5_jkv2x")
+
+[node name="Node3D" type="Node3D" parent="World"]
+
+[node name="cube_grabbable3" type="RigidBody3D" parent="World/Node3D" groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 6.93816, -10.2147)
+mass = 0.001
+
+[node name="Mesh" type="MeshInstance3D" parent="World/Node3D/cube_grabbable3"]
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_8478l")
+
+[node name="outline" type="MeshInstance3D" parent="World/Node3D/cube_grabbable3/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_edwin")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Node3D/cube_grabbable3"]
+shape = SubResource("ConvexPolygonShape3D_80mxe")
+
+[node name="cube_grabbable4" type="RigidBody3D" parent="World/Node3D" groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 7.93816, -10.2147)
+mass = 0.001
+
+[node name="Mesh" type="MeshInstance3D" parent="World/Node3D/cube_grabbable4"]
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_8478l")
+
+[node name="outline" type="MeshInstance3D" parent="World/Node3D/cube_grabbable4/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_edwin")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Node3D/cube_grabbable4"]
+shape = SubResource("ConvexPolygonShape3D_80mxe")
+
+[node name="cube_grabbable5" type="RigidBody3D" parent="World/Node3D" groups=["grabbable"]]
+transform = Transform3D(1.01958, 0, 0, 0, 1.01958, 0, 0, 0, 1.01958, 3, 6.93816, -10.2147)
+mass = 0.001
+
+[node name="Mesh" type="MeshInstance3D" parent="World/Node3D/cube_grabbable5"]
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_8478l")
+
+[node name="outline" type="MeshInstance3D" parent="World/Node3D/cube_grabbable5/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_edwin")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Node3D/cube_grabbable5"]
+shape = SubResource("ConvexPolygonShape3D_80mxe")
+
+[node name="cube_grabbable2" type="RigidBody3D" parent="World/Node3D" groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 9.93816, -9.21466)
+mass = 0.001
+
+[node name="Mesh" type="MeshInstance3D" parent="World/Node3D/cube_grabbable2"]
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_dp0hk")
+
+[node name="outline" type="MeshInstance3D" parent="World/Node3D/cube_grabbable2/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_yqh2u")
+
+[node name="Collision" type="CollisionShape3D" parent="World/Node3D/cube_grabbable2"]
+shape = SubResource("BoxShape3D_ucvms")
+
+[node name="cube_grabbable6" type="RigidBody3D" parent="World/Node3D" groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 9.93816, -9.21466)
+mass = 0.001
+
+[node name="Mesh" type="MeshInstance3D" parent="World/Node3D/cube_grabbable6"]
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_dp0hk")
+
+[node name="outline" type="MeshInstance3D" parent="World/Node3D/cube_grabbable6/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_yqh2u")
+
+[node name="Collision" type="CollisionShape3D" parent="World/Node3D/cube_grabbable6"]
+shape = SubResource("BoxShape3D_ucvms")
+
+[node name="cube_grabbable7" type="RigidBody3D" parent="World/Node3D" groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 9.93816, -11.2147)
+mass = 0.001
+
+[node name="Mesh" type="MeshInstance3D" parent="World/Node3D/cube_grabbable7"]
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_dp0hk")
+
+[node name="outline" type="MeshInstance3D" parent="World/Node3D/cube_grabbable7/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_yqh2u")
+
+[node name="Collision" type="CollisionShape3D" parent="World/Node3D/cube_grabbable7"]
+shape = SubResource("BoxShape3D_ucvms")
+
+[node name="cube_grabbable8" type="RigidBody3D" parent="World/Node3D" groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 9.93816, -11.2147)
+mass = 0.001
+
+[node name="Mesh" type="MeshInstance3D" parent="World/Node3D/cube_grabbable8"]
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_dp0hk")
+
+[node name="outline" type="MeshInstance3D" parent="World/Node3D/cube_grabbable8/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_yqh2u")
+
+[node name="Collision" type="CollisionShape3D" parent="World/Node3D/cube_grabbable8"]
+shape = SubResource("BoxShape3D_ucvms")
+
+[node name="cube_grabbable9" type="RigidBody3D" parent="World/Node3D" groups=["grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -9.21466)
-mass = 0.055
+mass = 0.001
 
-[node name="Mesh" type="MeshInstance3D" parent="World/cube_grabbable3"]
+[node name="Mesh" type="MeshInstance3D" parent="World/Node3D/cube_grabbable9"]
+material_override = SubResource("StandardMaterial3D_uqk2a")
+mesh = SubResource("BoxMesh_dp0hk")
+
+[node name="outline" type="MeshInstance3D" parent="World/Node3D/cube_grabbable9/Mesh"]
+visible = false
+mesh = SubResource("ArrayMesh_yqh2u")
+
+[node name="Collision" type="CollisionShape3D" parent="World/Node3D/cube_grabbable9"]
+shape = SubResource("BoxShape3D_ucvms")
+
+[node name="cube_grabbable10" type="RigidBody3D" parent="World/Node3D" groups=["grabbable"]]
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 1, 6.93816, -13.6671)
+mass = 100.0
+
+[node name="Mesh" type="MeshInstance3D" parent="World/Node3D/cube_grabbable10"]
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_8478l")
 
-[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable3/Mesh"]
-visible = false
-mesh = SubResource("ArrayMesh_edwin")
+[node name="outline" type="MeshInstance3D" parent="World/Node3D/cube_grabbable10/Mesh"]
+mesh = SubResource("ArrayMesh_4hf22")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cube_grabbable3"]
-shape = SubResource("ConvexPolygonShape3D_80mxe")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Node3D/cube_grabbable10"]
+shape = SubResource("ConvexPolygonShape3D_b2kjq")
 
-[node name="cube_grabbable4" type="RigidBody3D" parent="World" groups=["grabbable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -9.21466)
-mass = 0.055
+[node name="cardboard" type="RigidBody3D" parent="World/Node3D" groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 10.4511, -6.37193)
 
-[node name="Mesh" type="MeshInstance3D" parent="World/cube_grabbable4"]
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_8478l")
+[node name="mesh" parent="World/Node3D/cardboard" instance=ExtResource("5_a8y0u")]
+transform = Transform3D(0.035, 0, 0, 0, 0.035, 0, 0, 0, 0.035, 0, 0, 0)
 
-[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable4/Mesh"]
-visible = false
-mesh = SubResource("ArrayMesh_edwin")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cube_grabbable4"]
-shape = SubResource("ConvexPolygonShape3D_80mxe")
-
-[node name="cube_grabbable5" type="RigidBody3D" parent="World" groups=["grabbable"]]
-transform = Transform3D(1.01958, 0, 0, 0, 1.01958, 0, 0, 0, 1.01958, 0, 9.93816, -9.21466)
-mass = 0.055
-
-[node name="Mesh" type="MeshInstance3D" parent="World/cube_grabbable5"]
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_8478l")
-
-[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable5/Mesh"]
-visible = false
-mesh = SubResource("ArrayMesh_edwin")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cube_grabbable5"]
-shape = SubResource("ConvexPolygonShape3D_80mxe")
-
-[node name="big_cube" type="RigidBody3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.13578, 5.63077, -9.8008)
-mass = 58.445
-script = ExtResource("6_ivu44")
-
-[node name="Mesh" type="MeshInstance3D" parent="World/big_cube"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8355, 3.43419, -2.65497)
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_v5ynu")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/big_cube"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8355, 3.43419, -2.65497)
-shape = SubResource("ConvexPolygonShape3D_lk6ky")
-
-[node name="big_axel" type="RigidBody3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.28109)
-freeze = true
-
-[node name="Mesh2" type="MeshInstance3D" parent="World/big_axel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.2024, 7.12957, -9.66455)
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_wmtfa")
-skeleton = NodePath("../../big_cube/Mesh")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="World/big_axel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.2024, 7.12957, -9.66455)
-shape = SubResource("ConvexPolygonShape3D_rcr8j")
-
-[node name="big_wheel" type="RigidBody3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.13578, 5.63077, -8.37393)
-mass = 58.445
-script = ExtResource("6_ivu44")
-
-[node name="Mesh" type="MeshInstance3D" parent="World/big_wheel"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -16.3088, 1.44877, 1.75318)
-material_override = SubResource("StandardMaterial3D_phtt7")
-mesh = SubResource("CylinderMesh_v8e5w")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/big_wheel"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -16.3088, 1.44877, 1.75318)
-shape = SubResource("ConvexPolygonShape3D_547wj")
-
-[node name="HingeJoint3D" type="HingeJoint3D" parent="World/big_wheel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4888, 1.56307, 1.46406)
-node_a = NodePath("../../big_axel")
-node_b = NodePath("..")
-exclude_nodes_from_collision = false
-angular_limit/bias = 0.99
-angular_limit/softness = 16.0
-angular_limit/relaxation = 16.0
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Node3D/cardboard"]
+transform = Transform3D(1.36, 0, 0, 0, 1.245, 0, 0, 0, 1.355, 0, 0.629349, 0)
+shape = SubResource("BoxShape3D_jbj1t")
 
 [node name="floor_debug" type="MeshInstance3D" parent="World"]
 transform = Transform3D(24.9777, 0, 0, 0, 1, 0, 0, 0, -25.8834, -1, 4, -2)
+visible = false
 mesh = SubResource("BoxMesh_pwfbr")
 skeleton = NodePath("")
 metadata/grabbable = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="World/floor_debug"]
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="World/floor_debug/StaticBody3D"]
+visible = false
 shape = SubResource("BoxShape3D_t4502")
 
 [node name="cube_transparent" type="RigidBody3D" parent="World"]
@@ -257,95 +312,18 @@ mesh = SubResource("ArrayMesh_2i2m3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.436178, 0)
 shape = SubResource("ConvexPolygonShape3D_1cmnq")
 
-[node name="cube" type="RigidBody3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71125, 10.4473, -4.9004)
-mass = 0.055
+[node name="cube_not_grabbable" type="RigidBody3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.28875, 10.4473, -10.9004)
 script = ExtResource("6_ivu44")
 
-[node name="Mesh" type="MeshInstance3D" parent="World/cube"]
+[node name="Mesh" type="MeshInstance3D" parent="World/cube_not_grabbable"]
 material_override = SubResource("StandardMaterial3D_uqk2a")
 mesh = SubResource("BoxMesh_dp0hk")
 
-[node name="outline" type="MeshInstance3D" parent="World/cube/Mesh"]
-visible = false
+[node name="outline" type="MeshInstance3D" parent="World/cube_not_grabbable/Mesh"]
 mesh = SubResource("ArrayMesh_yqh2u")
 
-[node name="Collision" type="CollisionShape3D" parent="World/cube"]
-shape = SubResource("BoxShape3D_ucvms")
-
-[node name="cube_grabbable" type="RigidBody3D" parent="World" groups=["grabbable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -5.13971)
-mass = 0.055
-
-[node name="Mesh" type="MeshInstance3D" parent="World/cube_grabbable"]
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_dp0hk")
-
-[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable/Mesh"]
-visible = false
-mesh = SubResource("ArrayMesh_yqh2u")
-
-[node name="Collision" type="CollisionShape3D" parent="World/cube_grabbable"]
-shape = SubResource("BoxShape3D_ucvms")
-
-[node name="cube_grabbable2" type="RigidBody3D" parent="World/cube_grabbable" groups=["grabbable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -9.21466)
-mass = 0.055
-
-[node name="Mesh" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable2"]
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_dp0hk")
-
-[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable2/Mesh"]
-visible = false
-mesh = SubResource("ArrayMesh_yqh2u")
-
-[node name="Collision" type="CollisionShape3D" parent="World/cube_grabbable/cube_grabbable2"]
-shape = SubResource("BoxShape3D_ucvms")
-
-[node name="cube_grabbable3" type="RigidBody3D" parent="World/cube_grabbable" groups=["grabbable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -9.21466)
-mass = 0.055
-
-[node name="Mesh" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable3"]
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_dp0hk")
-
-[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable3/Mesh"]
-visible = false
-mesh = SubResource("ArrayMesh_yqh2u")
-
-[node name="Collision" type="CollisionShape3D" parent="World/cube_grabbable/cube_grabbable3"]
-shape = SubResource("BoxShape3D_ucvms")
-
-[node name="cube_grabbable4" type="RigidBody3D" parent="World/cube_grabbable" groups=["grabbable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -9.21466)
-mass = 0.055
-
-[node name="Mesh" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable4"]
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_dp0hk")
-
-[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable/cube_grabbable4/Mesh"]
-visible = false
-mesh = SubResource("ArrayMesh_yqh2u")
-
-[node name="Collision" type="CollisionShape3D" parent="World/cube_grabbable/cube_grabbable4"]
-shape = SubResource("BoxShape3D_ucvms")
-
-[node name="cube_grabbable2" type="RigidBody3D" parent="World" groups=["grabbable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.93816, -9.21466)
-mass = 0.055
-
-[node name="Mesh" type="MeshInstance3D" parent="World/cube_grabbable2"]
-material_override = SubResource("StandardMaterial3D_uqk2a")
-mesh = SubResource("BoxMesh_dp0hk")
-
-[node name="outline" type="MeshInstance3D" parent="World/cube_grabbable2/Mesh"]
-visible = false
-mesh = SubResource("ArrayMesh_yqh2u")
-
-[node name="Collision" type="CollisionShape3D" parent="World/cube_grabbable2"]
+[node name="Collision" type="CollisionShape3D" parent="World/cube_not_grabbable"]
 shape = SubResource("BoxShape3D_ucvms")
 
 [node name="cart" parent="World" instance=ExtResource("4_uxqny")]
@@ -354,8 +332,10 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -7.741
 [node name="Terrain" type="Node3D" parent="."]
 script = ExtResource("8_efkc1")
 chunk_scene = ExtResource("9_q8xru")
-room_scenes = Array[PackedScene]([ExtResource("13_tqmlw"), ExtResource("13_op4av")])
+view_distance = 6
+room_scenes = Array[PackedScene]([ExtResource("13_tqmlw"), ExtResource("13_op4av"), ExtResource("14_jbj1t"), ExtResource("12_dplet")])
 corridor_room_scene = ExtResource("13_tqmlw")
+house_size = Vector3i(4, 3, 4)
 
 [node name="DungeonGenerator3D" type="Node3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 34, 0)
@@ -365,10 +345,10 @@ corridor_room_scene = ExtResource("13_tqmlw")
 dungeon_size = Vector3i(5, 5, 5)
 max_retries = 3
 generate_threaded = true
-astar_heuristic = 0
 room_cost_multiplier = 1.0
 room_cost_at_end_for_required_doors = 4.0
 show_debug_in_game = true
 
 [node name="DungeonRoom3D" parent="Terrain/DungeonGenerator3D" instance=ExtResource("12_dplet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -20, 0)
+show_grid_aabb_with_doors = true

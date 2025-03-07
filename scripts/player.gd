@@ -38,7 +38,7 @@ var obj_speed_step:float = 1
 @onready var player_hand: Marker3D = $camera_pivot/spring_arm_3d/camera/hand
 @onready var grab_buffer_timer: Timer = $camera_pivot/spring_arm_3d/camera/grab_buffer_timer
 @onready var grab_buffer_display: TextureProgressBar = $GUI/buffer_timer_display
-@onready var rotate_to_player_joint: JoltGeneric6DOFJoint3D = $camera_pivot/spring_arm_3d/camera/rotate_to_player_joint
+@onready var rotate_to_player_joint = $camera_pivot/spring_arm_3d/camera/rotate_to_player_joint
 @onready var static_body: StaticBody3D = $camera_pivot/spring_arm_3d/camera/StaticBody3D
 
 
@@ -52,6 +52,9 @@ var camera_locked_in = false
 var carrying = null #object itself
 var hovered_obj = null
 var holding = false
+var current_rotation: Vector3
+
+
 
 func _ready() -> void:
 	Signalbus.grab_buffer_expired.connect(_grab_buffer_expired)
@@ -95,6 +98,7 @@ func player_grabbing(delta: float):
 		var distance = (b - a).length()
 		var movement_speed = clamp(distance * pull_power, 0, max_obj_speed)
 		carrying.linear_velocity = direction * movement_speed
+
 func player_movement(delta: float):
 	# Add the gravity.
 	if not is_on_floor():
@@ -145,9 +149,9 @@ func _input(event: InputEvent) -> void:
 			camera_pivot.rotation.x -= event.relative.y * Settings.sensitivity/10000.0
 			# -PI/2 = min vertical angle, PI/4 = max vertical angle
 			camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, -PI/2, PI/1.75)
-			 
-			flashlight.rotation.y = camera_pivot.rotation.y
-			flashlight.rotation.x = camera_pivot.rotation.x
+			
+			flashlight.rotation = camera_pivot.rotation
+			#flashlight.rotation.x = camera_pivot.rotation.x
 	else:
 		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			static_body.rotate_x(deg_to_rad(event.relative.y * rotation_power))
@@ -181,7 +185,8 @@ func _input(event: InputEvent) -> void:
 
 	#handle obj rotation
 	if event.is_action_pressed("rmb"):
-		camera_locked_in = true
+		if carrying:
+			camera_locked_in = true
 		#if carrying:
 			#rotate_obj(event)
 
@@ -207,16 +212,18 @@ func check_hover():
 	else:
 		if ray_interaction.is_colliding():
 			var obj = ray_interaction.get_collider()
-			if obj.is_in_group("grabbable"):
-				if obj != hovered_obj:
-					#for previously hovered object
-					if hovered_obj:
-						toggle_outline(hovered_obj, false)
-					#for the new hovered object
-					hovered_obj = obj
-					toggle_outline(hovered_obj, true)
-					
+			if obj:
+				if obj.is_in_group("grabbable"):
+					interact_tip_text.visible = true
+					if obj != hovered_obj:
+						#for previously hovered object
+						if hovered_obj:
+							toggle_outline(hovered_obj, false)
+						#for the new hovered object
+						hovered_obj = obj
+						toggle_outline(hovered_obj, true)
 			else:
+				interact_tip_text.visible = false
 				#turn off outline if not hovering over grabbable object
 				if hovered_obj:
 					toggle_outline(hovered_obj, false)
@@ -253,22 +260,29 @@ func perspective_toggle():
 	if spring_arm.spring_length <= 1:
 		perspective = "first"
 		spring_arm_length = 3
-		
 	match perspective:
 		"first":
+			current_rotation = camera_pivot.rotation
+			#camera_pivot.rotation = -current_rotation
 			if spring_arm.spring_length >= 1:
 				camera_pivot.rotation.y = rad_to_deg(180)
 				perspective = "third"
 				return
 			spring_arm.spring_length = spring_arm_length
+			camera_pivot.rotation = current_rotation
 			perspective = "second"
+			##TODO : controls need to be inverted ?
 		"second":
 			spring_arm.spring_length = spring_arm_length
-			camera_pivot.rotation.y = rad_to_deg(0)
+			camera_pivot.rotation = -current_rotation
+			camera_pivot.rotation.y = rad_to_deg(-180)
 			perspective = "third"
 		"third":
+			camera_pivot.rotation = current_rotation
 			spring_arm.spring_length = -1
 			perspective = "first"
+	
+
 
 func obj_speed_gui_visible(valueBool):
 	gui_obj_speed_text.visible = valueBool
@@ -306,7 +320,6 @@ func toggle_outline(obj, toggle: bool):
 			var outline = mesh.get_node("./outline")
 			if outline:
 				outline.visible = toggle
-				interact_tip_text.visible = toggle
 
 func _on_grab_buffer_timer_timeout() -> void:
 	Signalbus.grab_buffer_expired.emit()

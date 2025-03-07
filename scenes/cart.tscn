@@ -1,8 +1,8 @@
 [gd_scene load_steps=16 format=4 uid="uid://ng6tbx7od80u"]
 
 [ext_resource type="Texture2D" uid="uid://d2otqs5qr30eq" path="res://assets/icon.svg" id="1_1cd1f"]
-[ext_resource type="Script" path="res://scripts/cart.gd" id="1_kvflj"]
-[ext_resource type="Texture2D" uid="uid://b11it8urpy1mb" path="res://assets/GLB format/Textures/asphalt.png" id="3_6yod1"]
+[ext_resource type="Script" uid="uid://bi148play6u58" path="res://scripts/cart.gd" id="1_kvflj"]
+[ext_resource type="Texture2D" uid="uid://dhlesac6f3hw4" path="res://assets/GLB format/Textures/asphalt.png" id="3_6yod1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_snn2l"]
 albedo_texture = ExtResource("1_1cd1f")
@@ -128,17 +128,12 @@ material_override = SubResource("StandardMaterial3D_5q7wf")
 mesh = SubResource("SphereMesh_n5fif")
 skeleton = NodePath("../..")
 
-[node name="base_to_bar_joint" type="JoltGeneric6DOFJoint3D" parent="."]
-angular_limit_x/enabled = false
-angular_limit_y/upper = 1.13446
-angular_limit_y/lower = -1.13446
-angular_limit_z/upper = 1.13446
-angular_limit_z/lower = -1.13446
+[node name="base_to_bar_joint" type="Generic6DOFJoint3D" parent="."]
+transform = Transform3D(-0.999995, 0.0022337, -0.0020496, 0.00223333, 0.999997, 0.000181035, 0.00204999, 0.000176478, -0.999998, -2.03569, 1.13621, -0.00204999)
 node_a = NodePath("..")
 node_b = NodePath("../handle_bar")
 exclude_nodes_from_collision = false
-solver_position_iterations = 128
-transform = Transform3D(-0.999995, 0.0022337, -0.0020496, 0.00223333, 0.999997, 0.000181035, 0.00204999, 0.000176478, -0.999998, -2.03569, 1.13621, -0.00204999)
+angular_limit_x/enabled = false
 
 [node name="handle_bar" type="RigidBody3D" parent="."]
 transform = Transform3D(-0.999995, 0.0022337, -0.0020496, 0.00223333, 0.999997, 0.000181035, 0.00204999, 0.000176478, -0.999998, -4.09623, 1.27847, -0.00204999)
@@ -150,16 +145,15 @@ transform = Transform3D(1, -2.72223e-10, 2.32831e-10, -8.39862e-11, 1, 0, 0, -1.
 mesh = SubResource("BoxMesh_x8ghp")
 skeleton = NodePath("../..")
 
-[node name="bar_to_handle_joint" type="JoltGeneric6DOFJoint3D" parent="."]
-linear_spring_x/enabled = true
-linear_spring_x/damping = 20.31
-linear_spring_x/equilibrium_point = 4.785
-linear_spring_x/max_force = 39.415
+[node name="bar_to_handle_joint" type="Generic6DOFJoint3D" parent="."]
+process_physics_priority = 128
+transform = Transform3D(1, -5.05025e-10, 4.65661e-10, -8.39862e-11, 1, -1.45519e-11, 0, -2.91038e-11, 1, -6.1749, 1.00706, 0.0047822)
 node_a = NodePath("../handle_bar")
 node_b = NodePath("../handle")
 exclude_nodes_from_collision = false
-process_physics_priority = 128
-transform = Transform3D(1, -5.05025e-10, 4.65661e-10, -8.39862e-11, 1, -1.45519e-11, 0, -2.91038e-11, 1, -6.1749, 1.00706, 0.0047822)
+linear_spring_x/enabled = true
+linear_spring_x/damping = 20.31
+linear_spring_x/equilibrium_point = 4.785
 
 [node name="handle" type="RigidBody3D" parent="." groups=["grabbable"]]
 transform = Transform3D(1, -5.05025e-10, 4.65661e-10, -8.39862e-11, 1, -1.45519e-11, 0, -2.91038e-11, 1, -7, 1, 0)

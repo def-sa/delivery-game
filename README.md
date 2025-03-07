@@ -2,8 +2,15 @@
  
 haiiiiii    this is my pill game for now
 
-thx https://kenney.nl/ for placeholder assets
-thx https://github.com/majikayogames/SimpleDungeons for addon!
+
+placeholder assets:
+thx https://kenney.nl/
+thx "Carton Box_04_Closed" (https://skfb.ly/oWqPW) by Molfgang is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+addons:
+thx https://github.com/majikayogames/SimpleDungeons 
+
+
 
 
 Features:

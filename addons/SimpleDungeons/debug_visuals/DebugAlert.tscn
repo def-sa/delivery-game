@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://djjvvvx7svoux"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/debug_visuals/DebugAlert.gd" id="1_ngt8o"]
+[ext_resource type="Script" uid="uid://bakwjjfkrtsix" path="res://addons/SimpleDungeons/debug_visuals/DebugAlert.gd" id="1_ngt8o"]
 [ext_resource type="Texture2D" uid="uid://byywkosue8x0q" path="res://addons/SimpleDungeons/res/warning-sign.svg" id="2_q7g1p"]
 
 [node name="DebugAlert" type="Node3D"]

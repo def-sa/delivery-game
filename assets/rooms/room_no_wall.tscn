@@ -1,10 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://bqeis521kwxjl"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_gxf0j"]
-[ext_resource type="Script" path="res://assets/rooms/light.gd" id="2_jcv1t"]
+[ext_resource type="Script" uid="uid://d4noqaw33ekc5" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_gxf0j"]
+[ext_resource type="Script" uid="uid://dv5l65euc8nph" path="res://assets/rooms/light.gd" id="2_jcv1t"]
 
 [node name="room_no_wall" type="Node3D"]
 script = ExtResource("1_gxf0j")
+show_debug_in_game = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 use_collision = true
@@ -12,8 +13,9 @@ size = Vector3(10, 10, 10)
 script = ExtResource("2_jcv1t")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 operation = 2
-size = Vector3(10, 9, 10)
+size = Vector3(10, 10, 10)
 
 [node name="DOOR?_POSZ" type="Node3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
@@ -30,6 +32,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.30667, 0, 0)
 [node name="light" type="OmniLight3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.76804, 0)
 light_color = Color(0.92, 0.769733, 0.598, 1)
+light_bake_mode = 1
 omni_range = 17.665
 omni_attenuation = 1.123
 omni_shadow_mode = 0

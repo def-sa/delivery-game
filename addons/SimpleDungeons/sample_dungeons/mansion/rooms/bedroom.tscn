@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://crr6031qmir35"]
 
-[ext_resource type="Script" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_1c8qy"]
+[ext_resource type="Script" uid="uid://d4noqaw33ekc5" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_1c8qy"]
 
 [sub_resource type="Gradient" id="Gradient_omn5o"]
 

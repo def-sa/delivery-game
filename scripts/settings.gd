@@ -17,7 +17,7 @@ var grab_buffer:float = grab_buffer_settings[1]:
 #----------------------------------
 
 # Name, Default, Min, Max, Step
-var render_distance_settings :Array = ["Render Distance", 6, 2, 16, 1]
+var render_distance_settings :Array = ["Render Distance", 16, 2, 22, 1]
 #value
 var render_distance:int = render_distance_settings[1]:
 	set(value): 
