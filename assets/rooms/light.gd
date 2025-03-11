@@ -5,7 +5,7 @@ extends CSGBox3D
 func _ready() -> void:
 	
 	pass
-
-
-func _on_box_spawner_visibility_changed() -> void:
-	$box_spawner.spawn_box()
+#
+##BUG: dont do this, this sucks
+#func _on_box_spawner_visibility_changed() -> void:
+	#$box_spawner.spawn_box(["grabbable"])

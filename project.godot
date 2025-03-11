@@ -34,6 +34,7 @@ enabled=PackedStringArray("res://addons/SimpleDungeons/plugin.cfg")
 grabbable="object is grabbable"
 destroyable="object is destructable"
 spawner="item can spawn here"
+openable="openable box"
 
 [input]
 

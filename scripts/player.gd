@@ -21,12 +21,14 @@ var max_obj_speed:float = 10.0:
 var obj_speed_step:float = 1
 
 ##gui references
-@onready var gui_obj_speed_bar: ProgressBar = $GUI/obj_speed_bar
-@onready var gui_obj_speed_text: RichTextLabel = $GUI/obj_speed_text
-@onready var gui_cooldown: Timer = $GUI/gui_cooldown
-@onready var interact_tip_text: Label = $GUI/interact_tip_text
-
-
+@onready var gui_obj_speed_bar: ProgressBar = $CanvasLayer/GUI/obj_speed_bar
+@onready var gui_obj_speed_text: RichTextLabel = $CanvasLayer/GUI/obj_speed_text
+@onready var gui_cooldown: Timer = $CanvasLayer/GUI/gui_cooldown
+@onready var interact_tip_text: Label = $CanvasLayer/GUI/interact_tip_text
+@onready var grab_buffer_display: TextureProgressBar = $CanvasLayer/GUI/buffer_timer_display
+@onready var item_overlay_viewport = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport
+@onready var item_overlay_camera = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera
+@onready var item_overlay_no_item_text = $".."/CanvasLayer/item_overlay/no_item_text
 
 ##camera references
 @onready var camera_pivot: Node3D = $camera_pivot
@@ -37,7 +39,6 @@ var obj_speed_step:float = 1
 @onready var ray_interaction: RayCast3D = $camera_pivot/spring_arm_3d/camera/ray_interaction
 @onready var player_hand: Marker3D = $camera_pivot/spring_arm_3d/camera/hand
 @onready var grab_buffer_timer: Timer = $camera_pivot/spring_arm_3d/camera/grab_buffer_timer
-@onready var grab_buffer_display: TextureProgressBar = $GUI/buffer_timer_display
 @onready var rotate_to_player_joint = $camera_pivot/spring_arm_3d/camera/rotate_to_player_joint
 @onready var static_body: StaticBody3D = $camera_pivot/spring_arm_3d/camera/StaticBody3D
 
@@ -201,44 +202,62 @@ func _input(event: InputEvent) -> void:
 			else:
 				holding = false
 
+func _ray_intersect_obj():
+	if ray_interaction.is_colliding():
+		var obj = ray_interaction.get_collider()
+		return obj
+
+
 func check_hover():
 	if carrying:
 		toggle_outline(carrying, true)
 		#if not hovering over carryable, start timer
-		if ray_interaction.is_colliding():
-			var obj = ray_interaction.get_collider()
+		var obj = _ray_intersect_obj()
+		if obj: # carrying obj, ray colliding, obj exists
+			handle_carrying_gui(obj)
+			#// handle carrying modifiers
 			if obj.is_in_group("grabbable"):
 				grab_buffer_timer.start()
 	else:
-		if ray_interaction.is_colliding():
-			var obj = ray_interaction.get_collider()
-			if obj:
-				if obj.is_in_group("grabbable"):
-					interact_tip_text.visible = true
-					if obj != hovered_obj:
-						#for previously hovered object
-						if hovered_obj:
-							toggle_outline(hovered_obj, false)
-						#for the new hovered object
-						hovered_obj = obj
-						toggle_outline(hovered_obj, true)
-			else:
+		var obj = _ray_intersect_obj()
+		if obj:
+			
+			if obj.is_in_group("grabbable"):
+				interact_tip_text.visible = true
+				if obj != hovered_obj:
+					#for previously hovered object
+					#if hovered_obj:
+						#toggle_outline(hovered_obj, false)
+					#for the new hovered object
+					hovered_obj = obj
+					#toggle_outline(hovered_obj, true)
+			else: #if object not grabbable
 				interact_tip_text.visible = false
-				#turn off outline if not hovering over grabbable object
-				if hovered_obj:
-					toggle_outline(hovered_obj, false)
-					hovered_obj = null
-		else:
+		else: #if colliding but obj is null
+			#for child in item_overlay_viewport:
+				#if child.name == "object":
+					#item_overlay_viewport.remove_child(child)
+					#child.queue_free()d
+			#turn off outline if not hovering over grabbable object
+			#interact_tip_text.visible = false
+			if hovered_obj:
+				#toggle_outline(hovered_obj, false)
+				hovered_obj = null
+			holding = false #just in case
+			interact_tip_text.visible = false
 			#turn off outline if raycast is not colliding
 			if hovered_obj:
-				toggle_outline(hovered_obj, false)
+				#toggle_outline(hovered_obj, false)
 				hovered_obj = null
+
+
+
 
 func pick_up_object():
 	if carrying:
 			return
-	if ray_interaction.is_colliding():
-		var obj = ray_interaction.get_collider()
+	var obj = _ray_intersect_obj()
+	if obj:
 		if obj.is_in_group("grabbable"):
 			carrying = obj
 			rotate_to_player_joint.set_node_b(obj.get_path())
@@ -281,7 +300,69 @@ func perspective_toggle():
 			camera_pivot.rotation = current_rotation
 			spring_arm.spring_length = -1
 			perspective = "first"
+
+
+#func handle_carrying_gui(obj):
+	#var spawned_object = obj
+	##// handle hovered gui display
+	#for child in item_overlay_viewport.get_children():
+		#if child.name == "object":
+			#if child != self: #if not player & carrying
+				#spawned_object = child
+		#else: #hovering object
+			#var view_obj = spawned_object.duplicate()
+			#view_obj.name = "object"
+			#view_obj.rotation = Vector3i(20.7,49.1,22.2)
+			#view_obj.position.y = -50
+			#view_obj.freeze = true
+			#item_overlay_viewport.add_child(view_obj)
+
+
+var carrying_object_exists = false
+func handle_carrying_gui(obj):
+	var gui_spawned_object = null
+	if obj:
+		gui_spawned_object = obj
+	# handle hovered gui display
 	
+	#cross check held item with viewport
+	for child in item_overlay_viewport.get_children():
+		if child.name == "object":
+			carrying_object_exists = true
+			if child != self: # if not player & carrying
+				item_overlay_no_item_text.visible = false
+				gui_spawned_object = child
+	
+	#gui_spawned_object.visible = carrying_object_exists
+	
+	if carrying_object_exists:
+		item_overlay_camera.position = position
+		item_overlay_camera.position.y = -50
+		item_overlay_camera.position.z = position.x + 3.894
+		gui_spawned_object.rotation = Vector3i(0, 45, 0)
+		gui_spawned_object.position = position
+		gui_spawned_object.position.y = -50
+		if carrying:
+			gui_spawned_object.apply_torque_impulse(Vector3(60,0,0))
+			gui_spawned_object.rotation = carrying.rotation
+		
+	#on carry, if carry object exists already, initialize
+	if not carrying_object_exists:
+		# BUG: camera postion not following player  
+		var view_obj = gui_spawned_object.duplicate()
+		view_obj.name = "object"
+		view_obj.gravity_scale = 0
+		#view_obj.apply_torque_impulse(Vector3(60,0,0))
+		#if carrying:
+			#view_obj.apply_torque_impulse(Vector3(60,0,0))
+			#carrying.rotation = view_obj.rotation
+		view_obj.freeze = true
+		item_overlay_viewport.add_child(view_obj)
+
+
+
+
+
 
 
 func obj_speed_gui_visible(valueBool):

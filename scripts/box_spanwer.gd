@@ -1,21 +1,21 @@
 extends Node3D
-class_name box_spawner
 
+@export var box_size: Vector3 = Vector3(1, 1, 1)
+@export var box_mass: float = 1.0
+@export var box_texture: Texture
+@export var modifiers: Array
+
+#i want to pass in variables into the spawner and create the box with those variables 
 #modifers
 #rarity
 #texture
 #size
 #weight
+#openable
 
-
-@export var box_size: Vector3 = Vector3(1, 1, 1)
-@export var box_mass: float = 1.0
-@export var box_texture: Texture
-
-
-func spawn_box():
+func spawn_box(modifiers:Array):
+	
 	var rigidbody = RigidBody3D.new()
-	rigidbody.add_to_group("grabbable")
 	rigidbody.mass = box_mass
 	
 	var mesh = MeshInstance3D.new()
@@ -35,5 +35,20 @@ func spawn_box():
 	
 	rigidbody.add_child(mesh)
 	rigidbody.add_child(collision)
+	
+	for modifier in modifiers:
+		match modifier:
+			"grabbable":
+				rigidbody.add_to_group("grabbable")
+				pass
+			"openable":
+				rigidbody.add_to_group("openable")
+				pass
+	
+	
 	add_child(rigidbody)
 	print("box spawned:", rigidbody)
+
+
+#func _process(delta: float) -> void:
+	#print(child.get_groups())

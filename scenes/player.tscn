@@ -24,12 +24,15 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 script = ExtResource("1_v666e")
 
 [node name="FogVolume" type="FogVolume" parent="."]
-visible = false
 size = Vector3(75, 75, 75)
 shape = 0
 material = SubResource("FogMaterial_20bdx")
 
-[node name="GUI" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="GUI" type="Control" parent="CanvasLayer"]
+top_level = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,7 +42,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="buffer_timer_display" type="TextureProgressBar" parent="GUI"]
+[node name="buffer_timer_display" type="TextureProgressBar" parent="CanvasLayer/GUI"]
 visible = false
 texture_repeat = 3
 custom_minimum_size = Vector2(100, 100)
@@ -65,7 +68,7 @@ texture_under = ExtResource("2_k86f7")
 texture_progress = ExtResource("2_k86f7")
 tint_under = Color(1, 1, 1, 0.27451)
 
-[node name="obj_speed_text" type="RichTextLabel" parent="GUI"]
+[node name="obj_speed_text" type="RichTextLabel" parent="CanvasLayer/GUI"]
 visible = false
 layout_mode = 1
 anchors_preset = 6
@@ -87,7 +90,7 @@ text = "[center]drag power
 "
 scroll_active = false
 
-[node name="obj_speed_bar" type="ProgressBar" parent="GUI"]
+[node name="obj_speed_bar" type="ProgressBar" parent="CanvasLayer/GUI"]
 visible = false
 custom_minimum_size = Vector2(15, 350)
 layout_mode = 1
@@ -113,7 +116,7 @@ value = 25.0
 fill_mode = 3
 show_percentage = false
 
-[node name="crosshair" type="Panel" parent="GUI"]
+[node name="crosshair" type="Panel" parent="CanvasLayer/GUI"]
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 1)
 top_level = true
@@ -135,11 +138,11 @@ grow_vertical = 2
 size_flags_horizontal = 4
 mouse_filter = 2
 
-[node name="gui_cooldown" type="Timer" parent="GUI"]
+[node name="gui_cooldown" type="Timer" parent="CanvasLayer/GUI"]
 wait_time = 2.0
 one_shot = true
 
-[node name="interact_tip_text" type="Label" parent="GUI"]
+[node name="interact_tip_text" type="Label" parent="CanvasLayer/GUI"]
 visible = false
 layout_mode = 1
 anchors_preset = 12
@@ -200,5 +203,5 @@ light_size = 1.0
 spot_range = 11.065
 spot_angle = 55.21
 
-[connection signal="timeout" from="GUI/gui_cooldown" to="." method="_on_gui_cooldown_timeout"]
+[connection signal="timeout" from="CanvasLayer/GUI/gui_cooldown" to="." method="_on_gui_cooldown_timeout"]
 [connection signal="timeout" from="camera_pivot/spring_arm_3d/camera/grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]
