@@ -2,6 +2,10 @@ extends Node
 ##Display Settings
 signal settings_slider(slider_name:String, is_default:bool, value:float)
 signal fov_updated(is_default:bool, value:int)
+signal brightness_updated(is_default:bool, value:float)
+signal contrast_updated(is_default:bool, value:float)
+signal saturation_updated(is_default:bool, value:float)
+
 
 ##Control Settings
 signal sensitivity_updated(is_default:bool, value:int)

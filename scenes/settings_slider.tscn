@@ -27,7 +27,6 @@ size_flags_vertical = 1
 min_value = 1.0
 step = 0.001
 value = 50.0
-rounded = true
 
 [node name="default_btn" type="TextureButton" parent="."]
 modulate = Color(0.764706, 0.764706, 0.764706, 1)

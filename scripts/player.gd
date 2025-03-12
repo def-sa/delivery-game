@@ -50,11 +50,14 @@ var flashlight_toggle:bool = false:
 		flashlight.visible = flashlight_toggle
 		
 var camera_locked_in = false
-var carrying = null #object itself
+var carrying = null: #object itself
+	set(v):
+		handle_carrying_gui(v)
+		carrying = v
 var hovered_obj = null
 var holding = false
 var current_rotation: Vector3
-
+var gui_current_object = null
 
 
 func _ready() -> void:
@@ -72,6 +75,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	spring_arm.spring_length = -1
+	
 
 
 func _physics_process(delta: float) -> void:
@@ -81,6 +85,13 @@ func _physics_process(delta: float) -> void:
 	
 	if holding == true:
 		pick_up_object()
+		
+		if gui_current_object:
+			gui_current_object.position.x = position.x
+			gui_current_object.position.z = position.z
+			item_overlay_camera.position.x = position.x
+			item_overlay_camera.position.z = position.z + 3.894
+		
 		interact_tip_text.visible = false
 		
 	if holding == false:
@@ -157,6 +168,9 @@ func _input(event: InputEvent) -> void:
 		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			static_body.rotate_x(deg_to_rad(event.relative.y * rotation_power))
 			static_body.rotate_y(deg_to_rad(event.relative.x * rotation_power))
+			
+			if gui_current_object:
+				gui_current_object.rotation = static_body.rotation
 	
 	## TODO
 	#control grip, maybe refine this later
@@ -214,7 +228,6 @@ func check_hover():
 		#if not hovering over carryable, start timer
 		var obj = _ray_intersect_obj()
 		if obj: # carrying obj, ray colliding, obj exists
-			handle_carrying_gui(obj)
 			#// handle carrying modifiers
 			if obj.is_in_group("grabbable"):
 				grab_buffer_timer.start()
@@ -318,46 +331,28 @@ func perspective_toggle():
 			#item_overlay_viewport.add_child(view_obj)
 
 
-var carrying_object_exists = false
 func handle_carrying_gui(obj):
-	var gui_spawned_object = null
+	var view_obj
+	
 	if obj:
-		gui_spawned_object = obj
-	# handle hovered gui display
-	
-	#cross check held item with viewport
-	for child in item_overlay_viewport.get_children():
-		if child.name == "object":
-			carrying_object_exists = true
-			if child != self: # if not player & carrying
-				item_overlay_no_item_text.visible = false
-				gui_spawned_object = child
-	
-	#gui_spawned_object.visible = carrying_object_exists
-	
-	if carrying_object_exists:
-		item_overlay_camera.position = position
-		item_overlay_camera.position.y = -50
-		item_overlay_camera.position.z = position.x + 3.894
-		gui_spawned_object.rotation = Vector3i(0, 45, 0)
-		gui_spawned_object.position = position
-		gui_spawned_object.position.y = -50
-		if carrying:
-			gui_spawned_object.apply_torque_impulse(Vector3(60,0,0))
-			gui_spawned_object.rotation = carrying.rotation
+		item_overlay_camera.visible = true
+		item_overlay_no_item_text.visible = false
+		view_obj = obj.duplicate()
+		gui_current_object = view_obj
 		
-	#on carry, if carry object exists already, initialize
-	if not carrying_object_exists:
-		# BUG: camera postion not following player  
-		var view_obj = gui_spawned_object.duplicate()
-		view_obj.name = "object"
+		view_obj.name = "carrying_object"
 		view_obj.gravity_scale = 0
-		#view_obj.apply_torque_impulse(Vector3(60,0,0))
-		#if carrying:
-			#view_obj.apply_torque_impulse(Vector3(60,0,0))
-			#carrying.rotation = view_obj.rotation
 		view_obj.freeze = true
+		view_obj.position.y = -10
+		item_overlay_camera.position.y = -10
+		
 		item_overlay_viewport.add_child(view_obj)
+		
+	else:
+		item_overlay_camera.visible = false
+		item_overlay_no_item_text.visible = true
+		if gui_current_object:
+			gui_current_object.queue_free()
 
 
 

@@ -1,7 +1,45 @@
 extends Node
 
 ##Display
+# Name, Default, Min, Max, Step
+var brightness_settings:Array = ["Brightness", 1, 0.001, 8, 0.01]
+#Value
+var brightness:float = brightness_settings[1]:
+	set(value):
+		brightness = _clamp_to_slider_settings(value, brightness_settings)
+		#is_default, value
+		if value == brightness_settings[1]: # if value is default
+			Signalbus.brightness_updated.emit(true, value)
+		else:
+			Signalbus.brightness_updated.emit(false, value)
+			
 
+# Name, Default, Min, Max, Step
+var contrast_settings :Array = ["Contrast", 1, 0.001, 8, 0.01]
+#Value
+var contrast:float = contrast_settings[1]:
+	set(value):
+		contrast = _clamp_to_slider_settings(value, contrast_settings)
+		#is_default, value
+		if value == contrast_settings[1]: # if value is default
+			Signalbus.contrast_updated.emit(true, value)
+		else:
+			Signalbus.contrast_updated.emit(false, value)
+			
+			
+
+# Name, Default, Min, Max, Step
+var saturation_settings :Array = ["Saturation", 1, 0.001, 8, 0.01]
+#Value
+var saturation:float = saturation_settings[1]:
+	set(value):
+		saturation = _clamp_to_slider_settings(value, saturation_settings)
+		#is_default, value
+		if value == saturation_settings[1]: # if value is default
+			Signalbus.saturation_updated.emit(true, value)
+		else:
+			Signalbus.saturation_updated.emit(false, value)
+			
 ##Gameplay
 # Name, Default, Min, Max, Step
 var grab_buffer_settings:Array = ["Grab Buffer", 2, 0, 11, 1]

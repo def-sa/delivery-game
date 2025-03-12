@@ -37,13 +37,7 @@ func spawn_box(modifiers:Array):
 	rigidbody.add_child(collision)
 	
 	for modifier in modifiers:
-		match modifier:
-			"grabbable":
-				rigidbody.add_to_group("grabbable")
-				pass
-			"openable":
-				rigidbody.add_to_group("openable")
-				pass
+		rigidbody.add_to_group(modifier)
 	
 	
 	add_child(rigidbody)
