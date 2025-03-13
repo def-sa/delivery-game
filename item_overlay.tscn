@@ -33,7 +33,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-layout_mode = 2
 offset_left = -3.0
 offset_top = 392.0
 offset_right = 253.0
@@ -62,23 +61,21 @@ sky_mode = 1
 
 [node name="item_overlay_camera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.89415)
-visible = false
 projection = 1
 size = 1.75
 
 [node name="flashlight" type="SpotLight3D" parent="SubViewportContainer/SubViewport/item_overlay_camera"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.154216, -0.416483)
-light_color = Color(0.79903, 0.707115, 0.61987, 1)
-light_energy = 4.571
-light_volumetric_fog_energy = 0.1
-spot_range = 4.739
-spot_attenuation = -0.1
-spot_angle = 17.39
-spot_angle_attenuation = 0.210224
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0153489, 0.154216, -0.42613)
+light_color = Color(0.833199, 0.751289, 0.673868, 1)
+light_energy = 8.52
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+spot_range = 4.054
+spot_attenuation = 1.17
+spot_angle = 35.54
 
 [node name="box" type="RigidBody3D" parent="SubViewportContainer/SubViewport" groups=["grabbable"]]
-transform = Transform3D(0.707107, 2.08616e-07, 0.707106, 0.353553, 0.866025, -0.353554, -0.612372, 0.5, 0.612373, 0, 0, 0)
-visible = false
+transform = Transform3D(0.707107, 2.38418e-07, 0.707106, 0.353553, 0.866025, -0.353554, -0.612372, 0.5, 0.612373, 0, 0, 0)
 freeze = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/box"]
@@ -87,5 +84,33 @@ mesh = SubResource("BoxMesh_lmqf3")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/box"]
-visible = false
 shape = SubResource("ConvexPolygonShape3D_w8jie")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer"]
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer2"]
+handle_input_locally = false
+render_target_update_mode = 0
+
+[node name="item_overlay_camera" type="Camera3D" parent="SubViewportContainer2/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.89415)
+visible = false
+projection = 1
+size = 1.75
+
+[node name="flashlight" type="SpotLight3D" parent="SubViewportContainer2/SubViewport/item_overlay_camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.154216, -0.416483)
+visible = false
+light_color = Color(0.79903, 0.707115, 0.61987, 1)
+light_energy = 4.571
+light_volumetric_fog_energy = 0.1
+spot_range = 4.739
+spot_attenuation = -0.1
+spot_angle = 17.39
+spot_angle_attenuation = 0.210224

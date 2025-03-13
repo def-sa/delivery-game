@@ -26,9 +26,11 @@ var obj_speed_step:float = 1
 @onready var gui_cooldown: Timer = $CanvasLayer/GUI/gui_cooldown
 @onready var interact_tip_text: Label = $CanvasLayer/GUI/interact_tip_text
 @onready var grab_buffer_display: TextureProgressBar = $CanvasLayer/GUI/buffer_timer_display
+@onready var item_overlay_viewport_container = $".."/CanvasLayer/item_overlay/SubViewportContainer
 @onready var item_overlay_viewport = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport
 @onready var item_overlay_camera = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera
 @onready var item_overlay_no_item_text = $".."/CanvasLayer/item_overlay/no_item_text
+@onready var item_overlay_flashlight = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera/flashlight
 
 ##camera references
 @onready var camera_pivot: Node3D = $camera_pivot
@@ -54,10 +56,19 @@ var carrying = null: #object itself
 	set(v):
 		handle_carrying_gui(v)
 		carrying = v
-var hovered_obj = null
+
+var hovered_obj = null:
+	set(v):
+		handle_carrying_gui(v)
+		hovered_obj = v
+
 var holding = false
 var current_rotation: Vector3
-var gui_current_object = null
+var gui_current_object = null:
+	set(v):
+		if gui_current_object:
+			gui_current_object.queue_free()
+		gui_current_object = v
 
 
 func _ready() -> void:
@@ -83,15 +94,35 @@ func _physics_process(delta: float) -> void:
 	player_grabbing(delta)
 	player_movement(delta)
 	
+	#if gui_current_object:
+		#gui_current_object.position.x = position.x
+		#gui_current_object.position.z = position.z
+	#item_overlay_camera.position.x = position.x
+	#item_overlay_camera.position.z = position.z + 3.894
+	
+	#if gui_current_object:
+		#item_overlay_camera.look_at(gui_current_object.position)
+		#if hovered_obj:
+			#gui_current_object.rotation = Vector3i(20.7,49.1,22.2)
+	
+	if gui_current_object:
+		#TODO: look_at causing issues, make camera always face -z and everything else follow that 
+		item_overlay_camera.look_at(gui_current_object.position)
+		
+		#item_overlay_camera.position.x = position.x + 2.326
+		#item_overlay_camera.position.y = position.y - 2.854
+		#item_overlay_camera.position.z = position.z + 3.357
+		#
+		#item_overlay_camera.rotation.x = 35
+		#item_overlay_camera.rotation.y = 35
+		
+		
+		gui_current_object.position.x = position.x
+		gui_current_object.position.z = position.z
+	
 	if holding == true:
 		pick_up_object()
-		
-		if gui_current_object:
-			gui_current_object.position.x = position.x
-			gui_current_object.position.z = position.z
-			item_overlay_camera.position.x = position.x
-			item_overlay_camera.position.z = position.z + 3.894
-		
+			#item_overlay_flashlight.position = item_overlay_camera.position
 		interact_tip_text.visible = false
 		
 	if holding == false:
@@ -171,7 +202,6 @@ func _input(event: InputEvent) -> void:
 			
 			if gui_current_object:
 				gui_current_object.rotation = static_body.rotation
-	
 	## TODO
 	#control grip, maybe refine this later
 	if not event.is_action_pressed("control_grip_in"):
@@ -236,6 +266,7 @@ func check_hover():
 		if obj:
 			
 			if obj.is_in_group("grabbable"):
+				#handle_carrying_gui(obj)
 				interact_tip_text.visible = true
 				if obj != hovered_obj:
 					#for previously hovered object
@@ -335,29 +366,25 @@ func handle_carrying_gui(obj):
 	var view_obj
 	
 	if obj:
+		item_overlay_viewport_container.modulate = "ffffff" #100% opacity
 		item_overlay_camera.visible = true
+		item_overlay_camera.position.y = 15
+		item_overlay_camera.position.z = -15
 		item_overlay_no_item_text.visible = false
 		view_obj = obj.duplicate()
 		gui_current_object = view_obj
 		
-		view_obj.name = "carrying_object"
 		view_obj.gravity_scale = 0
 		view_obj.freeze = true
-		view_obj.position.y = -10
-		item_overlay_camera.position.y = -10
+		view_obj.position.y = 15
+		view_obj.position.z = -15
+		
 		
 		item_overlay_viewport.add_child(view_obj)
-		
 	else:
+		item_overlay_viewport_container.modulate = "ffffff80" #50% opacity
 		item_overlay_camera.visible = false
 		item_overlay_no_item_text.visible = true
-		if gui_current_object:
-			gui_current_object.queue_free()
-
-
-
-
-
 
 
 func obj_speed_gui_visible(valueBool):

@@ -32,6 +32,7 @@ sdfgi_normal_bias = 0.0
 sdfgi_probe_bias = 0.0
 fog_mode = 1
 fog_light_color = Color(0.844796, 0.839208, 0.949784, 1)
+fog_density = 1.0
 volumetric_fog_albedo = Color(0.533037, 0.533037, 0.533037, 1)
 adjustment_enabled = true
 

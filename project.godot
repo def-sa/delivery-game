@@ -114,6 +114,10 @@ rmb={
 ]
 }
 
+[layer_names]
+
+2d_render/layer_1="object"
+
 [memory]
 
 limits/message_queue/max_size_mb=64
