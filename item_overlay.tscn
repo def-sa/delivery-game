@@ -33,6 +33,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 0
 offset_left = -3.0
 offset_top = 392.0
 offset_right = 253.0
@@ -59,13 +60,18 @@ directional_shadow_mode = 0
 directional_shadow_max_distance = 25.0
 sky_mode = 1
 
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+light_color = Color(0.823777, 0.618614, 0.518154, 1)
+light_energy = 1.208
+
 [node name="item_overlay_camera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.89415)
 projection = 1
-size = 1.75
+size = 1.85
 
 [node name="flashlight" type="SpotLight3D" parent="SubViewportContainer/SubViewport/item_overlay_camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0153489, 0.154216, -0.42613)
+visible = false
 light_color = Color(0.833199, 0.751289, 0.673868, 1)
 light_energy = 8.52
 light_indirect_energy = 0.0

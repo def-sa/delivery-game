@@ -20,6 +20,12 @@ var max_obj_speed:float = 10.0:
 		max_obj_speed = value
 var obj_speed_step:float = 1
 
+##gui item overlay variables
+var spin_locked: bool = false
+var spin_speed: Vector3 = Vector3(1,1,1)
+
+
+
 ##gui references
 @onready var gui_obj_speed_bar: ProgressBar = $CanvasLayer/GUI/obj_speed_bar
 @onready var gui_obj_speed_text: RichTextLabel = $CanvasLayer/GUI/obj_speed_text
@@ -109,6 +115,9 @@ func _physics_process(delta: float) -> void:
 		#TODO: look_at causing issues, make camera always face -z and everything else follow that 
 		item_overlay_camera.look_at(gui_current_object.position)
 		
+		#item_overlay_flashlight.look_at(gui_current_object.position)
+		
+		
 		#item_overlay_camera.position.x = position.x + 2.326
 		#item_overlay_camera.position.y = position.y - 2.854
 		#item_overlay_camera.position.z = position.z + 3.357
@@ -126,6 +135,7 @@ func _physics_process(delta: float) -> void:
 		interact_tip_text.visible = false
 		
 	if holding == false:
+		handle_carrying_gui(null)
 		drop_object()
 		obj_speed_gui_visible(false)
 		grab_buffer_display.hide()
@@ -184,6 +194,7 @@ func _input(event: InputEvent) -> void:
 			
 	#handle mouse motion rotations such as camera & flashlight
 	if !camera_locked_in:
+		spin_locked = false
 		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			
 			camera_pivot.rotation.y -= event.relative.x * Settings.sensitivity/10000.0
@@ -195,13 +206,19 @@ func _input(event: InputEvent) -> void:
 			
 			flashlight.rotation = camera_pivot.rotation
 			#flashlight.rotation.x = camera_pivot.rotation.x
-	else:
+	else: #if camera locked
+		spin_locked = true
 		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			static_body.rotate_x(deg_to_rad(event.relative.y * rotation_power))
 			static_body.rotate_y(deg_to_rad(event.relative.x * rotation_power))
 			
 			if gui_current_object:
 				gui_current_object.rotation = static_body.rotation
+		#else: #if not rotating
+			#gui_current_object.add_constant_torque(Vector3(-3,-3,0))
+				
+			
+			
 	## TODO
 	#control grip, maybe refine this later
 	if not event.is_action_pressed("control_grip_in"):
@@ -370,18 +387,25 @@ func handle_carrying_gui(obj):
 		item_overlay_camera.visible = true
 		item_overlay_camera.position.y = 15
 		item_overlay_camera.position.z = -15
+		item_overlay_flashlight.position = item_overlay_camera.position
+		
+		
 		item_overlay_no_item_text.visible = false
 		view_obj = obj.duplicate()
 		gui_current_object = view_obj
 		
+		if not spin_locked:
+			#TODO: add lerp? smooth interpolate somehow
+			view_obj.set_angular_velocity(Vector3(-1,-1,-1))
 		view_obj.gravity_scale = 0
-		view_obj.freeze = true
+		#view_obj.freeze = true
 		view_obj.position.y = 15
 		view_obj.position.z = -15
 		
 		
 		item_overlay_viewport.add_child(view_obj)
 	else:
+		
 		item_overlay_viewport_container.modulate = "ffffff80" #50% opacity
 		item_overlay_camera.visible = false
 		item_overlay_no_item_text.visible = true
@@ -420,7 +444,8 @@ func toggle_outline(obj, toggle: bool):
 			if str(child.name.to_lower()).find("mesh") != -1:
 				mesh = child
 		if mesh:
-			var outline = mesh.get_node("./outline")
+			var outline
+			#var outline = mesh.get_node("./outline")
 			if outline:
 				outline.visible = toggle
 
