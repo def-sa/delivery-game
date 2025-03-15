@@ -78,11 +78,13 @@ var gui_current_object = null:
 
 
 func _ready() -> void:
+	camera.fov = Settings.fov
 	Signalbus.grab_buffer_expired.connect(_grab_buffer_expired)
 	Signalbus.grab_buffer_cooldown_updated.connect(_grab_buffer_updated)
 	Signalbus.gui_cooldown.connect(_gui_cooldown)
 	Signalbus.player_speed_updated.connect(_player_speed_updated)
 	Signalbus.player_jump_updated.connect(_player_jump_updated)
+	Signalbus.fov_updated.connect(_fov_updated)
 	#Signalbus.grab_buffer_expired.connect(_on_grab_buffer_timer_timeout)
 	
 	gui_obj_speed_bar.value = max_obj_speed
@@ -176,10 +178,16 @@ func player_movement(delta: float):
 	move_and_slide()
 
 func _process(delta: float) -> void:
-	camera.fov = Settings.fov
 	#Signalbus.grab_buffer_cooldown_updated.connect(_grab_buffer_updated)
+	pass
 
 func _input(event: InputEvent) -> void:
+	
+	#zoom 
+	if event.is_action_pressed("zoom"):
+		zoom(true)
+	elif event.is_action_released("zoom"):
+		zoom(false)
 	
 	#perspective toggle
 	if event.is_action_pressed("r"):
@@ -283,7 +291,7 @@ func check_hover():
 		if obj:
 			
 			if obj.is_in_group("grabbable"):
-				#handle_carrying_gui(obj)
+				handle_carrying_gui("hovering")
 				interact_tip_text.visible = true
 				if obj != hovered_obj:
 					#for previously hovered object
@@ -301,16 +309,13 @@ func check_hover():
 					#child.queue_free()d
 			#turn off outline if not hovering over grabbable object
 			#interact_tip_text.visible = false
+			#turn off outline if raycast is not colliding
 			if hovered_obj:
 				#toggle_outline(hovered_obj, false)
 				hovered_obj = null
 			holding = false #just in case
 			interact_tip_text.visible = false
-			#turn off outline if raycast is not colliding
-			if hovered_obj:
-				#toggle_outline(hovered_obj, false)
-				hovered_obj = null
-
+			
 
 
 
@@ -378,11 +383,16 @@ func perspective_toggle():
 			#view_obj.freeze = true
 			#item_overlay_viewport.add_child(view_obj)
 
+func zoom(zooming):
+	if zooming:
+		camera.fov = Settings.fov / 2.5
+	else:
+		camera.fov = Settings.fov
+
 
 func handle_carrying_gui(obj):
 	var view_obj
-	
-	if obj:
+	if obj is RigidBody3D:
 		item_overlay_viewport_container.modulate = "ffffff" #100% opacity
 		item_overlay_camera.visible = true
 		item_overlay_camera.position.y = 15
@@ -404,11 +414,15 @@ func handle_carrying_gui(obj):
 		
 		
 		item_overlay_viewport.add_child(view_obj)
-	else:
-		
+	elif obj == "hovering":
 		item_overlay_viewport_container.modulate = "ffffff80" #50% opacity
 		item_overlay_camera.visible = false
 		item_overlay_no_item_text.visible = true
+	else:
+		item_overlay_viewport_container.modulate = "ffffff80" #50% opacity
+		item_overlay_camera.visible = false
+		item_overlay_no_item_text.visible = true
+			
 
 
 func obj_speed_gui_visible(valueBool):
@@ -460,3 +474,9 @@ func _player_speed_updated(is_default, value):
 
 func _player_jump_updated(is_default, value):
 	jump_velocity = value
+
+#BUG : this crashes the game when updated too fast???? i have no idea why
+func _fov_updated(is_default, value):
+	#var interpolation = Settings.fov + (value - Settings.fov)
+	#prints(value, interpolation)
+	camera.set_fov(value)
