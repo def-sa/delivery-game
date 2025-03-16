@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=33 format=3 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/main.gd" id="1_0glii"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_rhc0n"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://bk5nsjwlc622e" path="res://assets/rooms/stairs.tscn" id="13_op4av"]
 [ext_resource type="PackedScene" uid="uid://bqeis521kwxjl" path="res://assets/rooms/room_no_wall.tscn" id="13_tqmlw"]
 [ext_resource type="PackedScene" uid="uid://ca867pya5p5p" path="res://assets/rooms/item_room.tscn" id="14_jbj1t"]
+[ext_resource type="Script" uid="uid://w0088ri165ve" path="res://scenes/delivery_point.gd" id="19_0ld40"]
 
 [sub_resource type="Environment" id="Environment_0xlil"]
 background_mode = 3
@@ -44,6 +45,56 @@ albedo_texture = ExtResource("5_jkv2x")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_muem4"]
 points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ld40"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="TextMesh" id="TextMesh_dp3eg"]
+material = SubResource("StandardMaterial3D_0ld40")
+text = "[delivery point]
+ |
+ |
+V"
+font_size = 127
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gqmmt"]
+cull_mode = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_yc10j"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0ld40"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="Curve" id="Curve_0ld40"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 0.494382), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_gqmmt"]
+curve = SubResource("Curve_0ld40")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jscy8"]
+particle_flag_rotate_y = true
+emission_shape = 1
+emission_sphere_radius = 4.72
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(1, 35.45, 0)
+spread = 180.0
+initial_velocity_min = -5.5
+initial_velocity_max = 4.02
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+scale_min = 0.0
+scale_max = 1.1
+scale_curve = SubResource("CurveTexture_gqmmt")
+scale_over_velocity_max = 289.72
+turbulence_noise_strength = 20.0
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_jscy8"]
+
 [node name="main" type="Node3D"]
 script = ExtResource("1_0glii")
 
@@ -52,8 +103,10 @@ layer = 100
 
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("2_rhc0n")]
 top_level = true
+metadata/_edit_use_anchors_ = true
 
 [node name="item_overlay" parent="CanvasLayer" instance=ExtResource("3_jkv2x")]
+metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("3_a6xwp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0816736, 6.29247, 0.000599861)
@@ -78,7 +131,7 @@ environment = SubResource("Environment_0xlil")
 
 [node name="World" type="Node3D" parent="."]
 script = ExtResource("4_a8y0u")
-modifiers = ["grabbable", "openable", ""]
+modifiers = ["grabbable", "openable", "deliverable"]
 
 [node name="box" type="RigidBody3D" parent="World" groups=["grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, 0)
@@ -148,3 +201,48 @@ show_debug_in_game = true
 [node name="DungeonRoom3D" parent="Terrain/DungeonGenerator3D" instance=ExtResource("12_dplet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -20, 0)
 show_grid_aabb_with_doors = true
+
+[node name="delivery_point" type="Node3D" parent="Terrain/DungeonGenerator3D" node_paths=PackedStringArray("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, -24, 0)
+script = ExtResource("19_0ld40")
+player = NodePath("../../../Player")
+
+[node name="text" type="MeshInstance3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
+transform = Transform3D(-4.37114e-08, 0, 5, 0, 1, 0, -1, 0, -2.18557e-07, 0, 0, 0)
+mesh = SubResource("TextMesh_dp3eg")
+
+[node name="mesh" type="MeshInstance3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+material_override = SubResource("StandardMaterial3D_gqmmt")
+transparency = 0.5
+mesh = SubResource("BoxMesh_yc10j")
+
+[node name="Area3D" type="Area3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/DungeonGenerator3D/delivery_point/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+shape = SubResource("ConcavePolygonShape3D_0ld40")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+emitting = false
+amount = 125
+lifetime = 0.75
+one_shot = true
+explosiveness = 0.81
+randomness = 1.0
+fixed_fps = 60
+collision_base_size = 0.97
+process_material = SubResource("ParticleProcessMaterial_jscy8")
+draw_pass_1 = SubResource("BoxMesh_jscy8")
+
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="Terrain/DungeonGenerator3D/delivery_point/GPUParticles3D"]
+strength = 211.7
+attenuation = 0.105112
+radius = 6.6
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.93537, 0)
+size = Vector3(15, 1, 15)
+
+[connection signal="body_entered" from="Terrain/DungeonGenerator3D/delivery_point/Area3D" to="Terrain/DungeonGenerator3D/delivery_point" method="_on_area_3d_body_entered"]

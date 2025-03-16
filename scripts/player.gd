@@ -134,7 +134,7 @@ func _physics_process(delta: float) -> void:
 	if holding == true:
 		pick_up_object()
 			#item_overlay_flashlight.position = item_overlay_camera.position
-		interact_tip_text.visible = false
+		interact_tip_text.text = ""
 		
 	if holding == false:
 		handle_carrying_gui(null)
@@ -292,29 +292,16 @@ func check_hover():
 			
 			if obj.is_in_group("grabbable"):
 				handle_carrying_gui("hovering")
-				interact_tip_text.visible = true
+				interact_tip_text.text = str(obj.get_groups())
 				if obj != hovered_obj:
-					#for previously hovered object
-					#if hovered_obj:
-						#toggle_outline(hovered_obj, false)
-					#for the new hovered object
 					hovered_obj = obj
-					#toggle_outline(hovered_obj, true)
 			else: #if object not grabbable
-				interact_tip_text.visible = false
+				interact_tip_text.text = ""
 		else: #if colliding but obj is null
-			#for child in item_overlay_viewport:
-				#if child.name == "object":
-					#item_overlay_viewport.remove_child(child)
-					#child.queue_free()d
-			#turn off outline if not hovering over grabbable object
-			#interact_tip_text.visible = false
-			#turn off outline if raycast is not colliding
 			if hovered_obj:
-				#toggle_outline(hovered_obj, false)
 				hovered_obj = null
 			holding = false #just in case
-			interact_tip_text.visible = false
+			interact_tip_text.text = ""
 			
 
 
@@ -450,6 +437,7 @@ func _gui_cooldown():
 	gui_obj_speed_text.visible = false
 	gui_obj_speed_bar.visible = false
 
+## NOTE: might remove this for some other visual system
 func toggle_outline(obj, toggle: bool):
 	if obj:
 		var mesh
@@ -459,6 +447,7 @@ func toggle_outline(obj, toggle: bool):
 				mesh = child
 		if mesh:
 			var outline
+			## NOTE : commented out to avoid errors, undo if keeping outline feature
 			#var outline = mesh.get_node("./outline")
 			if outline:
 				outline.visible = toggle
@@ -477,6 +466,4 @@ func _player_jump_updated(is_default, value):
 
 #BUG : this crashes the game when updated too fast???? i have no idea why
 func _fov_updated(is_default, value):
-	#var interpolation = Settings.fov + (value - Settings.fov)
-	#prints(value, interpolation)
 	camera.set_fov(value)

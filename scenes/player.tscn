@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=10 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/player.gd" id="1_v666e"]
 [ext_resource type="Texture2D" uid="uid://cjfiw60kceco1" path="res://assets/grab_buffer_icon.png" id="2_k86f7"]
+[ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scenes/gui.gd" id="2_qhqgy"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_20bdx"]
 density = 0.0383
@@ -41,6 +42,23 @@ offset_top = 588.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("2_qhqgy")
+
+[node name="score" type="RichTextLabel" parent="CanvasLayer/GUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 949.0
+offset_top = -588.0
+offset_bottom = -586.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 32
+text = "0"
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="buffer_timer_display" type="TextureProgressBar" parent="CanvasLayer/GUI"]
 visible = false
@@ -143,7 +161,6 @@ wait_time = 2.0
 one_shot = true
 
 [node name="interact_tip_text" type="Label" parent="CanvasLayer/GUI"]
-visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0

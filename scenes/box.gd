@@ -3,6 +3,10 @@ extends RigidBody3D
 @export var box_size: Vector3 = Vector3(1, 1, 1)
 @export var box_mass: float = 1.0
 @export var box_texture: Texture
+
+var id
+var is_delivered: bool = false
+
 @export var modifiers: Array
 
 
