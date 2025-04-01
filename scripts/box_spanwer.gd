@@ -4,10 +4,20 @@ extends Node3D
 @export var box_mass: float = 1.0
 @export var box_texture: Texture
 
+const box_script = preload("res://scenes/box.gd")
+
 #TODO : link up id with delivery point
 var id 
 var is_delivered:bool = false
 @export var modifiers: Array
+
+
+#TODO
+var tier = 0
+#TODO 
+var street = 0
+
+
 
 #i want to pass in variables into the spawner and create the box with those variables 
 #modifers
@@ -40,11 +50,19 @@ func spawn_box(modifiers:Array):
 	rigidbody.add_child(mesh)
 	rigidbody.add_child(collision)
 	
+	rigidbody.set_script(box_script)
+	
+	#object id 
+	#tier, street, total boxes spawned, (game name)
+	rigidbody.id = str("%01d" % tier) + "x" + str("%03d" % street) + "x" + str("%04d" % Global.total_boxes_spawned) + "xTEST"
+	rigidbody.tier = tier
+	
 	for modifier in modifiers:
 		rigidbody.add_to_group(modifier)
 	
 	
 	add_child(rigidbody)
+	Global.total_boxes_spawned =+ 1
 	print("box spawned:", rigidbody)
 
 

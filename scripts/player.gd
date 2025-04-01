@@ -9,22 +9,28 @@ var min_zoom_in: int = 0 #default spring length
 var max_zoom_out: int = 30
 var perspective = "first" #default is "first"
 
-## grab object variables  
+## grab object variables 
 var rotation_power = 0.05
 var pull_power:float = 10.0
 #TODO : remake this to be static, and use a different way to increase player "grip"
+# remove drag gui and everything
 var max_obj_speed:float = 10.0:
 	set(value):
 		value = clamp(value, 4.0, 25.0)
 		gui_obj_speed_bar.value = value
 		max_obj_speed = value
 var obj_speed_step:float = 1
+var hand_scroll = .35:
+	set(v):
+		hand_scroll = clamp(v, 0.15, 1)
+#TODO : maybe add something with drag?
+var object_drag = 0
+var max_reach = 7
+
 
 ##gui item overlay variables
 var spin_locked: bool = false
 var spin_speed: Vector3 = Vector3(1,1,1)
-
-
 
 ##gui references
 @onready var gui_obj_speed_bar: ProgressBar = $CanvasLayer/GUI/obj_speed_bar
@@ -32,11 +38,14 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var gui_cooldown: Timer = $CanvasLayer/GUI/gui_cooldown
 @onready var interact_tip_text: Label = $CanvasLayer/GUI/interact_tip_text
 @onready var grab_buffer_display: TextureProgressBar = $CanvasLayer/GUI/buffer_timer_display
+@onready var item_overlay = $".."/CanvasLayer/item_overlay
 @onready var item_overlay_viewport_container = $".."/CanvasLayer/item_overlay/SubViewportContainer
 @onready var item_overlay_viewport = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport
 @onready var item_overlay_camera = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera
-@onready var item_overlay_no_item_text = $".."/CanvasLayer/item_overlay/no_item_text
 @onready var item_overlay_flashlight = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera/flashlight
+@onready var item_overlay_info = $".."/CanvasLayer/item_overlay/item_info
+@onready var item_overlay_modifiers: Label = $".."/CanvasLayer/item_overlay/item_info/modifiers
+@onready var item_overlay_id: Label = $".."/CanvasLayer/item_overlay/item_info/id
 
 ##camera references
 @onready var camera_pivot: Node3D = $camera_pivot
@@ -45,11 +54,11 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var camera: Camera3D = $camera_pivot/spring_arm_3d/camera
 @onready var flashlight: SpotLight3D = $flashlight
 @onready var ray_interaction: RayCast3D = $camera_pivot/spring_arm_3d/camera/ray_interaction
-@onready var player_hand: Marker3D = $camera_pivot/spring_arm_3d/camera/hand
+@onready var player_hand: Marker3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D/hand
+@onready var path_follow_3d: PathFollow3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D
 @onready var grab_buffer_timer: Timer = $camera_pivot/spring_arm_3d/camera/grab_buffer_timer
 @onready var rotate_to_player_joint = $camera_pivot/spring_arm_3d/camera/rotate_to_player_joint
 @onready var static_body: StaticBody3D = $camera_pivot/spring_arm_3d/camera/StaticBody3D
-
 
 var spring_arm_length = min_zoom_in
 var flashlight_toggle:bool = false:
@@ -60,12 +69,24 @@ var flashlight_toggle:bool = false:
 var camera_locked_in = false
 var carrying = null: #object itself
 	set(v):
-		handle_carrying_gui(v)
+		if v:
+			if v.is_in_group("grabbable"):
+				handle_carrying_gui(v, "holding")
+			else:
+				handle_carrying_gui(v, "off")
 		carrying = v
 
 var hovered_obj = null:
 	set(v):
-		handle_carrying_gui(v)
+		if v:
+			if v == carrying:
+				handle_carrying_gui(v, "holding")
+				hovered_obj = v
+				return
+			if v.is_in_group("grabbable"):
+				handle_carrying_gui(v, "hovering")
+			else:
+				handle_carrying_gui(v, "off")
 		hovered_obj = v
 
 var holding = false
@@ -76,6 +97,8 @@ var gui_current_object = null:
 			gui_current_object.queue_free()
 		gui_current_object = v
 
+var holding_perspective_toggle = false
+
 
 func _ready() -> void:
 	camera.fov = Settings.fov
@@ -85,7 +108,6 @@ func _ready() -> void:
 	Signalbus.player_speed_updated.connect(_player_speed_updated)
 	Signalbus.player_jump_updated.connect(_player_jump_updated)
 	Signalbus.fov_updated.connect(_fov_updated)
-	#Signalbus.grab_buffer_expired.connect(_on_grab_buffer_timer_timeout)
 	
 	gui_obj_speed_bar.value = max_obj_speed
 	
@@ -95,6 +117,8 @@ func _ready() -> void:
 	
 	spring_arm.spring_length = -1
 	
+	path_follow_3d.progress_ratio = hand_scroll
+	path_follow_3d.progress = max_reach
 
 
 func _physics_process(delta: float) -> void:
@@ -102,31 +126,8 @@ func _physics_process(delta: float) -> void:
 	player_grabbing(delta)
 	player_movement(delta)
 	
-	#if gui_current_object:
-		#gui_current_object.position.x = position.x
-		#gui_current_object.position.z = position.z
-	#item_overlay_camera.position.x = position.x
-	#item_overlay_camera.position.z = position.z + 3.894
-	
-	#if gui_current_object:
-		#item_overlay_camera.look_at(gui_current_object.position)
-		#if hovered_obj:
-			#gui_current_object.rotation = Vector3i(20.7,49.1,22.2)
-	
 	if gui_current_object:
-		#TODO: look_at causing issues, make camera always face -z and everything else follow that 
 		item_overlay_camera.look_at(gui_current_object.position)
-		
-		#item_overlay_flashlight.look_at(gui_current_object.position)
-		
-		
-		#item_overlay_camera.position.x = position.x + 2.326
-		#item_overlay_camera.position.y = position.y - 2.854
-		#item_overlay_camera.position.z = position.z + 3.357
-		#
-		#item_overlay_camera.rotation.x = 35
-		#item_overlay_camera.rotation.y = 35
-		
 		
 		gui_current_object.position.x = position.x
 		gui_current_object.position.z = position.z
@@ -137,7 +138,7 @@ func _physics_process(delta: float) -> void:
 		interact_tip_text.text = ""
 		
 	if holding == false:
-		handle_carrying_gui(null)
+		handle_carrying_gui(null, null)
 		drop_object()
 		obj_speed_gui_visible(false)
 		grab_buffer_display.hide()
@@ -150,9 +151,22 @@ func player_grabbing(delta: float):
 		var a = carrying.global_transform.origin
 		var b = player_hand.global_transform.origin
 		var direction = (b - a)
-		var distance = (b - a).length()
+		var distance = (b - a).length() + object_drag
 		var movement_speed = clamp(distance * pull_power, 0, max_obj_speed)
+		
+		#move player_hand inwards/outwards toward the player, using the variable hand_scroll
+		path_follow_3d.progress_ratio = hand_scroll
+		
 		carrying.linear_velocity = direction * movement_speed
+
+
+
+
+
+
+
+
+
 
 func player_movement(delta: float):
 	# Add the gravity.
@@ -181,17 +195,28 @@ func _process(delta: float) -> void:
 	#Signalbus.grab_buffer_cooldown_updated.connect(_grab_buffer_updated)
 	pass
 
+
 func _input(event: InputEvent) -> void:
 	
-	#zoom 
+	if event.is_action_pressed("cam_zoom_in"):
+		hand_scroll += 0.1
+	if event.is_action_pressed("cam_zoom_out"):
+		hand_scroll += -0.1
+	
+	
+	#perspective toggle
+	if event.is_action_pressed("r"):
+		holding_perspective_toggle = true
+		perspective_toggle()
+	
+	if event.is_action_released("r"):
+		holding_perspective_toggle = false
+		
+	#camera zoom
 	if event.is_action_pressed("zoom"):
 		zoom(true)
 	elif event.is_action_released("zoom"):
 		zoom(false)
-	
-	#perspective toggle
-	if event.is_action_pressed("r"):
-		perspective_toggle()
 		
 	#flashlight toggle
 	if event.is_action_pressed("f"):
@@ -199,7 +224,7 @@ func _input(event: InputEvent) -> void:
 			flashlight_toggle = false
 		else:
 			flashlight_toggle = true
-			
+	
 	#handle mouse motion rotations such as camera & flashlight
 	if !camera_locked_in:
 		spin_locked = false
@@ -228,19 +253,19 @@ func _input(event: InputEvent) -> void:
 			
 			
 	## TODO
-	#control grip, maybe refine this later
-	if not event.is_action_pressed("control_grip_in"):
-		if event.is_action_pressed("cam_zoom_in"):
-			if spring_arm.spring_length >= min_zoom_in:
-				spring_arm.spring_length -= 1
-				spring_arm_length = spring_arm.spring_length
-		
-	if not event.is_action_pressed("control_grip_out"):
-		if event.is_action_pressed("cam_zoom_out"):
-			if spring_arm.spring_length <= max_zoom_out:
-				spring_arm.spring_length += 1
-				spring_arm_length = spring_arm.spring_length
-		
+	if holding_perspective_toggle: # hold r + zoom to zoom camera
+		if not event.is_action_pressed("control_grip_in"):
+			if event.is_action_pressed("cam_zoom_in"):
+				if spring_arm.spring_length >= min_zoom_in:
+					spring_arm.spring_length -= 1
+					spring_arm_length = spring_arm.spring_length
+			
+		if not event.is_action_pressed("control_grip_out"):
+			if event.is_action_pressed("cam_zoom_out"):
+				if spring_arm.spring_length <= max_zoom_out:
+					spring_arm.spring_length += 1
+					spring_arm_length = spring_arm.spring_length
+	##control grip, maybe refine this later
 	if event.is_action_pressed("control_grip_in"):
 		gui_cooldown.start()
 		gui_obj_speed_text.visible = true
@@ -276,35 +301,25 @@ func _ray_intersect_obj():
 		var obj = ray_interaction.get_collider()
 		return obj
 
-
 func check_hover():
 	if carrying:
-		toggle_outline(carrying, true)
-		#if not hovering over carryable, start timer
 		var obj = _ray_intersect_obj()
 		if obj: # carrying obj, ray colliding, obj exists
 			#// handle carrying modifiers
-			if obj.is_in_group("grabbable"):
-				grab_buffer_timer.start()
+			if obj != hovered_obj:
+				hovered_obj = obj
+			
+			grab_buffer_timer.start()
 	else:
 		var obj = _ray_intersect_obj()
 		if obj:
-			
-			if obj.is_in_group("grabbable"):
-				handle_carrying_gui("hovering")
-				interact_tip_text.text = str(obj.get_groups())
-				if obj != hovered_obj:
-					hovered_obj = obj
-			else: #if object not grabbable
-				interact_tip_text.text = ""
-		else: #if colliding but obj is null
+			if obj != hovered_obj:
+				hovered_obj = obj
+		else: #if not colliding (obj returns null)
+			handle_carrying_gui(obj, "off")
 			if hovered_obj:
 				hovered_obj = null
 			holding = false #just in case
-			interact_tip_text.text = ""
-			
-
-
 
 func pick_up_object():
 	if carrying:
@@ -316,17 +331,17 @@ func pick_up_object():
 			rotate_to_player_joint.set_node_b(obj.get_path())
 			start_buffer_timer()
 			obj_speed_gui_visible(true)
-			toggle_outline(carrying, true)
+			#toggle_outline(carrying, true)
 			if hovered_obj and hovered_obj != carrying:
 				rotate_to_player_joint.set_node_b(rotate_to_player_joint.get_path())
-				toggle_outline(hovered_obj, false)
+				#toggle_outline(hovered_obj, false)
 				hovered_obj = null
 
 func drop_object():
 	carrying = null
 	holding = false
-	if carrying:
-		toggle_outline(carrying, false)
+	#if carrying:
+		#toggle_outline(carrying, false)
 
 func perspective_toggle():
 	if spring_arm.spring_length <= 1:
@@ -354,63 +369,55 @@ func perspective_toggle():
 			spring_arm.spring_length = -1
 			perspective = "first"
 
-
-#func handle_carrying_gui(obj):
-	#var spawned_object = obj
-	##// handle hovered gui display
-	#for child in item_overlay_viewport.get_children():
-		#if child.name == "object":
-			#if child != self: #if not player & carrying
-				#spawned_object = child
-		#else: #hovering object
-			#var view_obj = spawned_object.duplicate()
-			#view_obj.name = "object"
-			#view_obj.rotation = Vector3i(20.7,49.1,22.2)
-			#view_obj.position.y = -50
-			#view_obj.freeze = true
-			#item_overlay_viewport.add_child(view_obj)
-
 func zoom(zooming):
 	if zooming:
 		camera.fov = Settings.fov / 2.5
 	else:
 		camera.fov = Settings.fov
 
+func handle_carrying_gui(obj, hovering):
+	overlay_info_visible(hovering)
+	if hovering != "off":
+		var view_obj
+		if obj is RigidBody3D:
+			item_overlay_modifiers.text = ""
+			for group in obj.get_groups():
+				item_overlay_modifiers.text += str(group).capitalize()+", "
+				
+			if obj.id:
+				item_overlay_id.text = obj.id
+			
+			view_obj = obj.duplicate()
+			gui_current_object = view_obj
+			
+			if not spin_locked:
+				#TODO: add lerp? smooth interpolate somehow
+				view_obj.set_angular_velocity(Vector3(-1,-1,-1))
+			view_obj.gravity_scale = 0
+			#view_obj.freeze = true
+			view_obj.position.y = 15
+			view_obj.position.z = -15
+			
+			item_overlay_viewport.add_child(view_obj)
 
-func handle_carrying_gui(obj):
-	var view_obj
-	if obj is RigidBody3D:
-		item_overlay_viewport_container.modulate = "ffffff" #100% opacity
-		item_overlay_camera.visible = true
+func overlay_info_visible(_visible):
+	if _visible:
 		item_overlay_camera.position.y = 15
 		item_overlay_camera.position.z = -15
 		item_overlay_flashlight.position = item_overlay_camera.position
-		
-		
-		item_overlay_no_item_text.visible = false
-		view_obj = obj.duplicate()
-		gui_current_object = view_obj
-		
-		if not spin_locked:
-			#TODO: add lerp? smooth interpolate somehow
-			view_obj.set_angular_velocity(Vector3(-1,-1,-1))
-		view_obj.gravity_scale = 0
-		#view_obj.freeze = true
-		view_obj.position.y = 15
-		view_obj.position.z = -15
-		
-		
-		item_overlay_viewport.add_child(view_obj)
-	elif obj == "hovering":
-		item_overlay_viewport_container.modulate = "ffffff80" #50% opacity
-		item_overlay_camera.visible = false
-		item_overlay_no_item_text.visible = true
-	else:
-		item_overlay_viewport_container.modulate = "ffffff80" #50% opacity
-		item_overlay_camera.visible = false
-		item_overlay_no_item_text.visible = true
-			
-
+	match _visible:
+		"holding":
+			item_overlay.visible = true
+			item_overlay.modulate = "ffffff" #100% opacity
+			item_overlay_camera.visible = true
+			item_overlay_info.visible = true
+		"hovering":
+			item_overlay.visible = true
+			item_overlay.modulate = "ffffff80" #50% opacity
+			item_overlay_camera.visible = true
+			item_overlay_info.visible = true
+		"off":
+			item_overlay.visible = false
 
 func obj_speed_gui_visible(valueBool):
 	gui_obj_speed_text.visible = valueBool
@@ -436,21 +443,6 @@ func _grab_buffer_expired():
 func _gui_cooldown():
 	gui_obj_speed_text.visible = false
 	gui_obj_speed_bar.visible = false
-
-## NOTE: might remove this for some other visual system
-func toggle_outline(obj, toggle: bool):
-	if obj:
-		var mesh
-		for child in obj.get_children():
-			#looks very specifically for any "mesh" children nodes
-			if str(child.name.to_lower()).find("mesh") != -1:
-				mesh = child
-		if mesh:
-			var outline
-			## NOTE : commented out to avoid errors, undo if keeping outline feature
-			#var outline = mesh.get_node("./outline")
-			if outline:
-				outline.visible = toggle
 
 func _on_grab_buffer_timer_timeout() -> void:
 	Signalbus.grab_buffer_expired.emit()

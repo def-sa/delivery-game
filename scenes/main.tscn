@@ -6,13 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://r0lr0id6q0kw" path="res://item_overlay.tscn" id="3_jkv2x"]
 [ext_resource type="Script" uid="uid://4meaxqmy35g5" path="res://scenes/world.gd" id="4_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://ng6tbx7od80u" path="res://scenes/cart.tscn" id="4_uxqny"]
-[ext_resource type="Texture2D" uid="uid://dbloleksleayn" path="res://assets/carton_box_04_closed_0.jpg" id="5_jkv2x"]
+[ext_resource type="Texture2D" uid="uid://bk1cs84anbjv" path="res://assets/carton_box_04_closed_0.jpg" id="5_jkv2x"]
 [ext_resource type="Script" uid="uid://d1c8g7rtwmurk" path="res://scenes/box.gd" id="6_jbj1t"]
 [ext_resource type="Script" uid="uid://dq8ehoakomj04" path="res://scripts/terrain.gd" id="8_efkc1"]
 [ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/box_spanwer.gd" id="8_jkv2x"]
-[ext_resource type="Texture2D" uid="uid://fik7svjxd50d" path="res://assets/GLB format/Textures/concrete.png" id="9_dp3eg"]
+[ext_resource type="Texture2D" uid="uid://dgf0f4pw7wa0" path="res://assets/GLB format/Textures/concrete.png" id="9_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://ogltphnc1i0n" path="res://scenes/chunk.tscn" id="9_q8xru"]
-[ext_resource type="Texture2D" uid="uid://dj4trj1p7i3mg" path="res://assets/GLB format/Textures/metal_wall.png" id="10_0ld40"]
+[ext_resource type="Texture2D" uid="uid://byfrwpqpid34" path="res://assets/GLB format/Textures/metal_wall.png" id="10_0ld40"]
 [ext_resource type="Script" uid="uid://c8cag65gdoiyl" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="12_c4p3y"]
 [ext_resource type="PackedScene" uid="uid://b53i8gkefhj0f" path="res://assets/rooms/door_no_wall.tscn" id="12_dplet"]
 [ext_resource type="PackedScene" uid="uid://bk5nsjwlc622e" path="res://assets/rooms/stairs.tscn" id="13_op4av"]
@@ -135,6 +135,7 @@ modifiers = ["grabbable", "openable", "deliverable"]
 
 [node name="box" type="RigidBody3D" parent="World" groups=["grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, 0)
+visible = false
 script = ExtResource("6_jbj1t")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="World/box"]

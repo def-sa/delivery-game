@@ -6,7 +6,6 @@ extends Node3D
 @onready var outline_mesh = $outline
 @onready var particles_delivered = $GPUParticles3D
 
-
 var elapsed_time = 0.0
 var target_time = 0.5 # Time in seconds
 var toggle_text_flash = false
@@ -32,7 +31,6 @@ func _process(delta: float) -> void:
 		text_mesh.mesh.text = "[delivery point]
 		 |
 		V"
-
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body.is_in_group("deliverable"):

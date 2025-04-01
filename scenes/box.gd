@@ -4,12 +4,13 @@ extends RigidBody3D
 @export var box_mass: float = 1.0
 @export var box_texture: Texture
 
-var id
-var is_delivered: bool = false
-
 @export var modifiers: Array
+var id = 0
+#TODO
+var tier = 0
 
 
+var is_delivered: bool = false
 @onready var rigidbody = $"."
 @onready var mesh = $"."/MeshInstance3D
 @onready var collision = $"."/CollisionShape3D
