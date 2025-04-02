@@ -208,8 +208,6 @@ target_position = Vector3(0, 0, -10)
 curve = SubResource("Curve3D_qhqgy")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
-progress = 10.0
 loop = false
 
 [node name="hand" type="Marker3D" parent="camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D"]

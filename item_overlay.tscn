@@ -101,14 +101,17 @@ spot_angle = 35.54
 
 [node name="box" type="RigidBody3D" parent="SubViewportContainer/SubViewport" groups=["grabbable"]]
 transform = Transform3D(0.707107, 2.38418e-07, 0.707106, 0.353553, 0.866025, -0.353554, -0.612372, 0.5, 0.612373, 0, 0, 0)
+visible = false
 freeze = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/box"]
+visible = false
 material_override = SubResource("StandardMaterial3D_bfenw")
 mesh = SubResource("BoxMesh_lmqf3")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/box"]
+visible = false
 shape = SubResource("ConvexPolygonShape3D_w8jie")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer"]

@@ -25,7 +25,7 @@ var hand_scroll = .35:
 		hand_scroll = clamp(v, 0.15, 1)
 #TODO : maybe add something with drag?
 var object_drag = 0.1
-var max_reach = 7
+var max_reach = 5.5
 
 
 ##gui item overlay variables
@@ -55,6 +55,7 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var flashlight: SpotLight3D = $flashlight
 @onready var ray_interaction: RayCast3D = $camera_pivot/spring_arm_3d/camera/ray_interaction
 @onready var player_hand: Marker3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D/hand
+@onready var path_3d: Path3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D
 @onready var path_follow_3d: PathFollow3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D
 @onready var grab_buffer_timer: Timer = $camera_pivot/spring_arm_3d/camera/grab_buffer_timer
 @onready var rotate_to_player_joint = $camera_pivot/spring_arm_3d/camera/rotate_to_player_joint
@@ -119,7 +120,7 @@ func _ready() -> void:
 	spring_arm.spring_length = -1
 	
 	path_follow_3d.progress_ratio = hand_scroll
-	path_follow_3d.progress = max_reach
+	path_3d.curve.set_point_position(1, Vector3(path_3d.curve.get_point_position(1).x,path_3d.curve.get_point_position(1).y,-max_reach)) 
 
 
 func _physics_process(delta: float) -> void:
@@ -135,7 +136,6 @@ func _physics_process(delta: float) -> void:
 	
 	if holding == true:
 		pick_up_object()
-			#item_overlay_flashlight.position = item_overlay_camera.position
 		interact_tip_text.text = ""
 		
 	if holding == false:
@@ -159,14 +159,6 @@ func player_grabbing(delta: float):
 		path_follow_3d.progress_ratio = hand_scroll
 		
 		carrying.linear_velocity = direction * movement_speed
-
-
-
-
-
-
-
-
 
 func player_movement(delta: float):
 	# Add the gravity.
@@ -238,7 +230,6 @@ func _input(event: InputEvent) -> void:
 			camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, -PI/2, PI/1.75)
 			
 			flashlight.rotation = camera_pivot.rotation
-			#flashlight.rotation.x = camera_pivot.rotation.x
 	else: #if camera locked
 		spin_locked = true
 		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -249,9 +240,6 @@ func _input(event: InputEvent) -> void:
 				gui_current_object.rotation = static_body.rotation
 		#else: #if not rotating
 			#gui_current_object.add_constant_torque(Vector3(-3,-3,0))
-				
-			
-			
 	## TODO
 	if holding_perspective_toggle: # hold r + zoom to zoom camera
 		if not event.is_action_pressed("control_grip_in"):
@@ -265,6 +253,7 @@ func _input(event: InputEvent) -> void:
 				if spring_arm.spring_length <= max_zoom_out:
 					spring_arm.spring_length += 1
 					spring_arm_length = spring_arm.spring_length
+	
 	##control grip, maybe refine this later
 	if event.is_action_pressed("control_grip_in"):
 		gui_cooldown.start()
@@ -277,17 +266,14 @@ func _input(event: InputEvent) -> void:
 		gui_obj_speed_text.visible = true
 		gui_obj_speed_bar.visible = true
 		max_obj_speed -= obj_speed_step
-
 	#handle obj rotation
 	if event.is_action_pressed("rmb"):
 		if carrying:
 			camera_locked_in = true
 		#if carrying:
 			#rotate_obj(event)
-
 	if event.is_action_released("rmb"):
 		camera_locked_in = false
-
 	#handle obj movement
 	if event.is_action_pressed("interact"):
 		if hovered_obj != null and hovered_obj.is_in_group("grabbable"):
@@ -295,6 +281,8 @@ func _input(event: InputEvent) -> void:
 				holding = true
 			else:
 				holding = false
+		else:
+			carrying = null
 
 func _ray_intersect_obj():
 	if ray_interaction.is_colliding():
@@ -383,9 +371,9 @@ func handle_carrying_gui(obj, hovering):
 			item_overlay_modifiers.text = ""
 			for group in obj.get_groups():
 				item_overlay_modifiers.text += str(group).capitalize()+", "
-				
-			if obj.id:
-				item_overlay_id.text = obj.id
+			
+			#if obj.id:
+				#item_overlay_id.text = obj.id
 			
 			view_obj = obj.duplicate()
 			gui_current_object = view_obj
@@ -395,15 +383,13 @@ func handle_carrying_gui(obj, hovering):
 				view_obj.set_angular_velocity(Vector3(-1,-1,-1))
 			view_obj.gravity_scale = 0
 			#view_obj.freeze = true
-			view_obj.position.y = 15
-			view_obj.position.z = -15
+			view_obj.position.y = -50
 			
 			item_overlay_viewport.add_child(view_obj)
 
 func overlay_info_visible(_visible):
 	if _visible:
-		item_overlay_camera.position.y = 15
-		item_overlay_camera.position.z = -15
+		item_overlay_camera.position.y = -50
 		item_overlay_flashlight.position = item_overlay_camera.position
 	match _visible:
 		"holding":
