@@ -5,6 +5,7 @@ extends Node3D
 @export var box_texture: Texture
 
 const box_script = preload("res://scenes/box.gd")
+const decal_script = preload("res://scenes/decal.gd")
 
 #TODO : link up id with delivery point
 var id 
@@ -47,6 +48,25 @@ func spawn_box(modifiers:Array):
 	box_shape.extents = box_size / 2  # BoxShape3D uses half-extents
 	collision.shape = box_shape
 	
+	var shadow_decal = Decal.new()
+	var noise_texture = NoiseTexture2D.new()
+	noise_texture.width = 1
+	noise_texture.height = 1
+	
+	shadow_decal.texture_albedo = noise_texture
+	shadow_decal.modulate = Color(0.0, 0.0, 0.0)
+	shadow_decal.size.x = 1
+	shadow_decal.size.z = 1
+	shadow_decal.size.y = 20
+	shadow_decal.lower_fade = 2
+	shadow_decal.upper_fade = .5
+	shadow_decal.position.y = -10.55
+	shadow_decal.distance_fade_enabled = true
+	shadow_decal.distance_fade_begin = 0.0
+	shadow_decal.distance_fade_length = 20
+	shadow_decal.set_script(decal_script)
+	
+	rigidbody.add_child(shadow_decal)
 	rigidbody.add_child(mesh)
 	rigidbody.add_child(collision)
 	
@@ -64,7 +84,3 @@ func spawn_box(modifiers:Array):
 	add_child(rigidbody)
 	Global.total_boxes_spawned =+ 1
 	print("box spawned:", rigidbody)
-
-
-#func _process(delta: float) -> void:
-	#print(child.get_groups())

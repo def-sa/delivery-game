@@ -1,4 +1,5 @@
 extends Node
+
 ##Display Settings
 signal settings_slider(slider_name:String, is_default:bool, value:float)
 signal fov_updated(is_default:bool, value:int)
@@ -19,4 +20,7 @@ signal grab_buffer_expired()
 signal player_speed_updated(is_default:bool, value:int)
 signal player_jump_updated(is_default:bool, value:float)
 
+
+##//
 signal gui_cooldown()
+signal box_being_carried(obj)

@@ -5,30 +5,48 @@ extends RigidBody3D
 @export var box_texture: Texture
 
 @export var modifiers: Array
+
+@onready var rigidbody = $"."
+var mesh
+var collision
+var decal
+
 var id = 0
 #TODO
 var tier = 0
 
+#var is_being_carried: bool = false
 
 var is_delivered: bool = false
-@onready var rigidbody = $"."
-@onready var mesh = $"."/MeshInstance3D
-@onready var collision = $"."/CollisionShape3D
+
 
 #i want to pass in variables into the spawner and create the box with those variables 
-#modifers
+#modifers x
 #rarity
-#texture
-#size
+#texture x
+#size x
 #weight
-#openable
+#openable 
 
-
+# was going to enable decal only when holing, i think its fine ? for now at least
 func _ready() -> void:
-	if box_texture:
-		var material = StandardMaterial3D.new()
-		material.albedo_texture = box_texture
-		mesh.material_override = material
+	for child in rigidbody.get_children():
+		if child is Decal:
+			decal = child
+		if child is CollisionShape3D:
+			collision = child
+		if child is MeshInstance3D:
+			mesh = child
+	
+	#Signalbus.box_being_carried.connect(_box_being_carried)
 	
 	for modifier in modifiers:
 		rigidbody.add_to_group(modifier)
+
+
+#func _box_being_carried(obj):
+	#decal.visible = is_being_carried
+	#if obj == self:
+		#is_being_carried = true
+	#else:
+		#is_being_carried = false

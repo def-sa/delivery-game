@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=35 format=3 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/main.gd" id="1_0glii"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_rhc0n"]
@@ -8,8 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://ng6tbx7od80u" path="res://scenes/cart.tscn" id="4_uxqny"]
 [ext_resource type="Texture2D" uid="uid://bk1cs84anbjv" path="res://assets/carton_box_04_closed_0.jpg" id="5_jkv2x"]
 [ext_resource type="Script" uid="uid://d1c8g7rtwmurk" path="res://scenes/box.gd" id="6_jbj1t"]
+[ext_resource type="Script" uid="uid://coe7nbe4f4y5f" path="res://scenes/decal.gd" id="7_gqmmt"]
 [ext_resource type="Script" uid="uid://dq8ehoakomj04" path="res://scripts/terrain.gd" id="8_efkc1"]
-[ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/box_spanwer.gd" id="8_jkv2x"]
+[ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/box_spawner.gd" id="8_jkv2x"]
 [ext_resource type="Texture2D" uid="uid://dgf0f4pw7wa0" path="res://assets/GLB format/Textures/concrete.png" id="9_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://ogltphnc1i0n" path="res://scenes/chunk.tscn" id="9_q8xru"]
 [ext_resource type="Texture2D" uid="uid://byfrwpqpid34" path="res://assets/GLB format/Textures/metal_wall.png" id="10_0ld40"]
@@ -36,6 +37,10 @@ fog_light_color = Color(0.844796, 0.839208, 0.949784, 1)
 fog_density = 1.0
 volumetric_fog_albedo = Color(0.533037, 0.533037, 0.533037, 1)
 adjustment_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ld40"]
+width = 1
+height = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jkv2x"]
 albedo_texture = ExtResource("5_jkv2x")
@@ -135,8 +140,19 @@ modifiers = ["grabbable", "openable", "deliverable"]
 
 [node name="box" type="RigidBody3D" parent="World" groups=["grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, 0)
-visible = false
 script = ExtResource("6_jbj1t")
+
+[node name="Decal" type="Decal" parent="World/box"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, -10.55, 0)
+size = Vector3(2, 20, 2)
+texture_albedo = SubResource("NoiseTexture2D_0ld40")
+modulate = Color(0, 0, 0, 1)
+upper_fade = 0.5
+lower_fade = 2.0
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+distance_fade_length = 20.0
+script = ExtResource("7_gqmmt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="World/box"]
 material_override = SubResource("StandardMaterial3D_jkv2x")

@@ -24,7 +24,7 @@ var hand_scroll = .35:
 	set(v):
 		hand_scroll = clamp(v, 0.15, 1)
 #TODO : maybe add something with drag?
-var object_drag = 0
+var object_drag = 0.1
 var max_reach = 7
 
 
@@ -72,6 +72,7 @@ var carrying = null: #object itself
 		if v:
 			if v.is_in_group("grabbable"):
 				handle_carrying_gui(v, "holding")
+				Signalbus.box_being_carried.emit(v)
 			else:
 				handle_carrying_gui(v, "off")
 		carrying = v
@@ -151,14 +152,13 @@ func player_grabbing(delta: float):
 		var a = carrying.global_transform.origin
 		var b = player_hand.global_transform.origin
 		var direction = (b - a)
-		var distance = (b - a).length() + object_drag
+		var distance = (b - a).length() * object_drag
 		var movement_speed = clamp(distance * pull_power, 0, max_obj_speed)
 		
 		#move player_hand inwards/outwards toward the player, using the variable hand_scroll
 		path_follow_3d.progress_ratio = hand_scroll
 		
 		carrying.linear_velocity = direction * movement_speed
-
 
 
 
@@ -191,9 +191,9 @@ func player_movement(delta: float):
 
 	move_and_slide()
 
-func _process(delta: float) -> void:
-	#Signalbus.grab_buffer_cooldown_updated.connect(_grab_buffer_updated)
-	pass
+#func _process(delta: float) -> void:
+	##Signalbus.grab_buffer_cooldown_updated.connect(_grab_buffer_updated)
+	#pass
 
 
 func _input(event: InputEvent) -> void:
