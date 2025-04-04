@@ -2,7 +2,9 @@ extends TabBar
 
 var slider_controls :Array= [
 	Settings.player_speed_settings,
-	Settings.player_jump_settings
+	Settings.player_jump_settings,
+	Settings.grab_buffer_settings,
+	Settings.max_grab_length_settings
 	]
 
 func _ready() -> void:
@@ -25,8 +27,16 @@ func _handle_slider_changed(slider_name,is_default,value):
 				Settings.player_jump = Settings.player_jump_settings[1]
 			else:
 				Settings.player_jump = value
-				
-				
+		"Grab Buffer":
+			if is_default == true:
+				Settings.grab_buffer = Settings.grab_buffer_settings[1]
+			else:
+				Settings.grab_buffer = value
+		"Max Grab Length":
+			if is_default == true:
+				Settings.max_grab_length = Settings.max_grab_length_settings[1]
+			else:
+				Settings.max_grab_length = value
 				
 		"Placeholder":
 			pass

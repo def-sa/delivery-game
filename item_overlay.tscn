@@ -13,20 +13,28 @@ points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5
 [node name="item_overlay" type="Control"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 3
-anchors_preset = 9
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 4
+mouse_filter = 1
 
 [node name="item_info" type="Control" parent="."]
 anchors_preset = 0
+offset_top = -2.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 38.0
+mouse_filter = 1
 
 [node name="id" type="Label" parent="item_info"]
 layout_mode = 0
-offset_top = 608.0
+offset_top = 922.0
 offset_right = 253.0
-offset_bottom = 656.0
+offset_bottom = 970.0
+scale = Vector2(1.8146, 1.8146)
+mouse_filter = 1
 theme_override_font_sizes/font_size = 29
 text = "1x111x1111xTEST"
 horizontal_alignment = 1
@@ -35,10 +43,11 @@ vertical_alignment = 3
 [node name="modifiers" type="Label" parent="item_info"]
 z_index = 1
 layout_mode = 0
-offset_top = -1.0
+offset_top = 437.0
 offset_right = 253.0
-offset_bottom = 382.0
-vertical_alignment = 2
+offset_bottom = 820.0
+scale = Vector2(1.8146, 1.8146)
+mouse_filter = 1
 autowrap_mode = 3
 text_overrun_behavior = 4
 
@@ -46,17 +55,22 @@ text_overrun_behavior = 4
 z_index = -8
 z_as_relative = false
 layout_mode = 0
-offset_top = 334.0
+offset_top = 437.0
 offset_right = 253.0
-offset_bottom = 650.0
+offset_bottom = 753.0
+scale = Vector2(1.8146, 1.8146)
+mouse_filter = 1
 color = Color(1, 1, 1, 0.196078)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 0
 offset_left = -3.0
-offset_top = 392.0
+offset_top = 545.0
 offset_right = 253.0
-offset_bottom = 648.0
+offset_bottom = 801.0
+scale = Vector2(1.80005, 1.80005)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer"]
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 transparent_bg = true
@@ -113,8 +127,6 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/box"]
 visible = false
 shape = SubResource("ConvexPolygonShape3D_w8jie")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer"]
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
 visible = false

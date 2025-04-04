@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://c4w0y6s27dwex"]
+
+[ext_resource type="Texture2D" uid="uid://b8afy7ss5kxee" path="res://assets/carton_box_04_closed_1.png" id="1_c1w0k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6deb"]
+albedo_texture = ExtResource("1_c1w0k")
+
+[sub_resource type="BoxMesh" id="BoxMesh_y6deb"]
+size = Vector3(4, 0.25, 8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pm3ni"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vxglm"]
+size = Vector3(0.25, 0.25, 7.95)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fv21b"]
+size = Vector3(3.5, 0.25, 0.25)
+
+[node name="cart_item_view" type="RigidBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.215, 0.805614)
+material_override = SubResource("StandardMaterial3D_y6deb")
+mesh = SubResource("BoxMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="wall-type-b" type="MeshInstance3D" parent="."]
+transform = Transform3D(3.95, 0, 0, 0, -1.4, 1.31134e-08, 0, -1.22392e-07, -0.15, 0, 0.377424, 4.67304)
+mesh = SubResource("BoxMesh_pm3ni")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87, 0.0349998, 0.780526)
+mesh = SubResource("BoxMesh_vxglm")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86815, 0.0352049, 0.781197)
+mesh = SubResource("BoxMesh_vxglm")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00599957, 0.0349998, -3.06647)
+mesh = SubResource("BoxMesh_fv21b")
+skeleton = NodePath("")

@@ -106,15 +106,18 @@ var holding_perspective_toggle = false
 
 
 func _ready() -> void:
-	camera.fov = Settings.fov
+	
 	Signalbus.grab_buffer_expired.connect(_grab_buffer_expired)
 	Signalbus.grab_buffer_cooldown_updated.connect(_grab_buffer_updated)
 	Signalbus.gui_cooldown.connect(_gui_cooldown)
 	Signalbus.player_speed_updated.connect(_player_speed_updated)
 	Signalbus.player_jump_updated.connect(_player_jump_updated)
 	Signalbus.fov_updated.connect(_fov_updated)
+	Signalbus.max_grab_length_updated.connect(_max_grab_length_updated)
 	
+	camera.fov = Settings.fov
 	gui_obj_speed_bar.value = max_obj_speed
+	grab_buffer_display.max_value = Settings.grab_buffer
 	
 	_grab_buffer_expired() #reset values
 	
@@ -155,7 +158,7 @@ func _physics_process(delta: float) -> void:
 	
 func player_grabbing(delta: float):
 	if carrying:
-		grab_buffer_display.value = grab_buffer_timer.time_left * 50
+		grab_buffer_display.value = grab_buffer_timer.time_left
 		
 		var a = carrying.global_transform.origin
 		var b = player_hand.global_transform.origin
@@ -394,7 +397,7 @@ func handle_carrying_gui(obj, hovering):
 			if not spin_locked:
 				#TODO: add lerp? smooth interpolate somehow
 				view_obj.set_angular_velocity(Vector3(-1,-1,-1))
-				
+			
 			view_obj.gravity_scale = 0
 			#view_obj.freeze = true
 			view_obj.position.y = -50
@@ -431,6 +434,8 @@ func start_buffer_timer():
 	timer_played_once = true
 
 func _grab_buffer_updated(is_default, value):
+	if value == 0:
+		value = 1000000000
 	grab_buffer_timer.set_wait_time(value)
 	grab_buffer_display.max_value = value
 
@@ -459,3 +464,9 @@ func _player_jump_updated(is_default, value):
 #BUG : this crashes the game when updated too fast???? i have no idea why
 func _fov_updated(is_default, value):
 	camera.set_fov(value)
+
+func _max_grab_length_updated(is_default, value):
+	path_3d.curve.set_point_position(1, Vector3(0,0,-value))
+	
+	
+	

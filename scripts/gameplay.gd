@@ -5,7 +5,6 @@ extends TabBar
 #var grab_buffer = Settings.grab_buffer
 
 var slider_controls :Array= [
-	Settings.grab_buffer_settings,
 	Settings.render_distance_settings
 	]
 
@@ -20,11 +19,6 @@ func _ready() -> void:
 
 func _handle_slider_changed(slider_name,is_default,value):
 	match slider_name:
-		"Grab Buffer":
-			if is_default == true:
-				Settings.grab_buffer = Settings.grab_buffer_settings[1]
-			else:
-				Settings.grab_buffer = value
 		"Render Distance":
 			if is_default == true:
 				Settings.render_distance = Settings.render_distance_settings[1]

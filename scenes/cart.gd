@@ -14,8 +14,8 @@ extends Node3D
 @onready var hand_path: Path3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D"
 @onready var hand_path_follow: PathFollow3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D"
 
-@onready var cart_item_view: RigidBody3D = $cart_item_view
-
+const CART_ITEM_VIEW_PRELOAD = preload("res://cart_item_view.tscn")
+var cart_item_view
 
 var object_drag = 0.0075
 var pull_power = 60
@@ -29,36 +29,45 @@ var bodies_in_cart = []
 func _ready() -> void:
 	area.body_entered.connect(_body_entered_cart)
 	area.body_exited.connect(_body_exited_cart)
-	pass
+	cart_item_view = CART_ITEM_VIEW_PRELOAD.instantiate()
 
 
 
 
 func _physics_process(delta: float) -> void:
-		if player.carrying == cart_handle:
-			
-			player.handle_carrying_gui(cart_item_view, "on")
-			
-			remote_transform.update_rotation = false
-			cart_handle_collision.disabled = true
-			
-			var new_location = (hand.global_transform.origin  - cart_body.global_transform.origin)
-			var distance = (hand.global_transform.origin - cart_body.global_transform.origin).length() * object_drag
-			var movement_speed = clamp(distance * pull_power, 0, max_obj_speed)
-			
-			cart_body.linear_velocity.x = new_location.x * movement_speed * cart_speed
-			cart_body.linear_velocity.z = new_location.z * movement_speed * cart_speed
-			
-			cart_body.rotation.y = lerp(cart_body.rotation.y, cart_handle.rotation.y, 1)
-			
-			for body in bodies_in_cart:
-				if !player:
-					body.linear_velocity.x = new_location.x * movement_speed * cart_speed
-					body.linear_velocity.z = new_location.z * movement_speed * cart_speed
-		else:
-			remote_transform.update_rotation = true
-			remote_transform.update_position = true
-			cart_handle_collision.disabled = false
+	
+	#if player.hovered_obj in cart.get_children():
+		#player.handle_carrying_gui(cart_item_view, "hovering")
+		#Signalbus.box_being_carried.emit(cart_item_view)
+	
+	#var saved_grab_length = Settings.max_grab_length
+	if player.carrying == cart_handle:
+		#Settings.max_grab_length = 20
+		
+		remote_transform.update_rotation = false
+		cart_handle_collision.disabled = true
+		
+		var new_location = (hand.global_transform.origin  - cart_body.global_transform.origin)
+		var distance = (hand.global_transform.origin - cart_body.global_transform.origin).length() * object_drag
+		var movement_speed = clamp(distance * pull_power, 0, max_obj_speed)
+		
+		# rewrite this ///////////
+		cart_body.linear_velocity.x = new_location.x * movement_speed * cart_speed
+		cart_body.linear_velocity.z = new_location.z * movement_speed * cart_speed
+		
+		cart_body.rotation.y = lerp(cart_body.rotation.y, cart_handle.rotation.y, 1)
+		
+		for body in bodies_in_cart:
+			if !player:
+				body.linear_velocity.x = new_location.x * movement_speed * cart_speed
+				body.linear_velocity.z = new_location.z * movement_speed * cart_speed
+		#////////////
+		
+	else:
+		#Settings.max_grab_length = saved_grab_length
+		remote_transform.update_rotation = true
+		remote_transform.update_position = true
+		cart_handle_collision.disabled = false
 
 
 

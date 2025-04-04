@@ -2,9 +2,16 @@
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/player.gd" id="1_v666e"]
 [ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scenes/gui.gd" id="2_qhqgy"]
-[ext_resource type="Texture2D" uid="uid://dqb0ywjldb8k6" path="res://assets/crosshair_grabbing.png" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://cyfjd4773jfol" path="res://assets/crosshair_grabbing.png" id="4_dqkch"]
 [ext_resource type="Texture2D" uid="uid://81ljda3073o0" path="res://assets/crosshair.png" id="5_qlg0r"]
 [ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://scenes/negative.gdshader" id="5_tuyoq"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xqg4r"]
+radius = 1.0
+height = 4.0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qlg0r"]
+points = PackedVector3Array(-0.25041, -1.06559, -0.961001, 0.0455663, 0.952141, 0.997768, 0.339426, 1.11829, 0.928346, 0.462089, -1.60714, 0.640893, 0.814783, 1.30203, -0.487023, -0.965635, 1.18975, 0.164435, -0.725713, -1.36458, 0.579376, 0.93809, -1.30906, -0.132543, -0.254891, 1.68542, -0.676214, -0.786851, -1.36785, -0.489421, 0.876492, 1.24659, 0.401691, 0.1683, 1.95497, 0.229596, -0.13641, -1.95298, -0.25855, 0.401111, -1.12629, -0.902936, -0.371062, 1.19093, -0.906971, -0.546702, 1.18449, 0.815474, -0.013873, -0.953646, 0.999321, 0.75168, -1.17729, 0.633943, 0.223164, 1.12615, -0.962382, -0.834529, 1.05577, -0.541012, -0.969147, -1.19401, -0.133028, -0.559494, 1.81712, 0.106672, -0.50041, -1.76148, 0.41065, 0.527294, -1.80554, -0.254789, 0.58675, 1.7431, -0.3144, 0.746805, -1.05261, -0.656476, 0.999325, 0.953283, -0.0137771, 0.106212, 1.75002, 0.649411, -0.309093, -1.18174, 0.931782, -0.194551, -1.56465, -0.796341, -0.7753, -0.996346, 0.631302, -0.601378, -1.17603, -0.777827)
 
 [sub_resource type="FogMaterial" id="FogMaterial_20bdx"]
 density = 0.0383
@@ -22,11 +29,6 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
 shader = ExtResource("5_tuyoq")
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_xqg4r"]
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_muvos"]
-points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607, 0.498884, 0.169713, 0.559144, 0.464172, 0.231051, -0.803591, 0.320455, 0.40741, 0.651043, -0.243523, -0.482789, 0.594843, 0.0822132, -0.362868, -0.682312, 0.289697, 0.469044, -0.654529, -0.0662713, -0.127444, 0.842701, -0.338103, -0.393435, -0.683942, -0.244717, 0.438255, 0.623309, 0.200849, 0.0841477, 0.977454, 0.114795, -0.0682023, -0.976458, -0.12927, 0.20055, -0.563129, -0.451454, -0.185527, 0.595453, -0.453475, -0.273363, 0.592268, 0.407754, -0.00693649, -0.476823, 0.49966, 0.375821, -0.588614, 0.316955, 0.111579, 0.563059, -0.481177, -0.41725, 0.527866, -0.270497, -0.484546, -0.596972, -0.0665097, -0.279747, 0.908561, 0.0533361, -0.250197, -0.880712, 0.205319, 0.263647, -0.902771, -0.127394, 0.293368, 0.871526, -0.157196, 0.373412, -0.526319, -0.328246, 0.499663, 0.476641, -0.00688856, 0.0531056, 0.875001, 0.324703, -0.154543, -0.590854, 0.465879, -0.0972799, -0.782358, -0.398188, -0.387649, -0.498171, 0.31565, -0.30068, -0.587995, -0.388901)
-
 [sub_resource type="Curve3D" id="Curve3D_qhqgy"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10),
@@ -41,6 +43,14 @@ point_count = 2
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_v666e")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+mesh = SubResource("CapsuleMesh_xqg4r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("ConvexPolygonShape3D_qlg0r")
+
 [node name="FogVolume" type="FogVolume" parent="."]
 visible = false
 size = Vector3(75, 75, 75)
@@ -51,38 +61,34 @@ material = SubResource("FogMaterial_20bdx")
 layer = 100
 
 [node name="GUI" type="Control" parent="CanvasLayer"]
-top_level = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 294.0
-offset_bottom = 294.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
-size_flags_vertical = 0
-mouse_filter = 2
+size_flags_vertical = 4
+mouse_filter = 1
 script = ExtResource("2_qhqgy")
 
 [node name="score" type="RichTextLabel" parent="CanvasLayer/GUI"]
+custom_minimum_size = Vector2(500, 100)
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 1
+anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 949.0
-offset_top = -588.0
-offset_bottom = -586.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/normal_font_size = 32
+offset_left = -1.0
+offset_bottom = 2.0
+grow_horizontal = 0
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 75
 text = "0"
 scroll_active = false
 horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="obj_speed_text" type="RichTextLabel" parent="CanvasLayer/GUI"]
-visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -90,12 +96,12 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -168.0
-offset_top = -319.0
+offset_top = 293.0
 offset_right = -33.0
-offset_bottom = -259.0
+offset_bottom = 353.0
 grow_horizontal = 0
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
 bbcode_enabled = true
 text = "[center]drag power
 (CTRL + SCROLL)
@@ -104,7 +110,6 @@ text = "[center]drag power
 scroll_active = false
 
 [node name="obj_speed_bar" type="ProgressBar" parent="CanvasLayer/GUI"]
-visible = false
 custom_minimum_size = Vector2(15, 350)
 layout_mode = 1
 anchors_preset = 6
@@ -113,13 +118,13 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -33.0
-offset_top = -461.0
+offset_top = 151.0
 offset_right = -18.0
-offset_bottom = -111.0
+offset_bottom = 501.0
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 4
-mouse_filter = 2
+mouse_filter = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_ce1ts")
 theme_override_styles/fill = SubResource("StyleBoxFlat_261lf")
 min_value = 4.0
@@ -134,7 +139,6 @@ wait_time = 2.0
 one_shot = true
 
 [node name="interact_tip_text" type="Label" parent="CanvasLayer/GUI"]
-visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -143,52 +147,60 @@ anchor_bottom = 1.0
 offset_top = -88.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 32
 text = "press E to pickup"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="crosshair_grabbing" type="TextureRect" parent="CanvasLayer/GUI"]
-top_level = true
 clip_children = 1
 clip_contents = true
-layout_mode = 0
-offset_left = 532.0
-offset_top = 276.0
-offset_right = 1044.0
-offset_bottom = 788.0
-scale = Vector2(0.17001, 0.17001)
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.0
+offset_top = -49.5
+offset_right = 463.0
+offset_bottom = 462.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.19, 0.19)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("4_dqkch")
+stretch_mode = 5
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUI/crosshair_grabbing"]
-modulate = Color(1, 0, 0, 1)
-self_modulate = Color(1, 0, 0, 1)
 layout_mode = 0
-offset_right = 520.0
-offset_bottom = 520.0
+offset_right = 512.0
+offset_bottom = 512.0
+mouse_filter = 1
 theme_override_styles/fill = SubResource("StyleBoxFlat_dqkch")
-step = 1.0
-value = 51.0
 fill_mode = 3
 show_percentage = false
 
-[node name="crosshair" type="TextureRect" parent="CanvasLayer/GUI"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="crosshair" type="TextureRect" parent="CanvasLayer/GUI/MarginContainer"]
 material = SubResource("ShaderMaterial_fjrip")
-layout_mode = 0
-offset_left = 532.0
-offset_top = -18.0
-offset_right = 1044.0
-offset_bottom = 494.0
-scale = Vector2(0.17, 0.17)
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("5_qlg0r")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_xqg4r")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_muvos")
+expand_mode = 3
 
 [node name="camera_pivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
 
 [node name="spring_arm_3d" type="SpringArm3D" parent="camera_pivot"]
 
@@ -230,7 +242,7 @@ linear_limit_z/enabled = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.50045)
 
 [node name="flashlight" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.916443, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.91644, 0)
 light_color = Color(0.79903, 0.707115, 0.61987, 1)
 light_energy = 16.0
 light_indirect_energy = 1.84

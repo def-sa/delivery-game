@@ -13,12 +13,13 @@ signal sensitivity_updated(is_default:bool, value:int)
 
 ##Gameplay Settings
 signal render_distance_updated(is_default:bool, value:float)
-signal grab_buffer_cooldown_updated(is_default:bool, value:float)
-signal grab_buffer_expired()
 
 ##Debug Settings
 signal player_speed_updated(is_default:bool, value:int)
 signal player_jump_updated(is_default:bool, value:float)
+signal grab_buffer_cooldown_updated(is_default:bool, value:float)
+signal grab_buffer_expired()
+signal max_grab_length_updated(is_default:bool, value:float)
 
 
 ##//
