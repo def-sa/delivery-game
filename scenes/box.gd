@@ -1,9 +1,5 @@
 extends RigidBody3D
 
-@export var box_size: Vector3 = Vector3(1, 1, 1)
-@export var box_mass: float = 1.0
-@export var box_texture: Texture
-
 @export var modifiers: Array
 
 @onready var rigidbody = $"."
@@ -18,7 +14,10 @@ var tier = 0
 #var is_being_carried: bool = false
 
 var is_delivered: bool = false
-
+var in_cart: bool = false:
+	set(v):
+		print("in_cart: ",v)
+		in_cart = v
 
 #i want to pass in variables into the spawner and create the box with those variables 
 #modifers x

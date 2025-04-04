@@ -134,6 +134,11 @@ limits/message_queue/max_size_mb=64
 3d/run_on_separate_thread=true
 common/physics_ticks_per_second=120
 3d/physics_engine="Jolt Physics"
+jolt_physics_3d/simulation/penetration_slop=0.01
+jolt_physics_3d/simulation/baumgarte_stabilization_factor=0.35
+jolt_physics_3d/simulation/sleep_velocity_threshold=0.5
+jolt_physics_3d/limits/max_linear_velocity=250.0
+jolt_physics_3d/limits/max_angular_velocity=23.5619
 2d/solver/default_constraint_bias=1.0
 common/physics_interpolation=true
 

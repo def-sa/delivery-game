@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=16 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/player.gd" id="1_v666e"]
-[ext_resource type="Texture2D" uid="uid://1yi60ooydpab" path="res://assets/grab_buffer_icon.png" id="2_k86f7"]
 [ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scenes/gui.gd" id="2_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://dqb0ywjldb8k6" path="res://assets/crosshair_grabbing.png" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://81ljda3073o0" path="res://assets/crosshair.png" id="5_qlg0r"]
+[ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://scenes/negative.gdshader" id="5_tuyoq"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_20bdx"]
 density = 0.0383
@@ -14,7 +16,11 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_261lf"]
 bg_color = Color(1, 1, 1, 1)
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4dx4g"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqkch"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
+shader = ExtResource("5_tuyoq")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xqg4r"]
 
@@ -29,6 +35,8 @@ _data = {
 point_count = 2
 
 [sub_resource type="BoxMesh" id="BoxMesh_dqkch"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qhqgy"]
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_v666e")
@@ -48,9 +56,12 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 588.0
+offset_top = 294.0
+offset_bottom = 294.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 mouse_filter = 2
 script = ExtResource("2_qhqgy")
 
@@ -69,32 +80,6 @@ text = "0"
 scroll_active = false
 horizontal_alignment = 2
 vertical_alignment = 1
-
-[node name="buffer_timer_display" type="TextureProgressBar" parent="CanvasLayer/GUI"]
-visible = false
-texture_repeat = 3
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 5.0
-offset_top = -341.0
-offset_right = 105.0
-offset_bottom = -241.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-max_value = 2.0
-step = 0.01
-value = 1.24
-fill_mode = 5
-nine_patch_stretch = true
-texture_under = ExtResource("2_k86f7")
-texture_progress = ExtResource("2_k86f7")
-tint_under = Color(1, 1, 1, 0.27451)
 
 [node name="obj_speed_text" type="RichTextLabel" parent="CanvasLayer/GUI"]
 visible = false
@@ -144,28 +129,6 @@ value = 25.0
 fill_mode = 3
 show_percentage = false
 
-[node name="crosshair" type="Panel" parent="CanvasLayer/GUI"]
-modulate = Color(0, 0, 0, 1)
-self_modulate = Color(0, 0, 0, 1)
-top_level = true
-z_index = 10
-material = SubResource("CanvasItemMaterial_4dx4g")
-clip_contents = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -2.0
-offset_top = -2.0
-offset_right = 2.0
-offset_bottom = 2.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-mouse_filter = 2
-
 [node name="gui_cooldown" type="Timer" parent="CanvasLayer/GUI"]
 wait_time = 2.0
 one_shot = true
@@ -183,6 +146,40 @@ grow_vertical = 0
 text = "press E to pickup"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="crosshair_grabbing" type="TextureRect" parent="CanvasLayer/GUI"]
+top_level = true
+clip_children = 1
+clip_contents = true
+layout_mode = 0
+offset_left = 532.0
+offset_top = 276.0
+offset_right = 1044.0
+offset_bottom = 788.0
+scale = Vector2(0.17001, 0.17001)
+texture = ExtResource("4_dqkch")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUI/crosshair_grabbing"]
+modulate = Color(1, 0, 0, 1)
+self_modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_right = 520.0
+offset_bottom = 520.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_dqkch")
+step = 1.0
+value = 51.0
+fill_mode = 3
+show_percentage = false
+
+[node name="crosshair" type="TextureRect" parent="CanvasLayer/GUI"]
+material = SubResource("ShaderMaterial_fjrip")
+layout_mode = 0
+offset_left = 532.0
+offset_top = -18.0
+offset_right = 1044.0
+offset_bottom = 494.0
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("5_qlg0r")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_xqg4r")
@@ -203,6 +200,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0458374, 0)
 [node name="ray_interaction" type="RayCast3D" parent="camera_pivot/spring_arm_3d/camera"]
 auto_translate_mode = 1
 target_position = Vector3(0, 0, -10)
+collision_mask = 3
 
 [node name="Path3D" type="Path3D" parent="camera_pivot/spring_arm_3d/camera/ray_interaction"]
 curve = SubResource("Curve3D_qhqgy")
@@ -240,6 +238,16 @@ light_volumetric_fog_energy = 6.59
 light_size = 1.0
 spot_range = 11.065
 spot_angle = 55.21
+
+[node name="no_fly_ray" type="RayCast3D" parent="."]
+target_position = Vector3(0, -6, 0)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+visible = false
+shape = SubResource("CapsuleShape3D_qhqgy")
 
 [connection signal="timeout" from="CanvasLayer/GUI/gui_cooldown" to="." method="_on_gui_cooldown_timeout"]
 [connection signal="timeout" from="camera_pivot/spring_arm_3d/camera/grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]

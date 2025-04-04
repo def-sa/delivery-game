@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=54 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/main.gd" id="1_0glii"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_rhc0n"]
@@ -9,9 +9,9 @@
 [ext_resource type="Script" uid="uid://d1c8g7rtwmurk" path="res://scenes/box.gd" id="6_jbj1t"]
 [ext_resource type="Script" uid="uid://b0i8cf6e8k2sm" path="res://scenes/cart.gd" id="6_jscy8"]
 [ext_resource type="Script" uid="uid://coe7nbe4f4y5f" path="res://scenes/decal.gd" id="7_gqmmt"]
-[ext_resource type="Texture2D" uid="uid://dvx8htg088q2w" path="res://assets/placeholder.jpg" id="7_jscy8"]
 [ext_resource type="Script" uid="uid://dq8ehoakomj04" path="res://scripts/terrain.gd" id="8_efkc1"]
 [ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/box_spawner.gd" id="8_jkv2x"]
+[ext_resource type="Texture2D" uid="uid://bhybhyix2urj0" path="res://assets/GLB format/Textures/wall_lines.png" id="8_jscy8"]
 [ext_resource type="Texture2D" uid="uid://b8afy7ss5kxee" path="res://assets/carton_box_04_closed_1.png" id="8_yc10j"]
 [ext_resource type="Texture2D" uid="uid://dgf0f4pw7wa0" path="res://assets/GLB format/Textures/concrete.png" id="9_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://ogltphnc1i0n" path="res://scenes/chunk.tscn" id="9_q8xru"]
@@ -40,22 +40,83 @@ fog_density = 1.0
 volumetric_fog_albedo = Color(0.533037, 0.533037, 0.533037, 1)
 adjustment_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pm3ni"]
-albedo_texture = ExtResource("7_jscy8")
-
-[sub_resource type="SphereMesh" id="SphereMesh_jscy8"]
+[sub_resource type="BoxMesh" id="BoxMesh_og1vs"]
+size = Vector3(3.99, 2, 7.5)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pm3ni"]
-points = PackedVector3Array(0.457871, 0.198079, 0.0157824, -0.48874, -0.0916874, -0.0451868, -0.471509, -0.137027, -0.0907015, 0.0763591, -0.333275, 0.364179, 0.136569, -0.332425, -0.346906, -0.151617, 0.471982, -0.0602459, -0.105347, 0.211936, 0.43966, -0.0450169, 0.198098, -0.456416, 0.409077, -0.151168, 0.242516, -0.271376, -0.377761, 0.181871, 0.41148, -0.075981, -0.27324, 0.198197, -0.456161, -0.044931, -0.240641, -0.331674, -0.285768, 0.227137, 0.25672, 0.363041, 0.227522, 0.423604, -0.135488, -0.37899, 0.0607022, 0.319462, -0.406747, 0.181049, -0.225691, -0.0146313, -0.0917695, 0.490229, -0.377855, 0.302793, 0.121712, 0.0462323, 0.456011, 0.198185, -0.227464, -0.0607863, -0.440348, 0.228455, 0.0607228, -0.439887, -0.0911376, -0.489246, -0.045174, 0.441865, -0.228216, -0.0449581, 0.317179, 0.241214, -0.300812, -0.0448487, 0.394737, -0.302955, -0.316348, -0.196222, 0.332551, 0.198442, -0.0304293, 0.457237, 0.0614714, -0.152246, -0.471307, 0.363089, 0.256708, 0.227079, 0.152134, -0.439489, 0.182379, -0.210725, 0.362276, 0.27223)
+points = PackedVector3Array(-1.93878, -1, -3.59788, 1.95011, 1, 3.51323, 1.995, -0.999279, 3.59532, -1.93878, -1, 3.59788, 1.995, -0.999279, -3.59532, -1.89249, 1, -3.51323, -1.89249, 1, 3.51323, 1.95011, 1, -3.51323)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2wyq8"]
+size = Vector3(3.99, 0.5, 7.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vxglm"]
+points = PackedVector3Array(1.995, 0.25, 3.75, 1.995, -0.25, 3.75, 1.995, 0.25, -3.75, -1.995, 0.25, 3.75, -1.995, -0.25, 3.75, 1.995, -0.25, -3.75, -1.995, 0.25, -3.75, -1.995, -0.25, -3.75)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6deb"]
 albedo_texture = ExtResource("8_yc10j")
 
 [sub_resource type="BoxMesh" id="BoxMesh_y6deb"]
-size = Vector3(8, 0.25, 8)
+size = Vector3(4, 0.25, 8)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_yc10j"]
+points = PackedVector3Array(-2.06349, -0.188455, -4.06349, 2.12698, 0.192423, 4.06349, 2.12698, -0.188455, 4.06349, 2.12698, 0.192423, -4.06349, -2.06349, 0.192423, 4.06349, -2.06349, -0.188455, 4.06349, 2.12698, -0.188455, -4.06349, -2.06349, 0.192423, -4.06349)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p075f"]
+resource_name = "wall_lines"
+shading_mode = 0
+albedo_texture = ExtResource("8_jscy8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_goax6"]
+resource_name = "concrete"
+shading_mode = 0
+albedo_texture = ExtResource("9_dp3eg")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_pm3ni"]
+_surfaces = [{
+"aabb": AABB(-0.5, 0, -0.035, 1, 0.5, 0.07),
+"attribute_data": PackedByteArray("6rEAADKzAAAys/9/6rH/fwHLMjMBywAAzMwAAMzM/38ys/9//bQzMzKzAAD9tAAANP4zMzT+AAD//wAA////f2Xm/38w6DMzZeYAADDoAAATzv9/zMz/f8zMAAATzgAA"),
+"format": 34896613399,
+"index_count": 48,
+"index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABAAGAAcABwAIAAQACQAEAAgACAAKAAkACgALAAkADAANAA4ADAAOAA8ADwAQAAwAEQAMABAAEAASABEAEgATABEAFAAVABYAFgAXABQA"),
+"material": SubResource("StandardMaterial3D_p075f"),
+"name": "wall_lines",
+"primitive": 3,
+"uv_scale": Vector4(10, 1, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////////7//////AAD/v///AAAAAP+///8AAP///7/rEZmZAAD//+sR//8AAP//AAD//wAA//8AAAAAAAD/////AAAAAP//E+6ZmQAA////////AAD//xPu//8AAP//E+6Zmf//AIAT7v////8AgP///////wCA//8AAP//AIAAAAAA//8AgOsRmZn//wCAAAD/////AIDrEf////8AgAAAAAD///+/AAAAAAAA/78AAP//AAD/vwAA//////+//38AAP9/AAD/fwAA/38AAP9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f///")
+}, {
+"aabb": AABB(-0.5, 0, -0.035, 1, 0.5, 0.07),
+"attribute_data": PackedByteArray("EJz//22b//9tm3b/EJx2/wAAdv8kCXb/JAn//wAA//+RpP//7aP//+2jdv+RpHb/7aP//xCc//8QnHb/7aN2/7dnLulaaC7pWmi06rdntOpiO7Tqvjq06r46LuliOy7p"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABgAHAAQACAAJAAoACgALAAgADAANAA4ADgAPAAwAEAARABIAEgATABAAFAAVABYAFgAXABQA"),
+"material": SubResource("StandardMaterial3D_goax6"),
+"name": "concrete",
+"primitive": 3,
+"uv_scale": Vector4(28, 24, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("E+7//wAA////////AAD/////////////E+7///////8AAAAA////v///AAD///+///8AAAAA/78AAAAAAAD/vwAA//8AAP//6xH//wAA///rEf///////wAA////////6xGZmQAA//8T7pmZAAD//xPumZn/////6xGZmf/////rEf//////v+sR//8AAP+/6xGZmQAA/7/rEZmZ////vxPumZn///+/E+6ZmQAA/78T7v//AAD/vxPu//////+//3//v/9//7//f/+//3//vwAA/38AAP9/AAD/fwAA/3//f/+//3//v/9//7//f/+//3//v/9//7//f/+//3//v/9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///")
+}]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jscy8"]
-points = PackedVector3Array(-4.06349, -0.188455, -4.06349, 4.06347, 0.192423, 4.06349, 4.06347, -0.188455, 4.06349, 4.06347, 0.192423, -4.06349, -4.06349, 0.192423, 4.06349, -4.06349, -0.188455, 4.06349, 4.06347, -0.188455, -4.06349, -4.06349, 0.192423, -4.06349)
+points = PackedVector3Array(-1.39683, -0.480253, -0.25, 1.52351, 0.52381, 0.297563, 1.39683, 0.480253, -0.25, -1.52351, 0.52381, 0.297563, 1.52351, -0.52381, 0.297563, -1.52351, -0.52381, 0.297563, -1.39683, 0.480253, -0.25, 1.39683, -0.480253, -0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vxglm"]
+size = Vector3(0.25, 0.25, 7.95)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2f3dj"]
+points = PackedVector3Array(-0.149386, -0.149386, -3.99939, 0.143252, 0.143252, 3.99939, 0.143252, -0.149386, 3.99939, 0.143252, 0.143252, -3.99939, -0.149386, 0.143252, 3.99939, -0.149386, -0.149386, 3.99939, 0.143252, -0.149386, -3.99939, -0.149386, 0.143252, -3.99939)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_yq6so"]
+points = PackedVector3Array(-0.149386, -0.149386, -3.99939, 0.143252, 0.143252, 3.99939, 0.143252, -0.149386, 3.99939, 0.143252, 0.143252, -3.99939, -0.149386, 0.143252, 3.99939, -0.149386, -0.149386, 3.99939, 0.143252, -0.149386, -3.99939, -0.149386, 0.143252, -3.99939)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fv21b"]
+size = Vector3(3.5, 0.25, 0.25)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tel4y"]
+points = PackedVector3Array(-1.77743, -0.152778, -0.152778, 1.77743, 0.180556, 0.180556, 1.77743, 0.180556, -0.152778, -1.77743, 0.180556, 0.180556, 1.77743, -0.152778, 0.180556, 1.77743, -0.152778, -0.152778, -1.77743, 0.180556, -0.152778, -1.77743, -0.152778, 0.180556)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pm3ni"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ld40"]
 width = 1
@@ -158,31 +219,147 @@ script = ExtResource("4_a8y0u")
 modifiers = ["grabbable", "openable", "deliverable"]
 
 [node name="cart" type="Node3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, -13)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, -12.9836)
 script = ExtResource("6_jscy8")
 
-[node name="cart_handle" type="RigidBody3D" parent="World/cart" groups=["grabbable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.950122, 0.519596)
-mass = 4.0
-lock_rotation = true
+[node name="cart_area" type="Area3D" parent="World/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.594738, 4.26153)
+gravity_space_override = 3
+gravity = 12.25
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_handle"]
-material_override = SubResource("StandardMaterial3D_pm3ni")
-mesh = SubResource("SphereMesh_jscy8")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -3.684)
+transparency = 0.74
+mesh = SubResource("BoxMesh_og1vs")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_handle"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -3.684)
 shape = SubResource("ConvexPolygonShape3D_pm3ni")
 
+[node name="cart_sticky" type="Area3D" parent="World/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.725, 4.26153)
+gravity_space_override = 1
+gravity = 12.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_sticky"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.757632, -3.684)
+transparency = 0.74
+mesh = SubResource("BoxMesh_2wyq8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_sticky"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.757632, -3.684)
+shape = SubResource("ConvexPolygonShape3D_vxglm")
+
 [node name="cart_body" type="RigidBody3D" parent="World/cart"]
-mass = 1000.0
-gravity_scale = 4.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.215, 0.831527)
+mass = 40.0
+continuous_cd = true
+angular_damp = 20.0
+
+[node name="RemoteTransform3D2" type="RemoteTransform3D" parent="World/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.203486, -0.84949)
+remote_path = NodePath("../../cart_handle")
+update_scale = false
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="World/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.785, 3.43)
+remote_path = NodePath("../../cart_handle_collision")
+update_position = false
+update_rotation = false
+update_scale = false
+
+[node name="RemoteTransform3D3" type="RemoteTransform3D" parent="World/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.809738, 3.43)
+remote_path = NodePath("../../cart_area")
+update_scale = false
+
+[node name="RemoteTransform3D4" type="RemoteTransform3D" parent="World/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51, 3.43)
+remote_path = NodePath("../../cart_sticky")
+update_scale = false
+
+[node name="RemoteTransform3D5" type="RemoteTransform3D" parent="World/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.836)
+remote_path = NodePath("../../cart_rails")
+update_scale = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0259132)
 material_override = SubResource("StandardMaterial3D_y6deb")
 mesh = SubResource("BoxMesh_y6deb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1.2, 0, 0, 0, 1, 0, -0.0871048, -0.0259132)
+shape = SubResource("ConvexPolygonShape3D_yc10j")
+
+[node name="cart_handle" type="RigidBody3D" parent="World/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0115137, -0.0179634)
+
+[node name="wall-type-b" type="MeshInstance3D" parent="World/cart/cart_handle"]
+transform = Transform3D(3.95, 0, 0, 0, -2.5, 2.18557e-07, 0, -2.18557e-07, -2.5, 0, 1.114, 4.691)
+mesh = SubResource("ArrayMesh_pm3ni")
+skeleton = NodePath("")
+
+[node name="cart_handle_collision" type="RigidBody3D" parent="World/cart" groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.57, 4.26153)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_handle_collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.157022, 0.279382)
 shape = SubResource("ConvexPolygonShape3D_jscy8")
+
+[node name="cart_rails" type="RigidBody3D" parent="World/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0349998, -0.00447369)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87, 0, 0.785)
+mesh = SubResource("BoxMesh_vxglm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87, 0, 0.785)
+shape = SubResource("ConvexPolygonShape3D_2f3dj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="World/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86815, 0.00020504, 0.78567)
+mesh = SubResource("BoxMesh_vxglm")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="World/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86815, 0.00020504, 0.78567)
+shape = SubResource("ConvexPolygonShape3D_yq6so")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="World/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 0, -3.062)
+mesh = SubResource("BoxMesh_fv21b")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="World/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 0, -3.062)
+shape = SubResource("ConvexPolygonShape3D_tel4y")
+
+[node name="cart_item_view" type="RigidBody3D" parent="World/cart"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_item_view"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.215, 0.805614)
+material_override = SubResource("StandardMaterial3D_y6deb")
+mesh = SubResource("BoxMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="wall-type-b" type="MeshInstance3D" parent="World/cart/cart_item_view"]
+transform = Transform3D(3.95, 0, 0, 0, -1.4, 1.31134e-08, 0, -1.22392e-07, -0.15, 0, 0.377424, 4.67304)
+mesh = SubResource("BoxMesh_pm3ni")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="World/cart/cart_item_view"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87, 0.0349998, 0.780526)
+mesh = SubResource("BoxMesh_vxglm")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="World/cart/cart_item_view"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86815, 0.0352049, 0.781197)
+mesh = SubResource("BoxMesh_vxglm")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="World/cart/cart_item_view"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00599957, 0.0349998, -3.06647)
+mesh = SubResource("BoxMesh_fv21b")
+skeleton = NodePath("")
 
 [node name="box" type="RigidBody3D" parent="World" groups=["grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, 0)
@@ -211,16 +388,19 @@ shape = SubResource("ConvexPolygonShape3D_muem4")
 [node name="box_spawner" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
 script = ExtResource("8_jkv2x")
+box_size = Vector3(2, 2, 2)
 box_texture = ExtResource("5_jkv2x")
 
 [node name="box_spawner2" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
 script = ExtResource("8_jkv2x")
+box_size = Vector3(0.5, 0.5, 0.5)
 box_texture = ExtResource("5_jkv2x")
 
 [node name="box_spawner3" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
 script = ExtResource("8_jkv2x")
+box_size = Vector3(1.5, 1.5, 1.5)
 box_texture = ExtResource("9_dp3eg")
 
 [node name="box_spawner4" type="Node3D" parent="World" groups=["spawner"]]

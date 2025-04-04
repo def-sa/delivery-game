@@ -1,22 +1,85 @@
 extends Node3D
-
-@onready var cart_handle: RigidBody3D = $"."/cart_handle
+@onready var cart: Node3D = $"."
+@onready var cart_handle: RigidBody3D = $"."/cart_handle_collision
+@onready var cart_handle_collision: CollisionShape3D = $cart_handle_collision/CollisionShape3D
 @onready var cart_body: RigidBody3D = $"."/cart_body
+@onready var remote_transform = $"."/cart_body/RemoteTransform3D
+@onready var player: CharacterBody3D = $"../../Player"
+@onready var hand: Marker3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D/hand"
+
+@onready var cart_rails: RigidBody3D = $cart_rails
+@onready var area: Area3D = $cart_area
+@onready var sticky_area: Area3D = $cart_sticky
+
+@onready var hand_path: Path3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D"
+@onready var hand_path_follow: PathFollow3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D"
+
+@onready var cart_item_view: RigidBody3D = $cart_item_view
+
 
 var object_drag = 0.0075
-var pull_power = 10
+var pull_power = 60
 var max_obj_speed = 10
+
+var cart_speed = 1.5
+
+var bodies_in_cart = []
 
 
 func _ready() -> void:
+	area.body_entered.connect(_body_entered_cart)
+	area.body_exited.connect(_body_exited_cart)
 	pass
 
 
+
+
 func _physics_process(delta: float) -> void:
-	var a = cart_body.global_transform.origin
-	var b = cart_handle.global_transform.origin
-	var direction = (b - a)
-	var distance = (b - a).length() * object_drag
-	var movement_speed = clamp(distance * pull_power, 0, max_obj_speed)
-	
-	cart_body.linear_velocity = direction * movement_speed
+		if player.carrying == cart_handle:
+			
+			player.handle_carrying_gui(cart_item_view, "on")
+			
+			remote_transform.update_rotation = false
+			cart_handle_collision.disabled = true
+			
+			var new_location = (hand.global_transform.origin  - cart_body.global_transform.origin)
+			var distance = (hand.global_transform.origin - cart_body.global_transform.origin).length() * object_drag
+			var movement_speed = clamp(distance * pull_power, 0, max_obj_speed)
+			
+			cart_body.linear_velocity.x = new_location.x * movement_speed * cart_speed
+			cart_body.linear_velocity.z = new_location.z * movement_speed * cart_speed
+			
+			cart_body.rotation.y = lerp(cart_body.rotation.y, cart_handle.rotation.y, 1)
+			
+			for body in bodies_in_cart:
+				if !player:
+					body.linear_velocity.x = new_location.x * movement_speed * cart_speed
+					body.linear_velocity.z = new_location.z * movement_speed * cart_speed
+		else:
+			remote_transform.update_rotation = true
+			remote_transform.update_position = true
+			cart_handle_collision.disabled = false
+
+
+
+func _body_entered_cart(body: Node3D):
+	if body != cart_body and body != cart_rails:
+		bodies_in_cart.push_front(body)
+		
+		print(bodies_in_cart)
+		if "in_cart" in body:
+			body.in_cart = true
+
+func _body_exited_cart(body: Node3D):
+	if body != cart_body and body != cart_rails:
+		var index = bodies_in_cart.find(body)
+		
+		for child in cart_body.get_children():
+			if child is RemoteTransform3D:
+				if child.remote_path == body.get_path():
+					child.queue_free()
+		
+		if index != -1:
+			bodies_in_cart.remove_at(index)
+		if "in_cart" in body:
+			body.in_cart = false

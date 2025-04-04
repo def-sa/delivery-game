@@ -37,7 +37,7 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var gui_obj_speed_text: RichTextLabel = $CanvasLayer/GUI/obj_speed_text
 @onready var gui_cooldown: Timer = $CanvasLayer/GUI/gui_cooldown
 @onready var interact_tip_text: Label = $CanvasLayer/GUI/interact_tip_text
-@onready var grab_buffer_display: TextureProgressBar = $CanvasLayer/GUI/buffer_timer_display
+@onready var grab_buffer_display: ProgressBar = $CanvasLayer/GUI/crosshair_grabbing/ProgressBar
 @onready var item_overlay = $".."/CanvasLayer/item_overlay
 @onready var item_overlay_viewport_container = $".."/CanvasLayer/item_overlay/SubViewportContainer
 @onready var item_overlay_viewport = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport
@@ -60,6 +60,9 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var grab_buffer_timer: Timer = $camera_pivot/spring_arm_3d/camera/grab_buffer_timer
 @onready var rotate_to_player_joint = $camera_pivot/spring_arm_3d/camera/rotate_to_player_joint
 @onready var static_body: StaticBody3D = $camera_pivot/spring_arm_3d/camera/StaticBody3D
+
+@onready var no_fly_ray: RayCast3D = $no_fly_ray
+
 
 var spring_arm_length = min_zoom_in
 var flashlight_toggle:bool = false:
@@ -146,9 +149,14 @@ func _physics_process(delta: float) -> void:
 		rotate_to_player_joint.set_node_b(rotate_to_player_joint.get_path())
 		holding = null #so we dont keep running these ^^^ 
 	
+	if no_fly_ray.get_collider() == carrying:
+		holding = false
+		carrying = null
+	
 func player_grabbing(delta: float):
 	if carrying:
-		grab_buffer_display.value = grab_buffer_timer.time_left
+		grab_buffer_display.value = grab_buffer_timer.time_left * 50
+		
 		var a = carrying.global_transform.origin
 		var b = player_hand.global_transform.origin
 		var direction = (b - a)
@@ -281,8 +289,9 @@ func _input(event: InputEvent) -> void:
 				holding = true
 			else:
 				holding = false
-		else:
+		elif carrying:
 			carrying = null
+			holding = false
 
 func _ray_intersect_obj():
 	if ray_interaction.is_colliding():
@@ -368,19 +377,24 @@ func handle_carrying_gui(obj, hovering):
 	if hovering != "off":
 		var view_obj
 		if obj is RigidBody3D:
-			item_overlay_modifiers.text = ""
-			for group in obj.get_groups():
-				item_overlay_modifiers.text += str(group).capitalize()+", "
-			
-			#if obj.id:
-				#item_overlay_id.text = obj.id
-			
 			view_obj = obj.duplicate()
 			gui_current_object = view_obj
 			
+			#find mesh, set item to 1 size
+			for child in view_obj.get_children():
+				if child is MeshInstance3D:
+					var unique_mesh = child.mesh.duplicate()
+					unique_mesh.size = Vector3(1,1,1)
+					child.mesh = unique_mesh
+					
+			item_overlay_modifiers.text = ""
+			for group in obj.get_groups():
+				item_overlay_modifiers.text += str(group).capitalize()+", "
+				
 			if not spin_locked:
 				#TODO: add lerp? smooth interpolate somehow
 				view_obj.set_angular_velocity(Vector3(-1,-1,-1))
+				
 			view_obj.gravity_scale = 0
 			#view_obj.freeze = true
 			view_obj.position.y = -50

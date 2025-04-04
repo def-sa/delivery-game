@@ -3,6 +3,8 @@ extends Node3D
 @export var box_size: Vector3 = Vector3(1, 1, 1)
 @export var box_mass: float = 1.0
 @export var box_texture: Texture
+#if no weight defined, it will default to calculating a weight based on its size
+@export var box_weight: float
 
 const box_script = preload("res://scenes/box.gd")
 const decal_script = preload("res://scenes/decal.gd")
@@ -18,14 +20,17 @@ var tier = 0
 #TODO 
 var street = 0
 
+func _ready() -> void:
+	if box_size and !box_weight:
+		box_weight = (box_size.x + box_size.y + box_size.z)/3
 
 
 #i want to pass in variables into the spawner and create the box with those variables 
-#modifers
+#modifers x
 #rarity
-#texture
-#size
-#weight
+#texture x
+#size x
+#weight 
 #openable
 
 func spawn_box(modifiers:Array):
@@ -48,6 +53,9 @@ func spawn_box(modifiers:Array):
 	box_shape.extents = box_size / 2  # BoxShape3D uses half-extents
 	collision.shape = box_shape
 	
+	rigidbody.mass = box_weight
+	print(box_weight)
+	
 	var shadow_decal = Decal.new()
 	var noise_texture = NoiseTexture2D.new()
 	noise_texture.width = 1
@@ -55,8 +63,8 @@ func spawn_box(modifiers:Array):
 	
 	shadow_decal.texture_albedo = noise_texture
 	shadow_decal.modulate = Color(0.0, 0.0, 0.0)
-	shadow_decal.size.x = 1
-	shadow_decal.size.z = 1
+	shadow_decal.size.x = box_size.x
+	shadow_decal.size.z = box_size.z
 	shadow_decal.size.y = 20
 	shadow_decal.lower_fade = 2
 	shadow_decal.upper_fade = .5
