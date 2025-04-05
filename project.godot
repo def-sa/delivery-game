@@ -25,8 +25,8 @@ Configfilehandler="*res://scripts/configfilehandler.gd"
 
 [display]
 
-window/size/viewport_width=1858
-window/size/viewport_height=1057
+window/size/viewport_width=1700
+window/size/viewport_height=900
 window/vsync/vsync_mode=0
 
 [editor_plugins]

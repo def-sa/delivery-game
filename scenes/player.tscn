@@ -1,10 +1,20 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=18 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/player.gd" id="1_v666e"]
 [ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scenes/gui.gd" id="2_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://cyfjd4773jfol" path="res://assets/crosshair_grabbing.png" id="4_dqkch"]
 [ext_resource type="Texture2D" uid="uid://81ljda3073o0" path="res://assets/crosshair.png" id="5_qlg0r"]
 [ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://scenes/negative.gdshader" id="5_tuyoq"]
+[ext_resource type="Script" uid="uid://bnn5y78er1wbb" path="res://item_detection.gd" id="6_tuyoq"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
+radius = 24.0
+height = 48.0
+radial_segments = 8
+rings = 8
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tuyoq"]
+points = PackedVector3Array(14.8662, 18.1499, -1.8302, -22.8497, -5.07139, -1.10259, -22.862, -5.07412, 1.07047, 10.5453, -21.1214, 0.343042, 1.07189, 5.08072, 22.8591, 1.07047, -5.07412, -22.862, -14.1562, 18.8549, -1.10335, 22.8591, -5.08072, 1.07189, -6.926, -21.8195, 6.16195, -0.375473, 11.6401, -20.7601, 17.0803, -4.36167, -15.6547, 16.294, -5.79447, 16.294, -14.97, -10.9387, -14.97, -15.658, 4.36135, 17.0791, 1.0716, 18.8715, 14.1405, -0.37594, -11.6552, 20.7544, -16.2967, 5.78382, -16.2967, 1.07085, -18.8585, -14.1634, 14.8081, 11.5679, 14.8081, -1.84615, 22.7618, -6.25759, -14.9781, -10.9446, 14.9454, 14.0733, 13.0067, -14.1105, 22.8591, 5.08072, 1.07189, -20.7601, 11.6401, -0.375473, -14.1562, -18.8549, -1.10335, 10.5251, -18.1709, 11.247, -10.5532, 18.1629, 11.2421, 14.0733, -13.0067, -14.1105, -11.9487, 16.6319, -11.9487, 4.76777, 22.8111, 4.76777, -4.05101, -22.7314, -5.51652, 20.7642, -11.6653, 0.343406)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xqg4r"]
 radius = 1.0
@@ -38,10 +48,16 @@ point_count = 2
 
 [sub_resource type="BoxMesh" id="BoxMesh_dqkch"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qhqgy"]
-
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_v666e")
+
+[node name="item_detection_area" type="Area3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="item_detection_area"]
+mesh = SubResource("SphereMesh_qlg0r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="item_detection_area"]
+shape = SubResource("ConvexPolygonShape3D_tuyoq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -58,7 +74,7 @@ shape = 0
 material = SubResource("FogMaterial_20bdx")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 100
+layer = 4
 
 [node name="GUI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -139,6 +155,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="interact_tip_text" type="Label" parent="CanvasLayer/GUI"]
+visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -199,6 +216,21 @@ size_flags_vertical = 4
 texture = ExtResource("5_qlg0r")
 expand_mode = 3
 
+[node name="item_detection" type="Control" parent="CanvasLayer/GUI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_tuyoq")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/GUI/item_detection"]
+visible = false
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+border_width = 2.0
+editor_only = false
+
 [node name="camera_pivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
 
@@ -254,12 +286,7 @@ spot_angle = 55.21
 [node name="no_fly_ray" type="RayCast3D" parent="."]
 target_position = Vector3(0, -6, 0)
 
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
-visible = false
-shape = SubResource("CapsuleShape3D_qhqgy")
-
+[connection signal="body_entered" from="item_detection_area" to="." method="_on_item_detection_area_body_entered"]
+[connection signal="body_exited" from="item_detection_area" to="." method="_on_item_detection_area_body_exited"]
 [connection signal="timeout" from="CanvasLayer/GUI/gui_cooldown" to="." method="_on_gui_cooldown_timeout"]
 [connection signal="timeout" from="camera_pivot/spring_arm_3d/camera/grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]

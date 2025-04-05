@@ -39,6 +39,8 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var interact_tip_text: Label = $CanvasLayer/GUI/interact_tip_text
 @onready var grab_buffer_display: ProgressBar = $CanvasLayer/GUI/crosshair_grabbing/ProgressBar
 @onready var item_overlay = $".."/CanvasLayer/item_overlay
+@onready var item_detection_gui: Control = $CanvasLayer/GUI/item_detection
+
 @onready var item_overlay_viewport_container = $".."/CanvasLayer/item_overlay/SubViewportContainer
 @onready var item_overlay_viewport = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport
 @onready var item_overlay_camera = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera
@@ -63,6 +65,7 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 
 @onready var no_fly_ray: RayCast3D = $no_fly_ray
 
+@onready var player: CharacterBody3D = $"."
 
 var spring_arm_length = min_zoom_in
 var flashlight_toggle:bool = false:
@@ -143,8 +146,12 @@ func _physics_process(delta: float) -> void:
 	if holding == true:
 		pick_up_object()
 		interact_tip_text.text = ""
+		if carrying:
+			carrying.can_sleep = false
 		
 	if holding == false:
+		if carrying:
+			carrying.can_sleep = true
 		handle_carrying_gui(null, null)
 		drop_object()
 		obj_speed_gui_visible(false)
@@ -422,6 +429,7 @@ func overlay_info_visible(_visible):
 		"off":
 			item_overlay.visible = false
 
+
 func obj_speed_gui_visible(valueBool):
 	gui_obj_speed_text.visible = valueBool
 	gui_obj_speed_bar.visible = valueBool
@@ -468,5 +476,20 @@ func _fov_updated(is_default, value):
 func _max_grab_length_updated(is_default, value):
 	path_3d.curve.set_point_position(1, Vector3(0,0,-value))
 	
+
+
+func _on_item_detection_area_body_entered(body: Node3D) -> void:
+	item_detection_gui.detected_obj = [body,"entered"]
+	item_detection_gui.objects_inside_area.push_front(body)
+
+func _on_item_detection_area_body_exited(body: Node3D) -> void:
+	item_detection_gui.detected_obj = [body, "exited"]
+	var obj_array = item_detection_gui.objects_inside_area
+	for obj in obj_array:
+		var index = obj_array.find(body)
+		if index != -1:
+			obj_array.remove_at(index)
+		
+	#obj_array.push_front(body)
 	
 	

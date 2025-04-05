@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=54 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/main.gd" id="1_0glii"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_rhc0n"]
@@ -116,6 +116,9 @@ size = Vector3(3.5, 0.25, 0.25)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tel4y"]
 points = PackedVector3Array(-1.77743, -0.152778, -0.152778, 1.77743, 0.180556, 0.180556, 1.77743, 0.180556, -0.152778, -1.77743, 0.180556, 0.180556, 1.77743, -0.152778, 0.180556, 1.77743, -0.152778, -0.152778, -1.77743, 0.180556, -0.152778, -1.77743, -0.152778, 0.180556)
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jscy8"]
+rough = true
+
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ld40"]
 width = 1
 height = 1
@@ -185,7 +188,6 @@ script = ExtResource("1_0glii")
 layer = 100
 
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("2_rhc0n")]
-top_level = true
 metadata/_edit_use_anchors_ = true
 
 [node name="item_overlay" parent="CanvasLayer" instance=ExtResource("3_jkv2x")]
@@ -219,6 +221,8 @@ modifiers = ["grabbable", "openable", "deliverable"]
 [node name="cart" type="Node3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, -12.9836)
 script = ExtResource("6_jscy8")
+
+[node name="bodies_in_cart" type="Node3D" parent="World/cart"]
 
 [node name="cart_area" type="Area3D" parent="World/cart"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.809738, 4.3255)
@@ -336,6 +340,7 @@ shape = SubResource("ConvexPolygonShape3D_tel4y")
 
 [node name="box" type="RigidBody3D" parent="World" groups=["grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, 0)
+physics_material_override = SubResource("PhysicsMaterial_jscy8")
 script = ExtResource("6_jbj1t")
 
 [node name="Decal" type="Decal" parent="World/box"]
