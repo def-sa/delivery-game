@@ -8,7 +8,8 @@ func _ready() -> void:
 func spawn_debug_boxes(modifiers:Array):
 	for child in get_children():
 		if child.is_in_group("spawner"):
-			if 0.5 < randf():
-				child.spawn_box(modifiers)
-			else:
-				child.spawn_box(["openable"])
+			child.spawn_box(modifiers)
+			#if 0.5 < randf():
+				#child.spawn_box(modifiers)
+			#else:
+				#child.spawn_box(["openable"])

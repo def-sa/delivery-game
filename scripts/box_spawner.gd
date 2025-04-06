@@ -54,7 +54,6 @@ func spawn_box(modifiers:Array):
 	collision.shape = box_shape
 	
 	rigidbody.mass = box_weight
-	print(box_weight)
 	
 	var shadow_decal = Decal.new()
 	var noise_texture = NoiseTexture2D.new()

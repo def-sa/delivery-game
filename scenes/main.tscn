@@ -216,9 +216,9 @@ environment = SubResource("Environment_0xlil")
 
 [node name="World" type="Node3D" parent="."]
 script = ExtResource("4_a8y0u")
-modifiers = ["grabbable", "openable", "deliverable"]
+modifiers = ["grabbable", "openable", "deliverable", "detectable"]
 
-[node name="cart" type="Node3D" parent="World"]
+[node name="cart" type="Node3D" parent="World" groups=["detectable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, -12.9836)
 script = ExtResource("6_jscy8")
 
@@ -338,7 +338,7 @@ mesh = SubResource("BoxMesh_fv21b")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 0, -3.062)
 shape = SubResource("ConvexPolygonShape3D_tel4y")
 
-[node name="box" type="RigidBody3D" parent="World" groups=["grabbable"]]
+[node name="box" type="RigidBody3D" parent="World" groups=["detectable", "grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, 0)
 physics_material_override = SubResource("PhysicsMaterial_jscy8")
 script = ExtResource("6_jbj1t")

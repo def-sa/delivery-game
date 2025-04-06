@@ -54,6 +54,7 @@ script = ExtResource("1_v666e")
 [node name="item_detection_area" type="Area3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="item_detection_area"]
+visible = false
 mesh = SubResource("SphereMesh_qlg0r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="item_detection_area"]
@@ -230,6 +231,9 @@ offset_right = 100.0
 offset_bottom = 100.0
 border_width = 2.0
 editor_only = false
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="CanvasLayer/GUI/item_detection"]
+visible = false
 
 [node name="camera_pivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)

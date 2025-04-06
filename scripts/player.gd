@@ -66,6 +66,9 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var no_fly_ray: RayCast3D = $no_fly_ray
 
 @onready var player: CharacterBody3D = $"."
+@onready var item_detection_area: Area3D = $item_detection_area
+
+
 
 var spring_arm_length = min_zoom_in
 var flashlight_toggle:bool = false:
@@ -479,17 +482,9 @@ func _max_grab_length_updated(is_default, value):
 
 
 func _on_item_detection_area_body_entered(body: Node3D) -> void:
-	item_detection_gui.detected_obj = [body,"entered"]
-	item_detection_gui.objects_inside_area.push_front(body)
+	item_detection_gui.item_entered_area(body)
+	item_detection_gui.objects_inside_area = item_detection_area.get_overlapping_bodies()
 
 func _on_item_detection_area_body_exited(body: Node3D) -> void:
-	item_detection_gui.detected_obj = [body, "exited"]
-	var obj_array = item_detection_gui.objects_inside_area
-	for obj in obj_array:
-		var index = obj_array.find(body)
-		if index != -1:
-			obj_array.remove_at(index)
-		
-	#obj_array.push_front(body)
-	
-	
+	item_detection_gui.item_exited_area(body)
+	item_detection_gui.objects_inside_area = item_detection_area.get_overlapping_bodies()
