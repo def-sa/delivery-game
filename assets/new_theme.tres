@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ds7d7egnskxum"]
+
+[ext_resource type="FontFile" uid="uid://cbmorh8hcgijx" path="res://assets/RobotoMono-Italic-VariableFont_wght.ttf" id="1_6pma3"]
+
+[resource]
+default_font = ExtResource("1_6pma3")

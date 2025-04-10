@@ -3,7 +3,6 @@ extends Node3D
 @onready var world: WorldEnvironment = $WorldEnvironment
 
 
-
 func _ready() -> void:
 	Signalbus.brightness_updated.connect(_brightness_updated)
 	Signalbus.contrast_updated.connect(_contrast_updated)

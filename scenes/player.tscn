@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=19 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/player.gd" id="1_v666e"]
 [ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scenes/gui.gd" id="2_qhqgy"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://81ljda3073o0" path="res://assets/crosshair.png" id="5_qlg0r"]
 [ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://scenes/negative.gdshader" id="5_tuyoq"]
 [ext_resource type="Script" uid="uid://bnn5y78er1wbb" path="res://item_detection.gd" id="6_tuyoq"]
+[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/new_theme.tres" id="7_fjrip"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
 radius = 24.0
@@ -87,6 +88,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
+theme = ExtResource("7_fjrip")
 script = ExtResource("2_qhqgy")
 
 [node name="score" type="RichTextLabel" parent="CanvasLayer/GUI"]
@@ -224,16 +226,25 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("6_tuyoq")
 
-[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/GUI/item_detection"]
-visible = false
+[node name="rectangle" type="ReferenceRect" parent="CanvasLayer/GUI/item_detection"]
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
-border_width = 2.0
 editor_only = false
 
-[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="CanvasLayer/GUI/item_detection"]
-visible = false
+[node name="item_name_bg" type="ColorRect" parent="CanvasLayer/GUI/item_detection/rectangle"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer/GUI/item_detection/rectangle/item_name_bg"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("7_fjrip")
+text = "testing waaaaow"
+clip_text = true
 
 [node name="camera_pivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)

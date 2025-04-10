@@ -61,10 +61,10 @@ func _physics_process(delta: float) -> void:
 		
 		cart_body.rotation.y = lerp(cart_body.rotation.y, cart_handle.rotation.y, 1)
 		
-		for child in bodies_in_cart_node.get_children():
-			child.linear_velocity.x = new_location.x * movement_speed * cart_speed
-			child.linear_velocity.z = new_location.z * movement_speed * cart_speed
-			
+		#for child in bodies_in_cart_node.get_children():
+			#child.linear_velocity.x = new_location.x * movement_speed * cart_speed
+			#child.linear_velocity.z = new_location.z * movement_speed * cart_speed
+			#
 			
 		#////////////
 		

@@ -1,9 +1,10 @@
-[gd_scene load_steps=54 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=55 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/main.gd" id="1_0glii"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_rhc0n"]
 [ext_resource type="PackedScene" uid="uid://d0dymr70087q8" path="res://scenes/player.tscn" id="3_a6xwp"]
 [ext_resource type="PackedScene" uid="uid://r0lr0id6q0kw" path="res://item_overlay.tscn" id="3_jkv2x"]
+[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/new_theme.tres" id="3_pm3ni"]
 [ext_resource type="Script" uid="uid://4meaxqmy35g5" path="res://scenes/world.gd" id="4_a8y0u"]
 [ext_resource type="Texture2D" uid="uid://bk1cs84anbjv" path="res://assets/carton_box_04_closed_0.jpg" id="5_jkv2x"]
 [ext_resource type="Script" uid="uid://d1c8g7rtwmurk" path="res://scenes/box.gd" id="6_jbj1t"]
@@ -188,9 +189,11 @@ script = ExtResource("1_0glii")
 layer = 100
 
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("2_rhc0n")]
+theme = ExtResource("3_pm3ni")
 metadata/_edit_use_anchors_ = true
 
 [node name="item_overlay" parent="CanvasLayer" instance=ExtResource("3_jkv2x")]
+theme = ExtResource("3_pm3ni")
 metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("3_a6xwp")]
@@ -362,6 +365,8 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="World/box"]
 shape = SubResource("ConvexPolygonShape3D_muem4")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="World/box"]
 
 [node name="box_spawner" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)

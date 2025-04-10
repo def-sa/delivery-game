@@ -73,6 +73,13 @@ func spawn_box(modifiers:Array):
 	shadow_decal.distance_fade_length = 20
 	shadow_decal.set_script(decal_script)
 	
+	#var on_screen_notifier = VisibleOnScreenNotifier3D.new()
+	#on_screen_notifier.aabb = box_mesh.get_aabb()
+	
+	
+	
+	
+	#rigidbody.add_child(on_screen_notifier)
 	rigidbody.add_child(shadow_decal)
 	rigidbody.add_child(mesh)
 	rigidbody.add_child(collision)

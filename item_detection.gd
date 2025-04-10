@@ -1,35 +1,55 @@
 extends Control
-
+@onready var player: CharacterBody3D = $"../../.."
+@onready var box: RigidBody3D = $World/box
 #object
 var objects_inside_area = []:
 	set(v):
 		objects_inside_area = v
 
 
-#[object, corrosponding rectangle, on screen notifier]
+#[object, current ui container]
 var connected_nodes_array = []
-
 
 #update rectangle, and  screen notifier position
 func _physics_process(delta: float) -> void:
-	
 	for obj in objects_inside_area:
+		
+		var obj_on_screen = true
+		var visible_on_screen_notifier = get_on_screen_notifier(obj)
+		if visible_on_screen_notifier:
+			if visible_on_screen_notifier.is_on_screen() == false:
+				obj_on_screen = false
 		var current_object = obj
+		
 		for node in connected_nodes_array:
 			if current_object == node[0]:
+				var current_ui_container = node[1]
+				if obj_on_screen == true:
+					current_ui_container.visible = true
+				else:
+					current_ui_container.visible = false
+					
 				var current_object_mesh = get_object_mesh(current_object)
-				
-				var current_rectangle = node[1]
-				var current_on_screen_notifier = node[2]
-				
-				current_on_screen_notifier.aabb = current_object_mesh.get_aabb()
 				var bounding_box = get_2d_bounding_box(current_object_mesh)
-				current_rectangle.position = bounding_box.position
-				current_rectangle.size = bounding_box.size
 				
-				#if current_on_screen_notifier.is_on_screen() == true:
 				
-				#if current_on_screen_notifier.is_on_screen() == false:
+				#this really sucks but it works for now i guess
+				var child = current_ui_container.get_children()[0]
+				if child.name == "rectangle":
+					child.position = bounding_box.position
+					child.size = bounding_box.size
+				child = child.get_children()[0]
+				if child.name == "item_name_bg":
+					child.size.x = bounding_box.size.x
+					child.visible = current_object.is_discovered
+				if player.carrying == current_object:
+					child = child.get_children()[0]
+					if child.name == "item_name":
+						child.text = str(current_object.id)
+						child.visible = current_object.is_discovered
+						current_object.is_discovered = true
+					########
+
 
 func item_entered_area(object):
 	#if nodes connected and saved, return 
@@ -38,7 +58,9 @@ func item_entered_area(object):
 			return
 	
 	if object.is_in_group("detectable"):
+		
 		var rectangle = ReferenceRect.new()
+		rectangle.name = "rectangle"
 		rectangle.border_width = 1
 		rectangle.editor_only = false
 		var current_object_mesh = get_object_mesh(object)
@@ -46,24 +68,59 @@ func item_entered_area(object):
 		rectangle.position = bounding_box.position
 		rectangle.size = bounding_box.size
 		
-		var on_screen_notifier = VisibleOnScreenNotifier3D.new()
-		on_screen_notifier.aabb = object.mesh.get_aabb()
+		var item_name_bg = ColorRect.new()
+		item_name_bg.name = "item_name_bg"
+		item_name_bg.color = Color(1.0, 0.0, 0.0)
+		item_name_bg.size.x = bounding_box.size.x
+		item_name_bg.size.y = 25
+		item_name_bg.position += Vector2(0, -25)
 		
-		connected_nodes_array.push_front([object, rectangle, on_screen_notifier])
-		add_child(rectangle)
-		add_child(on_screen_notifier)
-		print("created", object)
+		var item_name = Label.new()
+		var item_name_theme = Theme.new()
+		item_name_theme.default_font = load("res://assets/RobotoMono-Italic-VariableFont_wght.ttf")
+		item_name.theme = item_name_theme
+		item_name.name = "item_name"
+		#item_name.clip_text = true
+		if object.is_discovered == true:
+			item_name.text = str(object.id)
+		else:
+			item_name.text = "???"
+		
+		var ui_container = Node2D.new()
+		
+		#item_name.visible = false
+		#item_name_bg.visible = false
+		
+		item_name_bg.add_child(item_name)
+		rectangle.add_child(item_name_bg)
+		ui_container.add_child(rectangle)
+		
+		
+		# if object doesnt have on screen notifier
+		var visible_on_screen_notifier = get_on_screen_notifier(object)
+		if visible_on_screen_notifier == null:
+			visible_on_screen_notifier = VisibleOnScreenNotifier3D.new()
+			visible_on_screen_notifier.aabb = object.mesh.get_aabb()
+			object.add_child(visible_on_screen_notifier)
+		
+		connected_nodes_array.push_front([object, ui_container])
+		
+		#print(connected_nodes_array)
+		add_child(ui_container)
+		print("added:   ", object)
 
 func item_exited_area(object):
 	for node in connected_nodes_array:
 		if object == node[0]:
 			var current_object = node[0]
-			var current_rectangle = node[1]
-			var current_on_screen_notifier = node[2]
-			current_rectangle.queue_free()
-			current_on_screen_notifier.queue_free()
+			var current_ui_container = node[1]
+			
+			var visible_on_screen_notifier = get_on_screen_notifier(current_object)
+			if visible_on_screen_notifier:
+				visible_on_screen_notifier.queue_free()
+			current_ui_container.queue_free()
 			connected_nodes_array.erase(node)
-			print("deleted", current_object)
+			print("deleted:   ", current_object)
 
 func get_2d_bounding_box(mesh_instance: MeshInstance3D) -> Rect2:
 	# Get the bounding box (AABB) of the 3D object
@@ -109,4 +166,11 @@ func get_object_mesh(object):
 			#get mesh instance
 			for child in object.get_children():
 				if child is MeshInstance3D:
+					return child
+
+func get_on_screen_notifier(object):
+	if object.get_child_count() >= 1:
+			#get on screen notifier
+			for child in object.get_children():
+				if child is VisibleOnScreenNotifier3D:
 					return child

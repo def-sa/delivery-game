@@ -11,7 +11,6 @@ albedo_texture = ExtResource("1_6bnwv")
 points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
 
 [node name="item_overlay" type="Control"]
-custom_minimum_size = Vector2(250, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
