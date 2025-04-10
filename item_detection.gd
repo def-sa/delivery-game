@@ -1,14 +1,47 @@
 extends Control
 @onready var player: CharacterBody3D = $"../../.."
 @onready var box: RigidBody3D = $World/box
+@onready var camera: Camera3D = $"../../../camera_pivot/spring_arm_3d/camera"
+@onready var offscreen_reticle: TextureRect = $offscreen_reticle
+#
+
 #object
 var objects_inside_area = []:
 	set(v):
 		objects_inside_area = v
 
-
 #[object, current ui container]
 var connected_nodes_array = []
+
+@onready var viewport_center = Vector2(get_viewport().size) / 2.0
+@onready var border_offset = Vector2(32, 32)
+@onready var max_reticle_position = viewport_center - border_offset
+var reticle_offset = Vector2(32, 32)
+
+
+#object reticle, thank you 
+# https://www.youtube.com/watch?v=EKVYfF8oG0s
+func _process(delta: float) -> void:
+	for obj in objects_inside_area:
+		if camera.is_position_in_frustum(obj.global_position):
+			offscreen_reticle.hide()
+			var reticle_position = camera.unproject_position(obj.global_position)
+		else:
+			offscreen_reticle.show()
+			var local_to_camera = camera.to_local(obj.global_position)
+			var reticle_position = Vector2(local_to_camera.x, -local_to_camera.y)
+			if reticle_position.abs().aspect() > max_reticle_position.aspect():
+				reticle_position *= max_reticle_position.x / abs(reticle_position.x)
+			else:
+				reticle_position *= max_reticle_position.y / abs(reticle_position.y)
+			offscreen_reticle.set_global_position(max_reticle_position + reticle_position - reticle_offset)
+			var angle = Vector2.UP.angle_to(reticle_position)
+			offscreen_reticle.rotation = angle
+
+
+
+
+
 
 #update rectangle, and  screen notifier position
 func _physics_process(delta: float) -> void:

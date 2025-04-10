@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=20 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/player.gd" id="1_v666e"]
 [ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scenes/gui.gd" id="2_qhqgy"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://scenes/negative.gdshader" id="5_tuyoq"]
 [ext_resource type="Script" uid="uid://bnn5y78er1wbb" path="res://item_detection.gd" id="6_tuyoq"]
 [ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/new_theme.tres" id="7_fjrip"]
+[ext_resource type="Texture2D" uid="uid://bhdmrq6le812t" path="res://assets/up_arrow.png" id="8_smehm"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
 radius = 24.0
@@ -245,6 +246,14 @@ offset_bottom = 23.0
 theme = ExtResource("7_fjrip")
 text = "testing waaaaow"
 clip_text = true
+
+[node name="offscreen_reticle" type="TextureRect" parent="CanvasLayer/GUI/item_detection"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+texture = ExtResource("8_smehm")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="camera_pivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
