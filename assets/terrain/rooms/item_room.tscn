@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://ca867pya5p5p"]
 
 [ext_resource type="Script" uid="uid://d4noqaw33ekc5" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_1pxky"]
-[ext_resource type="Script" uid="uid://dv5l65euc8nph" path="res://assets/rooms/light.gd" id="2_hu4r7"]
-[ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/box_spawner.gd" id="3_r2ohy"]
-[ext_resource type="Texture2D" uid="uid://bk1cs84anbjv" path="res://assets/carton_box_04_closed_0.jpg" id="4_hu4r7"]
+[ext_resource type="Script" uid="uid://dv5l65euc8nph" path="res://assets/terrain/rooms/light.gd" id="2_hu4r7"]
+[ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/world/box_spawner.gd" id="3_r2ohy"]
+[ext_resource type="Texture2D" uid="uid://bk1cs84anbjv" path="res://assets/world/box/carton_box_04_closed_0.jpg" id="4_hu4r7"]
 
 [node name="DungeonRoom3D" type="Node3D"]
 script = ExtResource("1_1pxky")

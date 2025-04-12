@@ -5,10 +5,12 @@ extends Node3D
 @export var box_texture: Texture
 #if no weight defined, it will default to calculating a weight based on its size
 @export var box_weight: float
+@export var has_box_inside: bool
+@export var is_inside_box: bool
 
-const box_script = preload("res://scenes/box.gd")
-const decal_script = preload("res://scenes/decal.gd")
-
+const box_script = preload("res://scripts/world/box.gd")
+const box_spawner_script = preload("res://scripts/world/box_spawner.gd")
+const decal_script = preload("res://scripts/world/decal.gd")
 #TODO : link up id with delivery point
 var id 
 var is_delivered:bool = false
@@ -30,7 +32,7 @@ func _ready() -> void:
 #rarity
 #texture x
 #size x
-#weight 
+#weight x
 #openable
 
 func spawn_box(modifiers:Array):
@@ -38,10 +40,18 @@ func spawn_box(modifiers:Array):
 	var rigidbody = RigidBody3D.new()
 	rigidbody.mass = box_mass
 	
+	if is_inside_box:
+		rigidbody.continuous_cd = true
+	
 	var mesh = MeshInstance3D.new()
 	var box_mesh = BoxMesh.new()
 	box_mesh.size = box_size
 	mesh.mesh = box_mesh
+	
+	if has_box_inside:
+		var spawner_node = Node3D.new()
+		spawner_node.set_script(box_spawner_script)
+		pass
 	
 	if box_texture:
 		var material = StandardMaterial3D.new()

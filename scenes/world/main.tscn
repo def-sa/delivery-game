@@ -1,28 +1,30 @@
-[gd_scene load_steps=55 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=63 format=4 uid="uid://dcpt5m6we4os2"]
 
-[ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/main.gd" id="1_0glii"]
-[ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/pause.tscn" id="2_rhc0n"]
-[ext_resource type="PackedScene" uid="uid://d0dymr70087q8" path="res://scenes/player.tscn" id="3_a6xwp"]
-[ext_resource type="PackedScene" uid="uid://r0lr0id6q0kw" path="res://item_overlay.tscn" id="3_jkv2x"]
-[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/new_theme.tres" id="3_pm3ni"]
-[ext_resource type="Script" uid="uid://4meaxqmy35g5" path="res://scenes/world.gd" id="4_a8y0u"]
-[ext_resource type="Texture2D" uid="uid://bk1cs84anbjv" path="res://assets/carton_box_04_closed_0.jpg" id="5_jkv2x"]
-[ext_resource type="Script" uid="uid://d1c8g7rtwmurk" path="res://scenes/box.gd" id="6_jbj1t"]
-[ext_resource type="Script" uid="uid://b0i8cf6e8k2sm" path="res://scenes/cart.gd" id="6_jscy8"]
-[ext_resource type="Script" uid="uid://coe7nbe4f4y5f" path="res://scenes/decal.gd" id="7_gqmmt"]
-[ext_resource type="Script" uid="uid://dq8ehoakomj04" path="res://scripts/terrain.gd" id="8_efkc1"]
-[ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/box_spawner.gd" id="8_jkv2x"]
-[ext_resource type="Texture2D" uid="uid://bhybhyix2urj0" path="res://assets/GLB format/Textures/wall_lines.png" id="8_jscy8"]
-[ext_resource type="Texture2D" uid="uid://b8afy7ss5kxee" path="res://assets/carton_box_04_closed_1.png" id="8_yc10j"]
-[ext_resource type="Texture2D" uid="uid://dgf0f4pw7wa0" path="res://assets/GLB format/Textures/concrete.png" id="9_dp3eg"]
-[ext_resource type="PackedScene" uid="uid://ogltphnc1i0n" path="res://scenes/chunk.tscn" id="9_q8xru"]
-[ext_resource type="Texture2D" uid="uid://byfrwpqpid34" path="res://assets/GLB format/Textures/metal_wall.png" id="10_0ld40"]
-[ext_resource type="Script" uid="uid://c8cag65gdoiyl" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="12_c4p3y"]
-[ext_resource type="PackedScene" uid="uid://b53i8gkefhj0f" path="res://assets/rooms/door_no_wall.tscn" id="12_dplet"]
-[ext_resource type="PackedScene" uid="uid://bk5nsjwlc622e" path="res://assets/rooms/stairs.tscn" id="13_op4av"]
-[ext_resource type="PackedScene" uid="uid://bqeis521kwxjl" path="res://assets/rooms/room_no_wall.tscn" id="13_tqmlw"]
-[ext_resource type="PackedScene" uid="uid://ca867pya5p5p" path="res://assets/rooms/item_room.tscn" id="14_jbj1t"]
-[ext_resource type="Script" uid="uid://w0088ri165ve" path="res://scenes/delivery_point.gd" id="19_0ld40"]
+[ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/world/main.gd" id="1_md6cl"]
+[ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/ui/pause.tscn" id="2_u2p2s"]
+[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/themes/new_theme.tres" id="3_llfdw"]
+[ext_resource type="PackedScene" uid="uid://r0lr0id6q0kw" path="res://scenes/ui/item_overlay.tscn" id="4_80eyj"]
+[ext_resource type="PackedScene" uid="uid://d0dymr70087q8" path="res://scenes/world/player.tscn" id="5_wlwgd"]
+[ext_resource type="Script" uid="uid://4meaxqmy35g5" path="res://scripts/world/world.gd" id="6_4m2ge"]
+[ext_resource type="Script" uid="uid://b0i8cf6e8k2sm" path="res://scripts/world/cart.gd" id="7_exqdm"]
+[ext_resource type="Texture2D" uid="uid://b8afy7ss5kxee" path="res://assets/world/box/carton_box_04_closed_1.png" id="8_713oj"]
+[ext_resource type="Texture2D" uid="uid://owvdch0pwqd5" path="res://GLB format/Textures/wall_lines.png" id="9_r3w6i"]
+[ext_resource type="Texture2D" uid="uid://bm6u1og3wfoj4" path="res://GLB format/Textures/concrete.png" id="10_ggkmy"]
+[ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/world/box_spawner.gd" id="11_28gua"]
+[ext_resource type="Texture2D" uid="uid://bk1cs84anbjv" path="res://assets/world/box/carton_box_04_closed_0.jpg" id="12_e3mvx"]
+[ext_resource type="Script" uid="uid://d1c8g7rtwmurk" path="res://scripts/world/box.gd" id="13_8ap0l"]
+[ext_resource type="Script" uid="uid://coe7nbe4f4y5f" path="res://scripts/world/decal.gd" id="14_5ebq0"]
+[ext_resource type="ArrayMesh" uid="uid://y0jj1vhe4aun" path="res://assets/world/box/hollow_box.obj" id="15_tsn8l"]
+[ext_resource type="Texture2D" uid="uid://ckjv7s7p4cpn1" path="res://GLB format/Textures/metal_wall.png" id="16_1notw"]
+[ext_resource type="Script" uid="uid://jqsmym6pakn0" path="res://scenes/world/hurt_area.gd" id="17_5jr8u"]
+[ext_resource type="Script" uid="uid://dq8ehoakomj04" path="res://scripts/world/terrain/terrain.gd" id="18_kmiqj"]
+[ext_resource type="PackedScene" uid="uid://ogltphnc1i0n" path="res://scenes/world/terrain/chunk.tscn" id="19_rmdut"]
+[ext_resource type="PackedScene" uid="uid://bqeis521kwxjl" path="res://assets/terrain/rooms/room_no_wall.tscn" id="20_wauw2"]
+[ext_resource type="PackedScene" uid="uid://bk5nsjwlc622e" path="res://assets/terrain/rooms/stairs.tscn" id="21_dyae1"]
+[ext_resource type="PackedScene" uid="uid://ca867pya5p5p" path="res://assets/terrain/rooms/item_room.tscn" id="22_epcct"]
+[ext_resource type="PackedScene" uid="uid://b53i8gkefhj0f" path="res://assets/terrain/rooms/door_no_wall.tscn" id="23_jgscq"]
+[ext_resource type="Script" uid="uid://c8cag65gdoiyl" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="24_7bb5k"]
+[ext_resource type="Script" uid="uid://w0088ri165ve" path="res://scripts/world/delivery_point.gd" id="25_ij6fg"]
 
 [sub_resource type="Environment" id="Environment_0xlil"]
 background_mode = 3
@@ -41,6 +43,12 @@ fog_density = 1.0
 volumetric_fog_albedo = Color(0.533037, 0.533037, 0.533037, 1)
 adjustment_enabled = true
 
+[sub_resource type="BoxMesh" id="BoxMesh_yq6so"]
+size = Vector3(2.75, 1, 6)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fv21b"]
+points = PackedVector3Array(-1.30383, -0.5, -2.79365, 1.43452, 0.595126, 3.04702, 1.31573, -0.5, 2.79365, 1.43452, 0.595126, -3.04702, -1.42262, 0.595126, 3.04702, -1.42262, 0.595126, -3.04702, 1.31573, -0.5, -2.79365, -1.30383, -0.5, 2.79365)
+
 [sub_resource type="BoxMesh" id="BoxMesh_og1vs"]
 size = Vector3(3.99, 2, 7.5)
 
@@ -54,7 +62,7 @@ size = Vector3(3.99, 0.5, 7.5)
 points = PackedVector3Array(1.995, 0.25, 3.75, 1.995, -0.25, 3.75, 1.995, 0.25, -3.75, -1.995, 0.25, 3.75, -1.995, -0.25, 3.75, 1.995, -0.25, -3.75, -1.995, 0.25, -3.75, -1.995, -0.25, -3.75)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6deb"]
-albedo_texture = ExtResource("8_yc10j")
+albedo_texture = ExtResource("8_713oj")
 
 [sub_resource type="BoxMesh" id="BoxMesh_y6deb"]
 size = Vector3(4, 0.25, 8)
@@ -65,12 +73,12 @@ points = PackedVector3Array(-2.06349, -0.188455, -4.06349, 2.12698, 0.192423, 4.
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p075f"]
 resource_name = "wall_lines"
 shading_mode = 0
-albedo_texture = ExtResource("8_jscy8")
+albedo_texture = ExtResource("9_r3w6i")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_goax6"]
 resource_name = "concrete"
 shading_mode = 0
-albedo_texture = ExtResource("9_dp3eg")
+albedo_texture = ExtResource("10_ggkmy")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_pm3ni"]
 _surfaces = [{
@@ -117,19 +125,30 @@ size = Vector3(3.5, 0.25, 0.25)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tel4y"]
 points = PackedVector3Array(-1.77743, -0.152778, -0.152778, 1.77743, 0.180556, 0.180556, 1.77743, 0.180556, -0.152778, -1.77743, 0.180556, 0.180556, 1.77743, -0.152778, 0.180556, 1.77743, -0.152778, -0.152778, -1.77743, 0.180556, -0.152778, -1.77743, -0.152778, 0.180556)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jscy8"]
-rough = true
-
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ld40"]
 width = 1
 height = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jkv2x"]
-albedo_texture = ExtResource("8_yc10j")
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_og1vs"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.451, -0.451, -0.451, -0.451, -0.451, 0.451, -0.451, 0.451, -0.451, -0.451, 0.451, -0.451, -0.451, -0.451, 0.451, -0.451, 0.451, 0.451, 0.451, -0.451, -0.451, -0.451, -0.451, -0.451, 0.451, 0.451, -0.451, 0.451, 0.451, -0.451, -0.451, -0.451, -0.451, -0.451, 0.451, -0.451, 0.451, -0.451, 0.451, 0.451, -0.451, -0.451, 0.451, 0.451, 0.451, 0.451, 0.451, 0.451, 0.451, -0.451, -0.451, 0.451, 0.451, -0.451, -0.451, -0.451, 0.451, 0.451, -0.451, 0.451, -0.451, 0.451, 0.451, -0.451, 0.451, 0.451, 0.451, -0.451, 0.451, 0.451, 0.451, 0.451, -0.451, -0.451, 0.451, -0.451, -0.451, -0.451, 0.451, -0.451, 0.451, 0.451, -0.451, 0.451, -0.451, -0.451, -0.451, 0.451, -0.451, -0.451, 0.451, 0.451, 0.451, 0.451, 0.451, -0.451, -0.451, 0.451, 0.451, -0.451, 0.451, 0.451, 0.451, 0.451, -0.451, -0.451, 0.451, -0.451)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jscy8"]
+rough = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5q0nq"]
+albedo_texture = ExtResource("8_713oj")
 
 [sub_resource type="BoxMesh" id="BoxMesh_jbj1t"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_muem4"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_og1vs"]
+albedo_color = Color(0.890196, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2f3dj"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_y6deb"]
 points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ld40"]
@@ -183,21 +202,21 @@ collision_bounce = 1.0
 [sub_resource type="BoxMesh" id="BoxMesh_jscy8"]
 
 [node name="main" type="Node3D"]
-script = ExtResource("1_0glii")
+script = ExtResource("1_md6cl")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 100
 
-[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("2_rhc0n")]
-theme = ExtResource("3_pm3ni")
+[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("2_u2p2s")]
+theme = ExtResource("3_llfdw")
 metadata/_edit_use_anchors_ = true
 
-[node name="item_overlay" parent="CanvasLayer" instance=ExtResource("3_jkv2x")]
-theme = ExtResource("3_pm3ni")
+[node name="item_overlay" parent="CanvasLayer" instance=ExtResource("4_80eyj")]
+theme = ExtResource("3_llfdw")
 metadata/_edit_use_anchors_ = true
 
-[node name="Player" parent="." instance=ExtResource("3_a6xwp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0816736, 6.29247, 0.000599861)
+[node name="Player" parent="." instance=ExtResource("5_wlwgd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
 top_level = true
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
@@ -218,14 +237,27 @@ sky_mode = 1
 environment = SubResource("Environment_0xlil")
 
 [node name="World" type="Node3D" parent="."]
-script = ExtResource("4_a8y0u")
+script = ExtResource("6_4m2ge")
 modifiers = ["grabbable", "openable", "deliverable", "detectable"]
 
 [node name="cart" type="Node3D" parent="World" groups=["detectable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, -12.9836)
-script = ExtResource("6_jscy8")
+script = ExtResource("7_exqdm")
 
 [node name="bodies_in_cart" type="Node3D" parent="World/cart"]
+
+[node name="cart_area_bottom_objects" type="Area3D" parent="World/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.895504)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_area_bottom_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.568087, 0)
+visible = false
+mesh = SubResource("BoxMesh_yq6so")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_area_bottom_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.568087, 0)
+visible = false
+shape = SubResource("ConvexPolygonShape3D_fv21b")
 
 [node name="cart_area" type="Area3D" parent="World/cart"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.809738, 4.3255)
@@ -262,6 +294,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.895504)
 mass = 40.0
 continuous_cd = true
 angular_damp = 20.0
+
+[node name="RemoteTransform3D6" type="RemoteTransform3D" parent="World/cart/cart_body"]
+remote_path = NodePath("../../cart_area_bottom_objects")
+update_scale = false
 
 [node name="RemoteTransform3D2" type="RemoteTransform3D" parent="World/cart/cart_body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.203486, -0.84949)
@@ -341,10 +377,51 @@ mesh = SubResource("BoxMesh_fv21b")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 0, -3.062)
 shape = SubResource("ConvexPolygonShape3D_tel4y")
 
+[node name="box_inside_spawner" type="Node3D" parent="World" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 11, 0)
+script = ExtResource("11_28gua")
+box_size = Vector3(0.5, 0.5, 0.5)
+box_texture = ExtResource("12_e3mvx")
+is_inside_box = true
+
+[node name="box_with_item" type="RigidBody3D" parent="World" groups=["detectable", "grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 11, 0)
+script = ExtResource("13_8ap0l")
+
+[node name="Area3D" type="Area3D" parent="World/box_with_item"]
+monitorable = false
+
+[node name="Decal" type="Decal" parent="World/box_with_item"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, -10.55, 0)
+size = Vector3(2, 20, 2)
+texture_albedo = SubResource("NoiseTexture2D_0ld40")
+modulate = Color(0, 0, 0, 1)
+upper_fade = 0.5
+lower_fade = 2.0
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+distance_fade_length = 20.0
+script = ExtResource("14_5ebq0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/box_with_item"]
+transparency = 0.43
+mesh = ExtResource("15_tsn8l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/box_with_item"]
+shape = SubResource("ConcavePolygonShape3D_og1vs")
+debug_color = Color(1, 1, 1, 0.42)
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="World/box_with_item"]
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="World/box_with_item"]
+remote_path = NodePath("../../box_inside_spawner")
+update_rotation = false
+update_scale = false
+
 [node name="box" type="RigidBody3D" parent="World" groups=["detectable", "grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, 0)
 physics_material_override = SubResource("PhysicsMaterial_jscy8")
-script = ExtResource("6_jbj1t")
+script = ExtResource("13_8ap0l")
 
 [node name="Decal" type="Decal" parent="World/box"]
 transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, -10.55, 0)
@@ -356,10 +433,10 @@ lower_fade = 2.0
 distance_fade_enabled = true
 distance_fade_begin = 0.0
 distance_fade_length = 20.0
-script = ExtResource("7_gqmmt")
+script = ExtResource("14_5ebq0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="World/box"]
-material_override = SubResource("StandardMaterial3D_jkv2x")
+material_override = SubResource("StandardMaterial3D_5q0nq")
 mesh = SubResource("BoxMesh_jbj1t")
 skeleton = NodePath("")
 
@@ -370,50 +447,62 @@ shape = SubResource("ConvexPolygonShape3D_muem4")
 
 [node name="box_spawner" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
-script = ExtResource("8_jkv2x")
+script = ExtResource("11_28gua")
 box_size = Vector3(2, 2, 2)
-box_texture = ExtResource("5_jkv2x")
+box_texture = ExtResource("12_e3mvx")
 
 [node name="box_spawner2" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
-script = ExtResource("8_jkv2x")
+script = ExtResource("11_28gua")
 box_size = Vector3(0.5, 0.5, 0.5)
-box_texture = ExtResource("5_jkv2x")
+box_texture = ExtResource("12_e3mvx")
 
 [node name="box_spawner3" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
-script = ExtResource("8_jkv2x")
+script = ExtResource("11_28gua")
 box_size = Vector3(1.5, 1.5, 1.5)
-box_texture = ExtResource("9_dp3eg")
+box_texture = ExtResource("10_ggkmy")
 
 [node name="box_spawner4" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
-script = ExtResource("8_jkv2x")
-box_texture = ExtResource("5_jkv2x")
+script = ExtResource("11_28gua")
+box_texture = ExtResource("12_e3mvx")
 
 [node name="box_spawner5" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
-script = ExtResource("8_jkv2x")
-box_texture = ExtResource("10_0ld40")
+script = ExtResource("11_28gua")
+box_texture = ExtResource("16_1notw")
 
 [node name="box_spawner6" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
-script = ExtResource("8_jkv2x")
-box_texture = ExtResource("5_jkv2x")
+script = ExtResource("11_28gua")
+box_texture = ExtResource("12_e3mvx")
+
+[node name="hurt_area" type="Area3D" parent="World"]
+transform = Transform3D(3.738, 0, 0, 0, 3.738, 0, 0, 0, 3.738, 21.1608, 8.52638, 0)
+script = ExtResource("17_5jr8u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/hurt_area"]
+material_override = SubResource("StandardMaterial3D_og1vs")
+transparency = 0.8
+mesh = SubResource("BoxMesh_2f3dj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/hurt_area"]
+shape = SubResource("ConvexPolygonShape3D_y6deb")
 
 [node name="Terrain" type="Node3D" parent="."]
-script = ExtResource("8_efkc1")
-chunk_scene = ExtResource("9_q8xru")
+script = ExtResource("18_kmiqj")
+chunk_scene = ExtResource("19_rmdut")
 view_distance = 6
-room_scenes = Array[PackedScene]([ExtResource("13_tqmlw"), ExtResource("13_op4av"), ExtResource("14_jbj1t"), ExtResource("12_dplet")])
-corridor_room_scene = ExtResource("13_tqmlw")
+room_scenes = Array[PackedScene]([ExtResource("20_wauw2"), ExtResource("21_dyae1"), ExtResource("22_epcct"), ExtResource("23_jgscq")])
+corridor_room_scene = ExtResource("20_wauw2")
 house_size = Vector3i(4, 3, 4)
 
 [node name="DungeonGenerator3D" type="Node3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 34, 0)
-script = ExtResource("12_c4p3y")
-room_scenes = Array[PackedScene]([ExtResource("13_tqmlw"), ExtResource("13_op4av")])
-corridor_room_scene = ExtResource("13_tqmlw")
+script = ExtResource("24_7bb5k")
+room_scenes = Array[PackedScene]([ExtResource("20_wauw2"), ExtResource("21_dyae1")])
+corridor_room_scene = ExtResource("20_wauw2")
 dungeon_size = Vector3i(5, 5, 5)
 max_retries = 3
 generate_threaded = true
@@ -421,13 +510,13 @@ room_cost_multiplier = 1.0
 room_cost_at_end_for_required_doors = 4.0
 show_debug_in_game = true
 
-[node name="DungeonRoom3D" parent="Terrain/DungeonGenerator3D" instance=ExtResource("12_dplet")]
+[node name="DungeonRoom3D" parent="Terrain/DungeonGenerator3D" instance=ExtResource("23_jgscq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -20, 0)
 show_grid_aabb_with_doors = true
 
 [node name="delivery_point" type="Node3D" parent="Terrain/DungeonGenerator3D" node_paths=PackedStringArray("player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, -24, 0)
-script = ExtResource("19_0ld40")
+script = ExtResource("25_ij6fg")
 player = NodePath("../../../Player")
 
 [node name="text" type="MeshInstance3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
@@ -468,4 +557,7 @@ radius = 6.6
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.93537, 0)
 size = Vector3(15, 1, 15)
 
+[connection signal="body_entered" from="World/cart/cart_area_bottom_objects" to="World/cart" method="_on_cart_area_bottom_objects_body_entered"]
+[connection signal="body_exited" from="World/cart/cart_area_bottom_objects" to="World/cart" method="_on_cart_area_bottom_objects_body_exited"]
+[connection signal="body_entered" from="World/hurt_area" to="World/hurt_area" method="_on_body_entered"]
 [connection signal="body_entered" from="Terrain/DungeonGenerator3D/delivery_point/Area3D" to="Terrain/DungeonGenerator3D/delivery_point" method="_on_area_3d_body_entered"]

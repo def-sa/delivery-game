@@ -3,6 +3,13 @@ extends CharacterBody3D
 ##player variables
 @export var speed:int = 8
 @export var jump_velocity:float = 4.5
+var health:int = 100:
+	set(v):
+		health = v
+		health_bar.value = health
+		if v <= 0:
+			player_dead()
+
 
 ##camera variables
 var min_zoom_in: int = 0 #default spring length
@@ -68,7 +75,7 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var player: CharacterBody3D = $"."
 @onready var item_detection_area: Area3D = $item_detection_area
 
-
+@onready var health_bar: ProgressBar = $CanvasLayer/GUI/health_bar
 
 var spring_arm_length = min_zoom_in
 var flashlight_toggle:bool = false:
@@ -353,6 +360,11 @@ func drop_object():
 	#if carrying:
 		#toggle_outline(carrying, false)
 
+func player_dead():
+	position = Vector3(0, 6, 0)
+	health = 100
+	pass
+
 func perspective_toggle():
 	if spring_arm.spring_length <= 1:
 		perspective = "first"
@@ -396,9 +408,14 @@ func handle_carrying_gui(obj, hovering):
 			#find mesh, set item to 1 size
 			for child in view_obj.get_children():
 				if child is MeshInstance3D:
-					var unique_mesh = child.mesh.duplicate()
-					unique_mesh.size = Vector3(1,1,1)
-					child.mesh = unique_mesh
+					if child.mesh is ArrayMesh:
+						var unique_child = child.duplicate()
+						child.scale = Vector3(1,1,1)
+						child.mesh = unique_child.mesh
+					else:
+						var unique_mesh = child.mesh.duplicate()
+						unique_mesh.size = Vector3(1,1,1)
+						child.mesh = unique_mesh
 					
 			item_overlay_modifiers.text = ""
 			for group in obj.get_groups():

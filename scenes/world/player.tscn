@@ -1,13 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=22 format=3 uid="uid://d0dymr70087q8"]
 
-[ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/player.gd" id="1_v666e"]
-[ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scenes/gui.gd" id="2_qhqgy"]
-[ext_resource type="Texture2D" uid="uid://cyfjd4773jfol" path="res://assets/crosshair_grabbing.png" id="4_dqkch"]
-[ext_resource type="Texture2D" uid="uid://81ljda3073o0" path="res://assets/crosshair.png" id="5_qlg0r"]
-[ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://scenes/negative.gdshader" id="5_tuyoq"]
-[ext_resource type="Script" uid="uid://bnn5y78er1wbb" path="res://item_detection.gd" id="6_tuyoq"]
-[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/new_theme.tres" id="7_fjrip"]
-[ext_resource type="Texture2D" uid="uid://bhdmrq6le812t" path="res://assets/up_arrow.png" id="8_smehm"]
+[ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/world/player.gd" id="1_v666e"]
+[ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scripts/ui/gui.gd" id="2_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://cyfjd4773jfol" path="res://assets/ui/crosshair_grabbing.png" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://81ljda3073o0" path="res://assets/ui/crosshair.png" id="5_qlg0r"]
+[ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="5_tuyoq"]
+[ext_resource type="Script" uid="uid://bnn5y78er1wbb" path="res://scripts/world/item_detection.gd" id="6_tuyoq"]
+[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/themes/new_theme.tres" id="7_fjrip"]
+[ext_resource type="Texture2D" uid="uid://bhdmrq6le812t" path="res://assets/ui/up_arrow.png" id="8_smehm"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
 radius = 24.0
@@ -40,6 +40,12 @@ bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
 shader = ExtResource("5_tuyoq")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smehm"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ur7pv"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Curve3D" id="Curve3D_qhqgy"]
 _data = {
@@ -228,18 +234,21 @@ offset_bottom = 40.0
 script = ExtResource("6_tuyoq")
 
 [node name="rectangle" type="ReferenceRect" parent="CanvasLayer/GUI/item_detection"]
+visible = false
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
 editor_only = false
 
 [node name="item_name_bg" type="ColorRect" parent="CanvasLayer/GUI/item_detection/rectangle"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 color = Color(1, 0, 0, 1)
 
 [node name="Label" type="Label" parent="CanvasLayer/GUI/item_detection/rectangle/item_name_bg"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -248,12 +257,29 @@ text = "testing waaaaow"
 clip_text = true
 
 [node name="offscreen_reticle" type="TextureRect" parent="CanvasLayer/GUI/item_detection"]
+visible = false
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
 texture = ExtResource("8_smehm")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="health_bar" type="ProgressBar" parent="CanvasLayer/GUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+offset_right = 500.0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 22
+theme_override_font_sizes/font_size = 42
+theme_override_styles/background = SubResource("StyleBoxFlat_smehm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ur7pv")
+step = 1.0
+value = 100.0
 
 [node name="camera_pivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)

@@ -11,8 +11,10 @@ var id = 0
 #TODO
 var tier = 0
 
-var is_discovered = false
+var is_discovered:bool = false
 #var is_being_carried: bool = false
+#var has_item_inside:bool = false
+
 
 var is_delivered: bool = false
 var in_cart: bool = false:

@@ -8,6 +8,8 @@ extends Control
 #object
 var objects_inside_area = []:
 	set(v):
+		# NOTE: ONLY PASS ARRAYS INTO THIS
+		v.erase(player)
 		objects_inside_area = v
 
 #[object, current ui container]
@@ -22,21 +24,25 @@ var reticle_offset = Vector2(32, 32)
 #object reticle, thank you 
 # https://www.youtube.com/watch?v=EKVYfF8oG0s
 func _process(delta: float) -> void:
+	if objects_inside_area.is_empty():
+		offscreen_reticle.hide()
+	
 	for obj in objects_inside_area:
-		if camera.is_position_in_frustum(obj.global_position):
-			offscreen_reticle.hide()
-			var reticle_position = camera.unproject_position(obj.global_position)
-		else:
-			offscreen_reticle.show()
-			var local_to_camera = camera.to_local(obj.global_position)
-			var reticle_position = Vector2(local_to_camera.x, -local_to_camera.y)
-			if reticle_position.abs().aspect() > max_reticle_position.aspect():
-				reticle_position *= max_reticle_position.x / abs(reticle_position.x)
+		if obj:
+			if camera.is_position_in_frustum(obj.global_position):
+				offscreen_reticle.hide()
+				var reticle_position = camera.unproject_position(obj.global_position)
 			else:
-				reticle_position *= max_reticle_position.y / abs(reticle_position.y)
-			offscreen_reticle.set_global_position(max_reticle_position + reticle_position - reticle_offset)
-			var angle = Vector2.UP.angle_to(reticle_position)
-			offscreen_reticle.rotation = angle
+				offscreen_reticle.show()
+				var local_to_camera = camera.to_local(obj.global_position)
+				var reticle_position = Vector2(local_to_camera.x, -local_to_camera.y)
+				if reticle_position.abs().aspect() > max_reticle_position.aspect():
+					reticle_position *= max_reticle_position.x / abs(reticle_position.x)
+				else:
+					reticle_position *= max_reticle_position.y / abs(reticle_position.y)
+				offscreen_reticle.set_global_position(max_reticle_position + reticle_position - reticle_offset)
+				var angle = Vector2.UP.angle_to(reticle_position)
+				offscreen_reticle.rotation = angle
 
 
 
@@ -64,7 +70,6 @@ func _physics_process(delta: float) -> void:
 					
 				var current_object_mesh = get_object_mesh(current_object)
 				var bounding_box = get_2d_bounding_box(current_object_mesh)
-				
 				
 				#this really sucks but it works for now i guess
 				var child = current_ui_container.get_children()[0]
@@ -195,15 +200,17 @@ func get_2d_bounding_box(mesh_instance: MeshInstance3D) -> Rect2:
 	return Rect2(Vector2(min_x, min_y), Vector2(max_x - min_x, max_y - min_y))
 
 func get_object_mesh(object):
-	if object.get_child_count() >= 1:
-			#get mesh instance
-			for child in object.get_children():
-				if child is MeshInstance3D:
-					return child
+	if object:
+		if object.get_child_count() >= 1:
+				#get mesh instance
+				for child in object.get_children():
+					if child is MeshInstance3D:
+						return child
 
 func get_on_screen_notifier(object):
-	if object.get_child_count() >= 1:
-			#get on screen notifier
-			for child in object.get_children():
-				if child is VisibleOnScreenNotifier3D:
-					return child
+	if object:
+		if object.get_child_count() >= 1:
+				#get on screen notifier
+				for child in object.get_children():
+					if child is VisibleOnScreenNotifier3D:
+						return child

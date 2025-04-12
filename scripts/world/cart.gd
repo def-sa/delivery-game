@@ -16,7 +16,7 @@ extends Node3D
 @onready var hand_path: Path3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D"
 @onready var hand_path_follow: PathFollow3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D"
 
-const CART_ITEM_VIEW_PRELOAD = preload("res://cart_item_view.tscn")
+const CART_ITEM_VIEW_PRELOAD = preload("res://scenes/ui/cart_item_view.tscn")
 var cart_item_view
 
 var object_drag = 0.0025
@@ -26,6 +26,7 @@ var max_obj_speed = 10
 var cart_speed = 1.5
 
 var bodies_in_cart = []
+var bodies_on_bottom_of_cart = []
 
 @onready var saved_grab_length = Settings.max_grab_length
 
@@ -59,14 +60,28 @@ func _physics_process(delta: float) -> void:
 		cart_body.linear_velocity.x = new_location.x * movement_speed * cart_speed
 		cart_body.linear_velocity.z = new_location.z * movement_speed * cart_speed
 		
-		cart_body.rotation.y = lerp(cart_body.rotation.y, cart_handle.rotation.y, 1)
+		cart_body.rotation.y = lerp(cart_body.rotation.y, cart_handle.rotation.y, 0.5)
 		
-		#for child in bodies_in_cart_node.get_children():
-			#child.linear_velocity.x = new_location.x * movement_speed * cart_speed
-			#child.linear_velocity.z = new_location.z * movement_speed * cart_speed
-			#
+
+		for body in bodies_on_bottom_of_cart:
+			pass
+			#var saved_rotation = body.global_rotation
+			#body.rotation = saved_rotation + cart_body.global_rotation
 			
-		#////////////
+			#var offset = cart_handle.transform.basis.z
+			#offset += body.rotation
+			#body.look_at(offset)
+			#body.rotation.x = saved_rotation.x
+			#body.rotation.y = saved_rotation.y
+			
+			#var offset = body.rotation.y - cart_handle.rotation.y
+			#offset += body.rotation.y
+			#body.rotation.y += -offset
+			#body.rotation.y = lerp(body.rotation.y, -offset, 0.5)
+
+
+
+	#////////////
 		
 	else:
 		Settings.max_grab_length = saved_grab_length
@@ -76,10 +91,15 @@ func _physics_process(delta: float) -> void:
 
 
 
+
+
+
+
 func _body_entered_cart(body: Node3D):
 	if body != cart_body and body != cart_rails:
 		
 		body.reparent(bodies_in_cart_node)
+
 		bodies_in_cart.push_front(body)
 		
 		if "in_cart" in body:
@@ -103,3 +123,16 @@ func _body_exited_cart(body: Node3D):
 			bodies_in_cart.remove_at(index)
 		if "in_cart" in body:
 			body.in_cart = false
+
+
+
+
+func _on_cart_area_bottom_objects_body_entered(body: Node3D) -> void:
+	if body != cart_body and body != cart_rails:
+		bodies_on_bottom_of_cart.push_front(body)
+
+func _on_cart_area_bottom_objects_body_exited(body: Node3D) -> void:
+	if body != cart_body and body != cart_rails:
+		var index = bodies_on_bottom_of_cart.find(body)
+		if index != -1:
+			bodies_on_bottom_of_cart.remove_at(index)
