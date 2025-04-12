@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://coe7nbe4f4y5f" path="res://scripts/world/decal.gd" id="14_5ebq0"]
 [ext_resource type="ArrayMesh" uid="uid://y0jj1vhe4aun" path="res://assets/world/box/hollow_box.obj" id="15_tsn8l"]
 [ext_resource type="Texture2D" uid="uid://ckjv7s7p4cpn1" path="res://GLB format/Textures/metal_wall.png" id="16_1notw"]
+[ext_resource type="PackedScene" uid="uid://otlyvgs8ia5g" path="res://assets/world/box/hollow_box_collision.tscn" id="16_u2p2s"]
 [ext_resource type="Script" uid="uid://jqsmym6pakn0" path="res://scenes/world/hurt_area.gd" id="17_5jr8u"]
 [ext_resource type="Script" uid="uid://dq8ehoakomj04" path="res://scripts/world/terrain/terrain.gd" id="18_kmiqj"]
 [ext_resource type="PackedScene" uid="uid://ogltphnc1i0n" path="res://scenes/world/terrain/chunk.tscn" id="19_rmdut"]
@@ -128,9 +129,6 @@ points = PackedVector3Array(-1.77743, -0.152778, -0.152778, 1.77743, 0.180556, 0
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ld40"]
 width = 1
 height = 1
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_og1vs"]
-data = PackedVector3Array(-0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.451, -0.451, -0.451, -0.451, -0.451, 0.451, -0.451, 0.451, -0.451, -0.451, 0.451, -0.451, -0.451, -0.451, 0.451, -0.451, 0.451, 0.451, 0.451, -0.451, -0.451, -0.451, -0.451, -0.451, 0.451, 0.451, -0.451, 0.451, 0.451, -0.451, -0.451, -0.451, -0.451, -0.451, 0.451, -0.451, 0.451, -0.451, 0.451, 0.451, -0.451, -0.451, 0.451, 0.451, 0.451, 0.451, 0.451, 0.451, 0.451, -0.451, -0.451, 0.451, 0.451, -0.451, -0.451, -0.451, 0.451, 0.451, -0.451, 0.451, -0.451, 0.451, 0.451, -0.451, 0.451, 0.451, 0.451, -0.451, 0.451, 0.451, 0.451, 0.451, -0.451, -0.451, 0.451, -0.451, -0.451, -0.451, 0.451, -0.451, 0.451, 0.451, -0.451, 0.451, -0.451, -0.451, -0.451, 0.451, -0.451, -0.451, 0.451, 0.451, 0.451, 0.451, 0.451, -0.451, -0.451, 0.451, 0.451, -0.451, 0.451, 0.451, 0.451, 0.451, -0.451, -0.451, 0.451, -0.451)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jscy8"]
 rough = true
@@ -407,9 +405,7 @@ script = ExtResource("14_5ebq0")
 transparency = 0.43
 mesh = ExtResource("15_tsn8l")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/box_with_item"]
-shape = SubResource("ConcavePolygonShape3D_og1vs")
-debug_color = Color(1, 1, 1, 0.42)
+[node name="CollisionShape3D" parent="World/box_with_item" instance=ExtResource("16_u2p2s")]
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="World/box_with_item"]
 
@@ -446,37 +442,52 @@ shape = SubResource("ConvexPolygonShape3D_muem4")
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="World/box"]
 
 [node name="box_spawner" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
 script = ExtResource("11_28gua")
-box_size = Vector3(2, 2, 2)
 box_texture = ExtResource("12_e3mvx")
 
 [node name="box_spawner2" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
 script = ExtResource("11_28gua")
 box_size = Vector3(0.5, 0.5, 0.5)
 box_texture = ExtResource("12_e3mvx")
 
 [node name="box_spawner3" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
 script = ExtResource("11_28gua")
 box_size = Vector3(1.5, 1.5, 1.5)
 box_texture = ExtResource("10_ggkmy")
 
 [node name="box_spawner4" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
 script = ExtResource("11_28gua")
+box_size = Vector3(2, 1, 2)
 box_texture = ExtResource("12_e3mvx")
 
 [node name="box_spawner5" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
 script = ExtResource("11_28gua")
 box_texture = ExtResource("16_1notw")
 
 [node name="box_spawner6" type="Node3D" parent="World" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
+script = ExtResource("11_28gua")
+box_size = Vector3(0.25, 5, 1)
+box_texture = ExtResource("12_e3mvx")
+
+[node name="box_spawner7" type="Node3D" parent="World" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 8.13562, -3.71611)
+script = ExtResource("11_28gua")
+box_size = Vector3(2, 2, 2)
+has_box_inside = true
+is_hollow_box = true
+
+[node name="box_spawner8" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
 script = ExtResource("11_28gua")
-box_texture = ExtResource("12_e3mvx")
+box_size = Vector3(4, 1, 1)
+has_box_inside = true
+is_hollow_box = true
 
 [node name="hurt_area" type="Area3D" parent="World"]
 transform = Transform3D(3.738, 0, 0, 0, 3.738, 0, 0, 0, 3.738, 21.1608, 8.52638, 0)

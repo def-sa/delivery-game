@@ -403,33 +403,44 @@ func handle_carrying_gui(obj, hovering):
 		var view_obj
 		if obj is RigidBody3D:
 			view_obj = obj.duplicate()
-			gui_current_object = view_obj
+			#gui_current_object = view_obj
 			
+			var minimal_obj = RigidBody3D.new()
 			#find mesh, set item to 1 size
 			for child in view_obj.get_children():
 				if child is MeshInstance3D:
-					if child.mesh is ArrayMesh:
-						var unique_child = child.duplicate()
-						child.scale = Vector3(1,1,1)
-						child.mesh = unique_child.mesh
+					if child.mesh is not ArrayMesh:
+						var new_mesh_instance = MeshInstance3D.new()
+						new_mesh_instance.mesh = child.mesh.duplicate()
+						new_mesh_instance.mesh.size = Vector3(
+							clamp(child.mesh.size.x/2, 0, 1),
+							clamp(child.mesh.size.y/2, 0, 1),
+							clamp(child.mesh.size.z/2, 0, 1) )
+						new_mesh_instance.material_override = child.material_override.duplicate()
+						minimal_obj.add_child(new_mesh_instance)
 					else:
-						var unique_mesh = child.mesh.duplicate()
-						unique_mesh.size = Vector3(1,1,1)
-						child.mesh = unique_mesh
-					
+						var new_mesh_instance = MeshInstance3D.new()
+						var scaled_mesh = resize_arraymesh(child.mesh.duplicate(), 1)
+						new_mesh_instance.mesh = scaled_mesh
+						new_mesh_instance.transparency = child.transparency
+						if child.material_override:
+							new_mesh_instance.material_override = child.material_override.duplicate()
+						minimal_obj.add_child(new_mesh_instance)
+						
+			gui_current_object = minimal_obj
 			item_overlay_modifiers.text = ""
 			for group in obj.get_groups():
 				item_overlay_modifiers.text += str(group).capitalize()+", "
 				
 			if not spin_locked:
 				#TODO: add lerp? smooth interpolate somehow
-				view_obj.set_angular_velocity(Vector3(-1,-1,-1))
+				gui_current_object.set_angular_velocity(Vector3(-1,-1,-1))
 			
-			view_obj.gravity_scale = 0
+			gui_current_object.gravity_scale = 0
 			#view_obj.freeze = true
-			view_obj.position.y = -50
+			gui_current_object.position.y = -50
 			
-			item_overlay_viewport.add_child(view_obj)
+			item_overlay_viewport.add_child(gui_current_object)
 
 func overlay_info_visible(_visible):
 	if _visible:
@@ -448,6 +459,33 @@ func overlay_info_visible(_visible):
 			item_overlay_info.visible = true
 		"off":
 			item_overlay.visible = false
+
+func resize_arraymesh(original_mesh: ArrayMesh, scale_factor: float) -> ArrayMesh:
+	var new_mesh = ArrayMesh.new()
+	var surface_count = original_mesh.get_surface_count()
+	
+	for surface in range(surface_count):
+		# Retrieve the arrays for the current surface.
+		var arrays = original_mesh.surface_get_arrays(surface)
+		if arrays.is_empty():
+			continue
+
+		# Access the vertex array. The vertex data is typically stored at Mesh.ARRAY_VERTEX index.
+		var vertices = arrays[Mesh.ARRAY_VERTEX]
+		if vertices:
+			# Scale each vertex position.
+			for i in range(vertices.size()):
+				vertices[i] *= scale_factor
+			arrays[Mesh.ARRAY_VERTEX] = vertices
+
+		# Preserve other attributes like normals, UVs, etc. if needed.
+		new_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return new_mesh
+
+
+
+
+
 
 
 func obj_speed_gui_visible(valueBool):

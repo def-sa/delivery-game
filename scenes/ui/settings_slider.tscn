@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cl0ygjsp2yih7"]
 
 [ext_resource type="Script" uid="uid://dyi4mumyudlst" path="res://scripts/ui/settings_slider.gd" id="1_d3yen"]
-[ext_resource type="Texture2D" path="res://assets/reset_arrow.png" id="1_iusgf"]
+[ext_resource type="Texture2D" uid="uid://ytj03voj4bf0" path="res://assets/ui/reset_arrow.png" id="1_iusgf"]
 
 [node name="settings_slider" type="HBoxContainer"]
 script = ExtResource("1_d3yen")
