@@ -1,6 +1,6 @@
 extends Node3D
 @export_group("Box variables")
-@export var modifiers: Array
+@export var modifiers: Array[String] = ["grabbable", "deliverable","detectable"]
 @export var box_size: Vector3 = Vector3(1, 1, 1)
 @export var box_mass: float = 1.0
 @export var box_texture: Texture
@@ -13,7 +13,7 @@ extends Node3D
 var is_inside_box: bool
 
 @export_group("Inside box variables")
-@export var inside_box_modifiers:Array
+@export var inside_box_modifiers:Array[String] = []
 @export_range(0.1, .75, 0.01) var _inside_box_size = .5
 @onready var inside_box_size = Vector3(_inside_box_size,_inside_box_size,_inside_box_size)
 #@export var inside_box_size: Vector3 = Vector3(1,1,1)
@@ -45,6 +45,9 @@ func _ready() -> void:
 	
 	if is_hollow_box:
 		box_size = Vector3(1,1,1)
+	print(modifiers)
+	#TODO: modifiers not being applied correctly? 
+	#spawn_box(modifiers)
 
 #i want to pass in variables into the spawner and create the box with those variables 
 #modifers x
@@ -54,7 +57,7 @@ func _ready() -> void:
 #weight x
 #openable
 
-func spawn_box(modifiers:Array):
+func spawn_box(modifiers:Array[String]):
 	
 	var rigidbody = RigidBody3D.new()
 	rigidbody.mass = box_mass
@@ -146,15 +149,16 @@ func spawn_box(modifiers:Array):
 	rigidbody.id = str("%01d" % tier) + "x" + str("%03d" % street) + "x" + str("%04d" % Global.total_boxes_spawned) + "xTEST"
 	rigidbody.tier = tier
 	
-	for modifier in modifiers:
-		rigidbody.add_to_group(modifier)
 	
 	
 	add_child(rigidbody)
+	
+	for modifier in modifiers:
+		rigidbody.add_to_group(modifier, true)
+	
 	Global.total_boxes_spawned =+ 1
 	print("box spawned:", rigidbody)
 	return rigidbody
-
 
 func _body_exited_box_with_item(body: Node3D, obj_spawned: RigidBody3D, parent_box: RigidBody3D) -> void:
 	if body == obj_spawned:

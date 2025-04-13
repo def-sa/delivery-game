@@ -204,26 +204,34 @@ collision_bounce = 1.0
 script = ExtResource("1_md6cl")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
 layer = 100
 
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("2_u2p2s")]
+process_mode = 3
+z_index = 1000
 theme = ExtResource("3_llfdw")
 metadata/_edit_use_anchors_ = true
 
 [node name="item_overlay" parent="CanvasLayer" instance=ExtResource("4_80eyj")]
+process_mode = 1
+z_as_relative = false
 theme = ExtResource("3_llfdw")
 metadata/_edit_use_anchors_ = true
 
-[node name="Player" parent="." instance=ExtResource("5_wlwgd")]
+[node name="World" type="Node3D" parent="."]
+script = ExtResource("6_4m2ge")
+
+[node name="Player" parent="World" instance=ExtResource("5_wlwgd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
 top_level = true
 
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="World"]
 transform = Transform3D(0.0567843, 0.628216, -0.775964, 0.605976, 0.595997, 0.52686, 0.793454, -0.500133, -0.34684, -11.4479, 24.4967, 0)
 light_color = Color(0.31889, 0.491401, 0.677286, 1)
 light_energy = 0.597
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
 transform = Transform3D(-0.0574767, -0.166493, 0.984366, -3.44373e-09, 0.985996, 0.166769, -0.998347, 0.00958531, -0.0566718, 0, 16.3024, 0)
 light_color = Color(0.452574, 0.384917, 0.505313, 1)
 shadow_bias = 0.464
@@ -232,12 +240,8 @@ directional_shadow_mode = 0
 directional_shadow_max_distance = 25.0
 sky_mode = 1
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
 environment = SubResource("Environment_0xlil")
-
-[node name="World" type="Node3D" parent="."]
-script = ExtResource("6_4m2ge")
-modifiers = ["grabbable", "openable", "deliverable", "detectable"]
 
 [node name="cart" type="Node3D" parent="World" groups=["detectable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, -12.9836)
@@ -481,13 +485,13 @@ script = ExtResource("11_28gua")
 box_size = Vector3(2, 2, 2)
 has_box_inside = true
 is_hollow_box = true
+inside_box_modifiers = Array[String](["grabbable"])
 _inside_box_size = 0.75
 inside_box_texture = ExtResource("18_llfdw")
 
 [node name="box_spawner8" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
 script = ExtResource("11_28gua")
-box_size = Vector3(4, 1, 1)
 has_box_inside = true
 is_hollow_box = true
 _inside_box_size = 0.1
@@ -532,7 +536,7 @@ show_grid_aabb_with_doors = true
 [node name="delivery_point" type="Node3D" parent="Terrain/DungeonGenerator3D" node_paths=PackedStringArray("player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, -24, 0)
 script = ExtResource("25_ij6fg")
-player = NodePath("../../../Player")
+player = NodePath("../../../World/Player")
 
 [node name="text" type="MeshInstance3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
 transform = Transform3D(-4.37114e-08, 0, 5, 0, 1, 0, -1, 0, -2.18557e-07, 0, 0, 0)

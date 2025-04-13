@@ -33,7 +33,8 @@ func _process(delta: float) -> void:
 		V"
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
+	print(body.get_groups())
 	if body.is_in_group("deliverable"):
 		body.queue_free()
 		particles_delivered.emitting = true
-		Global.add_score(10)
+		Global.score += 10

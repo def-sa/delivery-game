@@ -17,8 +17,8 @@ var house_structure_chance:float = 0.5
 #@export var left_structures: Array[PackedScene]
 var shop_structure_chance:float = 1
 
-@onready var player = $"../Player"
- 
+@onready var player: CharacterBody3D = $"../World/Player"
+
 var chunks = {}
 
 var current_block_index: int = 0

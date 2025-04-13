@@ -348,5 +348,6 @@ one_shot = true
 
 [connection signal="body_entered" from="item_detection_area" to="." method="_on_item_detection_area_body_entered"]
 [connection signal="body_exited" from="item_detection_area" to="." method="_on_item_detection_area_body_exited"]
+[connection signal="value_changed" from="CanvasLayer/GUI/MarginContainer/open_box_bar" to="." method="_open_box_cooldown_updated"]
 [connection signal="timeout" from="camera_pivot/spring_arm_3d/camera/grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]
 [connection signal="timeout" from="gui_cooldown" to="." method="_on_gui_cooldown_timeout"]

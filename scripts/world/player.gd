@@ -1,9 +1,11 @@
 extends CharacterBody3D
 
+@export_category("Player variables")
+
 ##player variables
 @export var speed:int = 8
 @export var jump_velocity:float = 4.5
-var health:int = 100:
+@export var health:int = 100:
 	set(v):
 		health = v
 		health_bar.value = health
@@ -45,16 +47,16 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var gui_cooldown: Timer = $CanvasLayer/GUI/gui_cooldown
 @onready var interact_tip_text: Label = $CanvasLayer/GUI/interact_tip_text
 @onready var grab_buffer_display: ProgressBar = $CanvasLayer/GUI/crosshair_grabbing/ProgressBar
-@onready var item_overlay = $".."/CanvasLayer/item_overlay
+@onready var item_overlay = $".."/".."/CanvasLayer/item_overlay
 @onready var item_detection_gui: Control = $CanvasLayer/GUI/item_detection
 
-@onready var item_overlay_viewport_container = $".."/CanvasLayer/item_overlay/SubViewportContainer
-@onready var item_overlay_viewport = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport
-@onready var item_overlay_camera = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera
-@onready var item_overlay_flashlight = $".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera/flashlight
-@onready var item_overlay_info = $".."/CanvasLayer/item_overlay/item_info
-@onready var item_overlay_modifiers: Label = $".."/CanvasLayer/item_overlay/item_info/modifiers
-@onready var item_overlay_id: Label = $".."/CanvasLayer/item_overlay/item_info/id
+@onready var item_overlay_viewport_container = $".."/".."/CanvasLayer/item_overlay/SubViewportContainer
+@onready var item_overlay_viewport = $".."/".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport
+@onready var item_overlay_camera = $".."/".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera
+@onready var item_overlay_flashlight = $".."/".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera/flashlight
+@onready var item_overlay_info = $".."/".."/CanvasLayer/item_overlay/item_info
+@onready var item_overlay_modifiers: Label = $".."/".."/CanvasLayer/item_overlay/item_info/modifiers
+@onready var item_overlay_id: Label = $".."/".."/CanvasLayer/item_overlay/item_info/id
 
 ##camera references
 @onready var camera_pivot: Node3D = $camera_pivot
@@ -160,15 +162,14 @@ func _physics_process(delta: float) -> void:
 		gui_current_object.position.x = position.x
 		gui_current_object.position.z = position.z
 	
+	if carrying:
+		carrying.can_sleep = !holding
+	
 	if holding == true:
 		pick_up_object()
 		interact_tip_text.text = ""
-		if carrying:
-			carrying.can_sleep = false
 		
 	if holding == false:
-		if carrying:
-			carrying.can_sleep = true
 		handle_carrying_gui(null, null)
 		drop_object()
 		obj_speed_gui_visible(false)
@@ -177,8 +178,7 @@ func _physics_process(delta: float) -> void:
 		holding = null #so we dont keep running these ^^^ 
 	
 	if no_fly_ray.get_collider() == carrying:
-		holding = false
-		carrying = null
+		drop_object()
 
 func player_grabbing(delta: float):
 	if carrying:
@@ -370,12 +370,11 @@ func pick_up_object():
 func drop_object():
 	carrying = null
 	holding = false
-	#if carrying:
-		#toggle_outline(carrying, false)
 
 func player_dead():
 	position = Vector3(0, 6, 0)
 	health = 100
+	Global.score = 0
 	pass
 
 func perspective_toggle():
@@ -429,7 +428,8 @@ func handle_carrying_gui(obj, hovering):
 							clamp(child.mesh.size.x/2, 0, 1),
 							clamp(child.mesh.size.y/2, 0, 1),
 							clamp(child.mesh.size.z/2, 0, 1) )
-						new_mesh_instance.material_override = child.material_override.duplicate()
+						if child.material_override:
+							new_mesh_instance.material_override = child.material_override.duplicate()
 						minimal_obj.add_child(new_mesh_instance)
 					else:
 						var new_mesh_instance = MeshInstance3D.new()
@@ -543,10 +543,16 @@ func _max_grab_length_updated(value):
 	path_3d.curve.set_point_position(1, Vector3(0,0,-value))
 
 func _open_box_cooldown_updated(value):
-	pass
+	if value == 0:
+		value = 1000000000
+	open_box_timer.set_wait_time(value)
+	open_box_bar.max_value = value
 
 func _open_box_cooldown_expired(value):
-	pass
+	print(value)
+	if player.carrying:
+		drop_object()
+		player.carrying.queue_free()
 
 func _on_item_detection_area_body_entered(body: Node3D) -> void:
 	item_detection_gui.item_entered_area(body)

@@ -1,11 +1,12 @@
 extends Node3D
+
 @onready var cart: Node3D = $"."
 @onready var cart_handle: RigidBody3D = $"."/cart_handle_collision
 @onready var cart_handle_collision: CollisionShape3D = $cart_handle_collision/CollisionShape3D
 @onready var cart_body: RigidBody3D = $"."/cart_body
 @onready var remote_transform = $"."/cart_body/RemoteTransform3D
-@onready var player: CharacterBody3D = $"../../Player"
-@onready var hand: Marker3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D/hand"
+@onready var player: CharacterBody3D = $"../Player"
+@onready var hand: Marker3D = $"../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D/hand"
 @onready var bodies_in_cart_node: Node3D = $bodies_in_cart
 @onready var world: Node3D = $".."
 
@@ -13,8 +14,8 @@ extends Node3D
 @onready var area: Area3D = $cart_area
 @onready var sticky_area: Area3D = $cart_sticky
 
-@onready var hand_path: Path3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D"
-@onready var hand_path_follow: PathFollow3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D"
+@onready var hand_path: Path3D = $"../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D"
+@onready var hand_path_follow: PathFollow3D = $"../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D"
 
 const CART_ITEM_VIEW_PRELOAD = preload("res://scenes/ui/cart_item_view.tscn")
 var cart_item_view
