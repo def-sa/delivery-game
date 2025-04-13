@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=66 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/world/main.gd" id="1_md6cl"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/ui/pause.tscn" id="2_u2p2s"]
@@ -27,23 +27,6 @@
 [ext_resource type="PackedScene" uid="uid://b53i8gkefhj0f" path="res://assets/terrain/rooms/door_no_wall.tscn" id="23_jgscq"]
 [ext_resource type="Script" uid="uid://c8cag65gdoiyl" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="24_7bb5k"]
 [ext_resource type="Script" uid="uid://w0088ri165ve" path="res://scripts/world/delivery_point.gd" id="25_ij6fg"]
-
-[sub_resource type="Environment" id="Environment_0xlil"]
-background_mode = 3
-sdfgi_bounce_feedback = 0.0
-sdfgi_cascades = 1
-sdfgi_min_cell_size = 0.00078125
-sdfgi_cascade0_distance = 0.05
-sdfgi_max_distance = 0.1
-sdfgi_y_scale = 0
-sdfgi_energy = 0.0
-sdfgi_normal_bias = 0.0
-sdfgi_probe_bias = 0.0
-fog_mode = 1
-fog_light_color = Color(0.844796, 0.839208, 0.949784, 1)
-fog_density = 1.0
-volumetric_fog_albedo = Color(0.533037, 0.533037, 0.533037, 1)
-adjustment_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_yq6so"]
 size = Vector3(2.75, 1, 6)
@@ -200,6 +183,29 @@ collision_bounce = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_jscy8"]
 
+[sub_resource type="Environment" id="Environment_0xlil"]
+background_mode = 3
+sdfgi_bounce_feedback = 0.0
+sdfgi_cascades = 1
+sdfgi_min_cell_size = 0.00078125
+sdfgi_cascade0_distance = 0.05
+sdfgi_max_distance = 0.1
+sdfgi_y_scale = 0
+sdfgi_energy = 0.0
+sdfgi_normal_bias = 0.0
+sdfgi_probe_bias = 0.0
+fog_mode = 1
+fog_light_color = Color(0.844796, 0.839208, 0.949784, 1)
+fog_density = 1.0
+volumetric_fog_albedo = Color(0.533037, 0.533037, 0.533037, 1)
+adjustment_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_llfdw"]
+size = Vector3(256, 1, 256)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_u2p2s"]
+data = PackedVector3Array(-128, 0.5, 128, 128, 0.5, 128, -128, -0.5, 128, 128, 0.5, 128, 128, -0.5, 128, -128, -0.5, 128, 128, 0.5, -128, -128, 0.5, -128, 128, -0.5, -128, -128, 0.5, -128, -128, -0.5, -128, 128, -0.5, -128, 128, 0.5, 128, 128, 0.5, -128, 128, -0.5, 128, 128, 0.5, -128, 128, -0.5, -128, 128, -0.5, 128, -128, 0.5, -128, -128, 0.5, 128, -128, -0.5, -128, -128, 0.5, 128, -128, -0.5, 128, -128, -0.5, -128, 128, 0.5, 128, -128, 0.5, 128, 128, 0.5, -128, -128, 0.5, 128, -128, 0.5, -128, 128, 0.5, -128, -128, -0.5, 128, 128, -0.5, 128, -128, -0.5, -128, 128, -0.5, 128, 128, -0.5, -128, -128, -0.5, -128)
+
 [node name="main" type="Node3D"]
 script = ExtResource("1_md6cl")
 
@@ -210,17 +216,331 @@ layer = 100
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("2_u2p2s")]
 process_mode = 3
 z_index = 1000
+size_flags_horizontal = 0
 theme = ExtResource("3_llfdw")
-metadata/_edit_use_anchors_ = true
 
 [node name="item_overlay" parent="CanvasLayer" instance=ExtResource("4_80eyj")]
 process_mode = 1
 z_as_relative = false
+mouse_filter = 2
 theme = ExtResource("3_llfdw")
 metadata/_edit_use_anchors_ = true
 
 [node name="World" type="Node3D" parent="."]
 script = ExtResource("6_4m2ge")
+
+[node name="Enemies" type="Node3D" parent="World"]
+
+[node name="Objects" type="Node3D" parent="World"]
+
+[node name="cart" type="Node3D" parent="World/Objects" groups=["detectable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, -12.9836)
+script = ExtResource("7_exqdm")
+
+[node name="bodies_in_cart" type="Node3D" parent="World/Objects/cart"]
+
+[node name="cart_area_bottom_objects" type="Area3D" parent="World/Objects/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.895504)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Objects/cart/cart_area_bottom_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.568087, 0)
+visible = false
+mesh = SubResource("BoxMesh_yq6so")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/cart/cart_area_bottom_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.568087, 0)
+visible = false
+shape = SubResource("ConvexPolygonShape3D_fv21b")
+
+[node name="cart_area" type="Area3D" parent="World/Objects/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.809738, 4.3255)
+gravity_space_override = 3
+gravity = 12.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Objects/cart/cart_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -3.684)
+visible = false
+transparency = 0.74
+mesh = SubResource("BoxMesh_og1vs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/cart/cart_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -3.684)
+shape = SubResource("ConvexPolygonShape3D_pm3ni")
+
+[node name="cart_sticky" type="Area3D" parent="World/Objects/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51, 4.3255)
+gravity_space_override = 1
+gravity = 12.25
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Objects/cart/cart_sticky"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.757632, -3.684)
+visible = false
+transparency = 0.74
+mesh = SubResource("BoxMesh_2wyq8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/cart/cart_sticky"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.757632, -3.684)
+shape = SubResource("ConvexPolygonShape3D_vxglm")
+
+[node name="cart_body" type="RigidBody3D" parent="World/Objects/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.895504)
+mass = 40.0
+continuous_cd = true
+angular_damp = 20.0
+
+[node name="RemoteTransform3D6" type="RemoteTransform3D" parent="World/Objects/cart/cart_body"]
+remote_path = NodePath("../../cart_area_bottom_objects")
+update_scale = false
+
+[node name="RemoteTransform3D2" type="RemoteTransform3D" parent="World/Objects/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.203486, -0.84949)
+remote_path = NodePath("../../cart_handle")
+update_scale = false
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="World/Objects/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.785, 3.43)
+remote_path = NodePath("../../cart_handle_collision")
+update_position = false
+update_rotation = false
+update_scale = false
+
+[node name="RemoteTransform3D3" type="RemoteTransform3D" parent="World/Objects/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.809738, 3.43)
+remote_path = NodePath("../../cart_area")
+update_scale = false
+
+[node name="RemoteTransform3D4" type="RemoteTransform3D" parent="World/Objects/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51, 3.43)
+remote_path = NodePath("../../cart_sticky")
+update_scale = false
+
+[node name="RemoteTransform3D5" type="RemoteTransform3D" parent="World/Objects/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.836)
+remote_path = NodePath("../../cart_rails")
+update_scale = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Objects/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0259132)
+material_override = SubResource("StandardMaterial3D_y6deb")
+mesh = SubResource("BoxMesh_y6deb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/cart/cart_body"]
+transform = Transform3D(1, 0, 0, 0, 1.2, 0, 0, 0, 1, 0, -0.0871048, -0.0259132)
+shape = SubResource("ConvexPolygonShape3D_yc10j")
+
+[node name="cart_handle" type="RigidBody3D" parent="World/Objects/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.203486, 0.0460138)
+
+[node name="wall-type-b" type="MeshInstance3D" parent="World/Objects/cart/cart_handle"]
+transform = Transform3D(3.95, 0, 0, 0, -2.5, 2.18557e-07, 0, -2.18557e-07, -2.5, 0, 1.114, 4.691)
+mesh = SubResource("ArrayMesh_pm3ni")
+skeleton = NodePath("")
+
+[node name="cart_handle_collision" type="RigidBody3D" parent="World/Objects/cart" groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.57, 4.26153)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/cart/cart_handle_collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.157022, 0.279382)
+shape = SubResource("ConvexPolygonShape3D_jscy8")
+
+[node name="cart_rails" type="RigidBody3D" parent="World/Objects/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0.0595036)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Objects/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87, 0, 0.785)
+mesh = SubResource("BoxMesh_vxglm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87, 0, 0.785)
+shape = SubResource("ConvexPolygonShape3D_2f3dj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="World/Objects/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86815, 0.00020504, 0.78567)
+mesh = SubResource("BoxMesh_vxglm")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="World/Objects/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86815, 0.00020504, 0.78567)
+shape = SubResource("ConvexPolygonShape3D_yq6so")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="World/Objects/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 0, -3.062)
+mesh = SubResource("BoxMesh_fv21b")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="World/Objects/cart/cart_rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 0, -3.062)
+shape = SubResource("ConvexPolygonShape3D_tel4y")
+
+[node name="box_inside_spawner" type="Node3D" parent="World/Objects" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 11, 0)
+script = ExtResource("11_28gua")
+box_size = Vector3(0.5, 0.5, 0.5)
+box_texture = ExtResource("12_e3mvx")
+
+[node name="box_with_item" type="RigidBody3D" parent="World/Objects" groups=["detectable", "grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 11, 0)
+script = ExtResource("13_8ap0l")
+
+[node name="Area3D" type="Area3D" parent="World/Objects/box_with_item"]
+monitorable = false
+
+[node name="Decal" type="Decal" parent="World/Objects/box_with_item"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, -10.55, 0)
+size = Vector3(2, 20, 2)
+texture_albedo = SubResource("NoiseTexture2D_0ld40")
+modulate = Color(0, 0, 0, 1)
+upper_fade = 0.5
+lower_fade = 2.0
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+distance_fade_length = 20.0
+script = ExtResource("14_5ebq0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Objects/box_with_item"]
+transparency = 0.43
+mesh = ExtResource("15_tsn8l")
+
+[node name="CollisionShape3D" parent="World/Objects/box_with_item" instance=ExtResource("16_u2p2s")]
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="World/Objects/box_with_item"]
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="World/Objects/box_with_item"]
+remote_path = NodePath("../../box_inside_spawner")
+update_rotation = false
+update_scale = false
+
+[node name="box" type="RigidBody3D" parent="World/Objects" groups=["detectable", "grabbable", "openable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, 0)
+physics_material_override = SubResource("PhysicsMaterial_jscy8")
+script = ExtResource("13_8ap0l")
+
+[node name="Decal" type="Decal" parent="World/Objects/box"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, -10.55, 0)
+size = Vector3(2, 20, 2)
+texture_albedo = SubResource("NoiseTexture2D_0ld40")
+modulate = Color(0, 0, 0, 1)
+upper_fade = 0.5
+lower_fade = 2.0
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+distance_fade_length = 20.0
+script = ExtResource("14_5ebq0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Objects/box"]
+material_override = SubResource("StandardMaterial3D_5q0nq")
+mesh = SubResource("BoxMesh_jbj1t")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/box"]
+shape = SubResource("ConvexPolygonShape3D_muem4")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="World/Objects/box"]
+
+[node name="box_spawner" type="Node3D" parent="World/Objects" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
+script = ExtResource("11_28gua")
+box_texture = ExtResource("12_e3mvx")
+
+[node name="box_spawner2" type="Node3D" parent="World/Objects" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
+script = ExtResource("11_28gua")
+box_size = Vector3(0.5, 0.5, 0.5)
+box_texture = ExtResource("12_e3mvx")
+
+[node name="box_spawner3" type="Node3D" parent="World/Objects" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
+script = ExtResource("11_28gua")
+box_size = Vector3(1.5, 1.5, 1.5)
+box_texture = ExtResource("10_ggkmy")
+
+[node name="box_spawner4" type="Node3D" parent="World/Objects" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
+script = ExtResource("11_28gua")
+box_size = Vector3(2, 1, 2)
+box_texture = ExtResource("12_e3mvx")
+
+[node name="box_spawner5" type="Node3D" parent="World/Objects" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
+script = ExtResource("11_28gua")
+box_texture = ExtResource("16_1notw")
+
+[node name="box_spawner6" type="Node3D" parent="World/Objects" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
+script = ExtResource("11_28gua")
+box_size = Vector3(0.25, 5, 1)
+box_texture = ExtResource("12_e3mvx")
+
+[node name="box_spawner7" type="Node3D" parent="World/Objects" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 8.13562, -3.71611)
+script = ExtResource("11_28gua")
+box_size = Vector3(2, 2, 2)
+has_box_inside = true
+is_hollow_box = true
+inside_box_modifiers = Array[String](["grabbable", "deliverable", "detectable"])
+_inside_box_size = 0.75
+inside_box_texture = ExtResource("18_llfdw")
+
+[node name="box_spawner8" type="Node3D" parent="World/Objects" groups=["spawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
+script = ExtResource("11_28gua")
+has_box_inside = true
+is_hollow_box = true
+_inside_box_size = 0.1
+inside_box_texture = ExtResource("18_llfdw")
+
+[node name="hurt_area" type="Area3D" parent="World/Objects"]
+transform = Transform3D(3.738, 0, 0, 0, 3.738, 0, 0, 0, 3.738, 21.1608, 8.52638, 0)
+script = ExtResource("17_5jr8u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Objects/hurt_area"]
+material_override = SubResource("StandardMaterial3D_og1vs")
+transparency = 0.8
+mesh = SubResource("BoxMesh_2f3dj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/hurt_area"]
+shape = SubResource("ConvexPolygonShape3D_y6deb")
+
+[node name="delivery_point" type="Node3D" parent="World" node_paths=PackedStringArray("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 12, 0)
+script = ExtResource("25_ij6fg")
+player = NodePath("../Player")
+
+[node name="text" type="MeshInstance3D" parent="World/delivery_point"]
+transform = Transform3D(-4.37114e-08, 0, 5, 0, 1, 0, -1, 0, -2.18557e-07, 0, 0, 0)
+mesh = SubResource("TextMesh_dp3eg")
+
+[node name="mesh" type="MeshInstance3D" parent="World/delivery_point"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+material_override = SubResource("StandardMaterial3D_gqmmt")
+transparency = 0.5
+mesh = SubResource("BoxMesh_yc10j")
+
+[node name="Area3D" type="Area3D" parent="World/delivery_point"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/delivery_point/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+shape = SubResource("ConcavePolygonShape3D_0ld40")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="World/delivery_point"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+emitting = false
+amount = 125
+lifetime = 0.75
+one_shot = true
+explosiveness = 0.81
+randomness = 1.0
+fixed_fps = 60
+collision_base_size = 0.97
+process_material = SubResource("ParticleProcessMaterial_jscy8")
+draw_pass_1 = SubResource("BoxMesh_jscy8")
+
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="World/delivery_point/GPUParticles3D"]
+strength = 211.7
+attenuation = 0.105112
+radius = 6.6
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="World/delivery_point"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.93537, 0)
+size = Vector3(15, 1, 15)
 
 [node name="Player" parent="World" instance=ExtResource("5_wlwgd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
@@ -243,273 +563,19 @@ sky_mode = 1
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
 environment = SubResource("Environment_0xlil")
 
-[node name="cart" type="Node3D" parent="World" groups=["detectable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, -12.9836)
-script = ExtResource("7_exqdm")
+[node name="StaticBody3D" type="StaticBody3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -104, 0)
 
-[node name="bodies_in_cart" type="Node3D" parent="World/cart"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_llfdw")
 
-[node name="cart_area_bottom_objects" type="Area3D" parent="World/cart"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.895504)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_area_bottom_objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.568087, 0)
-visible = false
-mesh = SubResource("BoxMesh_yq6so")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_area_bottom_objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.568087, 0)
-visible = false
-shape = SubResource("ConvexPolygonShape3D_fv21b")
-
-[node name="cart_area" type="Area3D" parent="World/cart"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.809738, 4.3255)
-gravity_space_override = 3
-gravity = 12.25
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_area"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -3.684)
-visible = false
-transparency = 0.74
-mesh = SubResource("BoxMesh_og1vs")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_area"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -3.684)
-shape = SubResource("ConvexPolygonShape3D_pm3ni")
-
-[node name="cart_sticky" type="Area3D" parent="World/cart"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51, 4.3255)
-gravity_space_override = 1
-gravity = 12.25
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_sticky"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.757632, -3.684)
-visible = false
-transparency = 0.74
-mesh = SubResource("BoxMesh_2wyq8")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_sticky"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.757632, -3.684)
-shape = SubResource("ConvexPolygonShape3D_vxglm")
-
-[node name="cart_body" type="RigidBody3D" parent="World/cart"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.895504)
-mass = 40.0
-continuous_cd = true
-angular_damp = 20.0
-
-[node name="RemoteTransform3D6" type="RemoteTransform3D" parent="World/cart/cart_body"]
-remote_path = NodePath("../../cart_area_bottom_objects")
-update_scale = false
-
-[node name="RemoteTransform3D2" type="RemoteTransform3D" parent="World/cart/cart_body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.203486, -0.84949)
-remote_path = NodePath("../../cart_handle")
-update_scale = false
-
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="World/cart/cart_body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.785, 3.43)
-remote_path = NodePath("../../cart_handle_collision")
-update_position = false
-update_rotation = false
-update_scale = false
-
-[node name="RemoteTransform3D3" type="RemoteTransform3D" parent="World/cart/cart_body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.809738, 3.43)
-remote_path = NodePath("../../cart_area")
-update_scale = false
-
-[node name="RemoteTransform3D4" type="RemoteTransform3D" parent="World/cart/cart_body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51, 3.43)
-remote_path = NodePath("../../cart_sticky")
-update_scale = false
-
-[node name="RemoteTransform3D5" type="RemoteTransform3D" parent="World/cart/cart_body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.836)
-remote_path = NodePath("../../cart_rails")
-update_scale = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0259132)
-material_override = SubResource("StandardMaterial3D_y6deb")
-mesh = SubResource("BoxMesh_y6deb")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_body"]
-transform = Transform3D(1, 0, 0, 0, 1.2, 0, 0, 0, 1, 0, -0.0871048, -0.0259132)
-shape = SubResource("ConvexPolygonShape3D_yc10j")
-
-[node name="cart_handle" type="RigidBody3D" parent="World/cart"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.203486, 0.0460138)
-
-[node name="wall-type-b" type="MeshInstance3D" parent="World/cart/cart_handle"]
-transform = Transform3D(3.95, 0, 0, 0, -2.5, 2.18557e-07, 0, -2.18557e-07, -2.5, 0, 1.114, 4.691)
-mesh = SubResource("ArrayMesh_pm3ni")
-skeleton = NodePath("")
-
-[node name="cart_handle_collision" type="RigidBody3D" parent="World/cart" groups=["grabbable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.57, 4.26153)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_handle_collision"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.157022, 0.279382)
-shape = SubResource("ConvexPolygonShape3D_jscy8")
-
-[node name="cart_rails" type="RigidBody3D" parent="World/cart"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0.0595036)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/cart/cart_rails"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87, 0, 0.785)
-mesh = SubResource("BoxMesh_vxglm")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/cart/cart_rails"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87, 0, 0.785)
-shape = SubResource("ConvexPolygonShape3D_2f3dj")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="World/cart/cart_rails"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86815, 0.00020504, 0.78567)
-mesh = SubResource("BoxMesh_vxglm")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="World/cart/cart_rails"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86815, 0.00020504, 0.78567)
-shape = SubResource("ConvexPolygonShape3D_yq6so")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="World/cart/cart_rails"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 0, -3.062)
-mesh = SubResource("BoxMesh_fv21b")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="World/cart/cart_rails"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006, 0, -3.062)
-shape = SubResource("ConvexPolygonShape3D_tel4y")
-
-[node name="box_inside_spawner" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 11, 0)
-script = ExtResource("11_28gua")
-box_size = Vector3(0.5, 0.5, 0.5)
-box_texture = ExtResource("12_e3mvx")
-
-[node name="box_with_item" type="RigidBody3D" parent="World" groups=["detectable", "grabbable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 11, 0)
-script = ExtResource("13_8ap0l")
-
-[node name="Area3D" type="Area3D" parent="World/box_with_item"]
-monitorable = false
-
-[node name="Decal" type="Decal" parent="World/box_with_item"]
-transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, -10.55, 0)
-size = Vector3(2, 20, 2)
-texture_albedo = SubResource("NoiseTexture2D_0ld40")
-modulate = Color(0, 0, 0, 1)
-upper_fade = 0.5
-lower_fade = 2.0
-distance_fade_enabled = true
-distance_fade_begin = 0.0
-distance_fade_length = 20.0
-script = ExtResource("14_5ebq0")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/box_with_item"]
-transparency = 0.43
-mesh = ExtResource("15_tsn8l")
-
-[node name="CollisionShape3D" parent="World/box_with_item" instance=ExtResource("16_u2p2s")]
-
-[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="World/box_with_item"]
-
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="World/box_with_item"]
-remote_path = NodePath("../../box_inside_spawner")
-update_rotation = false
-update_scale = false
-
-[node name="box" type="RigidBody3D" parent="World" groups=["detectable", "grabbable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 11, 0)
-physics_material_override = SubResource("PhysicsMaterial_jscy8")
-script = ExtResource("13_8ap0l")
-
-[node name="Decal" type="Decal" parent="World/box"]
-transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, -10.55, 0)
-size = Vector3(2, 20, 2)
-texture_albedo = SubResource("NoiseTexture2D_0ld40")
-modulate = Color(0, 0, 0, 1)
-upper_fade = 0.5
-lower_fade = 2.0
-distance_fade_enabled = true
-distance_fade_begin = 0.0
-distance_fade_length = 20.0
-script = ExtResource("14_5ebq0")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/box"]
-material_override = SubResource("StandardMaterial3D_5q0nq")
-mesh = SubResource("BoxMesh_jbj1t")
-skeleton = NodePath("")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/box"]
-shape = SubResource("ConvexPolygonShape3D_muem4")
-
-[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="World/box"]
-
-[node name="box_spawner" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
-script = ExtResource("11_28gua")
-box_texture = ExtResource("12_e3mvx")
-
-[node name="box_spawner2" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
-script = ExtResource("11_28gua")
-box_size = Vector3(0.5, 0.5, 0.5)
-box_texture = ExtResource("12_e3mvx")
-
-[node name="box_spawner3" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
-script = ExtResource("11_28gua")
-box_size = Vector3(1.5, 1.5, 1.5)
-box_texture = ExtResource("10_ggkmy")
-
-[node name="box_spawner4" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
-script = ExtResource("11_28gua")
-box_size = Vector3(2, 1, 2)
-box_texture = ExtResource("12_e3mvx")
-
-[node name="box_spawner5" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
-script = ExtResource("11_28gua")
-box_texture = ExtResource("16_1notw")
-
-[node name="box_spawner6" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.1356, -12.7161)
-script = ExtResource("11_28gua")
-box_size = Vector3(0.25, 5, 1)
-box_texture = ExtResource("12_e3mvx")
-
-[node name="box_spawner7" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 8.13562, -3.71611)
-script = ExtResource("11_28gua")
-box_size = Vector3(2, 2, 2)
-has_box_inside = true
-is_hollow_box = true
-inside_box_modifiers = Array[String](["grabbable"])
-_inside_box_size = 0.75
-inside_box_texture = ExtResource("18_llfdw")
-
-[node name="box_spawner8" type="Node3D" parent="World" groups=["spawner"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
-script = ExtResource("11_28gua")
-has_box_inside = true
-is_hollow_box = true
-_inside_box_size = 0.1
-inside_box_texture = ExtResource("18_llfdw")
-
-[node name="hurt_area" type="Area3D" parent="World"]
-transform = Transform3D(3.738, 0, 0, 0, 3.738, 0, 0, 0, 3.738, 21.1608, 8.52638, 0)
-script = ExtResource("17_5jr8u")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/hurt_area"]
-material_override = SubResource("StandardMaterial3D_og1vs")
-transparency = 0.8
-mesh = SubResource("BoxMesh_2f3dj")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/hurt_area"]
-shape = SubResource("ConvexPolygonShape3D_y6deb")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("ConcavePolygonShape3D_u2p2s")
 
 [node name="Terrain" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 script = ExtResource("18_kmiqj")
 chunk_scene = ExtResource("19_rmdut")
 view_distance = 6
@@ -518,65 +584,16 @@ corridor_room_scene = ExtResource("20_wauw2")
 house_size = Vector3i(4, 3, 4)
 
 [node name="DungeonGenerator3D" type="Node3D" parent="Terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 34, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 15, -1.50534)
 script = ExtResource("24_7bb5k")
-room_scenes = Array[PackedScene]([ExtResource("20_wauw2"), ExtResource("21_dyae1")])
+room_scenes = Array[PackedScene]([ExtResource("20_wauw2"), ExtResource("22_epcct"), ExtResource("23_jgscq"), ExtResource("21_dyae1")])
 corridor_room_scene = ExtResource("20_wauw2")
-dungeon_size = Vector3i(5, 5, 5)
-max_retries = 3
-generate_threaded = true
-room_cost_multiplier = 1.0
-room_cost_at_end_for_required_doors = 4.0
-show_debug_in_game = true
+dungeon_size = Vector3i(5, 2, 5)
+voxel_scale = Vector3(5, 5, 5)
+max_retries = 4
+metadata/_custom_type_script = "uid://c8cag65gdoiyl"
 
-[node name="DungeonRoom3D" parent="Terrain/DungeonGenerator3D" instance=ExtResource("23_jgscq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -20, 0)
-show_grid_aabb_with_doors = true
-
-[node name="delivery_point" type="Node3D" parent="Terrain/DungeonGenerator3D" node_paths=PackedStringArray("player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, -24, 0)
-script = ExtResource("25_ij6fg")
-player = NodePath("../../../World/Player")
-
-[node name="text" type="MeshInstance3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
-transform = Transform3D(-4.37114e-08, 0, 5, 0, 1, 0, -1, 0, -2.18557e-07, 0, 0, 0)
-mesh = SubResource("TextMesh_dp3eg")
-
-[node name="mesh" type="MeshInstance3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
-material_override = SubResource("StandardMaterial3D_gqmmt")
-transparency = 0.5
-mesh = SubResource("BoxMesh_yc10j")
-
-[node name="Area3D" type="Area3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/DungeonGenerator3D/delivery_point/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
-shape = SubResource("ConcavePolygonShape3D_0ld40")
-
-[node name="GPUParticles3D" type="GPUParticles3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
-emitting = false
-amount = 125
-lifetime = 0.75
-one_shot = true
-explosiveness = 0.81
-randomness = 1.0
-fixed_fps = 60
-collision_base_size = 0.97
-process_material = SubResource("ParticleProcessMaterial_jscy8")
-draw_pass_1 = SubResource("BoxMesh_jscy8")
-
-[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="Terrain/DungeonGenerator3D/delivery_point/GPUParticles3D"]
-strength = 211.7
-attenuation = 0.105112
-radius = 6.6
-
-[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="Terrain/DungeonGenerator3D/delivery_point"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.93537, 0)
-size = Vector3(15, 1, 15)
-
-[connection signal="body_entered" from="World/cart/cart_area_bottom_objects" to="World/cart" method="_on_cart_area_bottom_objects_body_entered"]
-[connection signal="body_exited" from="World/cart/cart_area_bottom_objects" to="World/cart" method="_on_cart_area_bottom_objects_body_exited"]
-[connection signal="body_entered" from="World/hurt_area" to="World/hurt_area" method="_on_body_entered"]
-[connection signal="body_entered" from="Terrain/DungeonGenerator3D/delivery_point/Area3D" to="Terrain/DungeonGenerator3D/delivery_point" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="World/Objects/cart/cart_area_bottom_objects" to="World/Objects/cart" method="_on_cart_area_bottom_objects_body_entered"]
+[connection signal="body_exited" from="World/Objects/cart/cart_area_bottom_objects" to="World/Objects/cart" method="_on_cart_area_bottom_objects_body_exited"]
+[connection signal="body_entered" from="World/Objects/hurt_area" to="World/Objects/hurt_area" method="_on_body_entered"]
+[connection signal="body_entered" from="World/delivery_point/Area3D" to="World/delivery_point" method="_on_area_3d_body_entered"]

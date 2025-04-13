@@ -44,9 +44,10 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 ##gui references
 @onready var gui_obj_speed_bar: ProgressBar = $CanvasLayer/GUI/obj_speed_bar
 @onready var gui_obj_speed_text: RichTextLabel = $CanvasLayer/GUI/obj_speed_text
-@onready var gui_cooldown: Timer = $CanvasLayer/GUI/gui_cooldown
+#@onready var gui_cooldown: Timer = $CanvasLayer/GUI/gui_cooldown
 @onready var interact_tip_text: Label = $CanvasLayer/GUI/interact_tip_text
 @onready var grab_buffer_display: ProgressBar = $CanvasLayer/GUI/crosshair_grabbing/ProgressBar
+@onready var grab_buffer_timer: Timer = $grab_buffer_timer
 @onready var item_overlay = $".."/".."/CanvasLayer/item_overlay
 @onready var item_detection_gui: Control = $CanvasLayer/GUI/item_detection
 
@@ -68,16 +69,16 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var player_hand: Marker3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D/hand
 @onready var path_3d: Path3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D
 @onready var path_follow_3d: PathFollow3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D
-@onready var grab_buffer_timer: Timer = $camera_pivot/spring_arm_3d/camera/grab_buffer_timer
 @onready var rotate_to_player_joint = $camera_pivot/spring_arm_3d/camera/rotate_to_player_joint
 @onready var static_body: StaticBody3D = $camera_pivot/spring_arm_3d/camera/StaticBody3D
+
 
 @onready var no_fly_ray: RayCast3D = $no_fly_ray
 @onready var player: CharacterBody3D = $"."
 @onready var item_detection_area: Area3D = $item_detection_area
 @onready var health_bar: ProgressBar = $CanvasLayer/GUI/health_bar
-@onready var open_box_timer: Timer = $open_box_timer
-@onready var open_box_bar: ProgressBar = $CanvasLayer/GUI/MarginContainer/open_box_bar
+@onready var box_open_timer: Timer = $box_open_timer
+@onready var box_open_bar: ProgressBar = $CanvasLayer/GUI/MarginContainer/box_open_bar
 
 
 
@@ -133,13 +134,15 @@ func _ready() -> void:
 	Signalbus.player_jump_updated.connect(_player_jump_updated)
 	Signalbus.fov_updated.connect(_fov_updated)
 	Signalbus.max_grab_length_updated.connect(_max_grab_length_updated)
-	Signalbus.box_open_timer_updated.connect(_open_box_cooldown_updated)
-	Signalbus.box_open_timer_expired.connect(_open_box_cooldown_expired)
+	
+	Signalbus.box_open_timer_updated.connect(_box_open_timer_updated)
+	Signalbus.box_open_timer_expired.connect(_box_open_timer_expired)
 
 	camera.fov = Settings.fov
 	gui_obj_speed_bar.value = max_obj_speed
 	
-	grab_buffer_display.max_value = Settings.grab_buffer
+	_box_open_timer_updated(Settings.box_open_timer_default)
+	_grab_buffer_updated(Settings.grab_buffer_default)
 	
 	
 	_grab_buffer_expired() #reset values
@@ -183,6 +186,7 @@ func _physics_process(delta: float) -> void:
 func player_grabbing(delta: float):
 	if carrying:
 		grab_buffer_display.value = grab_buffer_timer.time_left
+		box_open_bar.value = box_open_timer.time_left
 		
 		var a = carrying.global_transform.origin
 		var b = player_hand.global_transform.origin
@@ -253,11 +257,15 @@ func _input(event: InputEvent) -> void:
 			flashlight_toggle = true
 	
 	if event.is_action_pressed("lmb"):
-		if carrying:
-			open_box_timer.start()
-			
-			pass
-	
+		if carrying and carrying.is_in_group("openable"):
+			box_open_bar.show()
+			start_box_open_timer()
+		#print("timer started", box_open_timer.time_left)
+	elif event.is_action_released("lmb"):
+		box_open_timer.stop()
+		box_open_timer_played_once = false
+		box_open_bar.hide()
+		
 	#handle mouse motion rotations such as camera & flashlight
 	if !camera_locked_in:
 		spin_locked = false
@@ -297,13 +305,13 @@ func _input(event: InputEvent) -> void:
 	
 	##control grip, maybe refine this later
 	if event.is_action_pressed("control_grip_in"):
-		gui_cooldown.start()
+		#gui_cooldown.start()
 		gui_obj_speed_text.visible = true
 		gui_obj_speed_bar.visible = true
 		max_obj_speed += obj_speed_step
 		
 	if event.is_action_pressed("control_grip_out"):
-		gui_cooldown.start()
+		#gui_cooldown.start()
 		gui_obj_speed_text.visible = true
 		gui_obj_speed_bar.visible = true
 		max_obj_speed -= obj_speed_step
@@ -501,11 +509,11 @@ func obj_speed_gui_visible(valueBool):
 	gui_obj_speed_bar.visible = valueBool
 	grab_buffer_display.visible = valueBool
 
-var timer_played_once = false
+var grab_buffer_timer_played_once = false
 func start_buffer_timer():
-	if timer_played_once == false:
+	if grab_buffer_timer_played_once == false:
 		grab_buffer_timer.start()
-	timer_played_once = true
+	grab_buffer_timer_played_once = true
 
 func _grab_buffer_updated(value):
 	if value == 0:
@@ -514,17 +522,17 @@ func _grab_buffer_updated(value):
 	grab_buffer_display.max_value = value
 
 func _grab_buffer_expired():
-	timer_played_once = false #reset timer
+	grab_buffer_timer_played_once = false #reset timer
 	drop_object()
 	obj_speed_gui_visible(false)
 	grab_buffer_display.hide()
 
+func _on_grab_buffer_timer_timeout() -> void:
+	Signalbus.grab_buffer_expired.emit()
+
 func _gui_cooldown():
 	gui_obj_speed_text.visible = false
 	gui_obj_speed_bar.visible = false
-
-func _on_grab_buffer_timer_timeout() -> void:
-	Signalbus.grab_buffer_expired.emit()
 
 func _on_gui_cooldown_timeout() -> void:
 	Signalbus.gui_cooldown.emit()
@@ -542,17 +550,32 @@ func _fov_updated(value):
 func _max_grab_length_updated(value):
 	path_3d.curve.set_point_position(1, Vector3(0,0,-value))
 
-func _open_box_cooldown_updated(value):
-	if value == 0:
-		value = 1000000000
-	open_box_timer.set_wait_time(value)
-	open_box_bar.max_value = value
 
-func _open_box_cooldown_expired(value):
-	print(value)
-	if player.carrying:
-		drop_object()
-		player.carrying.queue_free()
+
+var box_open_timer_played_once = false
+func start_box_open_timer():
+	print(box_open_timer_played_once)
+	if box_open_timer_played_once == false:
+		box_open_timer.start()
+	box_open_timer_played_once = true
+
+
+func _box_open_timer_updated(value):
+	if value == 0:
+		value = 0.01
+	box_open_timer.set_wait_time(value)
+	box_open_bar.max_value = value
+
+func _box_open_timer_expired():
+	box_open_timer.stop()
+	box_open_bar.hide()
+	box_open_timer_played_once = false
+	if carrying:
+		if carrying.is_in_group("openable"):
+			carrying.queue_free()
+
+func _on_box_open_timer_timeout() -> void:
+	Signalbus.box_open_timer_expired.emit()
 
 func _on_item_detection_area_body_entered(body: Node3D) -> void:
 	item_detection_gui.item_entered_area(body)

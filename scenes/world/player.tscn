@@ -9,6 +9,24 @@
 [ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/themes/new_theme.tres" id="7_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bhdmrq6le812t" path="res://assets/ui/up_arrow.png" id="8_smehm"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ce1ts"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_261lf"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqkch"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
+shader = ExtResource("5_tuyoq")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smehm"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ur7pv"]
+bg_color = Color(0, 0, 0, 1)
+
 [sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
 radius = 24.0
 height = 48.0
@@ -29,24 +47,6 @@ points = PackedVector3Array(-0.25041, -1.06559, -0.961001, 0.0455663, 0.952141, 
 density = 0.0383
 emission = Color(0.617493, 0.474562, 0.392049, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ce1ts"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_261lf"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqkch"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
-shader = ExtResource("5_tuyoq")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smehm"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ur7pv"]
-bg_color = Color(0, 0, 0, 1)
-
 [sub_resource type="Curve3D" id="Curve3D_qhqgy"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10),
@@ -58,29 +58,6 @@ point_count = 2
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_v666e")
-
-[node name="item_detection_area" type="Area3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="item_detection_area"]
-visible = false
-mesh = SubResource("SphereMesh_qlg0r")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="item_detection_area"]
-shape = SubResource("ConvexPolygonShape3D_tuyoq")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-mesh = SubResource("CapsuleMesh_xqg4r")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-shape = SubResource("ConvexPolygonShape3D_qlg0r")
-
-[node name="FogVolume" type="FogVolume" parent="."]
-visible = false
-size = Vector3(75, 75, 75)
-shape = 0
-material = SubResource("FogMaterial_20bdx")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 4
@@ -222,12 +199,14 @@ size_flags_vertical = 4
 texture = ExtResource("5_qlg0r")
 expand_mode = 3
 
-[node name="open_box_bar" type="ProgressBar" parent="CanvasLayer/GUI/MarginContainer"]
+[node name="box_open_bar" type="ProgressBar" parent="CanvasLayer/GUI/MarginContainer"]
+visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-fill_mode = 2
+max_value = 1.0
+fill_mode = 3
 show_percentage = false
 
 [node name="item_detection" type="Control" parent="CanvasLayer/GUI"]
@@ -285,6 +264,29 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ur7pv")
 step = 1.0
 value = 100.0
 
+[node name="item_detection_area" type="Area3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="item_detection_area"]
+visible = false
+mesh = SubResource("SphereMesh_qlg0r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="item_detection_area"]
+shape = SubResource("ConvexPolygonShape3D_tuyoq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+mesh = SubResource("CapsuleMesh_xqg4r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("ConvexPolygonShape3D_qlg0r")
+
+[node name="FogVolume" type="FogVolume" parent="."]
+visible = false
+size = Vector3(75, 75, 75)
+shape = 0
+material = SubResource("FogMaterial_20bdx")
+
 [node name="camera_pivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
 
@@ -314,10 +316,6 @@ transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 visible = false
 mesh = SubResource("BoxMesh_dqkch")
 
-[node name="grab_buffer_timer" type="Timer" parent="camera_pivot/spring_arm_3d/camera"]
-wait_time = 2.0
-one_shot = true
-
 [node name="rotate_to_player_joint" type="Generic6DOFJoint3D" parent="camera_pivot/spring_arm_3d/camera"]
 node_a = NodePath("../StaticBody3D")
 linear_limit_x/enabled = false
@@ -329,6 +327,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.50045)
 
 [node name="flashlight" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.91644, 0)
+visible = false
 light_color = Color(0.79903, 0.707115, 0.61987, 1)
 light_energy = 16.0
 light_indirect_energy = 1.84
@@ -340,7 +339,12 @@ spot_angle = 55.21
 [node name="no_fly_ray" type="RayCast3D" parent="."]
 target_position = Vector3(0, -6, 0)
 
-[node name="open_box_timer" type="Timer" parent="."]
+[node name="box_open_timer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="grab_buffer_timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
 
 [node name="gui_cooldown" type="Timer" parent="."]
 wait_time = 2.0
@@ -348,6 +352,6 @@ one_shot = true
 
 [connection signal="body_entered" from="item_detection_area" to="." method="_on_item_detection_area_body_entered"]
 [connection signal="body_exited" from="item_detection_area" to="." method="_on_item_detection_area_body_exited"]
-[connection signal="value_changed" from="CanvasLayer/GUI/MarginContainer/open_box_bar" to="." method="_open_box_cooldown_updated"]
-[connection signal="timeout" from="camera_pivot/spring_arm_3d/camera/grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]
+[connection signal="timeout" from="box_open_timer" to="." method="_on_box_open_timer_timeout"]
+[connection signal="timeout" from="grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]
 [connection signal="timeout" from="gui_cooldown" to="." method="_on_gui_cooldown_timeout"]

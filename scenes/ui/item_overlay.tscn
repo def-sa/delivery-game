@@ -1,6 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://r0lr0id6q0kw"]
+[gd_scene load_steps=7 format=3 uid="uid://r0lr0id6q0kw"]
 
 [ext_resource type="Texture2D" uid="uid://bk1cs84anbjv" path="res://assets/world/box/carton_box_04_closed_0.jpg" id="1_6bnwv"]
+[ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="1_48na1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6pp8d"]
+shader = ExtResource("1_48na1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfenw"]
 albedo_texture = ExtResource("1_6bnwv")
@@ -28,6 +32,7 @@ offset_bottom = 40.0
 mouse_filter = 1
 
 [node name="id" type="Label" parent="item_info"]
+material = SubResource("ShaderMaterial_6pp8d")
 layout_mode = 0
 offset_top = 489.0
 offset_right = 253.0
@@ -41,6 +46,7 @@ vertical_alignment = 3
 
 [node name="modifiers" type="Label" parent="item_info"]
 z_index = 1
+material = SubResource("ShaderMaterial_6pp8d")
 layout_mode = 0
 offset_top = 4.0
 offset_right = 253.0
@@ -53,6 +59,7 @@ text_overrun_behavior = 4
 [node name="background" type="ColorRect" parent="item_info"]
 z_index = -8
 z_as_relative = false
+material = SubResource("ShaderMaterial_6pp8d")
 layout_mode = 0
 offset_top = 4.0
 offset_right = 253.0

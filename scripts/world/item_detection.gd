@@ -1,9 +1,9 @@
 extends Control
 @onready var player: CharacterBody3D = $"../../.."
-@onready var box: RigidBody3D = $World/box
+#@onready var box: RigidBody3D = $World/box
 @onready var camera: Camera3D = $"../../../camera_pivot/spring_arm_3d/camera"
 @onready var offscreen_reticle: TextureRect = $offscreen_reticle
-#
+
 
 #object
 var objects_inside_area = []:
@@ -115,7 +115,7 @@ func item_entered_area(object):
 		
 		var item_name = Label.new()
 		var item_name_theme = Theme.new()
-		item_name_theme.default_font = load("res://assets/RobotoMono-Italic-VariableFont_wght.ttf")
+		#item_name_theme.default_font = load("res://assets/RobotoMono-Italic-VariableFont_wght.ttf")
 		item_name.theme = item_name_theme
 		item_name.name = "item_name"
 		#item_name.clip_text = true
@@ -145,7 +145,7 @@ func item_entered_area(object):
 		
 		#print(connected_nodes_array)
 		add_child(ui_container)
-		print("added:   ", object)
+		#print("added:   ", object)
 
 func item_exited_area(object):
 	for node in connected_nodes_array:
@@ -158,7 +158,7 @@ func item_exited_area(object):
 				visible_on_screen_notifier.queue_free()
 			current_ui_container.queue_free()
 			connected_nodes_array.erase(node)
-			print("deleted:   ", current_object)
+			#print("deleted:   ", current_object)
 
 func get_2d_bounding_box(mesh_instance: MeshInstance3D) -> Rect2:
 	# Get the bounding box (AABB) of the 3D object

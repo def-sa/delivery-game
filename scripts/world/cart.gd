@@ -5,17 +5,17 @@ extends Node3D
 @onready var cart_handle_collision: CollisionShape3D = $cart_handle_collision/CollisionShape3D
 @onready var cart_body: RigidBody3D = $"."/cart_body
 @onready var remote_transform = $"."/cart_body/RemoteTransform3D
-@onready var player: CharacterBody3D = $"../Player"
-@onready var hand: Marker3D = $"../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D/hand"
+@onready var player: CharacterBody3D = $"../../Player"
+@onready var hand: Marker3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D/hand"
 @onready var bodies_in_cart_node: Node3D = $bodies_in_cart
-@onready var world: Node3D = $".."
+@onready var objects: Node3D = $".."
 
 @onready var cart_rails: RigidBody3D = $cart_rails
 @onready var area: Area3D = $cart_area
 @onready var sticky_area: Area3D = $cart_sticky
 
-@onready var hand_path: Path3D = $"../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D"
-@onready var hand_path_follow: PathFollow3D = $"../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D"
+@onready var hand_path: Path3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D"
+@onready var hand_path_follow: PathFollow3D = $"../../Player/camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D"
 
 const CART_ITEM_VIEW_PRELOAD = preload("res://scenes/ui/cart_item_view.tscn")
 var cart_item_view
@@ -97,7 +97,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _body_entered_cart(body: Node3D):
-	if body != cart_body and body != cart_rails:
+	if body != cart_body and body != cart_rails and body != player:
 		
 		body.reparent(bodies_in_cart_node)
 
@@ -109,7 +109,7 @@ func _body_entered_cart(body: Node3D):
 		print(body.get_path())
 
 func _body_exited_cart(body: Node3D):
-	if body != cart_body and body != cart_rails:
+	if body != cart_body and body != cart_rails and body != player:
 		
 		for child in cart_body.get_children():
 			if child is RemoteTransform3D:
@@ -117,7 +117,7 @@ func _body_exited_cart(body: Node3D):
 					child.queue_free()
 					
 		
-		body.reparent(world)
+		body.reparent(objects)
 		
 		var index = bodies_in_cart.find(body)
 		if index != -1:

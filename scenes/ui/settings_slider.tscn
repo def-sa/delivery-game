@@ -1,12 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://cl0ygjsp2yih7"]
+[gd_scene load_steps=5 format=3 uid="uid://cl0ygjsp2yih7"]
 
+[ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="1_807sy"]
 [ext_resource type="Script" uid="uid://dyi4mumyudlst" path="res://scripts/ui/settings_slider.gd" id="1_d3yen"]
 [ext_resource type="Texture2D" uid="uid://ytj03voj4bf0" path="res://assets/ui/reset_arrow.png" id="1_iusgf"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tvc2o"]
+shader = ExtResource("1_807sy")
+
 [node name="settings_slider" type="HBoxContainer"]
+material = SubResource("ShaderMaterial_tvc2o")
 script = ExtResource("1_d3yen")
 
 [node name="slider_value_txt" type="Label" parent="."]
+material = SubResource("ShaderMaterial_tvc2o")
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -14,6 +20,7 @@ theme_override_font_sizes/font_size = 28
 vertical_alignment = 1
 
 [node name="slider_text" type="Label" parent="."]
+material = SubResource("ShaderMaterial_tvc2o")
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -21,6 +28,7 @@ theme_override_font_sizes/font_size = 28
 horizontal_alignment = 2
 
 [node name="slider" type="HSlider" parent="."]
+material = SubResource("ShaderMaterial_tvc2o")
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_vertical = 1
@@ -32,6 +40,7 @@ value = 50.0
 modulate = Color(0.764706, 0.764706, 0.764706, 1)
 show_behind_parent = true
 clip_children = 2
+material = SubResource("ShaderMaterial_tvc2o")
 custom_minimum_size = Vector2(35, 35)
 layout_direction = 1
 layout_mode = 2

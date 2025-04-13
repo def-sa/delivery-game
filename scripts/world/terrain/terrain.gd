@@ -1,6 +1,6 @@
 extends Node3D
 
-var seed: String = "bruh"
+var seed_name: String = "wasgajahhjfukfhkfhkyfujk"
 
 @export var chunk_scene: PackedScene
 @export var chunk_size: float = 50.0
@@ -25,8 +25,18 @@ var current_block_index: int = 0
 var current_chunk_index: int = 0
 var initial = null
 
+
 #TODO: when creating chunks, would it be more efficient to use multithreading? idk how that workz
 func _ready():
+	var seed_to_use : int
+	
+	if seed_name:
+		seed_to_use = hash(seed_name)
+	else:
+		seed_to_use = randi()
+	
+	seed(seed_to_use)
+	
 	Signalbus.render_distance_updated.connect(_render_distance_updated)
 	initial = true
 	_generate_initial_chunks()
@@ -70,20 +80,19 @@ func _generate_chunks_from_index(index):
 				if chunk_position not in chunks:
 					_create_chunk(chunk_position, index)
 
-## BUG: crash upon queuing free? or maybe spawning over preexisting chunks
-##TODO: remake this function or else a memory leak will happen :(
-#func _free_outside_chunks(index):
-	#var positions_to_remove = []
-	#var player_z = player.global_transform.origin.z
-	#for position in chunks.keys():
-		#if abs(position.z - player_z) > view_distance * chunk_size:
-			#positions_to_remove.append(position)
-	#for position in positions_to_remove:
-		##if is not spawn chunk
-		##if index != 0:
-		#chunks[position].queue_free()
-		##print("/REMOVED/ chunk removed : ", position)
-		#chunks.erase(position)
+func _free_outside_chunks(index):
+	var positions_to_remove = []
+	var player_z = player.global_transform.origin.z
+	for position in chunks.keys():
+		if abs(position.z - player_z) > view_distance * chunk_size:
+			positions_to_remove.append(position)
+	for position in positions_to_remove:
+		for child in chunks[position].get_children():
+			if child is DungeonGenerator3D:
+				if child.stage == DungeonGenerator3D.BuildStage.DONE:
+					chunks[position].queue_free()
+					print("/REMOVED/ chunk removed : ", position)
+					chunks.erase(position)
 
 func _create_chunk(position: Vector3, index):
 	var chunk = chunk_scene.instantiate()
@@ -117,6 +126,7 @@ func _create_structure(type, chunk, chance, index):
 			print("creating structure", chunk.position)
 			
 			var dungeon = DungeonGenerator3D.new()
+			dungeon.voxel_scale = Vector3(5,5,5)
 			dungeon.name = "structure"
 			
 			match type:
@@ -132,7 +142,6 @@ func _create_structure(type, chunk, chance, index):
 func _create_house(chunk, dungeon):
 			#var structure = structure_pool[randi() % structure_pool.size()].instantiate()
 	#dungeon.visible = false
-	dungeon.generate_seed = str(chunk.position.z)
 	dungeon.position = Vector3i(1, 5 + (house_size.y * 5), 1)
 	#honestly not sure if this is more efficient but it seems to cause less lag spikes and more consistant lag
 	#dungeon.visualize_generation_progress = true
@@ -141,7 +150,7 @@ func _create_house(chunk, dungeon):
 	#else: 
 		#dungeon.visualize_generation_wait_between_iterations = 1
 	dungeon.max_retries = 4
-	dungeon.max_safe_iterations = 500
+	dungeon.max_safe_iterations = 400
 	dungeon.generate_threaded = true
 	dungeon.room_cost_multiplier = 2
 	dungeon.room_cost_at_end_for_required_doors = 2
@@ -150,12 +159,12 @@ func _create_house(chunk, dungeon):
 	dungeon.corridor_room_scene = corridor_room_scene
 	dungeon.dungeon_size = house_size
 	dungeon.generate_on_ready = true
-	chunk.add_child(dungeon)
-	
 	dungeon.done_generating.connect(_populate_house_items.bind(dungeon))
+	dungeon.transform.origin += Vector3(0, -12, 0)
+	
+	chunk.add_child(dungeon)
 
 func _create_shop(chunk, dungeon):
-	dungeon.generate_seed = str(chunk.position.z)
 	dungeon.position = Vector3i(1, 5 + (shop_size.y * 5), 1)
 	#honestly not sure if this is more efficient but it seems to cause less lag spikes and more consistant lag
 	#dungeon.visualize_generation_progress = true
@@ -199,9 +208,9 @@ func get_node_with_group_spawner(node):
 
 
 #settings slider changed
-func _render_distance_updated(is_default, value):
+func _render_distance_updated(value):
 	view_distance = value
 	var player_z = player.global_transform.origin.z
 	var new_chunk_index = int(player_z / chunk_size)
 	_generate_chunks_from_index(new_chunk_index)
-	#_free_outside_chunks(new_chunk_index)
+	_free_outside_chunks(new_chunk_index)

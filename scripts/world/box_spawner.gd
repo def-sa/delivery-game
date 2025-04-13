@@ -1,6 +1,7 @@
 extends Node3D
 @export_group("Box variables")
-@export var modifiers: Array[String] = ["grabbable", "deliverable","detectable"]
+#@export var modifiers: Array[String]
+@onready var modifiers: Array[String] = ["deliverable","detectable","grabbable","openable"]
 @export var box_size: Vector3 = Vector3(1, 1, 1)
 @export var box_mass: float = 1.0
 @export var box_texture: Texture
@@ -60,7 +61,8 @@ func _ready() -> void:
 func spawn_box(modifiers:Array[String]):
 	
 	var rigidbody = RigidBody3D.new()
-	rigidbody.mass = box_mass
+	if box_mass > 0:
+		rigidbody.mass = box_mass
 	
 	if is_inside_box:
 		rigidbody.continuous_cd = true
@@ -154,7 +156,7 @@ func spawn_box(modifiers:Array[String]):
 	add_child(rigidbody)
 	
 	for modifier in modifiers:
-		rigidbody.add_to_group(modifier, true)
+		rigidbody.add_to_group(modifier)
 	
 	Global.total_boxes_spawned =+ 1
 	print("box spawned:", rigidbody)

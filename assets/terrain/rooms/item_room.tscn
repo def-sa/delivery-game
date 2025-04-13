@@ -15,8 +15,8 @@ size = Vector3(10, 10, 10)
 script = ExtResource("2_hu4r7")
 
 [node name="box_spawner" type="Node3D" parent="CSGBox3D" groups=["spawner"]]
-visible = false
 script = ExtResource("3_r2ohy")
+box_size = Vector3(2, 2, 2)
 box_texture = ExtResource("4_hu4r7")
 metadata/_custom_type_script = "uid://csg6h0wweg7cj"
 
@@ -27,7 +27,6 @@ size = Vector3(10, 10, 10)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
-visible = false
 operation = 2
 size = Vector3(2, 8, 5)
 
@@ -36,7 +35,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.69333, 0, 0)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="CSGBox3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5.60922, 0)
-visible = false
 spot_range = 17.916
 spot_attenuation = -2.19
 spot_angle = 36.81

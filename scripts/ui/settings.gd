@@ -137,8 +137,8 @@ var max_grab_length:float = max_grab_length_default:
 #@export var box_open_timer_name:String = "box_open_timer"
 @export_range(0, 1, 0.01, "or_greater") var box_open_timer_min: float = 0
 @export_range(0, 8, 0.01, "or_greater") var box_open_timer_max: float = 11
-@export var box_open_timer_default:float = 6
-@export var box_open_timer_step: float = 1
+@export var box_open_timer_default:float = 1.25
+@export var box_open_timer_step: float = 0.1
 
 var box_open_timer:float = box_open_timer_default:
 	set(v):
