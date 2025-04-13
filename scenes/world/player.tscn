@@ -160,10 +160,6 @@ value = 25.0
 fill_mode = 3
 show_percentage = false
 
-[node name="gui_cooldown" type="Timer" parent="CanvasLayer/GUI"]
-wait_time = 2.0
-one_shot = true
-
 [node name="interact_tip_text" type="Label" parent="CanvasLayer/GUI"]
 visible = false
 layout_mode = 1
@@ -225,6 +221,14 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("5_qlg0r")
 expand_mode = 3
+
+[node name="open_box_bar" type="ProgressBar" parent="CanvasLayer/GUI/MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+fill_mode = 2
+show_percentage = false
 
 [node name="item_detection" type="Control" parent="CanvasLayer/GUI"]
 layout_mode = 3
@@ -336,7 +340,13 @@ spot_angle = 55.21
 [node name="no_fly_ray" type="RayCast3D" parent="."]
 target_position = Vector3(0, -6, 0)
 
+[node name="open_box_timer" type="Timer" parent="."]
+
+[node name="gui_cooldown" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="body_entered" from="item_detection_area" to="." method="_on_item_detection_area_body_entered"]
 [connection signal="body_exited" from="item_detection_area" to="." method="_on_item_detection_area_body_exited"]
-[connection signal="timeout" from="CanvasLayer/GUI/gui_cooldown" to="." method="_on_gui_cooldown_timeout"]
 [connection signal="timeout" from="camera_pivot/spring_arm_3d/camera/grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]
+[connection signal="timeout" from="gui_cooldown" to="." method="_on_gui_cooldown_timeout"]

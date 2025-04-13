@@ -1,13 +1,25 @@
 extends Node3D
-
+@export_group("Box variables")
+@export var modifiers: Array
 @export var box_size: Vector3 = Vector3(1, 1, 1)
 @export var box_mass: float = 1.0
 @export var box_texture: Texture
 #if no weight defined, it will default to calculating a weight based on its size
 @export var box_weight: float
+
+#TODO: box cannot be resized if box inside
 @export var has_box_inside: bool
 @export var is_hollow_box: bool
-@export var is_inside_box: bool
+var is_inside_box: bool
+
+@export_group("Inside box variables")
+@export var inside_box_modifiers:Array
+@export_range(0.1, .75, 0.01) var _inside_box_size = .5
+@onready var inside_box_size = Vector3(_inside_box_size,_inside_box_size,_inside_box_size)
+#@export var inside_box_size: Vector3 = Vector3(1,1,1)
+@export var inside_box_mass: float
+@export var inside_box_texture: Texture
+@export var inside_box_weight: float
 
 const box_script = preload("res://scripts/world/box.gd")
 const box_spawner_script = preload("res://scripts/world/box_spawner.gd")
@@ -17,7 +29,7 @@ const hollow_box_collision = preload("res://assets/world/box/hollow_box_collisio
 #TODO : link up id with delivery point
 var id 
 var is_delivered:bool = false
-@export var modifiers: Array
+
 
 
 #TODO
@@ -82,8 +94,11 @@ func spawn_box(modifiers:Array):
 		spawner_node.set_script(box_spawner_script)
 		add_child(spawner_node)
 		spawner_node.is_inside_box = true
-		spawner_node.box_size = Vector3(.5,.5,.5)
-		var obj_spawned = spawner_node.spawn_box([])
+		spawner_node.box_size = inside_box_size
+		spawner_node.box_texture = inside_box_texture
+		spawner_node.box_mass = inside_box_mass
+		
+		var obj_spawned = spawner_node.spawn_box(inside_box_modifiers)
 		
 		var remote_transform = RemoteTransform3D.new()
 		remote_transform.remote_path = spawner_node.get_path()

@@ -8,12 +8,12 @@ func _ready() -> void:
 	Signalbus.contrast_updated.connect(_contrast_updated)
 	Signalbus.saturation_updated.connect(_saturation_updated)
 
-func _brightness_updated(is_default, value):
+func _brightness_updated(value):
 	world.environment.adjustment_brightness = value
 
-func _contrast_updated(is_default, value):
+func _contrast_updated(value):
 	world.environment.adjustment_contrast = value
 
-func _saturation_updated(is_default, value):
+func _saturation_updated(value):
 	world.environment.adjustment_saturation = value
 	

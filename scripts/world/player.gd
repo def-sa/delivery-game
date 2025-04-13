@@ -71,11 +71,13 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var static_body: StaticBody3D = $camera_pivot/spring_arm_3d/camera/StaticBody3D
 
 @onready var no_fly_ray: RayCast3D = $no_fly_ray
-
 @onready var player: CharacterBody3D = $"."
 @onready var item_detection_area: Area3D = $item_detection_area
-
 @onready var health_bar: ProgressBar = $CanvasLayer/GUI/health_bar
+@onready var open_box_timer: Timer = $open_box_timer
+@onready var open_box_bar: ProgressBar = $CanvasLayer/GUI/MarginContainer/open_box_bar
+
+
 
 var spring_arm_length = min_zoom_in
 var flashlight_toggle:bool = false:
@@ -120,17 +122,23 @@ var holding_perspective_toggle = false
 
 func _ready() -> void:
 	
+	
 	Signalbus.grab_buffer_expired.connect(_grab_buffer_expired)
-	Signalbus.grab_buffer_cooldown_updated.connect(_grab_buffer_updated)
+	Signalbus.grab_buffer_updated.connect(_grab_buffer_updated)
 	Signalbus.gui_cooldown.connect(_gui_cooldown)
+	
 	Signalbus.player_speed_updated.connect(_player_speed_updated)
 	Signalbus.player_jump_updated.connect(_player_jump_updated)
 	Signalbus.fov_updated.connect(_fov_updated)
 	Signalbus.max_grab_length_updated.connect(_max_grab_length_updated)
-	
+	Signalbus.box_open_timer_updated.connect(_open_box_cooldown_updated)
+	Signalbus.box_open_timer_expired.connect(_open_box_cooldown_expired)
+
 	camera.fov = Settings.fov
 	gui_obj_speed_bar.value = max_obj_speed
+	
 	grab_buffer_display.max_value = Settings.grab_buffer
+	
 	
 	_grab_buffer_expired() #reset values
 	
@@ -140,7 +148,6 @@ func _ready() -> void:
 	
 	path_follow_3d.progress_ratio = hand_scroll
 	path_3d.curve.set_point_position(1, Vector3(path_3d.curve.get_point_position(1).x,path_3d.curve.get_point_position(1).y,-max_reach)) 
-
 
 func _physics_process(delta: float) -> void:
 	check_hover()
@@ -172,7 +179,7 @@ func _physics_process(delta: float) -> void:
 	if no_fly_ray.get_collider() == carrying:
 		holding = false
 		carrying = null
-	
+
 func player_grabbing(delta: float):
 	if carrying:
 		grab_buffer_display.value = grab_buffer_timer.time_left
@@ -244,6 +251,12 @@ func _input(event: InputEvent) -> void:
 			flashlight_toggle = false
 		else:
 			flashlight_toggle = true
+	
+	if event.is_action_pressed("lmb"):
+		if carrying:
+			open_box_timer.start()
+			
+			pass
 	
 	#handle mouse motion rotations such as camera & flashlight
 	if !camera_locked_in:
@@ -483,11 +496,6 @@ func resize_arraymesh(original_mesh: ArrayMesh, scale_factor: float) -> ArrayMes
 	return new_mesh
 
 
-
-
-
-
-
 func obj_speed_gui_visible(valueBool):
 	gui_obj_speed_text.visible = valueBool
 	gui_obj_speed_bar.visible = valueBool
@@ -499,7 +507,7 @@ func start_buffer_timer():
 		grab_buffer_timer.start()
 	timer_played_once = true
 
-func _grab_buffer_updated(is_default, value):
+func _grab_buffer_updated(value):
 	if value == 0:
 		value = 1000000000
 	grab_buffer_timer.set_wait_time(value)
@@ -521,20 +529,24 @@ func _on_grab_buffer_timer_timeout() -> void:
 func _on_gui_cooldown_timeout() -> void:
 	Signalbus.gui_cooldown.emit()
 
-func _player_speed_updated(is_default, value):
+func _player_speed_updated(value):
 	speed = value
 
-func _player_jump_updated(is_default, value):
+func _player_jump_updated(value):
 	jump_velocity = value
 
 #BUG : this crashes the game when updated too fast???? i have no idea why
-func _fov_updated(is_default, value):
+func _fov_updated(value):
 	camera.set_fov(value)
 
-func _max_grab_length_updated(is_default, value):
+func _max_grab_length_updated(value):
 	path_3d.curve.set_point_position(1, Vector3(0,0,-value))
-	
 
+func _open_box_cooldown_updated(value):
+	pass
+
+func _open_box_cooldown_expired(value):
+	pass
 
 func _on_item_detection_area_body_entered(body: Node3D) -> void:
 	item_detection_gui.item_entered_area(body)

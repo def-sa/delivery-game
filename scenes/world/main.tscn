@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=64 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/world/main.gd" id="1_md6cl"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/ui/pause.tscn" id="2_u2p2s"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://otlyvgs8ia5g" path="res://assets/world/box/hollow_box_collision.tscn" id="16_u2p2s"]
 [ext_resource type="Script" uid="uid://jqsmym6pakn0" path="res://scenes/world/hurt_area.gd" id="17_5jr8u"]
 [ext_resource type="Script" uid="uid://dq8ehoakomj04" path="res://scripts/world/terrain/terrain.gd" id="18_kmiqj"]
+[ext_resource type="Texture2D" uid="uid://dvx8htg088q2w" path="res://assets/world/box/placeholder.jpg" id="18_llfdw"]
 [ext_resource type="PackedScene" uid="uid://ogltphnc1i0n" path="res://scenes/world/terrain/chunk.tscn" id="19_rmdut"]
 [ext_resource type="PackedScene" uid="uid://bqeis521kwxjl" path="res://assets/terrain/rooms/room_no_wall.tscn" id="20_wauw2"]
 [ext_resource type="PackedScene" uid="uid://bk5nsjwlc622e" path="res://assets/terrain/rooms/stairs.tscn" id="21_dyae1"]
@@ -380,7 +381,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 11, 0)
 script = ExtResource("11_28gua")
 box_size = Vector3(0.5, 0.5, 0.5)
 box_texture = ExtResource("12_e3mvx")
-is_inside_box = true
 
 [node name="box_with_item" type="RigidBody3D" parent="World" groups=["detectable", "grabbable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 11, 0)
@@ -481,6 +481,8 @@ script = ExtResource("11_28gua")
 box_size = Vector3(2, 2, 2)
 has_box_inside = true
 is_hollow_box = true
+_inside_box_size = 0.75
+inside_box_texture = ExtResource("18_llfdw")
 
 [node name="box_spawner8" type="Node3D" parent="World" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.13562, -3.71611)
@@ -488,6 +490,8 @@ script = ExtResource("11_28gua")
 box_size = Vector3(4, 1, 1)
 has_box_inside = true
 is_hollow_box = true
+_inside_box_size = 0.1
+inside_box_texture = ExtResource("18_llfdw")
 
 [node name="hurt_area" type="Area3D" parent="World"]
 transform = Transform3D(3.738, 0, 0, 0, 3.738, 0, 0, 0, 3.738, 21.1608, 8.52638, 0)

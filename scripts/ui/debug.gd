@@ -37,7 +37,11 @@ func _handle_slider_changed(slider_name,is_default,value):
 				Settings.max_grab_length = Settings.max_grab_length_settings[1]
 			else:
 				Settings.max_grab_length = value
-				
+		"Box Open Time":
+			if is_default == true:
+				Settings.max_grab_length = Settings.max_grab_length_settings[1]
+			else:
+				Settings.max_grab_length = value	
 		"Placeholder":
 			pass
 
