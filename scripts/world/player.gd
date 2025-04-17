@@ -65,6 +65,7 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var spring_position: Node3D = $camera_pivot/spring_arm_3d/spring_position
 @onready var camera: Camera3D = $camera_pivot/spring_arm_3d/camera
 @onready var flashlight: SpotLight3D = $flashlight
+@onready var click_ray: RayCast3D = $camera_pivot/spring_arm_3d/camera/click_ray
 @onready var ray_interaction: RayCast3D = $camera_pivot/spring_arm_3d/camera/ray_interaction
 @onready var player_hand: Marker3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D/hand
 @onready var path_3d: Path3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D
@@ -159,6 +160,10 @@ func _physics_process(delta: float) -> void:
 	player_grabbing(delta)
 	player_movement(delta)
 	
+	if shoot_click_ray:
+		click_ray_hit = shoot_ray()
+	
+	
 	if gui_current_object:
 		item_overlay_camera.look_at(gui_current_object.position)
 		
@@ -173,7 +178,7 @@ func _physics_process(delta: float) -> void:
 		interact_tip_text.text = ""
 		
 	if holding == false:
-		handle_carrying_gui(null, null)
+		#handle_carrying_gui(null, null)
 		drop_object()
 		obj_speed_gui_visible(false)
 		grab_buffer_display.hide()
@@ -226,8 +231,17 @@ func player_movement(delta: float):
 	##Signalbus.grab_buffer_cooldown_updated.connect(_grab_buffer_updated)
 	#pass
 
-
+var click_ray_hit
+var shoot_click_ray = false
 func _input(event: InputEvent) -> void:
+	
+	if event.is_action_pressed("tab"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		shoot_click_ray = true
+	if event.is_action_released("tab"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		shoot_click_ray = false
+	
 	
 	if event.is_action_pressed("cam_zoom_in"):
 		hand_scroll += 0.1
@@ -257,11 +271,19 @@ func _input(event: InputEvent) -> void:
 			flashlight_toggle = true
 	
 	if event.is_action_pressed("lmb"):
+		
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+			shoot_click_ray = true
+			
 		if carrying and carrying.is_in_group("openable"):
 			box_open_bar.show()
 			start_box_open_timer()
 		#print("timer started", box_open_timer.time_left)
 	elif event.is_action_released("lmb"):
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+			if click_ray_hit:
+				handle_carrying_gui(click_ray_hit.collider, "hovering")
+		shoot_click_ray = false
 		box_open_timer.stop()
 		box_open_timer_played_once = false
 		box_open_bar.hide()
@@ -333,6 +355,30 @@ func _input(event: InputEvent) -> void:
 		elif carrying:
 			carrying = null
 			holding = false
+
+func shoot_ray():
+	var mouse_pos = get_viewport().get_mouse_position()
+	var ray_origin = camera.project_ray_origin(mouse_pos)
+	var ray_direction = camera.project_ray_normal(mouse_pos)
+	var ray_length = 1000  # Adjust as needed
+	var ray_end = ray_origin + ray_direction * ray_length
+
+	var params = PhysicsRayQueryParameters3D.new()
+	params.from = ray_origin
+	params.to = ray_end
+	params.collision_mask = 1  # Optional: Set collision layers to check
+
+	var space_state = get_world_3d().direct_space_state
+	var result = space_state.intersect_ray(params)
+	
+	return result
+
+
+
+
+
+
+
 
 func _ray_intersect_obj():
 	if ray_interaction.is_colliding():
@@ -417,9 +463,9 @@ func zoom(zooming):
 	else:
 		camera.fov = Settings.fov
 
-func handle_carrying_gui(obj, hovering):
-	overlay_info_visible(hovering)
-	if hovering != "off":
+func handle_carrying_gui(obj, visiblity):
+	overlay_info_visible(visiblity)
+	if visiblity != "off":
 		var view_obj
 		if obj is RigidBody3D:
 			view_obj = obj.duplicate()
@@ -463,11 +509,11 @@ func handle_carrying_gui(obj, hovering):
 			
 			item_overlay_viewport.add_child(gui_current_object)
 
-func overlay_info_visible(_visible):
-	if _visible:
+func overlay_info_visible(visiblity):
+	if visiblity:
 		item_overlay_camera.position.y = -50
 		item_overlay_flashlight.position = item_overlay_camera.position
-	match _visible:
+	match visiblity:
 		"holding":
 			item_overlay.visible = true
 			item_overlay.modulate = "ffffff" #100% opacity

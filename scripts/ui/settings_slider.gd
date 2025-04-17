@@ -6,7 +6,6 @@ extends HBoxContainer
 
 @onready var slider_name:String = str(slider_node.get_parent().name).replace(" ", "_"):
 	set(value):
-		#slider_name = value
 		slider_value_txt.text = value
 		
 @onready var slider_default_value:float = 50:
@@ -30,12 +29,10 @@ extends HBoxContainer
 
 func _on_default_btn_pressed() -> void:
 	Settings[slider_name.to_lower()] = Settings[slider_name+"_default"]
-	#Signalbus.settings_slider.emit(slider_name, true, 0)
 	slider_value_txt.text = str(slider_default_value)
 	slider_node.value = slider_default_value
 
 func _on_slider_value_changed(value: float) -> void:
 	Settings[slider_name.to_lower()] = value
-	#Signalbus.settings_slider.emit(slider_name, false, value)
 	slider_value_txt.text = str(value)
 	slider_node.value = value

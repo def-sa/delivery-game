@@ -14,7 +14,7 @@ func _ready() -> void:
 	
 	# for each slider, find set values and set slider
 	for slider in sliders_in_display:
-		print(slider)
+		#print(slider)
 		#[_name, min, max, default, step]
 		var slider_node = get_node("VBoxContainer/"+slider)
 		var slider_values = _get_slider_values(slider)
@@ -36,7 +36,7 @@ func _handle_slider_changed(slider_name,is_default,value):
 		#print(slider_name)
 		if slider_name == slider:
 			var slider_values = _get_slider_values(slider)
-			print(slider_values,"||| ",slider)
+			#print(slider_values,"||| ",slider)
 			if !slider_values:
 				print("could not get slider values")
 				return
@@ -57,7 +57,7 @@ func _get_slider_values(get_slider):
 	var step
 	
 	for slider in sliders_in_display:
-		print(get_slider," : ", slider)
+		#print(get_slider," : ", slider)
 		if get_slider == slider:
 			#print("triggered")
 			#_name = Settings[slider+"_name"]
@@ -65,7 +65,7 @@ func _get_slider_values(get_slider):
 			max = Settings[slider+"_max"]
 			default = Settings[slider+"_default"]
 			step = Settings[slider+"_step"]
-			print([min, max, default, step])
+			#print([min, max, default, step])
 	if min != null:
 		return [min, max, default, step]
 	else:

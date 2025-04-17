@@ -1,17 +1,11 @@
 extends Node3D
 
-var seed_name: String = "wasgajahhjfukfhkfhkyfujk"
+@export var seed_name: String = "cvyjiubo7jgy9trjytdihgltk9 h80j9y7utrm9bliu"
 
 @export var chunk_scene: PackedScene
 @export var chunk_size: float = 50.0
-@export var view_distance: int = 16
+@onready var view_distance: int = Settings.render_distance
 @export var block_size: int = 12
-@export var room_scenes : Array[PackedScene] = []
-## The corridor room is a special room scene which must be a 1x1x1 (in voxels) scene inheriting DungeonRoom which is used to connect all the placed rooms.
-@export var corridor_room_scene : PackedScene
-@export var house_size := Vector3i(1,2,1)
-@export var shop_size := Vector3i(2,2,2
-)
 #@export var right_structures: Array[PackedScene]
 var house_structure_chance:float = 0.5
 #@export var left_structures: Array[PackedScene]
@@ -59,21 +53,12 @@ func _update_chunks():
 		current_chunk_index = new_chunk_index
 		current_block_index = -current_chunk_index % block_size
 		#print("BLOCK: in chunk (", current_block_index, " of ", block_size, ")")
-		#_update_fog(current_chunk_index)
 		_generate_chunks_from_index(current_chunk_index)
-		#_free_outside_chunks(current_chunk_index)
-
-##BUG: fog doesnt update based on consecutive blocks entered, only new blocks. going backwards will progress fog color 
-#func _update_fog(current_chunk_index):
-	##clamp number to size of color array
-	#var chunk_index_by_fog = -current_chunk_index % block_fog_color.size()
-	#if chunk_index_by_fog == 0: #for each new block entered
-		#$"../WorldEnvironment".environment.set_fog_light_color(block_fog_color[current_fog_color_index])
-		#current_fog_color_index = current_fog_color_index + 1
+		_free_outside_chunks(current_chunk_index)
 
 func _generate_chunks_from_index(index):
 		for i in range(-view_distance, view_distance):
-			for j in range(-1, 2):  # Update three lanes
+			for j in range(-5, 5):  # Update three lanes
 				var z = (index - i) * chunk_size
 				var x = j * chunk_size
 				var chunk_position = Vector3(x, 0, z)
@@ -83,16 +68,15 @@ func _generate_chunks_from_index(index):
 func _free_outside_chunks(index):
 	var positions_to_remove = []
 	var player_z = player.global_transform.origin.z
-	for position in chunks.keys():
-		if abs(position.z - player_z) > view_distance * chunk_size:
-			positions_to_remove.append(position)
-	for position in positions_to_remove:
-		for child in chunks[position].get_children():
-			if child is DungeonGenerator3D:
-				if child.stage == DungeonGenerator3D.BuildStage.DONE:
-					chunks[position].queue_free()
-					print("/REMOVED/ chunk removed : ", position)
-					chunks.erase(position)
+	for _position in chunks.keys():
+		if abs(_position.z - player_z) > view_distance * chunk_size:
+			positions_to_remove.append(_position)
+	for _position in positions_to_remove:
+		for chunk in chunks.keys():
+			if chunk == _position:
+				chunks[chunk].queue_free()
+				print("/REMOVED/ chunk removed : ", chunks[chunk])
+				chunks.erase(chunk)
 
 func _create_chunk(position: Vector3, index):
 	var chunk = chunk_scene.instantiate()
@@ -125,77 +109,21 @@ func _create_structure(type, chunk, chance, index):
 					return
 			print("creating structure", chunk.position)
 			
-			var dungeon = DungeonGenerator3D.new()
-			dungeon.voxel_scale = Vector3(5,5,5)
-			dungeon.name = "structure"
+			#var dungeon = DungeonGenerator3D.new()
+			#dungeon.voxel_scale = Vector3(5,5,5)
+			#dungeon.name = "structure"
 			
 			match type:
 				"house":
-					print("creating house")
-					_create_house(chunk, dungeon)
+					pass
+					#print("creating house")
+					#_create_house(chunk, dungeon)
 				"shop":
-					print("creating shop")
-					_create_shop(chunk, dungeon)
+					pass
+					#print("creating shop")
+					#_create_shop(chunk, dungeon)
 
 
-
-func _create_house(chunk, dungeon):
-			#var structure = structure_pool[randi() % structure_pool.size()].instantiate()
-	#dungeon.visible = false
-	dungeon.position = Vector3i(1, 5 + (house_size.y * 5), 1)
-	#honestly not sure if this is more efficient but it seems to cause less lag spikes and more consistant lag
-	#dungeon.visualize_generation_progress = true
-	#if initial == false:
-		#dungeon.visualize_generation_wait_between_iterations = 250
-	#else: 
-		#dungeon.visualize_generation_wait_between_iterations = 1
-	dungeon.max_retries = 4
-	dungeon.max_safe_iterations = 400
-	dungeon.generate_threaded = true
-	dungeon.room_cost_multiplier = 2
-	dungeon.room_cost_at_end_for_required_doors = 2
-	#dungeon.show_debug_in_game = true
-	dungeon.room_scenes = room_scenes 
-	dungeon.corridor_room_scene = corridor_room_scene
-	dungeon.dungeon_size = house_size
-	dungeon.generate_on_ready = true
-	dungeon.done_generating.connect(_populate_house_items.bind(dungeon))
-	dungeon.transform.origin += Vector3(0, -12, 0)
-	
-	chunk.add_child(dungeon)
-
-func _create_shop(chunk, dungeon):
-	dungeon.position = Vector3i(1, 5 + (shop_size.y * 5), 1)
-	#honestly not sure if this is more efficient but it seems to cause less lag spikes and more consistant lag
-	#dungeon.visualize_generation_progress = true
-	#if initial == false:
-		#dungeon.visualize_generation_wait_between_iterations = 250
-	#else: 
-		#dungeon.visualize_generation_wait_between_iterations = 1
-	dungeon.max_retries = 6
-	dungeon.max_safe_iterations = 500
-	dungeon.generate_threaded = true
-	dungeon.room_cost_multiplier = 2
-	dungeon.room_cost_at_end_for_required_doors = 2
-	#dungeon.show_debug_in_game = true
-	dungeon.room_scenes = room_scenes 
-	dungeon.corridor_room_scene = corridor_room_scene
-	dungeon.dungeon_size = shop_size
-	dungeon.generate_on_ready = true
-	chunk.add_child(dungeon)
-	
-	dungeon.done_generating.connect(_populate_house_items.bind(dungeon))
-
-
-#BUG: all of this vvvvv
-func _populate_house_items(dungeon):
-	#dungeon.visible = true
-	#print(dungeon, " done generating")
-	#this is fucking disgusting, dont ever do this
-	var spawner = get_node_with_group_spawner(dungeon.get_children()[1].get_children()[0].get_children()[0])
-	#print(dungeon.position, " attempting to spawn item")
-	if spawner:
-		spawner.visible = true
 
 func get_node_with_group_spawner(node):
 	if node is Node and node != null:

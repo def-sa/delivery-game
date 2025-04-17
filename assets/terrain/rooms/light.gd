@@ -2,9 +2,12 @@ extends CSGBox3D
 
 @onready var box_spawner: Node3D = $box_spawner
 @onready var light: OmniLight3D = $light
-var modifiers: Array[String] = ["grabbable", "detectable"]
-
-
+@export var modifiers: Dictionary = {
+	"deliverable": false,
+	"detectable": false,
+	"grabbable": false,
+	"openable": false
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -8,8 +8,7 @@ var collision
 var decal
 
 var id = 0
-#TODO
-var tier = 0
+var tier
 
 var is_discovered:bool = false
 #var is_being_carried: bool = false

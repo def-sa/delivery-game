@@ -3,7 +3,7 @@ extends Control
 #@onready var box: RigidBody3D = $World/box
 @onready var camera: Camera3D = $"../../../camera_pivot/spring_arm_3d/camera"
 @onready var offscreen_reticle: TextureRect = $offscreen_reticle
-
+@onready var negative_shader = preload("res://shaders/negative.gdshader")
 
 #object
 var objects_inside_area = []:
@@ -96,9 +96,19 @@ func item_entered_area(object):
 			return
 	
 	if object.is_in_group("detectable"):
+		var tier_color = Color("ff5252")
+		if object.tier:
+			tier_color = Global.TIER_COLORS[Global.TIER_COLORS.keys()[object.tier]]
+			print(tier_color)
+		
+		var item_name_shader_material = ShaderMaterial.new()
+		item_name_shader_material.shader = negative_shader
 		
 		var rectangle = ReferenceRect.new()
 		rectangle.name = "rectangle"
+		rectangle.material = item_name_shader_material
+		
+		rectangle.border_color = tier_color
 		rectangle.border_width = 1
 		rectangle.editor_only = false
 		var current_object_mesh = get_object_mesh(object)
@@ -108,7 +118,7 @@ func item_entered_area(object):
 		
 		var item_name_bg = ColorRect.new()
 		item_name_bg.name = "item_name_bg"
-		item_name_bg.color = Color(1.0, 0.0, 0.0)
+		item_name_bg.color = tier_color
 		item_name_bg.size.x = bounding_box.size.x
 		item_name_bg.size.y = 25
 		item_name_bg.position += Vector2(0, -25)
@@ -118,6 +128,12 @@ func item_entered_area(object):
 		#item_name_theme.default_font = load("res://assets/RobotoMono-Italic-VariableFont_wght.ttf")
 		item_name.theme = item_name_theme
 		item_name.name = "item_name"
+		item_name.add_theme_color_override("font_color", Color(0,0,0))
+		
+		
+		#item_name.material = item_name_shader_material
+		
+		
 		#item_name.clip_text = true
 		if object.is_discovered == true:
 			item_name.text = str(object.id)
@@ -129,8 +145,9 @@ func item_entered_area(object):
 		#item_name.visible = false
 		#item_name_bg.visible = false
 		
-		item_name_bg.add_child(item_name)
 		rectangle.add_child(item_name_bg)
+		item_name_bg.add_child(item_name)
+		
 		ui_container.add_child(rectangle)
 		
 		

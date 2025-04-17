@@ -4,6 +4,16 @@ var street = 0
 var delivered = 0
 var total_boxes_spawned = 0
 
+const TIER_COLORS = {
+	"COMMON": Color("999999"),
+	"STANDARD": Color("ebebeb"),
+	"BUISNESS": Color("91ff80"),
+	"PREMIUM": Color("80aeff"),
+	"FIRST_CLASS": Color("8280ff"),
+	"EXPORT": Color("ffff52")
+}
+
+
 
 @onready var score_node = get_node("/root/main/World/Player/CanvasLayer/GUI/score")
 var score = 0:

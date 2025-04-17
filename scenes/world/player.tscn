@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=23 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/world/player.gd" id="1_v666e"]
 [ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scripts/ui/gui.gd" id="2_qhqgy"]
@@ -19,6 +19,9 @@ bg_color = Color(1, 1, 1, 1)
 bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
+shader = ExtResource("5_tuyoq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kgc2y"]
 shader = ExtResource("5_tuyoq")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smehm"]
@@ -57,6 +60,8 @@ point_count = 2
 [sub_resource type="BoxMesh" id="BoxMesh_dqkch"]
 
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_v666e")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -232,6 +237,7 @@ color = Color(1, 0, 0, 1)
 
 [node name="Label" type="Label" parent="CanvasLayer/GUI/item_detection/rectangle/item_name_bg"]
 visible = false
+material = SubResource("ShaderMaterial_kgc2y")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -240,7 +246,6 @@ text = "testing waaaaow"
 clip_text = true
 
 [node name="offscreen_reticle" type="TextureRect" parent="CanvasLayer/GUI/item_detection"]
-visible = false
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
@@ -300,7 +305,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0458374, 0)
 [node name="ray_interaction" type="RayCast3D" parent="camera_pivot/spring_arm_3d/camera"]
 auto_translate_mode = 1
 target_position = Vector3(0, 0, -10)
-collision_mask = 3
+collision_mask = 2
 
 [node name="Path3D" type="Path3D" parent="camera_pivot/spring_arm_3d/camera/ray_interaction"]
 curve = SubResource("Curve3D_qhqgy")
@@ -324,6 +329,9 @@ linear_limit_z/enabled = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="camera_pivot/spring_arm_3d/camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.50045)
+
+[node name="click_ray" type="RayCast3D" parent="camera_pivot/spring_arm_3d/camera"]
+collision_mask = 2
 
 [node name="flashlight" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.91644, 0)

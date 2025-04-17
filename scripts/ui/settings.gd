@@ -46,7 +46,7 @@ var saturation:float = saturation_default:
 #@export var render_distance_name:String = "render_distance"
 @export_range(0, 1, 0.01, "or_greater") var render_distance_min: int = 2
 @export_range(0, 8, 0.01, "or_greater") var render_distance_max: int = 22
-@export var render_distance_default:int = 16
+@export var render_distance_default:int = 6
 @export var render_distance_step: int = 1
 
 var render_distance:int = render_distance_default:

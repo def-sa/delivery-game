@@ -2,15 +2,16 @@ extends Control
 
 var paused: bool = false
 @onready var world: Node3D = $"../../World"
+@onready var pause_menu: Control = $"."
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$".".hide()
+	pause_menu.hide()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		paused = !paused
-		$".".visible = paused
+		pause_menu.visible = paused
 		world.get_tree().paused = paused
 		
 		if paused:

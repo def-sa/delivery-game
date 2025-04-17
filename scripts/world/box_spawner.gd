@@ -1,7 +1,14 @@
 extends Node3D
 @export_group("Box variables")
-#@export var modifiers: Array[String]
-@onready var modifiers: Array[String] = ["deliverable","detectable","grabbable","openable"]
+@export_enum("ECONOMY", "STANDARD", "BUISNESS", "PREMIUM", "FIRST_CLASS", "EXPORT") var tier: int
+@export var modifiers: Dictionary = {
+	"deliverable": false,
+	"detectable": false,
+	"grabbable": false,
+	"openable": false
+}
+
+
 @export var box_size: Vector3 = Vector3(1, 1, 1)
 @export var box_mass: float = 1.0
 @export var box_texture: Texture
@@ -14,7 +21,12 @@ extends Node3D
 var is_inside_box: bool
 
 @export_group("Inside box variables")
-@export var inside_box_modifiers:Array[String] = []
+@export var inside_box_modifiers: Dictionary = {
+	"deliverable": false,
+	"detectable": false,
+	"grabbable": false,
+	"openable": false
+}
 @export_range(0.1, .75, 0.01) var _inside_box_size = .5
 @onready var inside_box_size = Vector3(_inside_box_size,_inside_box_size,_inside_box_size)
 #@export var inside_box_size: Vector3 = Vector3(1,1,1)
@@ -23,44 +35,55 @@ var is_inside_box: bool
 @export var inside_box_weight: float
 
 const box_script = preload("res://scripts/world/box.gd")
-const box_spawner_script = preload("res://scripts/world/box_spawner.gd")
 const decal_script = preload("res://scripts/world/decal.gd")
-const hollow_box = preload("res://assets/world/box/hollow_box.obj")
+const box_spawner_script = preload("res://scripts/world/box_spawner.gd")
+const hollow_box_obj = preload("res://assets/world/box/hollow_box.obj")
+#const hollow_obj = preload("res://assets/world/box/hollow_obj.tscn")
 const hollow_box_collision = preload("res://assets/world/box/hollow_box_collision.tscn")
+
 #TODO : link up id with delivery point
 var id 
 var is_delivered:bool = false
 
-
-
-#TODO
-var tier = 0
 #TODO 
 var street = 0
 
 func _ready() -> void:
+	#print(tier)
+	
+	
 	if box_size and !box_weight:
 		box_weight = (box_size.x + box_size.y + box_size.z)/3
+	if inside_box_size and !inside_box_weight:
+		inside_box_weight = (inside_box_size.x + inside_box_size.y + inside_box_size.z)/3
+	
 	if has_box_inside:
 		is_hollow_box = true
 	
 	if is_hollow_box:
 		box_size = Vector3(1,1,1)
-	print(modifiers)
+	#print(modifiers)
 	#TODO: modifiers not being applied correctly? 
 	#spawn_box(modifiers)
 
 #i want to pass in variables into the spawner and create the box with those variables 
 #modifers x
-#rarity
+#rarity x
 #texture x
 #size x
 #weight x
-#openable
+#openable x
+#------
+# est. value
+# from street # (to determine est. value + for id) 
+# id
+# pos to delivery point
 
-func spawn_box(modifiers:Array[String]):
+func spawn_box(modifiers:Dictionary):
 	
 	var rigidbody = RigidBody3D.new()
+	rigidbody.set_collision_layer_value(2, true)
+	rigidbody.set_collision_mask_value(2, true)
 	if box_mass > 0:
 		rigidbody.mass = box_mass
 	
@@ -69,22 +92,24 @@ func spawn_box(modifiers:Array[String]):
 	
 	var mesh = MeshInstance3D.new()
 	if is_hollow_box:
-		#mesh.mesh = resize_array_mesh(hollow_box, box_size)
-		mesh.mesh = hollow_box
+		mesh.mesh = hollow_box_obj
 		mesh.transparency = .5
 	else:
 		var box_mesh = BoxMesh.new()
 		box_mesh.size = box_size
 		mesh.mesh = box_mesh
-	
-	
+		
 	if box_texture:
 		var material = StandardMaterial3D.new()
 		material.albedo_texture = box_texture
 		mesh.material_override = material
 	
+	
+	
 	if is_hollow_box:
-		rigidbody.add_child(hollow_box_collision.instantiate())
+		var collision_shapes = hollow_box_collision.instantiate().get_children()
+		for shape in collision_shapes:
+			rigidbody.add_child(shape.duplicate())
 	else:
 		var collision = CollisionShape3D.new()
 		var box_shape = BoxShape3D.new()
@@ -104,6 +129,7 @@ func spawn_box(modifiers:Array[String]):
 		spawner_node.box_mass = inside_box_mass
 		
 		var obj_spawned = spawner_node.spawn_box(inside_box_modifiers)
+		#obj_spawned.gravity_scale = 0
 		
 		var remote_transform = RemoteTransform3D.new()
 		remote_transform.remote_path = spawner_node.get_path()
@@ -112,6 +138,8 @@ func spawn_box(modifiers:Array[String]):
 		rigidbody.add_child(remote_transform)
 		
 		var area_3d = Area3D.new()
+		area_3d.set_collision_layer_value(2, true)
+		area_3d.set_collision_mask_value(2, true)
 		var area_3d_collision = CollisionShape3D.new()
 		var box_shape = BoxShape3D.new()
 		box_shape.size = box_size
@@ -140,6 +168,7 @@ func spawn_box(modifiers:Array[String]):
 	shadow_decal.distance_fade_length = 20
 	shadow_decal.set_script(decal_script)
 	
+	
 	rigidbody.add_child(shadow_decal)
 	rigidbody.add_child(mesh)
 	
@@ -152,11 +181,12 @@ func spawn_box(modifiers:Array[String]):
 	rigidbody.tier = tier
 	
 	
-	
+	print(rigidbody.get_tree_string_pretty())
 	add_child(rigidbody)
 	
-	for modifier in modifiers:
-		rigidbody.add_to_group(modifier)
+	for modifier in modifiers.keys():
+		if modifiers.get(modifier) == true:
+			rigidbody.add_to_group(modifier)
 	
 	Global.total_boxes_spawned =+ 1
 	print("box spawned:", rigidbody)
@@ -164,4 +194,6 @@ func spawn_box(modifiers:Array[String]):
 
 func _body_exited_box_with_item(body: Node3D, obj_spawned: RigidBody3D, parent_box: RigidBody3D) -> void:
 	if body == obj_spawned:
+		body.linear_velocity = Vector3.ZERO
+		body.angular_velocity = Vector3.ZERO
 		body.global_position = parent_box.global_position
