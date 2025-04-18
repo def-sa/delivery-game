@@ -122,6 +122,10 @@ var gui_current_object = null:
 		gui_current_object = v
 
 var holding_perspective_toggle = false
+@onready var roped_items_gui: GridContainer = $CanvasLayer/GUI/roped_items/GridContainer
+
+var rope_limit = 3
+var items_on_rope: Array = []
 
 
 func _ready() -> void:
@@ -248,6 +252,24 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("cam_zoom_out"):
 		hand_scroll += -0.1
 	
+	if event.is_action_pressed("toggle_rope"):
+		if carrying and carrying is RigidBody3D:
+			if "is_roped" in carrying:
+				
+					if !carrying.is_roped:
+						if items_on_rope.size() < rope_limit:
+							add_obj_to_rope(carrying)
+							update_rope_ui()
+						else:
+							print("cannot exceed rope limit of : ", rope_limit)
+					else:
+						for item in items_on_rope:
+							if item.rigidbody_attached_to_end == carrying:
+								carrying.is_roped = false
+								items_on_rope.erase(item)
+								item.queue_free()
+								update_rope_ui()
+				
 	
 	#perspective toggle
 	if event.is_action_pressed("r"):
@@ -374,10 +396,40 @@ func shoot_ray():
 	return result
 
 
+@onready var rope_follow: RigidBody3D = $"../Entities/rope_follow"
+@onready var entities: Node3D = $"../Entities"
+
+func add_obj_to_rope(obj:RigidBody3D):
+	#create rope
+	const PATH_3D_ROPE_SCRIPT = preload("res://scripts/path_3d_rope.gd")
+	const PATH_3D_ROPE = preload("res://scenes/path_3d_rope.tscn")
+	var path_3d = PATH_3D_ROPE.instantiate()
+	path_3d.transform.origin = rope_follow.transform.origin
+	path_3d.set_script(PATH_3D_ROPE_SCRIPT)
+	path_3d.number_of_segments = 6
+	path_3d.mesh_sides = 4
+	path_3d.cable_thickness = 1
+	path_3d.rigidbody_attached_to_start = rope_follow
+	
+	path_3d.rigidbody_attached_to_end = obj
+	if "is_roped" in obj:
+		obj.is_roped = true
+	
+	
+	items_on_rope.push_back(path_3d)
+	entities.add_child(path_3d)
 
 
-
-
+func update_rope_ui():
+	
+	for child in roped_items_gui.get_children():
+		child.queue_free()
+		
+	for i in items_on_rope.size():
+		var color_rect = ColorRect.new()
+		color_rect.custom_minimum_size = Vector2(250,250)
+		color_rect.color = Color(1.0, 0.0, 0.0, 0.482)
+		roped_items_gui.add_child(color_rect)
 
 
 func _ray_intersect_obj():

@@ -21,6 +21,15 @@ var in_cart: bool = false:
 		print("in_cart: ",v)
 		in_cart = v
 
+
+var is_roped: bool = false:
+	set(v):
+		if v == true:
+			gravity_scale = 0.5
+		else:
+			gravity_scale = 1
+		is_roped = v
+
 #i want to pass in variables into the spawner and create the box with those variables 
 #modifers x
 #rarity

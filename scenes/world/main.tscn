@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=89 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/world/main.gd" id="1_md6cl"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/ui/pause.tscn" id="2_u2p2s"]
@@ -17,6 +17,7 @@
 [ext_resource type="ArrayMesh" uid="uid://y0jj1vhe4aun" path="res://assets/world/box/hollow_box.obj" id="15_tsn8l"]
 [ext_resource type="Texture2D" uid="uid://ckjv7s7p4cpn1" path="res://GLB format/Textures/metal_wall.png" id="16_1notw"]
 [ext_resource type="Script" uid="uid://jqsmym6pakn0" path="res://scenes/world/hurt_area.gd" id="17_5jr8u"]
+[ext_resource type="PackedScene" uid="uid://x4xnc85khpl5" path="res://scenes/path_3d_rope.tscn" id="18_80eyj"]
 [ext_resource type="Texture2D" uid="uid://dvx8htg088q2w" path="res://assets/world/box/placeholder.jpg" id="18_llfdw"]
 [ext_resource type="PackedScene" uid="uid://bqeis521kwxjl" path="res://assets/terrain/rooms/room_no_wall.tscn" id="20_wauw2"]
 [ext_resource type="PackedScene" uid="uid://bk5nsjwlc622e" path="res://assets/terrain/rooms/stairs.tscn" id="21_dyae1"]
@@ -145,14 +146,6 @@ albedo_texture = ExtResource("8_713oj")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_muem4"]
 points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_og1vs"]
-albedo_color = Color(0.890196, 0, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_2f3dj"]
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_llfdw"]
-data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
-
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_llfdw"]
 points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5)
 
@@ -182,6 +175,41 @@ points = PackedVector3Array(0.425, 0.425, 0.05, 0.425, 0.425, -0.05, -0.425, 0.4
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_e3mvx"]
 points = PackedVector3Array(0.425, 0.425, 0.05, 0.425, 0.425, -0.05, -0.425, 0.425, 0.05, 0.425, -0.425, 0.05, 0.425, -0.425, -0.05, -0.425, 0.425, -0.05, -0.425, -0.425, 0.05, -0.425, -0.425, -0.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_og1vs"]
+albedo_color = Color(0.890196, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2f3dj"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_llfdw"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="Curve3D" id="Curve3D_wlwgd"]
+resource_local_to_scene = true
+bake_interval = 512.0
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.95995, -0.0841599, 3.6265, 0, 0, 0, 0, 0, 0, 2.601, -1.21547, 5.76838),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_llfdw"]
+resource_local_to_scene = true
+bake_interval = 512.0
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.95995, -0.0841599, 3.6265, 0, 0, 0, 0, 0, 0, 2.601, -1.21547, 5.76838),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_80eyj"]
+resource_local_to_scene = true
+bake_interval = 512.0
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.95995, -0.0841599, 3.6265, 0, 0, 0, 0, 0, 0, 2.601, -1.21547, 5.76838),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ld40"]
 emission_enabled = true
@@ -232,6 +260,28 @@ collision_friction = 0.0
 collision_bounce = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_jscy8"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_llfdw"]
+radial_velocity_min = -2.00002
+radial_velocity_max = 1.99998
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_80eyj"]
+radius = 0.504
+height = 1.018
+radial_segments = 4
+rings = 1
+
+[sub_resource type="Curve3D" id="Curve3D_4m2ge"]
+resource_local_to_scene = true
+bake_interval = 512.0
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
 
 [sub_resource type="Environment" id="Environment_0xlil"]
 background_mode = 3
@@ -529,6 +579,74 @@ shape = SubResource("ConvexPolygonShape3D_muem4")
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="World/Objects/box"]
 
+[node name="hollow_box_test" type="RigidBody3D" parent="World/Objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, -12)
+collision_layer = 2
+collision_mask = 2
+
+[node name="main" type="MeshInstance3D" parent="World/Objects/hollow_box_test"]
+transparency = 0.65
+mesh = ExtResource("15_tsn8l")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="World/Objects/hollow_box_test"]
+shape = SubResource("ConvexPolygonShape3D_llfdw")
+debug_color = Color(1, 1, 1, 1)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.454515, 0.00479174, -0.00219846)
+visible = false
+mesh = SubResource("BoxMesh_80eyj")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.445485, 0.00479174, -0.00219846)
+visible = false
+mesh = SubResource("BoxMesh_80eyj")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00451469, 0.454792, -0.00219846)
+visible = false
+mesh = SubResource("BoxMesh_wlwgd")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00451469, -0.445208, -0.00219846)
+visible = false
+mesh = SubResource("BoxMesh_wlwgd")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00451469, 0.00479174, 0.447802)
+visible = false
+mesh = SubResource("BoxMesh_4m2ge")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00451469, 0.00479174, -0.452198)
+visible = false
+mesh = SubResource("BoxMesh_4m2ge")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_exqdm")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_713oj")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+shape = SubResource("ConvexPolygonShape3D_r3w6i")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+shape = SubResource("ConvexPolygonShape3D_ggkmy")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.45)
+shape = SubResource("ConvexPolygonShape3D_28gua")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/hollow_box_test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.45)
+shape = SubResource("ConvexPolygonShape3D_e3mvx")
+
 [node name="box_spawner" type="Node3D" parent="World/Objects" groups=["spawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.1356, -12.7161)
 script = ExtResource("11_28gua")
@@ -658,96 +776,57 @@ mesh = SubResource("BoxMesh_2f3dj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.87266, 0)
 shape = SubResource("ConcavePolygonShape3D_llfdw")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="World/Objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, 0)
-collision_layer = 2
-collision_mask = 2
+[node name="Entities" type="Node3D" parent="World"]
 
-[node name="main" type="MeshInstance3D" parent="World/Objects/RigidBody3D"]
-transparency = 0.65
-mesh = ExtResource("15_tsn8l")
-skeleton = NodePath("../../../..")
-
-[node name="CollisionShape3D7" type="CollisionShape3D" parent="World/Objects/RigidBody3D"]
-shape = SubResource("ConvexPolygonShape3D_llfdw")
-debug_color = Color(1, 1, 1, 1)
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.454515, 0.00479174, -0.00219846)
+[node name="Rope_1" parent="World/Entities" node_paths=PackedStringArray("rigidbody_attached_to_start") instance=ExtResource("18_80eyj")]
+transform = Transform3D(0.568619, 0.822507, -0.0124747, -0.745443, 0.521637, 0.414981, 0.347832, -0.226667, 0.909745, 1.82366, 2.96125, -0.180315)
 visible = false
-mesh = SubResource("BoxMesh_80eyj")
+curve = SubResource("Curve3D_wlwgd")
+number_of_segments = 6
+mesh_sides = 16
+cable_thickness = 0.5
+rigidbody_attached_to_start = NodePath("../rope_follow")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.445485, 0.00479174, -0.00219846)
+[node name="Rope_2" parent="World/Entities" node_paths=PackedStringArray("rigidbody_attached_to_start") instance=ExtResource("18_80eyj")]
+transform = Transform3D(0.568619, 0.822507, -0.0124747, -0.745443, 0.521637, 0.414981, 0.347832, -0.226667, 0.909745, 1.82366, 2.96125, -0.180315)
 visible = false
-mesh = SubResource("BoxMesh_80eyj")
+curve = SubResource("Curve3D_llfdw")
+number_of_segments = 6
+mesh_sides = 16
+cable_thickness = 0.5
+rigidbody_attached_to_start = NodePath("../rope_follow")
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00451469, 0.454792, -0.00219846)
+[node name="Rope_3" parent="World/Entities" node_paths=PackedStringArray("rigidbody_attached_to_start") instance=ExtResource("18_80eyj")]
+transform = Transform3D(0.568619, 0.822507, -0.0124747, -0.745443, 0.521637, 0.414981, 0.347832, -0.226667, 0.909745, 1.82366, 2.96125, -0.180315)
 visible = false
-mesh = SubResource("BoxMesh_wlwgd")
+curve = SubResource("Curve3D_80eyj")
+number_of_segments = 6
+mesh_sides = 16
+cable_thickness = 0.5
+rigidbody_attached_to_start = NodePath("../rope_follow")
 
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00451469, -0.445208, -0.00219846)
-visible = false
-mesh = SubResource("BoxMesh_wlwgd")
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00451469, 0.00479174, 0.447802)
-visible = false
-mesh = SubResource("BoxMesh_4m2ge")
-
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00451469, 0.00479174, -0.452198)
-visible = false
-mesh = SubResource("BoxMesh_4m2ge")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_exqdm")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_713oj")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
-shape = SubResource("ConvexPolygonShape3D_r3w6i")
-
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
-shape = SubResource("ConvexPolygonShape3D_ggkmy")
-
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.45)
-shape = SubResource("ConvexPolygonShape3D_28gua")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.45)
-shape = SubResource("ConvexPolygonShape3D_e3mvx")
-
-[node name="delivery_point" type="Node3D" parent="World" node_paths=PackedStringArray("player")]
+[node name="delivery_point" type="Node3D" parent="World/Entities" node_paths=PackedStringArray("player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4, 0)
 script = ExtResource("25_ij6fg")
-player = NodePath("../Player")
+player = NodePath("../../Player")
 
-[node name="text" type="MeshInstance3D" parent="World/delivery_point"]
+[node name="text" type="MeshInstance3D" parent="World/Entities/delivery_point"]
 transform = Transform3D(-4.37114e-08, 0, 5, 0, 1, 0, -1, 0, -2.18557e-07, 0, 0, 0)
 mesh = SubResource("TextMesh_dp3eg")
 
-[node name="mesh" type="MeshInstance3D" parent="World/delivery_point"]
+[node name="mesh" type="MeshInstance3D" parent="World/Entities/delivery_point"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
 material_override = SubResource("StandardMaterial3D_gqmmt")
 transparency = 0.5
 mesh = SubResource("BoxMesh_yc10j")
 
-[node name="Area3D" type="Area3D" parent="World/delivery_point"]
+[node name="Area3D" type="Area3D" parent="World/Entities/delivery_point"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/delivery_point/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Entities/delivery_point/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
 shape = SubResource("ConcavePolygonShape3D_0ld40")
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="World/delivery_point"]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="World/Entities/delivery_point"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
 emitting = false
 amount = 125
@@ -760,18 +839,52 @@ collision_base_size = 0.97
 process_material = SubResource("ParticleProcessMaterial_jscy8")
 draw_pass_1 = SubResource("BoxMesh_jscy8")
 
-[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="World/delivery_point/GPUParticles3D"]
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="World/Entities/delivery_point/GPUParticles3D"]
 strength = 211.7
 attenuation = 0.105112
 radius = 6.6
 
-[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="World/delivery_point"]
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="World/Entities/delivery_point"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.93537, 0)
 size = Vector3(15, 1, 15)
+
+[node name="rope_follow" type="RigidBody3D" parent="World/Entities"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, 0)
+collision_layer = 0
+collision_mask = 0
+
+[node name="Marker3D" type="Marker3D" parent="World/Entities"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -8)
+visible = false
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="World/Entities/Marker3D"]
+visible = false
+amount = 418
+lifetime = 0.14
+fixed_fps = 60
+trail_enabled = true
+trail_lifetime = 0.48
+process_material = SubResource("ParticleProcessMaterial_llfdw")
+draw_pass_1 = SubResource("CapsuleMesh_80eyj")
+
+[node name="Path3DRope" parent="World/Entities" node_paths=PackedStringArray("rigidbody_attached_to_start") instance=ExtResource("18_80eyj")]
+visible = false
+curve = SubResource("Curve3D_4m2ge")
+number_of_segments = 6
+mesh_sides = 16
+cable_thickness = 0.5
+rigidbody_attached_to_start = NodePath("../rope_follow")
 
 [node name="Player" parent="World" instance=ExtResource("5_wlwgd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 top_level = true
+collision_priority = 2.0
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="World/Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0)
+remote_path = NodePath("../../Entities/rope_follow")
+update_rotation = false
+update_scale = false
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="World"]
 transform = Transform3D(0.0567843, 0.628216, -0.775964, 0.605976, 0.595997, 0.52686, 0.793454, -0.500133, -0.34684, -11.4479, 24.4967, 0)
@@ -791,8 +904,8 @@ sky_mode = 1
 environment = SubResource("Environment_0xlil")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="World" groups=["_is_floor"]]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 7
+collision_mask = 7
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="World/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -819,14 +932,16 @@ metadata/_custom_type_script = "uid://c8cag65gdoiyl"
 
 [node name="Terrain" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.636328, 0)
+visible = false
 script = ExtResource("28_80eyj")
 chunk_scene = ExtResource("27_llfdw")
 
 [node name="chunk" parent="Terrain" instance=ExtResource("27_llfdw")]
-collision_layer = 3
-collision_mask = 3
+visible = false
+collision_layer = 7
+collision_mask = 7
 
 [connection signal="body_entered" from="World/Objects/cart/cart_area_bottom_objects" to="World/Objects/cart" method="_on_cart_area_bottom_objects_body_entered"]
 [connection signal="body_exited" from="World/Objects/cart/cart_area_bottom_objects" to="World/Objects/cart" method="_on_cart_area_bottom_objects_body_exited"]
 [connection signal="body_entered" from="World/Objects/hurt_area" to="World/Objects/hurt_area" method="_on_body_entered"]
-[connection signal="body_entered" from="World/delivery_point/Area3D" to="World/delivery_point" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="World/Entities/delivery_point/Area3D" to="World/Entities/delivery_point" method="_on_area_3d_body_entered"]

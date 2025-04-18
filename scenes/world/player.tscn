@@ -253,6 +253,45 @@ texture = ExtResource("8_smehm")
 expand_mode = 1
 stretch_mode = 4
 
+[node name="roped_items" type="Control" parent="CanvasLayer/GUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 450.0
+offset_right = -850.0
+offset_bottom = -57.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/GUI/roped_items"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -250.0
+offset_right = 758.0
+grow_vertical = 0
+columns = 3
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GUI/roped_items/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+color = Color(1, 0, 0, 0.482353)
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/GUI/roped_items/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+color = Color(1, 1, 1, 0.482353)
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/GUI/roped_items/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+color = Color(1, 1, 1, 0.482353)
+
 [node name="health_bar" type="ProgressBar" parent="CanvasLayer/GUI"]
 layout_mode = 1
 anchors_preset = 2
@@ -270,6 +309,8 @@ step = 1.0
 value = 100.0
 
 [node name="item_detection_area" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="item_detection_area"]
 visible = false
