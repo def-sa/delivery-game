@@ -82,7 +82,6 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var box_open_bar: ProgressBar = $CanvasLayer/GUI/MarginContainer/box_open_bar
 
 
-
 var spring_arm_length = min_zoom_in
 var flashlight_toggle:bool = false:
 	set(value):
@@ -90,30 +89,44 @@ var flashlight_toggle:bool = false:
 		flashlight.visible = flashlight_toggle
 		
 var camera_locked_in = false
+
 var carrying = null: #object itself
 	set(v):
-		if v:
-			if v.is_in_group("grabbable"):
-				handle_carrying_gui(v, "holding")
-				Signalbus.box_being_carried.emit(v)
-			else:
-				handle_carrying_gui(v, "off")
 		carrying = v
+		if carrying:
+			carrying.can_sleep = !holding
+			if carrying.is_in_group("grabbable"):
+				handle_carrying_gui(carrying, "holding")
+				Signalbus.box_being_carried.emit(carrying)
+			else:
+				handle_carrying_gui(carrying, "off")
 
 var hovered_obj = null:
 	set(v):
-		if v:
-			if v == carrying:
-				handle_carrying_gui(v, "holding")
-				hovered_obj = v
-				return
-			if v.is_in_group("grabbable"):
-				handle_carrying_gui(v, "hovering")
-			else:
-				handle_carrying_gui(v, "off")
 		hovered_obj = v
+		if hovered_obj:
+			if v == carrying:
+				handle_carrying_gui(hovered_obj, "holding")
+				return
+			if hovered_obj.is_in_group("grabbable"):
+				handle_carrying_gui(hovered_obj, "hovering")
+			else:
+				handle_carrying_gui(hovered_obj, "off")
+		
 
-var holding = false
+var holding = false:
+	set(v):
+		holding = v
+		if holding == false:
+			carrying = null
+			#obj_speed_gui_visible(false)
+			grab_buffer_display.hide()
+			rotate_to_player_joint.set_node_b(rotate_to_player_joint.get_path())
+			holding = null #so we dont keep running these ^^^ 
+		if holding == true:
+			pick_up_object()
+			interact_tip_text.text = ""
+			
 var current_rotation: Vector3
 var gui_current_object = null:
 	set(v):
@@ -122,28 +135,25 @@ var gui_current_object = null:
 		gui_current_object = v
 
 var holding_perspective_toggle = false
-@onready var roped_items_gui: GridContainer = $CanvasLayer/GUI/roped_items/GridContainer
-
-var rope_limit = 3
-var items_on_rope: Array = []
+#@onready var roped_items_gui: GridContainer = $CanvasLayer/GUI/roped_items/GridContainer
+#
+#var rope_limit = 3
+#var items_on_rope: Array = []
 
 
 func _ready() -> void:
 	
-	
 	Signalbus.grab_buffer_expired.connect(_grab_buffer_expired)
 	Signalbus.grab_buffer_updated.connect(_grab_buffer_updated)
-	Signalbus.gui_cooldown.connect(_gui_cooldown)
-	
+	#Signalbus.gui_cooldown.connect(_gui_cooldown)
 	Signalbus.player_speed_updated.connect(_player_speed_updated)
 	Signalbus.player_jump_updated.connect(_player_jump_updated)
 	Signalbus.fov_updated.connect(_fov_updated)
 	Signalbus.max_grab_length_updated.connect(_max_grab_length_updated)
-	
 	Signalbus.box_open_timer_updated.connect(_box_open_timer_updated)
 	Signalbus.box_open_timer_expired.connect(_box_open_timer_expired)
 
-	camera.fov = Settings.fov
+	#camera.fov = Settings.fov
 	gui_obj_speed_bar.value = max_obj_speed
 	
 	_box_open_timer_updated(Settings.box_open_timer_default)
@@ -160,9 +170,11 @@ func _ready() -> void:
 	path_3d.curve.set_point_position(1, Vector3(path_3d.curve.get_point_position(1).x,path_3d.curve.get_point_position(1).y,-max_reach)) 
 
 func _physics_process(delta: float) -> void:
+	_player_movement(delta)
+	
 	check_hover()
 	player_grabbing(delta)
-	player_movement(delta)
+	
 	
 	if shoot_click_ray:
 		click_ray_hit = shoot_ray()
@@ -173,21 +185,6 @@ func _physics_process(delta: float) -> void:
 		
 		gui_current_object.position.x = position.x
 		gui_current_object.position.z = position.z
-	
-	if carrying:
-		carrying.can_sleep = !holding
-	
-	if holding == true:
-		pick_up_object()
-		interact_tip_text.text = ""
-		
-	if holding == false:
-		#handle_carrying_gui(null, null)
-		drop_object()
-		obj_speed_gui_visible(false)
-		grab_buffer_display.hide()
-		rotate_to_player_joint.set_node_b(rotate_to_player_joint.get_path())
-		holding = null #so we dont keep running these ^^^ 
 	
 	if no_fly_ray.get_collider() == carrying:
 		drop_object()
@@ -204,31 +201,27 @@ func player_grabbing(delta: float):
 		var movement_speed = clamp(distance * pull_power, 0, max_obj_speed)
 		
 		#move player_hand inwards/outwards toward the player, using the variable hand_scroll
-		path_follow_3d.progress_ratio = hand_scroll
+		path_follow_3d.progress_ratio = hand_scroll * delta
 		
-		carrying.linear_velocity = direction * movement_speed
+		carrying.linear_velocity = direction * movement_speed  * delta
 
-func player_movement(delta: float):
+func _player_movement(delta: float):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = jump_velocity
-	
 	#handle mmovement
 	var input_dir := Input.get_vector("left", "right", "forward", "back")
 	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
 	direction = direction.rotated(Vector3.UP, camera.global_rotation.y)
-	
 	if direction:
 		velocity.x = direction.x * speed
 		velocity.z = direction.z * speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
-
 	move_and_slide()
 
 #func _process(delta: float) -> void:
@@ -252,23 +245,23 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("cam_zoom_out"):
 		hand_scroll += -0.1
 	
-	if event.is_action_pressed("toggle_rope"):
-		if carrying and carrying is RigidBody3D:
-			if "is_roped" in carrying:
-				
-					if !carrying.is_roped:
-						if items_on_rope.size() < rope_limit:
-							add_obj_to_rope(carrying)
-							update_rope_ui()
-						else:
-							print("cannot exceed rope limit of : ", rope_limit)
-					else:
-						for item in items_on_rope:
-							if item.rigidbody_attached_to_end == carrying:
-								carrying.is_roped = false
-								items_on_rope.erase(item)
-								item.queue_free()
-								update_rope_ui()
+	#if event.is_action_pressed("toggle_rope"):
+		#if carrying and carrying is RigidBody3D:
+			#if "is_roped" in carrying:
+				#
+					#if !carrying.is_roped:
+						#if items_on_rope.size() < rope_limit:
+							#add_obj_to_rope(carrying)
+							#update_rope_ui()
+						#else:
+							#print("cannot exceed rope limit of : ", rope_limit)
+					#else:
+						#for item in items_on_rope:
+							#if item.rigidbody_attached_to_end == carrying:
+								#carrying.is_roped = false
+								#items_on_rope.erase(item)
+								#item.queue_free()
+								#update_rope_ui()
 				
 	
 	#perspective toggle
@@ -395,41 +388,46 @@ func shoot_ray():
 	
 	return result
 
+#@onready var rope_follow: RigidBody3D = $rope_follow
+#@onready var entities: Node3D = $"../Entities"
+#
+#func add_obj_to_rope(obj:RigidBody3D):
+	##create rope
+	#const PATH_3D_ROPE_SCRIPT = preload("res://scripts/path_3d_rope.gd")
+	#const PATH_3D_ROPE = preload("res://scenes/path_3d_rope.tscn")
+	#var path_3d = PATH_3D_ROPE.instantiate()
+	#path_3d.transform.origin = rope_follow.transform.origin
+	#path_3d.set_script(PATH_3D_ROPE_SCRIPT)
+	#path_3d.number_of_segments = 6
+	#path_3d.mesh_sides = 8
+	#path_3d.cable_thickness = 0.5
+	#path_3d.rigidbody_attached_to_start = rope_follow
+	#
+	#for pos in path_3d.curve.get_baked_points().size():
+		#if pos == 0:
+			#path_3d.curve.set_point_position(pos, rope_follow.global_position)
+		#if pos == 1:
+			#path_3d.curve.set_point_position(pos, obj.global_position)
+	#
+	#path_3d.rigidbody_attached_to_end = obj
+	#if "is_roped" in obj:
+		#obj.is_roped = true
+	#
+	#
+	#items_on_rope.push_back(path_3d)
+	#entities.add_child(path_3d)
 
-@onready var rope_follow: RigidBody3D = $"../Entities/rope_follow"
-@onready var entities: Node3D = $"../Entities"
 
-func add_obj_to_rope(obj:RigidBody3D):
-	#create rope
-	const PATH_3D_ROPE_SCRIPT = preload("res://scripts/path_3d_rope.gd")
-	const PATH_3D_ROPE = preload("res://scenes/path_3d_rope.tscn")
-	var path_3d = PATH_3D_ROPE.instantiate()
-	path_3d.transform.origin = rope_follow.transform.origin
-	path_3d.set_script(PATH_3D_ROPE_SCRIPT)
-	path_3d.number_of_segments = 6
-	path_3d.mesh_sides = 4
-	path_3d.cable_thickness = 1
-	path_3d.rigidbody_attached_to_start = rope_follow
-	
-	path_3d.rigidbody_attached_to_end = obj
-	if "is_roped" in obj:
-		obj.is_roped = true
-	
-	
-	items_on_rope.push_back(path_3d)
-	entities.add_child(path_3d)
-
-
-func update_rope_ui():
-	
-	for child in roped_items_gui.get_children():
-		child.queue_free()
-		
-	for i in items_on_rope.size():
-		var color_rect = ColorRect.new()
-		color_rect.custom_minimum_size = Vector2(250,250)
-		color_rect.color = Color(1.0, 0.0, 0.0, 0.482)
-		roped_items_gui.add_child(color_rect)
+#func update_rope_ui():
+	#
+	#for child in roped_items_gui.get_children():
+		#child.queue_free()
+		#
+	#for i in items_on_rope.size():
+		#var color_rect = ColorRect.new()
+		#color_rect.custom_minimum_size = Vector2(250,250)
+		#color_rect.color = Color(1.0, 0.0, 0.0, 0.482)
+		#roped_items_gui.add_child(color_rect)
 
 
 func _ray_intersect_obj():
@@ -438,8 +436,8 @@ func _ray_intersect_obj():
 		return obj
 
 func check_hover():
+	var obj = _ray_intersect_obj()
 	if carrying:
-		var obj = _ray_intersect_obj()
 		if obj: # carrying obj, ray colliding, obj exists
 			#// handle carrying modifiers
 			if obj != hovered_obj:
@@ -447,7 +445,6 @@ func check_hover():
 			
 			grab_buffer_timer.start()
 	else:
-		var obj = _ray_intersect_obj()
 		if obj:
 			if obj != hovered_obj:
 				hovered_obj = obj
@@ -466,7 +463,7 @@ func pick_up_object():
 			carrying = obj
 			rotate_to_player_joint.set_node_b(obj.get_path())
 			start_buffer_timer()
-			obj_speed_gui_visible(true)
+			#obj_speed_gui_visible(true)
 			#toggle_outline(carrying, true)
 			if hovered_obj and hovered_obj != carrying:
 				rotate_to_player_joint.set_node_b(rotate_to_player_joint.get_path())
@@ -481,8 +478,9 @@ func player_dead():
 	position = Vector3(0, 6, 0)
 	health = 100
 	Global.score = 0
-	pass
 
+
+## for debugging only, do not keep
 func perspective_toggle():
 	if spring_arm.spring_length <= 1:
 		perspective = "first"
@@ -602,38 +600,36 @@ func resize_arraymesh(original_mesh: ArrayMesh, scale_factor: float) -> ArrayMes
 	return new_mesh
 
 
-func obj_speed_gui_visible(valueBool):
-	gui_obj_speed_text.visible = valueBool
-	gui_obj_speed_bar.visible = valueBool
-	grab_buffer_display.visible = valueBool
+#func obj_speed_gui_visible(valueBool):
+	#gui_obj_speed_text.visible = valueBool
+	#gui_obj_speed_bar.visible = valueBool
+	#grab_buffer_display.visible = valueBool
 
 var grab_buffer_timer_played_once = false
 func start_buffer_timer():
 	if grab_buffer_timer_played_once == false:
 		grab_buffer_timer.start()
 	grab_buffer_timer_played_once = true
-
 func _grab_buffer_updated(value):
 	if value == 0:
 		value = 1000000000
 	grab_buffer_timer.set_wait_time(value)
 	grab_buffer_display.max_value = value
-
 func _grab_buffer_expired():
 	grab_buffer_timer_played_once = false #reset timer
 	drop_object()
-	obj_speed_gui_visible(false)
+	#obj_speed_gui_visible(false)
 	grab_buffer_display.hide()
 
 func _on_grab_buffer_timer_timeout() -> void:
 	Signalbus.grab_buffer_expired.emit()
 
-func _gui_cooldown():
-	gui_obj_speed_text.visible = false
-	gui_obj_speed_bar.visible = false
+#func _gui_cooldown():
+	#gui_obj_speed_text.visible = false
+	#gui_obj_speed_bar.visible = false
 
-func _on_gui_cooldown_timeout() -> void:
-	Signalbus.gui_cooldown.emit()
+#func _on_gui_cooldown_timeout() -> void:
+	#Signalbus.gui_cooldown.emit()
 
 func _player_speed_updated(value):
 	speed = value

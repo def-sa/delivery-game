@@ -24,9 +24,9 @@ func create_line(from:Vector3, to:Vector3):
 	surface_tool.begin(Mesh.PRIMITIVE_LINES)
 	surface_tool.add_vertex(from) # Start point
 	surface_tool.add_vertex(to) # End point
-	var mesh = surface_tool.commit()
+	var line_mesh = surface_tool.commit()
 	var mesh_instance = MeshInstance3D.new()
-	mesh_instance.mesh = mesh 
+	mesh_instance.mesh = line_mesh 
 	var material = StandardMaterial3D.new()
 	material.albedo_color = Color(1, 0, 0) # Red color
 	mesh_instance.material_override = material
@@ -46,7 +46,7 @@ func init():
 	curve = cloned_curve  # Assign it as the active curve of the Path3D
 
 	# CSG Mesh shape array
-	var myShape : PackedVector2Array
+	#var myShape : PackedVector2Array
 	for i in (number_of_segments+1):
 		curve_points.append(curve.sample_baked((distance*(i))/(number_of_segments), true))
 	curve.clear_points()
@@ -104,7 +104,7 @@ func init():
 	#mesh.transparency = .5
 	#if material != null:
 		#mesh.material = material
-	#
+	
 	# restore position and rotation
 	rotation = rotation_buffer
 	# lock joints and segments position and rotation 

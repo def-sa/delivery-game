@@ -65,6 +65,7 @@ func _generate_chunks_from_index(index):
 				if chunk_position not in chunks:
 					_create_chunk(chunk_position, index)
 
+#TODO: free from index not setup 
 func _free_outside_chunks(index):
 	var positions_to_remove = []
 	var player_z = player.global_transform.origin.z

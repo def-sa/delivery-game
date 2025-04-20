@@ -399,6 +399,11 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 
+[node name="rope_follow" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0)
+collision_layer = 0
+collision_mask = 0
+
 [connection signal="body_entered" from="item_detection_area" to="." method="_on_item_detection_area_body_entered"]
 [connection signal="body_exited" from="item_detection_area" to="." method="_on_item_detection_area_body_exited"]
 [connection signal="timeout" from="box_open_timer" to="." method="_on_box_open_timer_timeout"]

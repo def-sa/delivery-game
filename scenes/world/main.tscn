@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=86 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/world/main.gd" id="1_md6cl"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/ui/pause.tscn" id="2_u2p2s"]
@@ -184,33 +184,6 @@ albedo_color = Color(0.890196, 0, 0, 1)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_llfdw"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[sub_resource type="Curve3D" id="Curve3D_wlwgd"]
-resource_local_to_scene = true
-bake_interval = 512.0
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.95995, -0.0841599, 3.6265, 0, 0, 0, 0, 0, 0, 2.601, -1.21547, 5.76838),
-"tilts": PackedFloat32Array(0, 0, 0)
-}
-point_count = 3
-
-[sub_resource type="Curve3D" id="Curve3D_llfdw"]
-resource_local_to_scene = true
-bake_interval = 512.0
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.95995, -0.0841599, 3.6265, 0, 0, 0, 0, 0, 0, 2.601, -1.21547, 5.76838),
-"tilts": PackedFloat32Array(0, 0, 0)
-}
-point_count = 3
-
-[sub_resource type="Curve3D" id="Curve3D_80eyj"]
-resource_local_to_scene = true
-bake_interval = 512.0
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.95995, -0.0841599, 3.6265, 0, 0, 0, 0, 0, 0, 2.601, -1.21547, 5.76838),
-"tilts": PackedFloat32Array(0, 0, 0)
-}
-point_count = 3
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ld40"]
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
@@ -278,10 +251,10 @@ rings = 1
 resource_local_to_scene = true
 bake_interval = 512.0
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5),
-"tilts": PackedFloat32Array(0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.684, 0, 0, 0, 0, 0, 0, 0, 0, 5),
+"tilts": PackedFloat32Array(0, 0, 0)
 }
-point_count = 2
+point_count = 3
 
 [sub_resource type="Environment" id="Environment_0xlil"]
 background_mode = 3
@@ -778,33 +751,6 @@ shape = SubResource("ConcavePolygonShape3D_llfdw")
 
 [node name="Entities" type="Node3D" parent="World"]
 
-[node name="Rope_1" parent="World/Entities" node_paths=PackedStringArray("rigidbody_attached_to_start") instance=ExtResource("18_80eyj")]
-transform = Transform3D(0.568619, 0.822507, -0.0124747, -0.745443, 0.521637, 0.414981, 0.347832, -0.226667, 0.909745, 1.82366, 2.96125, -0.180315)
-visible = false
-curve = SubResource("Curve3D_wlwgd")
-number_of_segments = 6
-mesh_sides = 16
-cable_thickness = 0.5
-rigidbody_attached_to_start = NodePath("../rope_follow")
-
-[node name="Rope_2" parent="World/Entities" node_paths=PackedStringArray("rigidbody_attached_to_start") instance=ExtResource("18_80eyj")]
-transform = Transform3D(0.568619, 0.822507, -0.0124747, -0.745443, 0.521637, 0.414981, 0.347832, -0.226667, 0.909745, 1.82366, 2.96125, -0.180315)
-visible = false
-curve = SubResource("Curve3D_llfdw")
-number_of_segments = 6
-mesh_sides = 16
-cable_thickness = 0.5
-rigidbody_attached_to_start = NodePath("../rope_follow")
-
-[node name="Rope_3" parent="World/Entities" node_paths=PackedStringArray("rigidbody_attached_to_start") instance=ExtResource("18_80eyj")]
-transform = Transform3D(0.568619, 0.822507, -0.0124747, -0.745443, 0.521637, 0.414981, 0.347832, -0.226667, 0.909745, 1.82366, 2.96125, -0.180315)
-visible = false
-curve = SubResource("Curve3D_80eyj")
-number_of_segments = 6
-mesh_sides = 16
-cable_thickness = 0.5
-rigidbody_attached_to_start = NodePath("../rope_follow")
-
 [node name="delivery_point" type="Node3D" parent="World/Entities" node_paths=PackedStringArray("player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4, 0)
 script = ExtResource("25_ij6fg")
@@ -848,11 +794,6 @@ radius = 6.6
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.93537, 0)
 size = Vector3(15, 1, 15)
 
-[node name="rope_follow" type="RigidBody3D" parent="World/Entities"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, 0)
-collision_layer = 0
-collision_mask = 0
-
 [node name="Marker3D" type="Marker3D" parent="World/Entities"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -8)
 visible = false
@@ -867,24 +808,18 @@ trail_lifetime = 0.48
 process_material = SubResource("ParticleProcessMaterial_llfdw")
 draw_pass_1 = SubResource("CapsuleMesh_80eyj")
 
-[node name="Path3DRope" parent="World/Entities" node_paths=PackedStringArray("rigidbody_attached_to_start") instance=ExtResource("18_80eyj")]
+[node name="Path3DRope" parent="World/Entities" instance=ExtResource("18_80eyj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 visible = false
 curve = SubResource("Curve3D_4m2ge")
 number_of_segments = 6
 mesh_sides = 16
 cable_thickness = 0.5
-rigidbody_attached_to_start = NodePath("../rope_follow")
 
 [node name="Player" parent="World" instance=ExtResource("5_wlwgd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 top_level = true
 collision_priority = 2.0
-
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="World/Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0)
-remote_path = NodePath("../../Entities/rope_follow")
-update_rotation = false
-update_scale = false
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="World"]
 transform = Transform3D(0.0567843, 0.628216, -0.775964, 0.605976, 0.595997, 0.52686, 0.793454, -0.500133, -0.34684, -11.4479, 24.4967, 0)

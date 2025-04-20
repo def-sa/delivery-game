@@ -23,6 +23,11 @@ Settings="*res://scripts/ui/settings.gd"
 Signalbus="*res://scripts/signalbus.gd"
 Configfilehandler="*res://scripts/configfilehandler.gd"
 
+[debug]
+
+settings/stdout/print_fps=true
+gdscript/warnings/unused_signal=0
+
 [display]
 
 window/size/viewport_width=1700

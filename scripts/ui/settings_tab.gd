@@ -3,8 +3,6 @@ extends TabBar
 @onready var v_box_container: VBoxContainer = $VBoxContainer
 var sliders_in_display:Array[String]
 
-
-#TODO : fix sliders 
 func _ready() -> void:
 	Signalbus.settings_slider.connect(_handle_slider_changed)
 	
@@ -40,7 +38,7 @@ func _handle_slider_changed(slider_name,is_default,value):
 			if !slider_values:
 				print("could not get slider values")
 				return
-			var slider_node = get_node("VBoxContainer/"+slider)
+			#var slider_node = get_node("VBoxContainer/"+slider)
 			
 			#[_name, min, max, default, step]
 			if slider in Settings:
@@ -51,22 +49,22 @@ func _handle_slider_changed(slider_name,is_default,value):
 
 func _get_slider_values(get_slider):
 	#var _name
-	var min
-	var max
-	var default 
-	var step
+	var slider_min
+	var slider_max
+	var slider_default 
+	var slider_step
 	
 	for slider in sliders_in_display:
 		#print(get_slider," : ", slider)
 		if get_slider == slider:
 			#print("triggered")
 			#_name = Settings[slider+"_name"]
-			min = Settings[slider+"_min"]
-			max = Settings[slider+"_max"]
-			default = Settings[slider+"_default"]
-			step = Settings[slider+"_step"]
+			slider_min = Settings[slider+"_min"]
+			slider_max = Settings[slider+"_max"]
+			slider_default = Settings[slider+"_default"]
+			slider_step = Settings[slider+"_step"]
 			#print([min, max, default, step])
 	if min != null:
-		return [min, max, default, step]
+		return [slider_min, slider_max, slider_default, slider_step]
 	else:
 		return null

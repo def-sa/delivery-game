@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 		if obj:
 			if camera.is_position_in_frustum(obj.global_position):
 				offscreen_reticle.hide()
-				var reticle_position = camera.unproject_position(obj.global_position)
+				#var reticle_position = camera.unproject_position(obj.global_position)
 			else:
 				offscreen_reticle.show()
 				var local_to_camera = camera.to_local(obj.global_position)
