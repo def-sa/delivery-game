@@ -28,5 +28,4 @@ signal box_open_timer_expired()
 
 
 ##//
-signal gui_cooldown()
-signal box_being_carried(obj)
+#signal box_being_carried(obj)

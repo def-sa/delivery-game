@@ -68,6 +68,7 @@ shape = SubResource("ConvexPolygonShape3D_qlg0r")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
 
 [node name="spring_arm_3d" type="SpringArm3D" parent="camera_pivot"]
+spring_length = -1.0
 
 [node name="spring_position" type="Node3D" parent="camera_pivot/spring_arm_3d"]
 
@@ -101,9 +102,6 @@ linear_limit_z/enabled = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="camera_pivot/spring_arm_3d/camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.50045)
-
-[node name="click_ray" type="RayCast3D" parent="camera_pivot/spring_arm_3d/camera"]
-collision_mask = 2
 
 [node name="GUI_layer" type="CanvasLayer" parent="."]
 layer = 4
@@ -192,45 +190,6 @@ size_flags_vertical = 4
 max_value = 1.0
 fill_mode = 3
 show_percentage = false
-
-[node name="roped_items" type="Control" parent="GUI_layer/GUI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 450.0
-offset_right = -850.0
-offset_bottom = -57.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="GUI_layer/GUI/roped_items"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -250.0
-offset_right = 758.0
-grow_vertical = 0
-columns = 3
-
-[node name="ColorRect" type="ColorRect" parent="GUI_layer/GUI/roped_items/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
-color = Color(1, 0, 0, 0.482353)
-
-[node name="ColorRect2" type="ColorRect" parent="GUI_layer/GUI/roped_items/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
-color = Color(1, 1, 1, 0.482353)
-
-[node name="ColorRect3" type="ColorRect" parent="GUI_layer/GUI/roped_items/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
-color = Color(1, 1, 1, 0.482353)
 
 [node name="health_bar" type="ProgressBar" parent="GUI_layer/GUI"]
 layout_mode = 1
@@ -329,12 +288,7 @@ wait_time = 0.25
 wait_time = 2.0
 one_shot = true
 
-[node name="gui_cooldown" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-
 [connection signal="body_entered" from="item_detection_area" to="." method="_on_item_detection_area_body_entered"]
 [connection signal="body_exited" from="item_detection_area" to="." method="_on_item_detection_area_body_exited"]
 [connection signal="timeout" from="box_open_timer" to="." method="_on_box_open_timer_timeout"]
 [connection signal="timeout" from="grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]
-[connection signal="timeout" from="gui_cooldown" to="." method="_on_gui_cooldown_timeout"]

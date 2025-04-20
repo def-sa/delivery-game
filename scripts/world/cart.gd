@@ -36,16 +36,7 @@ func _ready() -> void:
 	area.body_exited.connect(_body_exited_cart)
 	cart_item_view = CART_ITEM_VIEW_PRELOAD.instantiate()
 
-
-
 func _physics_process(delta: float) -> void:
-	
-	
-	#if player.hovered_obj in cart.get_children():
-		#player.handle_carrying_gui(cart_item_view, "hovering")
-		#Signalbus.box_being_carried.emit(cart_item_view)
-	
-	
 	if player.carrying_obj == cart_handle:
 		Settings.max_grab_length = 10
 		hand_path_follow.progress_ratio += .5
@@ -64,24 +55,8 @@ func _physics_process(delta: float) -> void:
 		cart_body.rotation.y = lerp(cart_body.rotation.y, cart_handle.rotation.y, 0.5)
 		
 
-		for body in bodies_on_bottom_of_cart:
-			pass
-			#var saved_rotation = body.global_rotation
-			#body.rotation = saved_rotation + cart_body.global_rotation
-			
-			#var offset = cart_handle.transform.basis.z
-			#offset += body.rotation
-			#body.look_at(offset)
-			#body.rotation.x = saved_rotation.x
-			#body.rotation.y = saved_rotation.y
-			
-			#var offset = body.rotation.y - cart_handle.rotation.y
-			#offset += body.rotation.y
-			#body.rotation.y += -offset
-			#body.rotation.y = lerp(body.rotation.y, -offset, 0.5)
-
-
-
+		#for body in bodies_on_bottom_of_cart:
+			#pass
 	#////////////
 		
 	else:
@@ -89,11 +64,6 @@ func _physics_process(delta: float) -> void:
 		remote_transform.update_rotation = true
 		remote_transform.update_position = true
 		cart_handle_collision.disabled = false
-
-
-
-
-
 
 
 func _body_entered_cart(body: Node3D):
@@ -106,7 +76,7 @@ func _body_entered_cart(body: Node3D):
 		if "in_cart" in body:
 			body.in_cart = true
 		
-		print(body.get_path())
+		#print(body.get_path())
 
 func _body_exited_cart(body: Node3D):
 	if body != cart_body and body != cart_rails and body != player:
@@ -115,7 +85,6 @@ func _body_exited_cart(body: Node3D):
 			if child is RemoteTransform3D:
 				if child.remote_path == body.get_path():
 					child.queue_free()
-					
 		
 		body.reparent(objects)
 		
@@ -124,8 +93,6 @@ func _body_exited_cart(body: Node3D):
 			bodies_in_cart.remove_at(index)
 		if "in_cart" in body:
 			body.in_cart = false
-
-
 
 
 func _on_cart_area_bottom_objects_body_entered(body: Node3D) -> void:

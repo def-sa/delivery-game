@@ -8,7 +8,6 @@ extends Control
 
 @onready var id_label: Label = $item_info/id
 @onready var modifiers_label: Label = $item_info/modifiers
-@onready var background: ColorRect = $item_info/background
 
 var current_obj
 var current_visiblity
@@ -25,7 +24,6 @@ func _physics_process(delta: float) -> void:
 
 func set_to(obj, visiblity):
 	#print(obj, visiblity)
-	background.visible = (obj != null)
 	if current_obj == obj and current_visiblity == visiblity: return
 	if visiblity == "off":
 		current_obj = null

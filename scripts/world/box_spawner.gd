@@ -184,7 +184,7 @@ func spawn_box(new_modifiers:Dictionary):
 	rigidbody.tier = tier
 	
 	
-	print(rigidbody.get_tree_string_pretty())
+	#print(rigidbody.get_tree_string_pretty())
 	add_child(rigidbody)
 	
 	for modifier in modifiers.keys():
@@ -192,7 +192,7 @@ func spawn_box(new_modifiers:Dictionary):
 			rigidbody.add_to_group(modifier)
 	
 	Global.total_boxes_spawned =+ 1
-	print("box spawned:", rigidbody)
+	#print("box spawned:", rigidbody)
 	return rigidbody
 
 func _body_exited_box_with_item(body: Node3D, obj_spawned: RigidBody3D, parent_box: RigidBody3D) -> void:

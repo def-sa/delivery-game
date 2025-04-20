@@ -37,13 +37,13 @@ mouse_filter = 1
 [node name="id" type="Label" parent="item_info"]
 material = SubResource("ShaderMaterial_6pp8d")
 layout_mode = 0
-offset_top = 489.0
+offset_top = 768.0
 offset_right = 253.0
-offset_bottom = 537.0
+offset_bottom = 816.0
 scale = Vector2(1.8146, 1.8146)
 mouse_filter = 1
 theme_override_font_sizes/font_size = 29
-text = "1x111x1111xTEST"
+text = "ghjkljhgfd"
 horizontal_alignment = 1
 vertical_alignment = 3
 
@@ -59,25 +59,11 @@ mouse_filter = 1
 autowrap_mode = 3
 text_overrun_behavior = 4
 
-[node name="background" type="ColorRect" parent="item_info"]
-z_index = -8
-z_as_relative = false
-material = SubResource("ShaderMaterial_6pp8d")
-layout_mode = 0
-offset_top = 4.0
-offset_right = 253.0
-offset_bottom = 320.0
-scale = Vector2(1.8146, 1.8146)
-mouse_filter = 1
-color = Color(1, 1, 1, 0.196078)
-
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 1
 offset_right = 256.0
 offset_bottom = 256.0
 scale = Vector2(1.80005, 1.80005)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer"]
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 transparent_bg = true
