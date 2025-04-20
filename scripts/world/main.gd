@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var world: WorldEnvironment = $World/WorldEnvironment
+@onready var world: WorldEnvironment = $World/Environment/WorldEnvironment
 
 
 func _ready() -> void:

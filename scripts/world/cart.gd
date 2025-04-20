@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 		#Signalbus.box_being_carried.emit(cart_item_view)
 	
 	
-	if player.carrying == cart_handle:
+	if player.carrying_obj == cart_handle:
 		Settings.max_grab_length = 10
 		hand_path_follow.progress_ratio += .5
 		

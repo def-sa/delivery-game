@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://r0lr0id6q0kw"]
+[gd_scene load_steps=9 format=3 uid="uid://r0lr0id6q0kw"]
 
 [ext_resource type="Texture2D" uid="uid://bk1cs84anbjv" path="res://assets/world/box/carton_box_04_closed_0.jpg" id="1_6bnwv"]
+[ext_resource type="Script" uid="uid://c2s6luioippuo" path="res://scenes/ui/item_overlay.gd" id="1_6pp8d"]
 [ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="1_48na1"]
+[ext_resource type="Texture2D" uid="uid://cfroow2y4ieic" path="res://assets/light_cookie.png" id="3_de71s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6pp8d"]
 shader = ExtResource("1_48na1")
@@ -23,6 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
 mouse_filter = 1
+script = ExtResource("1_6pp8d")
 
 [node name="item_info" type="Control" parent="."]
 layout_mode = 1
@@ -102,17 +105,18 @@ light_color = Color(0.823777, 0.618614, 0.518154, 1)
 light_energy = 1.208
 
 [node name="item_overlay_camera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.89415)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17.25, 10)
 projection = 1
 size = 1.85
 
-[node name="flashlight" type="SpotLight3D" parent="SubViewportContainer/SubViewport/item_overlay_camera"]
+[node name="light" type="SpotLight3D" parent="SubViewportContainer/SubViewport/item_overlay_camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0153489, 0.154216, -0.42613)
-visible = false
 light_color = Color(0.833199, 0.751289, 0.673868, 1)
 light_energy = 8.52
 light_indirect_energy = 0.0
 light_volumetric_fog_energy = 0.0
+light_projector = ExtResource("3_de71s")
+shadow_enabled = true
 spot_range = 4.054
 spot_attenuation = 1.17
 spot_angle = 35.54
@@ -120,41 +124,16 @@ spot_angle = 35.54
 [node name="box" type="RigidBody3D" parent="SubViewportContainer/SubViewport" groups=["grabbable"]]
 transform = Transform3D(0.707107, 2.38418e-07, 0.707106, 0.353553, 0.866025, -0.353554, -0.612372, 0.5, 0.612373, 0, 0, 0)
 visible = false
+gravity_scale = 0.0
 freeze = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/box"]
-visible = false
 material_override = SubResource("StandardMaterial3D_bfenw")
 mesh = SubResource("BoxMesh_lmqf3")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/box"]
-visible = false
 shape = SubResource("ConvexPolygonShape3D_w8jie")
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
-visible = false
-layout_mode = 1
-offset_right = 512.0
-offset_bottom = 512.0
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer2"]
-handle_input_locally = false
-render_target_update_mode = 0
-
-[node name="item_overlay_camera" type="Camera3D" parent="SubViewportContainer2/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.89415)
-visible = false
-projection = 1
-size = 1.75
-
-[node name="flashlight" type="SpotLight3D" parent="SubViewportContainer2/SubViewport/item_overlay_camera"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.154216, -0.416483)
-visible = false
-light_color = Color(0.79903, 0.707115, 0.61987, 1)
-light_energy = 4.571
-light_volumetric_fog_energy = 0.1
-spot_range = 4.739
-spot_attenuation = -0.1
-spot_angle = 17.39
-spot_angle_attenuation = 0.210224
+[node name="item_container" type="Node3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.707107, 2.38418e-07, 0.707106, 0.353553, 0.866025, -0.353554, -0.612372, 0.5, 0.612373, 0, 0, 0)

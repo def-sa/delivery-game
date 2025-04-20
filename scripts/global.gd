@@ -13,9 +13,9 @@ const TIER_COLORS = {
 	"EXPORT": Color("ffff52")
 }
 
+@onready var score_node = get_node("/root/main/World/Player/GUI_layer/GUI/score")
 
 
-@onready var score_node = get_node("/root/main/World/Player/CanvasLayer/GUI/score")
 var score = 0:
 	set(v):
 		score = v

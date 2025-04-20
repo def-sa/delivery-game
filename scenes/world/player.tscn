@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=22 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/world/player.gd" id="1_v666e"]
 [ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scripts/ui/gui.gd" id="2_qhqgy"]
@@ -8,36 +8,8 @@
 [ext_resource type="Script" uid="uid://bnn5y78er1wbb" path="res://scripts/world/item_detection.gd" id="6_tuyoq"]
 [ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/themes/new_theme.tres" id="7_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bhdmrq6le812t" path="res://assets/ui/up_arrow.png" id="8_smehm"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ce1ts"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_261lf"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqkch"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
-shader = ExtResource("5_tuyoq")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kgc2y"]
-shader = ExtResource("5_tuyoq")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smehm"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ur7pv"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
-radius = 24.0
-height = 48.0
-radial_segments = 8
-rings = 8
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tuyoq"]
-points = PackedVector3Array(14.8662, 18.1499, -1.8302, -22.8497, -5.07139, -1.10259, -22.862, -5.07412, 1.07047, 10.5453, -21.1214, 0.343042, 1.07189, 5.08072, 22.8591, 1.07047, -5.07412, -22.862, -14.1562, 18.8549, -1.10335, 22.8591, -5.08072, 1.07189, -6.926, -21.8195, 6.16195, -0.375473, 11.6401, -20.7601, 17.0803, -4.36167, -15.6547, 16.294, -5.79447, 16.294, -14.97, -10.9387, -14.97, -15.658, 4.36135, 17.0791, 1.0716, 18.8715, 14.1405, -0.37594, -11.6552, 20.7544, -16.2967, 5.78382, -16.2967, 1.07085, -18.8585, -14.1634, 14.8081, 11.5679, 14.8081, -1.84615, 22.7618, -6.25759, -14.9781, -10.9446, 14.9454, 14.0733, 13.0067, -14.1105, 22.8591, 5.08072, 1.07189, -20.7601, 11.6401, -0.375473, -14.1562, -18.8549, -1.10335, 10.5251, -18.1709, 11.247, -10.5532, 18.1629, 11.2421, 14.0733, -13.0067, -14.1105, -11.9487, 16.6319, -11.9487, 4.76777, 22.8111, 4.76777, -4.05101, -22.7314, -5.51652, 20.7642, -11.6653, 0.343406)
+[ext_resource type="PackedScene" uid="uid://r0lr0id6q0kw" path="res://scenes/ui/item_overlay.tscn" id="9_7psdb"]
+[ext_resource type="Texture2D" uid="uid://cfroow2y4ieic" path="res://assets/light_cookie.png" id="9_dlnwf"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xqg4r"]
 radius = 1.0
@@ -45,10 +17,6 @@ height = 4.0
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qlg0r"]
 points = PackedVector3Array(-0.25041, -1.06559, -0.961001, 0.0455663, 0.952141, 0.997768, 0.339426, 1.11829, 0.928346, 0.462089, -1.60714, 0.640893, 0.814783, 1.30203, -0.487023, -0.965635, 1.18975, 0.164435, -0.725713, -1.36458, 0.579376, 0.93809, -1.30906, -0.132543, -0.254891, 1.68542, -0.676214, -0.786851, -1.36785, -0.489421, 0.876492, 1.24659, 0.401691, 0.1683, 1.95497, 0.229596, -0.13641, -1.95298, -0.25855, 0.401111, -1.12629, -0.902936, -0.371062, 1.19093, -0.906971, -0.546702, 1.18449, 0.815474, -0.013873, -0.953646, 0.999321, 0.75168, -1.17729, 0.633943, 0.223164, 1.12615, -0.962382, -0.834529, 1.05577, -0.541012, -0.969147, -1.19401, -0.133028, -0.559494, 1.81712, 0.106672, -0.50041, -1.76148, 0.41065, 0.527294, -1.80554, -0.254789, 0.58675, 1.7431, -0.3144, 0.746805, -1.05261, -0.656476, 0.999325, 0.953283, -0.0137771, 0.106212, 1.75002, 0.649411, -0.309093, -1.18174, 0.931782, -0.194551, -1.56465, -0.796341, -0.7753, -0.996346, 0.631302, -0.601378, -1.17603, -0.777827)
-
-[sub_resource type="FogMaterial" id="FogMaterial_20bdx"]
-density = 0.0383
-emission = Color(0.617493, 0.474562, 0.392049, 1)
 
 [sub_resource type="Curve3D" id="Curve3D_qhqgy"]
 _data = {
@@ -59,265 +27,34 @@ point_count = 2
 
 [sub_resource type="BoxMesh" id="BoxMesh_dqkch"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqkch"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
+shader = ExtResource("5_tuyoq")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smehm"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ur7pv"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kgc2y"]
+shader = ExtResource("5_tuyoq")
+
+[sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
+radius = 24.0
+height = 48.0
+radial_segments = 8
+rings = 8
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tuyoq"]
+points = PackedVector3Array(14.8662, 18.1499, -1.8302, -22.8497, -5.07139, -1.10259, -22.862, -5.07412, 1.07047, 10.5453, -21.1214, 0.343042, 1.07189, 5.08072, 22.8591, 1.07047, -5.07412, -22.862, -14.1562, 18.8549, -1.10335, 22.8591, -5.08072, 1.07189, -6.926, -21.8195, 6.16195, -0.375473, 11.6401, -20.7601, 17.0803, -4.36167, -15.6547, 16.294, -5.79447, 16.294, -14.97, -10.9387, -14.97, -15.658, 4.36135, 17.0791, 1.0716, 18.8715, 14.1405, -0.37594, -11.6552, 20.7544, -16.2967, 5.78382, -16.2967, 1.07085, -18.8585, -14.1634, 14.8081, 11.5679, 14.8081, -1.84615, 22.7618, -6.25759, -14.9781, -10.9446, 14.9454, 14.0733, 13.0067, -14.1105, 22.8591, 5.08072, 1.07189, -20.7601, 11.6401, -0.375473, -14.1562, -18.8549, -1.10335, 10.5251, -18.1709, 11.247, -10.5532, 18.1629, 11.2421, 14.0733, -13.0067, -14.1105, -11.9487, 16.6319, -11.9487, 4.76777, 22.8111, 4.76777, -4.05101, -22.7314, -5.51652, 20.7642, -11.6653, 0.343406)
+
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_v666e")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 4
-
-[node name="GUI" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 1
-theme = ExtResource("7_fjrip")
-script = ExtResource("2_qhqgy")
-
-[node name="score" type="RichTextLabel" parent="CanvasLayer/GUI"]
-custom_minimum_size = Vector2(500, 100)
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -1.0
-offset_bottom = 2.0
-grow_horizontal = 0
-mouse_filter = 1
-theme_override_font_sizes/normal_font_size = 75
-text = "0"
-scroll_active = false
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="obj_speed_text" type="RichTextLabel" parent="CanvasLayer/GUI"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -168.0
-offset_top = 293.0
-offset_right = -33.0
-offset_bottom = 353.0
-grow_horizontal = 0
-grow_vertical = 2
-mouse_filter = 1
-bbcode_enabled = true
-text = "[center]drag power
-(CTRL + SCROLL)
-[/center]
-"
-scroll_active = false
-
-[node name="obj_speed_bar" type="ProgressBar" parent="CanvasLayer/GUI"]
-custom_minimum_size = Vector2(15, 350)
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -33.0
-offset_top = 151.0
-offset_right = -18.0
-offset_bottom = 501.0
-grow_horizontal = 0
-grow_vertical = 2
-size_flags_horizontal = 4
-mouse_filter = 1
-theme_override_styles/background = SubResource("StyleBoxFlat_ce1ts")
-theme_override_styles/fill = SubResource("StyleBoxFlat_261lf")
-min_value = 4.0
-max_value = 25.0
-step = 1.0
-value = 25.0
-fill_mode = 3
-show_percentage = false
-
-[node name="interact_tip_text" type="Label" parent="CanvasLayer/GUI"]
-visible = false
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -88.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 1
-theme_override_font_sizes/font_size = 32
-text = "press E to pickup"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="crosshair_grabbing" type="TextureRect" parent="CanvasLayer/GUI"]
-clip_children = 1
-clip_contents = true
-layout_mode = 2
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -49.0
-offset_top = -49.5
-offset_right = 463.0
-offset_bottom = 462.5
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.19, 0.19)
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("4_dqkch")
-stretch_mode = 5
-
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUI/crosshair_grabbing"]
-layout_mode = 0
-offset_right = 512.0
-offset_bottom = 512.0
-mouse_filter = 1
-theme_override_styles/fill = SubResource("StyleBoxFlat_dqkch")
-fill_mode = 3
-show_percentage = false
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/GUI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="crosshair" type="TextureRect" parent="CanvasLayer/GUI/MarginContainer"]
-material = SubResource("ShaderMaterial_fjrip")
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("5_qlg0r")
-expand_mode = 3
-
-[node name="box_open_bar" type="ProgressBar" parent="CanvasLayer/GUI/MarginContainer"]
-visible = false
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-max_value = 1.0
-fill_mode = 3
-show_percentage = false
-
-[node name="item_detection" type="Control" parent="CanvasLayer/GUI"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("6_tuyoq")
-
-[node name="rectangle" type="ReferenceRect" parent="CanvasLayer/GUI/item_detection"]
-visible = false
-layout_mode = 0
-offset_right = 100.0
-offset_bottom = 100.0
-editor_only = false
-
-[node name="item_name_bg" type="ColorRect" parent="CanvasLayer/GUI/item_detection/rectangle"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(1, 0, 0, 1)
-
-[node name="Label" type="Label" parent="CanvasLayer/GUI/item_detection/rectangle/item_name_bg"]
-visible = false
-material = SubResource("ShaderMaterial_kgc2y")
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-theme = ExtResource("7_fjrip")
-text = "testing waaaaow"
-clip_text = true
-
-[node name="offscreen_reticle" type="TextureRect" parent="CanvasLayer/GUI/item_detection"]
-layout_mode = 0
-offset_right = 100.0
-offset_bottom = 100.0
-texture = ExtResource("8_smehm")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="roped_items" type="Control" parent="CanvasLayer/GUI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 450.0
-offset_right = -850.0
-offset_bottom = -57.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="CanvasLayer/GUI/roped_items"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -250.0
-offset_right = 758.0
-grow_vertical = 0
-columns = 3
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GUI/roped_items/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
-color = Color(1, 0, 0, 0.482353)
-
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/GUI/roped_items/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
-color = Color(1, 1, 1, 0.482353)
-
-[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/GUI/roped_items/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
-color = Color(1, 1, 1, 0.482353)
-
-[node name="health_bar" type="ProgressBar" parent="CanvasLayer/GUI"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -26.0
-offset_right = 500.0
-grow_vertical = 0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 22
-theme_override_font_sizes/font_size = 42
-theme_override_styles/background = SubResource("StyleBoxFlat_smehm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ur7pv")
-step = 1.0
-value = 100.0
-
-[node name="item_detection_area" type="Area3D" parent="."]
-collision_layer = 2
-collision_mask = 2
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="item_detection_area"]
-visible = false
-mesh = SubResource("SphereMesh_qlg0r")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="item_detection_area"]
-shape = SubResource("ConvexPolygonShape3D_tuyoq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -326,12 +63,6 @@ mesh = SubResource("CapsuleMesh_xqg4r")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("ConvexPolygonShape3D_qlg0r")
-
-[node name="FogVolume" type="FogVolume" parent="."]
-visible = false
-size = Vector3(75, 75, 75)
-shape = 0
-material = SubResource("FogMaterial_20bdx")
 
 [node name="camera_pivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
@@ -374,6 +105,207 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.50045)
 [node name="click_ray" type="RayCast3D" parent="camera_pivot/spring_arm_3d/camera"]
 collision_mask = 2
 
+[node name="GUI_layer" type="CanvasLayer" parent="."]
+layer = 4
+
+[node name="GUI" type="Control" parent="GUI_layer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+theme = ExtResource("7_fjrip")
+script = ExtResource("2_qhqgy")
+
+[node name="score" type="RichTextLabel" parent="GUI_layer/GUI"]
+custom_minimum_size = Vector2(500, 100)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1.0
+offset_bottom = 2.0
+grow_horizontal = 0
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 75
+text = "0"
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="crosshair_grabbing" type="TextureRect" parent="GUI_layer/GUI"]
+clip_children = 1
+clip_contents = true
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.0
+offset_top = -49.5
+offset_right = 463.0
+offset_bottom = 462.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.19, 0.19)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_dqkch")
+stretch_mode = 5
+
+[node name="ProgressBar" type="ProgressBar" parent="GUI_layer/GUI/crosshair_grabbing"]
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 512.0
+mouse_filter = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_dqkch")
+fill_mode = 3
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="GUI_layer/GUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="crosshair" type="TextureRect" parent="GUI_layer/GUI/MarginContainer"]
+material = SubResource("ShaderMaterial_fjrip")
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_qlg0r")
+expand_mode = 3
+
+[node name="box_open_bar" type="ProgressBar" parent="GUI_layer/GUI/MarginContainer"]
+visible = false
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="roped_items" type="Control" parent="GUI_layer/GUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 450.0
+offset_right = -850.0
+offset_bottom = -57.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="GUI_layer/GUI/roped_items"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -250.0
+offset_right = 758.0
+grow_vertical = 0
+columns = 3
+
+[node name="ColorRect" type="ColorRect" parent="GUI_layer/GUI/roped_items/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+color = Color(1, 0, 0, 0.482353)
+
+[node name="ColorRect2" type="ColorRect" parent="GUI_layer/GUI/roped_items/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+color = Color(1, 1, 1, 0.482353)
+
+[node name="ColorRect3" type="ColorRect" parent="GUI_layer/GUI/roped_items/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+color = Color(1, 1, 1, 0.482353)
+
+[node name="health_bar" type="ProgressBar" parent="GUI_layer/GUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+offset_right = 500.0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 22
+theme_override_font_sizes/font_size = 42
+theme_override_styles/background = SubResource("StyleBoxFlat_smehm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ur7pv")
+step = 1.0
+value = 100.0
+
+[node name="item_detection" type="Control" parent="GUI_layer/GUI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_tuyoq")
+
+[node name="rectangle" type="ReferenceRect" parent="GUI_layer/GUI/item_detection"]
+visible = false
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+editor_only = false
+
+[node name="item_name_bg" type="ColorRect" parent="GUI_layer/GUI/item_detection/rectangle"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="GUI_layer/GUI/item_detection/rectangle/item_name_bg"]
+visible = false
+material = SubResource("ShaderMaterial_kgc2y")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("7_fjrip")
+text = "testing waaaaow"
+clip_text = true
+
+[node name="offscreen_reticle" type="TextureRect" parent="GUI_layer/GUI/item_detection"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+texture = ExtResource("8_smehm")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="item_overlay" parent="GUI_layer/GUI" instance=ExtResource("9_7psdb")]
+process_mode = 1
+z_as_relative = false
+layout_mode = 1
+mouse_filter = 2
+theme = ExtResource("7_fjrip")
+metadata/_edit_use_anchors_ = true
+
+[node name="item_detection_area" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="item_detection_area"]
+visible = false
+mesh = SubResource("SphereMesh_qlg0r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="item_detection_area"]
+shape = SubResource("ConvexPolygonShape3D_tuyoq")
+
 [node name="flashlight" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.91644, 0)
 visible = false
@@ -381,7 +313,9 @@ light_color = Color(0.79903, 0.707115, 0.61987, 1)
 light_energy = 16.0
 light_indirect_energy = 1.84
 light_volumetric_fog_energy = 6.59
+light_projector = ExtResource("9_dlnwf")
 light_size = 1.0
+shadow_enabled = true
 spot_range = 11.065
 spot_angle = 55.21
 
@@ -398,11 +332,6 @@ one_shot = true
 [node name="gui_cooldown" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
-
-[node name="rope_follow" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0)
-collision_layer = 0
-collision_mask = 0
 
 [connection signal="body_entered" from="item_detection_area" to="." method="_on_item_detection_area_body_entered"]
 [connection signal="body_exited" from="item_detection_area" to="." method="_on_item_detection_area_body_exited"]

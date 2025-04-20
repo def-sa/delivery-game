@@ -80,7 +80,7 @@ func _physics_process(delta: float) -> void:
 				if child.name == "item_name_bg":
 					child.size.x = bounding_box.size.x
 					child.visible = current_object.is_discovered
-				if player.carrying == current_object:
+				if player.carrying_obj == current_object:
 					child = child.get_children()[0]
 					if child.name == "item_name":
 						child.text = str(current_object.id)

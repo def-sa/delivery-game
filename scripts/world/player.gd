@@ -26,7 +26,7 @@ var pull_power:float = 10.0
 var max_obj_speed:float = 10.0:
 	set(value):
 		value = clamp(value, 4.0, 25.0)
-		gui_obj_speed_bar.value = value
+		#gui_obj_speed_bar.value = value
 		max_obj_speed = value
 var obj_speed_step:float = 1
 var hand_scroll = .35:
@@ -39,25 +39,26 @@ var max_reach = 5.5
 
 ##gui item overlay variables
 var spin_locked: bool = false
-var spin_speed: Vector3 = Vector3(1,1,1)
+#var spin_speed: Vector3 = Vector3(1,1,1)
 
 ##gui references
-@onready var gui_obj_speed_bar: ProgressBar = $CanvasLayer/GUI/obj_speed_bar
-@onready var gui_obj_speed_text: RichTextLabel = $CanvasLayer/GUI/obj_speed_text
-#@onready var gui_cooldown: Timer = $CanvasLayer/GUI/gui_cooldown
-@onready var interact_tip_text: Label = $CanvasLayer/GUI/interact_tip_text
-@onready var grab_buffer_display: ProgressBar = $CanvasLayer/GUI/crosshair_grabbing/ProgressBar
-@onready var grab_buffer_timer: Timer = $grab_buffer_timer
-@onready var item_overlay = $".."/".."/CanvasLayer/item_overlay
-@onready var item_detection_gui: Control = $CanvasLayer/GUI/item_detection
+#@onready var gui_obj_speed_bar: ProgressBar = $GUI_layer/GUI/obj_speed_bar
+#@onready var gui_obj_speed_text: RichTextLabel = $GUI_layer/GUI/obj_speed_text
+#@onready var gui_cooldown: Timer = $GUI_layer/GUI/gui_cooldown
+#@onready var interact_tip_text: Label = $GUI_layer/GUI/interact_tip_text
+@onready var grab_buffer_display: ProgressBar = $GUI_layer/GUI/crosshair_grabbing/ProgressBar
+@onready var health_bar: ProgressBar = $GUI_layer/GUI/health_bar
+@onready var box_open_bar: ProgressBar = $GUI_layer/GUI/MarginContainer/box_open_bar
 
-@onready var item_overlay_viewport_container = $".."/".."/CanvasLayer/item_overlay/SubViewportContainer
-@onready var item_overlay_viewport = $".."/".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport
-@onready var item_overlay_camera = $".."/".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera
-@onready var item_overlay_flashlight = $".."/".."/CanvasLayer/item_overlay/SubViewportContainer/SubViewport/item_overlay_camera/flashlight
-@onready var item_overlay_info = $".."/".."/CanvasLayer/item_overlay/item_info
-@onready var item_overlay_modifiers: Label = $".."/".."/CanvasLayer/item_overlay/item_info/modifiers
-@onready var item_overlay_id: Label = $".."/".."/CanvasLayer/item_overlay/item_info/id
+
+##timers
+@onready var grab_buffer_timer: Timer = $grab_buffer_timer
+@onready var box_open_timer: Timer = $box_open_timer
+
+##item overlay
+@onready var item_overlay: Control = $GUI_layer/GUI/item_overlay
+@onready var item_detection_gui: Control = $GUI_layer/GUI/item_detection
+
 
 ##camera references
 @onready var camera_pivot: Node3D = $camera_pivot
@@ -77,9 +78,6 @@ var spin_speed: Vector3 = Vector3(1,1,1)
 @onready var no_fly_ray: RayCast3D = $no_fly_ray
 @onready var player: CharacterBody3D = $"."
 @onready var item_detection_area: Area3D = $item_detection_area
-@onready var health_bar: ProgressBar = $CanvasLayer/GUI/health_bar
-@onready var box_open_timer: Timer = $box_open_timer
-@onready var box_open_bar: ProgressBar = $CanvasLayer/GUI/MarginContainer/box_open_bar
 
 
 var spring_arm_length = min_zoom_in
@@ -90,71 +88,54 @@ var flashlight_toggle:bool = false:
 		
 var camera_locked_in = false
 
-var carrying = null: #object itself
+var carrying_obj = null: #object itself
 	set(v):
-		carrying = v
-		if carrying:
-			carrying.can_sleep = !holding
-			if carrying.is_in_group("grabbable"):
-				handle_carrying_gui(carrying, "holding")
-				Signalbus.box_being_carried.emit(carrying)
-			else:
-				handle_carrying_gui(carrying, "off")
+		carrying_obj = v
+		if carrying_obj:
+			carrying_obj.can_sleep = !holding
 
 var hovered_obj = null:
 	set(v):
 		hovered_obj = v
 		if hovered_obj:
-			if v == carrying:
-				handle_carrying_gui(hovered_obj, "holding")
-				return
-			if hovered_obj.is_in_group("grabbable"):
-				handle_carrying_gui(hovered_obj, "hovering")
+			if hovered_obj == carrying_obj and holding:
+				item_overlay.set_to(carrying_obj, "holding")
 			else:
-				handle_carrying_gui(hovered_obj, "off")
-		
+				if hovered_obj.is_in_group("grabbable"):
+					item_overlay.set_to(hovered_obj, "hovering")
+		else:
+			item_overlay.set_to(carrying_obj, "off")
 
 var holding = false:
 	set(v):
 		holding = v
 		if holding == false:
-			carrying = null
-			#obj_speed_gui_visible(false)
+			#item_overlay.set_to(carrying_obj, "off")
+			carrying_obj = null
 			grab_buffer_display.hide()
 			rotate_to_player_joint.set_node_b(rotate_to_player_joint.get_path())
 			holding = null #so we dont keep running these ^^^ 
 		if holding == true:
+			#start_buffer_timer()
+			item_overlay.set_to(carrying_obj, "holding")
+			grab_buffer_timer.start()
+			grab_buffer_display.show()
 			pick_up_object()
-			interact_tip_text.text = ""
 			
-var current_rotation: Vector3
-var gui_current_object = null:
-	set(v):
-		if gui_current_object:
-			gui_current_object.queue_free()
-		gui_current_object = v
+var current_camera_rotation: Vector3
 
 var holding_perspective_toggle = false
-#@onready var roped_items_gui: GridContainer = $CanvasLayer/GUI/roped_items/GridContainer
-#
-#var rope_limit = 3
-#var items_on_rope: Array = []
-
 
 func _ready() -> void:
 	
 	Signalbus.grab_buffer_expired.connect(_grab_buffer_expired)
 	Signalbus.grab_buffer_updated.connect(_grab_buffer_updated)
-	#Signalbus.gui_cooldown.connect(_gui_cooldown)
 	Signalbus.player_speed_updated.connect(_player_speed_updated)
 	Signalbus.player_jump_updated.connect(_player_jump_updated)
 	Signalbus.fov_updated.connect(_fov_updated)
 	Signalbus.max_grab_length_updated.connect(_max_grab_length_updated)
 	Signalbus.box_open_timer_updated.connect(_box_open_timer_updated)
 	Signalbus.box_open_timer_expired.connect(_box_open_timer_expired)
-
-	#camera.fov = Settings.fov
-	gui_obj_speed_bar.value = max_obj_speed
 	
 	_box_open_timer_updated(Settings.box_open_timer_default)
 	_grab_buffer_updated(Settings.grab_buffer_default)
@@ -169,41 +150,41 @@ func _ready() -> void:
 	path_follow_3d.progress_ratio = hand_scroll
 	path_3d.curve.set_point_position(1, Vector3(path_3d.curve.get_point_position(1).x,path_3d.curve.get_point_position(1).y,-max_reach)) 
 
+var clicked_obj = null
+
 func _physics_process(delta: float) -> void:
 	_player_movement(delta)
+	_player_grabbing()
 	
-	check_hover()
-	player_grabbing(delta)
+	ray_interaction.enabled = bool(perspective == "first")
 	
+	if Input.is_action_pressed("tab"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		clicked_obj = shoot_click_ray()
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
-	if shoot_click_ray:
-		click_ray_hit = shoot_ray()
-	
-	
-	if gui_current_object:
-		item_overlay_camera.look_at(gui_current_object.position)
-		
-		gui_current_object.position.x = position.x
-		gui_current_object.position.z = position.z
-	
-	if no_fly_ray.get_collider() == carrying:
+	if no_fly_ray.get_collider() == carrying_obj:
 		drop_object()
 
-func player_grabbing(delta: float):
-	if carrying:
+func _player_grabbing():
+	hovered_obj = _ray_intersect_obj()
+	grab_buffer_timer.paused = (carrying_obj == hovered_obj and holding)
+	if carrying_obj:
+		#grab_buffer_timer.start()
 		grab_buffer_display.value = grab_buffer_timer.time_left
 		box_open_bar.value = box_open_timer.time_left
 		
-		var a = carrying.global_transform.origin
+		var a = carrying_obj.global_transform.origin
 		var b = player_hand.global_transform.origin
 		var direction = (b - a)
 		var distance = (b - a).length() * object_drag
 		var movement_speed = clamp(distance * pull_power, 0, max_obj_speed)
 		
 		#move player_hand inwards/outwards toward the player, using the variable hand_scroll
-		path_follow_3d.progress_ratio = hand_scroll * delta
+		path_follow_3d.progress_ratio = hand_scroll
 		
-		carrying.linear_velocity = direction * movement_speed  * delta
+		carrying_obj.linear_velocity = direction * movement_speed
 
 func _player_movement(delta: float):
 	# Add the gravity.
@@ -224,20 +205,11 @@ func _player_movement(delta: float):
 		velocity.z = move_toward(velocity.z, 0, speed)
 	move_and_slide()
 
-#func _process(delta: float) -> void:
-	##Signalbus.grab_buffer_cooldown_updated.connect(_grab_buffer_updated)
-	#pass
 
-var click_ray_hit
-var shoot_click_ray = false
+
+
 func _input(event: InputEvent) -> void:
-	
-	if event.is_action_pressed("tab"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		shoot_click_ray = true
-	if event.is_action_released("tab"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		shoot_click_ray = false
+
 	
 	
 	if event.is_action_pressed("cam_zoom_in"):
@@ -246,19 +218,19 @@ func _input(event: InputEvent) -> void:
 		hand_scroll += -0.1
 	
 	#if event.is_action_pressed("toggle_rope"):
-		#if carrying and carrying is RigidBody3D:
-			#if "is_roped" in carrying:
+		#if carrying_obj and carrying_obj is RigidBody3D:
+			#if "is_roped" in carrying_obj:
 				#
-					#if !carrying.is_roped:
+					#if !carrying_obj.is_roped:
 						#if items_on_rope.size() < rope_limit:
-							#add_obj_to_rope(carrying)
+							#add_obj_to_rope(carrying_obj)
 							#update_rope_ui()
 						#else:
 							#print("cannot exceed rope limit of : ", rope_limit)
 					#else:
 						#for item in items_on_rope:
-							#if item.rigidbody_attached_to_end == carrying:
-								#carrying.is_roped = false
+							#if item.rigidbody_attached_to_end == carrying_obj:
+								#carrying_obj.is_roped = false
 								#items_on_rope.erase(item)
 								#item.queue_free()
 								#update_rope_ui()
@@ -286,21 +258,15 @@ func _input(event: InputEvent) -> void:
 			flashlight_toggle = true
 	
 	if event.is_action_pressed("lmb"):
-		
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			shoot_click_ray = true
-			
-		if carrying and carrying.is_in_group("openable"):
+		if carrying_obj and carrying_obj.is_in_group("openable"):
 			box_open_bar.show()
-			start_box_open_timer()
-		#print("timer started", box_open_timer.time_left)
+			box_open_timer.start()
 	elif event.is_action_released("lmb"):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			if click_ray_hit:
-				handle_carrying_gui(click_ray_hit.collider, "hovering")
-		shoot_click_ray = false
+			if clicked_obj and clicked_obj.is_in_group("grabbable"):
+				item_overlay.set_to(clicked_obj, "hovering")
 		box_open_timer.stop()
-		box_open_timer_played_once = false
+		#box_open_timer_played_once = false
 		box_open_bar.hide()
 		
 	#handle mouse motion rotations such as camera & flashlight
@@ -321,12 +287,7 @@ func _input(event: InputEvent) -> void:
 		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			static_body.rotate_x(deg_to_rad(event.relative.y * rotation_power))
 			static_body.rotate_y(deg_to_rad(event.relative.x * rotation_power))
-			
-			if gui_current_object:
-				gui_current_object.rotation = static_body.rotation
-		#else: #if not rotating
-			#gui_current_object.add_constant_torque(Vector3(-3,-3,0))
-	## TODO
+	
 	if holding_perspective_toggle: # hold r + zoom to zoom camera
 		if not event.is_action_pressed("control_grip_in"):
 			if event.is_action_pressed("cam_zoom_in"):
@@ -339,39 +300,18 @@ func _input(event: InputEvent) -> void:
 				if spring_arm.spring_length <= max_zoom_out:
 					spring_arm.spring_length += 1
 					spring_arm_length = spring_arm.spring_length
-	
-	##control grip, maybe refine this later
-	if event.is_action_pressed("control_grip_in"):
-		#gui_cooldown.start()
-		gui_obj_speed_text.visible = true
-		gui_obj_speed_bar.visible = true
-		max_obj_speed += obj_speed_step
-		
-	if event.is_action_pressed("control_grip_out"):
-		#gui_cooldown.start()
-		gui_obj_speed_text.visible = true
-		gui_obj_speed_bar.visible = true
-		max_obj_speed -= obj_speed_step
 	#handle obj rotation
 	if event.is_action_pressed("rmb"):
-		if carrying:
+		if carrying_obj:
 			camera_locked_in = true
-		#if carrying:
-			#rotate_obj(event)
 	if event.is_action_released("rmb"):
 		camera_locked_in = false
+	
 	#handle obj movement
 	if event.is_action_pressed("interact"):
-		if hovered_obj != null and hovered_obj.is_in_group("grabbable"):
-			if !holding:
-				holding = true
-			else:
-				holding = false
-		elif carrying:
-			carrying = null
-			holding = false
+		holding = !holding
 
-func shoot_ray():
+func shoot_click_ray():
 	var mouse_pos = get_viewport().get_mouse_position()
 	var ray_origin = camera.project_ray_origin(mouse_pos)
 	var ray_direction = camera.project_ray_normal(mouse_pos)
@@ -381,12 +321,13 @@ func shoot_ray():
 	var params = PhysicsRayQueryParameters3D.new()
 	params.from = ray_origin
 	params.to = ray_end
-	params.collision_mask = 1  # Optional: Set collision layers to check
+	#params.collision_mask = 1  # Optional: Set collision layers to check
 
 	var space_state = get_world_3d().direct_space_state
 	var result = space_state.intersect_ray(params)
 	
-	return result
+	if result.get("collider"):
+		return result.get("collider")	
 
 #@onready var rope_follow: RigidBody3D = $rope_follow
 #@onready var entities: Node3D = $"../Entities"
@@ -435,43 +376,47 @@ func _ray_intersect_obj():
 		var obj = ray_interaction.get_collider()
 		return obj
 
-func check_hover():
-	var obj = _ray_intersect_obj()
-	if carrying:
-		if obj: # carrying obj, ray colliding, obj exists
-			#// handle carrying modifiers
-			if obj != hovered_obj:
-				hovered_obj = obj
-			
-			grab_buffer_timer.start()
-	else:
-		if obj:
-			if obj != hovered_obj:
-				hovered_obj = obj
-		else: #if not colliding (obj returns null)
-			handle_carrying_gui(obj, "off")
-			if hovered_obj:
-				hovered_obj = null
-			holding = false #just in case
+#func check_hover():
+	#var obj = _ray_intersect_obj()
+	#hovered_obj = obj
+	##if obj != hovered_obj:
+		
+	
+	#if carrying_obj:
+		#if hovered_obj:
+				#hovered_obj = null
+				#drop_object()
+				#item_overlay.set_to(obj, "off")
+	#if carrying_obj:
+		#if obj: # carrying_obj obj, ray colliding, obj exists
+			##// handle carrying_obj modifiers
+			#if obj != hovered_obj:
+				#hovered_obj = obj
+			#
+			#grab_buffer_timer.start()
+	#else:
+		#if obj:
+			#if obj != hovered_obj:
+				#hovered_obj = obj
+		##else: #if not colliding (obj returns null)
+			#item_overlay.set_to(obj, "off")
+			#if hovered_obj:
+				#hovered_obj = null
+			#holding = false #just in case
 
 func pick_up_object():
-	if carrying:
-			return
+	if carrying_obj:
+		return
 	var obj = _ray_intersect_obj()
-	if obj:
-		if obj.is_in_group("grabbable"):
-			carrying = obj
-			rotate_to_player_joint.set_node_b(obj.get_path())
-			start_buffer_timer()
-			#obj_speed_gui_visible(true)
-			#toggle_outline(carrying, true)
-			if hovered_obj and hovered_obj != carrying:
-				rotate_to_player_joint.set_node_b(rotate_to_player_joint.get_path())
-				#toggle_outline(hovered_obj, false)
-				hovered_obj = null
+	if obj and obj.is_in_group("grabbable"):
+		carrying_obj = obj
+		rotate_to_player_joint.set_node_b(obj.get_path())
+		if hovered_obj and hovered_obj != carrying_obj:
+			rotate_to_player_joint.set_node_b(rotate_to_player_joint.get_path())
+			#hovered_obj = null
 
 func drop_object():
-	carrying = null
+	carrying_obj = null
 	holding = false
 
 func player_dead():
@@ -480,30 +425,29 @@ func player_dead():
 	Global.score = 0
 
 
-## for debugging only, do not keep
 func perspective_toggle():
 	if spring_arm.spring_length <= 1:
 		perspective = "first"
 		spring_arm_length = 3
 	match perspective:
 		"first":
-			current_rotation = camera_pivot.rotation
-			#camera_pivot.rotation = -current_rotation
+			current_camera_rotation = camera_pivot.rotation
+			#camera_pivot.rotation = -current_camera_rotation
 			if spring_arm.spring_length >= 1:
 				camera_pivot.rotation.y = rad_to_deg(180)
 				perspective = "third"
 				return
 			spring_arm.spring_length = spring_arm_length
-			camera_pivot.rotation = current_rotation
+			camera_pivot.rotation = current_camera_rotation
 			perspective = "second"
 			##TODO : controls need to be inverted ?
 		"second":
 			spring_arm.spring_length = spring_arm_length
-			camera_pivot.rotation = -current_rotation
+			camera_pivot.rotation = -current_camera_rotation
 			camera_pivot.rotation.y = rad_to_deg(-180)
 			perspective = "third"
 		"third":
-			camera_pivot.rotation = current_rotation
+			camera_pivot.rotation = current_camera_rotation
 			spring_arm.spring_length = -1
 			perspective = "first"
 
@@ -513,123 +457,18 @@ func zoom(zooming):
 	else:
 		camera.fov = Settings.fov
 
-func handle_carrying_gui(obj, visiblity):
-	overlay_info_visible(visiblity)
-	if visiblity != "off":
-		var view_obj
-		if obj is RigidBody3D:
-			view_obj = obj.duplicate()
-			#gui_current_object = view_obj
-			
-			var minimal_obj = RigidBody3D.new()
-			#find mesh, set item to 1 size
-			for child in view_obj.get_children():
-				if child is MeshInstance3D:
-					if child.mesh is not ArrayMesh:
-						var new_mesh_instance = MeshInstance3D.new()
-						new_mesh_instance.mesh = child.mesh.duplicate()
-						new_mesh_instance.mesh.size = Vector3(
-							clamp(child.mesh.size.x/2, 0, 1),
-							clamp(child.mesh.size.y/2, 0, 1),
-							clamp(child.mesh.size.z/2, 0, 1) )
-						if child.material_override:
-							new_mesh_instance.material_override = child.material_override.duplicate()
-						minimal_obj.add_child(new_mesh_instance)
-					else:
-						var new_mesh_instance = MeshInstance3D.new()
-						var scaled_mesh = resize_arraymesh(child.mesh.duplicate(), 1)
-						new_mesh_instance.mesh = scaled_mesh
-						new_mesh_instance.transparency = child.transparency
-						if child.material_override:
-							new_mesh_instance.material_override = child.material_override.duplicate()
-						minimal_obj.add_child(new_mesh_instance)
-						
-			gui_current_object = minimal_obj
-			item_overlay_modifiers.text = ""
-			for group in obj.get_groups():
-				item_overlay_modifiers.text += str(group).capitalize()+", "
-				
-			if not spin_locked:
-				#TODO: add lerp? smooth interpolate somehow
-				gui_current_object.set_angular_velocity(Vector3(-1,-1,-1))
-			
-			gui_current_object.gravity_scale = 0
-			#view_obj.freeze = true
-			gui_current_object.position.y = -50
-			
-			item_overlay_viewport.add_child(gui_current_object)
-
-func overlay_info_visible(visiblity):
-	if visiblity:
-		item_overlay_camera.position.y = -50
-		item_overlay_flashlight.position = item_overlay_camera.position
-	match visiblity:
-		"holding":
-			item_overlay.visible = true
-			item_overlay.modulate = "ffffff" #100% opacity
-			item_overlay_camera.visible = true
-			item_overlay_info.visible = true
-		"hovering":
-			item_overlay.visible = true
-			item_overlay.modulate = "ffffff80" #50% opacity
-			item_overlay_camera.visible = true
-			item_overlay_info.visible = true
-		"off":
-			item_overlay.visible = false
-
-func resize_arraymesh(original_mesh: ArrayMesh, scale_factor: float) -> ArrayMesh:
-	var new_mesh = ArrayMesh.new()
-	var surface_count = original_mesh.get_surface_count()
-	
-	for surface in range(surface_count):
-		# Retrieve the arrays for the current surface.
-		var arrays = original_mesh.surface_get_arrays(surface)
-		if arrays.is_empty():
-			continue
-
-		# Access the vertex array. The vertex data is typically stored at Mesh.ARRAY_VERTEX index.
-		var vertices = arrays[Mesh.ARRAY_VERTEX]
-		if vertices:
-			# Scale each vertex position.
-			for i in range(vertices.size()):
-				vertices[i] *= scale_factor
-			arrays[Mesh.ARRAY_VERTEX] = vertices
-
-		# Preserve other attributes like normals, UVs, etc. if needed.
-		new_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	return new_mesh
-
-
-#func obj_speed_gui_visible(valueBool):
-	#gui_obj_speed_text.visible = valueBool
-	#gui_obj_speed_bar.visible = valueBool
-	#grab_buffer_display.visible = valueBool
-
-var grab_buffer_timer_played_once = false
-func start_buffer_timer():
-	if grab_buffer_timer_played_once == false:
-		grab_buffer_timer.start()
-	grab_buffer_timer_played_once = true
 func _grab_buffer_updated(value):
 	if value == 0:
 		value = 1000000000
 	grab_buffer_timer.set_wait_time(value)
 	grab_buffer_display.max_value = value
 func _grab_buffer_expired():
-	grab_buffer_timer_played_once = false #reset timer
+	#grab_buffer_timer_played_once = false #reset timer
 	drop_object()
-	#obj_speed_gui_visible(false)
 	grab_buffer_display.hide()
 
 func _on_grab_buffer_timer_timeout() -> void:
 	Signalbus.grab_buffer_expired.emit()
-
-#func _gui_cooldown():
-	#gui_obj_speed_text.visible = false
-	#gui_obj_speed_bar.visible = false
-
-#func _on_gui_cooldown_timeout() -> void:
-	#Signalbus.gui_cooldown.emit()
 
 func _player_speed_updated(value):
 	speed = value
@@ -644,16 +483,6 @@ func _fov_updated(value):
 func _max_grab_length_updated(value):
 	path_3d.curve.set_point_position(1, Vector3(0,0,-value))
 
-
-
-var box_open_timer_played_once = false
-func start_box_open_timer():
-	print(box_open_timer_played_once)
-	if box_open_timer_played_once == false:
-		box_open_timer.start()
-	box_open_timer_played_once = true
-
-
 func _box_open_timer_updated(value):
 	if value == 0:
 		value = 0.01
@@ -663,10 +492,11 @@ func _box_open_timer_updated(value):
 func _box_open_timer_expired():
 	box_open_timer.stop()
 	box_open_bar.hide()
-	box_open_timer_played_once = false
-	if carrying:
-		if carrying.is_in_group("openable"):
-			carrying.queue_free()
+	if carrying_obj and carrying_obj.is_in_group("openable"):
+		item_overlay.set_to(carrying_obj, "off")
+		carrying_obj.queue_free()
+		drop_object()
+
 
 func _on_box_open_timer_timeout() -> void:
 	Signalbus.box_open_timer_expired.emit()
