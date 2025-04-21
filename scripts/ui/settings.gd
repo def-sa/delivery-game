@@ -1,59 +1,6 @@
 extends Node
 
 @export_category("Display")
-
-#region max_fps slider
-@export_group("max fps", "max_fps")
-#@export var brightness_name:String = "brightness"
-@export_range(0, 1, 0.01, "or_greater") var max_fps_min: int = 0
-@export_range(0, 8, 0.01, "or_greater") var max_fps_max: int = 512
-@export var max_fps_default:int = 0
-@export var max_fps_step: int = 1
-
-var max_fps:float = max_fps_default:
-	set(v):
-		max_fps = clamp(v, max_fps_min, max_fps_max)
-		Signalbus.max_fps_updated.emit(max_fps)
-#endregion
-#region brightness slider
-@export_group("brightness", "brightness")
-#@export var brightness_name:String = "brightness"
-@export_range(0, 1, 0.01, "or_greater") var brightness_min: float = 0.001
-@export_range(0, 8, 0.01, "or_greater") var brightness_max: float = 8
-@export var brightness_default:float = 1
-@export var brightness_step: float = 0.01
-
-var brightness:float = brightness_default:
-	set(v):
-		brightness = clamp(v, brightness_min, brightness_max)
-		Signalbus.brightness_updated.emit(brightness)
-#endregion
-#region contrast slider
-@export_group("contrast", "contrast")
-#@export var contrast_name:String = "contrast"
-@export_range(0, 1, 0.01, "or_greater") var contrast_min: float = 0.001
-@export_range(0, 8, 0.01, "or_greater") var contrast_max: float = 8
-@export var contrast_default:float = 1
-@export var contrast_step: float = 0.01
-
-var contrast:float = contrast_default:
-	set(v):
-		contrast = clamp(v, contrast_min, contrast_max)
-		Signalbus.contrast_updated.emit(contrast)
-#endregion
-#region saturation slider
-@export_group("saturation", "saturation")
-#@export var saturation_name:String = "saturation"
-@export_range(0, 1, 0.01, "or_greater") var saturation_min: float = 0.001
-@export_range(0, 8, 0.01, "or_greater") var saturation_max: float = 8
-@export var saturation_default:float = 1
-@export var saturation_step: float = 0.01
-
-var saturation:float = saturation_default:
-	set(v):
-		saturation = clamp(v, saturation_min, saturation_max)
-		Signalbus.saturation_updated.emit(saturation)
-#endregion
 #region window display type dropdown
 @export_group("window display type", "window_display_type")
 @export var window_display_type_selections:Array[String] = [
@@ -105,13 +52,96 @@ var shadow_quality:String = shadow_quality_default:
 			shadow_quality = v
 			Signalbus.shadow_quality_updated.emit(shadow_quality)
 #endregion
+#region fov slider
+@export_group("fov", "fov")
+@export var fov_min: int = 1
+@export var fov_max: int = 179
+@export var fov_default:int = 95
+@export var fov_step: int = 1
+
+var fov:int = fov_default:
+	set(v):
+		fov = clamp(v, fov_min, fov_max)
+		Signalbus.fov_updated.emit(fov)
+#endregion
+#region max_fps slider
+@export_group("max fps", "max_fps")
+@export var max_fps_min: int = 0
+@export var max_fps_max: int = 512
+@export var max_fps_default:int = 0
+@export var max_fps_step: int = 1
+
+var max_fps:float = max_fps_default:
+	set(v):
+		max_fps = clamp(v, max_fps_min, max_fps_max)
+		Signalbus.max_fps_updated.emit(max_fps)
+#endregion
+#region viewport width slider
+@export_group("viewport width", "viewport_width")
+@export var viewport_width_min: int = 1
+@export var viewport_width_max: int = 7680
+@export var viewport_width_default:int = 1700
+@export var viewport_width_step: int = 1
+
+var viewport_width:float = viewport_width_default:
+	set(v):
+		viewport_width = clamp(v, viewport_width_min, viewport_width_max)
+		Signalbus.viewport_width_updated.emit(viewport_width)
+#endregion
+#region viewport height slider
+@export_group("viewport height", "viewport_height")
+@export var viewport_height_min: int = 1
+@export var viewport_height_max: int = 4320
+@export var viewport_height_default:int = 900
+@export var viewport_height_step: int = 1
+
+var viewport_height:float = viewport_height_default:
+	set(v):
+		viewport_height = clamp(v, viewport_height_min, viewport_height_max)
+		Signalbus.viewport_height_updated.emit(viewport_height)
+#endregion
+#region brightness slider
+@export_group("brightness", "brightness")
+@export var brightness_min: float = 0.001
+@export var brightness_max: float = 8
+@export var brightness_default:float = 1
+@export var brightness_step: float = 0.01
+
+var brightness:float = brightness_default:
+	set(v):
+		brightness = clamp(v, brightness_min, brightness_max)
+		Signalbus.brightness_updated.emit(brightness)
+#endregion
+#region contrast slider
+@export_group("contrast", "contrast")
+@export var contrast_min: float = 0.001
+@export var contrast_max: float = 8
+@export var contrast_default:float = 1
+@export var contrast_step: float = 0.01
+
+var contrast:float = contrast_default:
+	set(v):
+		contrast = clamp(v, contrast_min, contrast_max)
+		Signalbus.contrast_updated.emit(contrast)
+#endregion
+#region saturation slider
+@export_group("saturation", "saturation")
+@export var saturation_min: float = 0.001
+@export var saturation_max: float = 8
+@export var saturation_default:float = 1
+@export var saturation_step: float = 0.01
+
+var saturation:float = saturation_default:
+	set(v):
+		saturation = clamp(v, saturation_min, saturation_max)
+		Signalbus.saturation_updated.emit(saturation)
+#endregion
 
 @export_category("Gameplay")
 #region render distance slider
 @export_group("render distance", "render_distance")
-#@export var render_distance_name:String = "render_distance"
-@export_range(0, 1, 0.01, "or_greater") var render_distance_min: int = 2
-@export_range(0, 8, 0.01, "or_greater") var render_distance_max: int = 22
+@export var render_distance_min: int = 2
+@export var render_distance_max: int = 22
 @export var render_distance_default:int = 6
 @export var render_distance_step: int = 1
 
@@ -124,8 +154,8 @@ var render_distance:int = render_distance_default:
 @export_category("Audio")
 #region main volume slider
 @export_group("main volume", "main_volume")
-@export_range(0, 1, 0.01, "or_greater") var main_volume_min: int = 0
-@export_range(0, 8, 0.01, "or_greater") var main_volume_max: int = 100
+@export var main_volume_min: int = 0
+@export var main_volume_max: int = 100
 @export var main_volume_default:int = 50
 @export var main_volume_step: int = 1
 
@@ -136,24 +166,10 @@ var main_volume:int = main_volume_default:
 #endregion
 
 @export_category("Controls")
-#region fov slider
-@export_group("fov", "fov")
-#@export var fov_name:String = "fov"
-@export_range(0, 1, 0.01, "or_greater") var fov_min: int = 1
-@export_range(0, 8, 0.01, "or_greater") var fov_max: int = 179
-@export var fov_default:int = 95
-@export var fov_step: int = 1
-
-var fov:int = fov_default:
-	set(v):
-		fov = clamp(v, fov_min, fov_max)
-		Signalbus.fov_updated.emit(fov)
-#endregion
 #region sensitivity slider
 @export_group("sensitivity", "sensitivity")
-#@export var sensitivity_name:String = "sensitivity"
-@export_range(0, 1, 0.01, "or_greater") var sensitivity_min: int = 1
-@export_range(0, 8, 0.01, "or_greater") var sensitivity_max: int = 100
+@export var sensitivity_min: int = 1
+@export var sensitivity_max: int = 100
 @export var sensitivity_default:int = 44
 @export var sensitivity_step: int = 1
 
@@ -166,9 +182,8 @@ var sensitivity:int = sensitivity_default:
 @export_category("Debug")
 #region player speed slider
 @export_group("player speed", "player_speed")
-#@export var player_speed_name:String = "player_speed"
-@export_range(0, 1, 0.01, "or_greater") var player_speed_min: int = 1
-@export_range(0, 8, 0.01, "or_greater") var player_speed_max: int = 250
+@export var player_speed_min: int = 1
+@export var player_speed_max: int = 250
 @export var player_speed_default:int = 12
 @export var player_speed_step: int = 1
 
@@ -179,9 +194,8 @@ var player_speed:int = sensitivity_default:
 #endregion
 #region player jump slider
 @export_group("player jump", "player_jump")
-#@export var player_jump_name:String = "player_jump"
-@export_range(0, 1, 0.01, "or_greater") var player_jump_min: float = 1
-@export_range(0, 8, 0.01, "or_greater") var player_jump_max: float = 250
+@export var player_jump_min: float = 1
+@export var player_jump_max: float = 250
 @export var player_jump_default:float = 12
 @export var player_jump_step: float = 1
 
@@ -192,9 +206,8 @@ var player_jump:float = player_jump_default:
 #endregion
 #region grab buffer slider
 @export_group("grab buffer", "grab_buffer")
-#@export var grab_buffer_name:String = "grab_buffer"
-@export_range(0, 1, 0.01, "or_greater") var grab_buffer_min: float = 0
-@export_range(0, 8, 0.01, "or_greater") var grab_buffer_max: float = 11
+@export var grab_buffer_min: float = 0
+@export var grab_buffer_max: float = 11
 @export var grab_buffer_default:float = 2
 @export var grab_buffer_step: float = 1
 
@@ -205,9 +218,8 @@ var grab_buffer:float = grab_buffer_default:
 #endregion
 #region max grab length slider
 @export_group("max grab length", "max_grab_length")
-#@export var max_grab_length_name:String = "max_grab_length"
-@export_range(0, 1, 0.01, "or_greater") var max_grab_length_min: float = 0
-@export_range(0, 8, 0.01, "or_greater") var max_grab_length_max: float = 12
+@export var max_grab_length_min: float = 0
+@export var max_grab_length_max: float = 12
 @export var max_grab_length_default:float = 6
 @export var max_grab_length_step: float = 1
 
@@ -217,11 +229,9 @@ var max_grab_length:float = max_grab_length_default:
 		Signalbus.max_grab_length_updated.emit(max_grab_length)
 #endregion
 #region box open timer slider
-
 @export_group("box open timer", "box_open_timer")
-#@export var box_open_timer_name:String = "box_open_timer"
-@export_range(0, 1, 0.01, "or_greater") var box_open_timer_min: float = 0
-@export_range(0, 8, 0.01, "or_greater") var box_open_timer_max: float = 11
+@export var box_open_timer_min: float = 0
+@export var box_open_timer_max: float = 11
 @export var box_open_timer_default:float = 1.25
 @export var box_open_timer_step: float = 0.1
 

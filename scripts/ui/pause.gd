@@ -1,6 +1,9 @@
 extends Control
 
-var paused: bool = false
+var paused: bool = false:
+	set(v):
+		paused = v
+		Signalbus.is_paused.emit(paused)
 @onready var world: Node3D = $"../../World"
 @onready var pause_menu: Control = $"."
 

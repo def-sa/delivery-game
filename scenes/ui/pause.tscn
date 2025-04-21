@@ -108,6 +108,12 @@ layout_mode = 2
 [node name="max_fps" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
 
+[node name="viewport_width" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
+layout_mode = 2
+
+[node name="viewport_height" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
+layout_mode = 2
+
 [node name="brightness" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
 size_flags_horizontal = 8

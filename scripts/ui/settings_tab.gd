@@ -25,7 +25,11 @@ func _update_dropdowns():
 	for element in elements_in_tab:
 		if element.get_child(1) is OptionButton:
 			var dropdown = element.get_child(1)
-			print(dropdown)
+			var default_option
 			for option in Settings[element.name+"_selections"]:
+				if option == Settings[element.name+"_default"]:
+					default_option = option
 				dropdown.add_item(option)
+			var index_of_default_option = Settings[element.name+"_selections"].find(default_option)
+			dropdown.select(index_of_default_option)
 			element.dropdown_text.text = (element.name).capitalize()
