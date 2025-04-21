@@ -31,8 +31,6 @@ gdscript/warnings/unused_signal=0
 
 window/size/viewport_width=1700
 window/size/viewport_height=900
-window/size/initial_position_type=0
-window/size/initial_position=Vector2i(0, 1000)
 window/vsync/vsync_mode=0
 
 [global_group]

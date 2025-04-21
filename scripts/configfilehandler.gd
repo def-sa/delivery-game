@@ -11,12 +11,15 @@ func _ready() -> void:
 		config.set_value("key", "left", "A")
 		config.set_value("key", "back", "S")
 		config.set_value("key", "right", "D")
-		config.set_value("key", "perspective", "`")
+		config.set_value("key", "perspective", "r")
 		config.set_value("key", "interact", "E")
 		config.set_value("key", "sprint", "SHIFT")
 		config.set_value("key", "ui_cancel", "ESC")
 		
 		config.set_value("video", "fullscreen", false)
+		config.set_value("video", "borderless fullscreen", false)
+		config.set_value("video", "windowed", true)
+		
 		config.set_value("video", "subtitles", false)
 		
 		config.set_value("audio", "master_volume", 1.0)
@@ -51,4 +54,4 @@ func load_audio_settings():
 	var audio_settings = {}
 	for key in config.get_section_keys("audio"):
 		audio_settings[key] = config.get_value("audio", key)
-		
+	return audio_settings

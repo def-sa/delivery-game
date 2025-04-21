@@ -1,7 +1,7 @@
 extends Node
 
 @export_category("Display")
-#region brightness
+#region brightness slider
 @export_group("brightness", "brightness")
 #@export var brightness_name:String = "brightness"
 @export_range(0, 1, 0.01, "or_greater") var brightness_min: float = 0.001
@@ -14,7 +14,7 @@ var brightness:float = brightness_default:
 		brightness = clamp(v, brightness_min, brightness_max)
 		Signalbus.brightness_updated.emit(brightness)
 #endregion
-#region contrast
+#region contrast slider
 @export_group("contrast", "contrast")
 #@export var contrast_name:String = "contrast"
 @export_range(0, 1, 0.01, "or_greater") var contrast_min: float = 0.001
@@ -27,7 +27,7 @@ var contrast:float = contrast_default:
 		contrast = clamp(v, contrast_min, contrast_max)
 		Signalbus.contrast_updated.emit(contrast)
 #endregion
-#region saturation
+#region saturation slider
 @export_group("saturation", "saturation")
 #@export var saturation_name:String = "saturation"
 @export_range(0, 1, 0.01, "or_greater") var saturation_min: float = 0.001
@@ -40,9 +40,20 @@ var saturation:float = saturation_default:
 		saturation = clamp(v, saturation_min, saturation_max)
 		Signalbus.saturation_updated.emit(saturation)
 #endregion
+#region window display type dropdown
+@export_group("window display type", "window_display_type")
+@export var window_display_type_selections:Array[String] = ["windowed", "fullscreen", "borderless windowed"]
+@export var window_display_type_default:String = window_display_type_selections[0]
+
+var window_display_type:String = window_display_type_default:
+	set(v):
+		if window_display_type_selections.has(v):
+			window_display_type = v
+		Signalbus.window_display_type_updated.emit(window_display_type)
+#endregion
 
 @export_category("Gameplay")
-#region render distance
+#region render distance slider
 @export_group("render distance", "render_distance")
 #@export var render_distance_name:String = "render_distance"
 @export_range(0, 1, 0.01, "or_greater") var render_distance_min: int = 2
@@ -57,7 +68,7 @@ var render_distance:int = render_distance_default:
 #endregion
 
 @export_category("Audio")
-#region main volume
+#region main volume slider
 @export_group("main volume", "main_volume")
 @export_range(0, 1, 0.01, "or_greater") var main_volume_min: int = 0
 @export_range(0, 8, 0.01, "or_greater") var main_volume_max: int = 100
@@ -71,7 +82,7 @@ var main_volume:int = main_volume_default:
 #endregion
 
 @export_category("Controls")
-#region fov
+#region fov slider
 @export_group("fov", "fov")
 #@export var fov_name:String = "fov"
 @export_range(0, 1, 0.01, "or_greater") var fov_min: int = 1
@@ -84,7 +95,7 @@ var fov:int = fov_default:
 		fov = clamp(v, fov_min, fov_max)
 		Signalbus.fov_updated.emit(fov)
 #endregion
-#region sensitivity
+#region sensitivity slider
 @export_group("sensitivity", "sensitivity")
 #@export var sensitivity_name:String = "sensitivity"
 @export_range(0, 1, 0.01, "or_greater") var sensitivity_min: int = 1
@@ -99,7 +110,7 @@ var sensitivity:int = sensitivity_default:
 #endregion
 
 @export_category("Debug")
-#region player speed
+#region player speed slider
 @export_group("player speed", "player_speed")
 #@export var player_speed_name:String = "player_speed"
 @export_range(0, 1, 0.01, "or_greater") var player_speed_min: int = 1
@@ -112,7 +123,7 @@ var player_speed:int = sensitivity_default:
 		player_speed = clamp(v, player_speed_min, player_speed_max)
 		Signalbus.player_speed_updated.emit(player_speed)
 #endregion
-#region player jump
+#region player jump slider
 @export_group("player jump", "player_jump")
 #@export var player_jump_name:String = "player_jump"
 @export_range(0, 1, 0.01, "or_greater") var player_jump_min: float = 1
@@ -125,7 +136,7 @@ var player_jump:float = player_jump_default:
 		player_jump = clamp(v, player_jump_min, player_jump_max)
 		Signalbus.player_jump_updated.emit(player_jump)
 #endregion
-#region grab buffer
+#region grab buffer slider
 @export_group("grab buffer", "grab_buffer")
 #@export var grab_buffer_name:String = "grab_buffer"
 @export_range(0, 1, 0.01, "or_greater") var grab_buffer_min: float = 0
@@ -138,7 +149,7 @@ var grab_buffer:float = grab_buffer_default:
 		grab_buffer = clamp(v, grab_buffer_min, grab_buffer_max)
 		Signalbus.grab_buffer_updated.emit(grab_buffer)
 #endregion
-#region max grab length
+#region max grab length slider
 @export_group("max grab length", "max_grab_length")
 #@export var max_grab_length_name:String = "max_grab_length"
 @export_range(0, 1, 0.01, "or_greater") var max_grab_length_min: float = 0
@@ -151,7 +162,7 @@ var max_grab_length:float = max_grab_length_default:
 		max_grab_length = clamp(v, max_grab_length_min, max_grab_length_max)
 		Signalbus.max_grab_length_updated.emit(max_grab_length)
 #endregion
-#region box open timer
+#region box open timer slider
 
 @export_group("box open timer", "box_open_timer")
 #@export var box_open_timer_name:String = "box_open_timer"

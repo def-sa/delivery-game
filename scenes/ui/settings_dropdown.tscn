@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://nnqguvlim14g"]
+
+[ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="1_2t6yv"]
+[ext_resource type="Script" uid="uid://cnni0kswhiiut" path="res://scenes/ui/settings_dropdown.gd" id="1_81l2v"]
+[ext_resource type="Texture2D" uid="uid://ytj03voj4bf0" path="res://assets/ui/reset_arrow.png" id="2_81l2v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pijgp"]
+shader = ExtResource("1_2t6yv")
+
+[node name="settings_dropdown" type="HBoxContainer"]
+size_flags_horizontal = 0
+script = ExtResource("1_81l2v")
+
+[node name="dropdown_text" type="Label" parent="."]
+material = SubResource("ShaderMaterial_pijgp")
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 2
+
+[node name="dropdown" type="OptionButton" parent="."]
+layout_mode = 2
+
+[node name="default_btn" type="TextureButton" parent="."]
+modulate = Color(0.764706, 0.764706, 0.764706, 1)
+show_behind_parent = true
+clip_children = 2
+material = SubResource("ShaderMaterial_pijgp")
+custom_minimum_size = Vector2(35, 35)
+layout_direction = 1
+layout_mode = 2
+texture_normal = ExtResource("2_81l2v")
+ignore_texture_size = true
+stretch_mode = 5
+flip_h = true
+
+[connection signal="item_selected" from="dropdown" to="." method="_on_dropdown_item_selected"]
+[connection signal="pressed" from="default_btn" to="." method="_on_default_btn_pressed"]

@@ -1,12 +1,13 @@
 extends Node
-signal settings_slider(slider_name:String, is_default:bool, value:float)
-
+#signal settings_slider(slider_name:String, is_default:bool, value:float)
+#signal settings_dropdown(dropdown_name:String, is_default:bool, value:String)
 
 ##Display Settings
 signal fov_updated(value:int)
 signal brightness_updated(value:float)
 signal contrast_updated(value:float)
 signal saturation_updated(value:float)
+signal window_display_type_updated(value:String)
 
 
 ##Control Settings
