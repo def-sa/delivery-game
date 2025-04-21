@@ -18,7 +18,7 @@ var is_discovered:bool = false
 var is_delivered: bool = false
 var in_cart: bool = false:
 	set(v):
-		print("in_cart: ",v)
+		#print("in_cart: ",v)
 		in_cart = v
 
 

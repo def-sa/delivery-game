@@ -45,10 +45,6 @@ func _process(delta: float) -> void:
 				offscreen_reticle.rotation = angle
 
 
-
-
-
-
 #update rectangle, and  screen notifier position
 func _physics_process(delta: float) -> void:
 	for obj in objects_inside_area:
@@ -99,7 +95,7 @@ func item_entered_area(object):
 		var tier_color = Color("ff5252")
 		if object.tier:
 			tier_color = Global.TIER_COLORS[Global.TIER_COLORS.keys()[object.tier]]
-			print(tier_color)
+			#print(tier_color)
 		
 		var item_name_shader_material = ShaderMaterial.new()
 		item_name_shader_material.shader = negative_shader

@@ -4,12 +4,11 @@ extends HBoxContainer
 @onready var slider_value_txt:Label = $slider_value_txt
 @onready var slider_node:Slider = $slider
 
-@onready var slider_name:String = str(slider_node.get_parent().name).replace(" ", "_"):
-	set(value):
-		slider_value_txt.text = value
+@onready var slider_name:String = str(slider_node.get_parent().name).replace(" ", "_")
 		
 @onready var slider_default_value:float = 50:
 	set(value):
+		slider_value_txt.text = str(value)
 		slider_node.value = value
 		slider_default_value = value
 @onready var slider_min_value:float = 0:

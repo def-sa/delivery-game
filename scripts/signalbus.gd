@@ -15,6 +15,9 @@ signal sensitivity_updated(value:int)
 ##Gameplay Settings
 signal render_distance_updated(value:float)
 
+##Audio Settings
+signal main_volume_updated(value:int)
+
 ##Debug Settings
 signal player_speed_updated(value:int)
 signal player_jump_updated(value:float)

@@ -17,6 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://ckjv7s7p4cpn1" path="res://GLB format/Textures/metal_wall.png" id="16_1notw"]
 [ext_resource type="Script" uid="uid://jqsmym6pakn0" path="res://scenes/world/hurt_area.gd" id="17_5jr8u"]
 [ext_resource type="Texture2D" uid="uid://dvx8htg088q2w" path="res://assets/world/box/placeholder.jpg" id="18_llfdw"]
+[ext_resource type="Script" uid="uid://58aenjo516yf" path="res://scenes/world/terrain.gd" id="19_hbyw3"]
+[ext_resource type="PackedScene" uid="uid://ctkf7174d1xtu" path="res://scenes/chunk.tscn" id="20_ubvmu"]
 [ext_resource type="Script" uid="uid://w0088ri165ve" path="res://scripts/world/delivery_point.gd" id="25_ij6fg"]
 
 [sub_resource type="Environment" id="Environment_0xlil"]
@@ -192,12 +194,6 @@ albedo_color = Color(0.890196, 0, 0, 1)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_llfdw"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_llfdw"]
-size = Vector3(256, 1, 256)
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_u2p2s"]
-data = PackedVector3Array(-128, 0.5, 128, 128, 0.5, 128, -128, -0.5, 128, 128, 0.5, 128, 128, -0.5, 128, -128, -0.5, 128, 128, 0.5, -128, -128, 0.5, -128, 128, -0.5, -128, -128, 0.5, -128, -128, -0.5, -128, 128, -0.5, -128, 128, 0.5, 128, 128, 0.5, -128, 128, -0.5, 128, 128, 0.5, -128, 128, -0.5, -128, 128, -0.5, 128, -128, 0.5, -128, -128, 0.5, 128, -128, -0.5, -128, -128, 0.5, 128, -128, -0.5, 128, -128, -0.5, -128, 128, 0.5, 128, -128, 0.5, 128, 128, 0.5, -128, -128, 0.5, 128, -128, 0.5, -128, 128, 0.5, -128, -128, -0.5, 128, 128, -0.5, 128, -128, -0.5, -128, 128, -0.5, 128, 128, -0.5, -128, -128, -0.5, -128)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ld40"]
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
@@ -263,6 +259,11 @@ theme = ExtResource("3_llfdw")
 
 [node name="World" type="Node3D" parent="."]
 script = ExtResource("6_4m2ge")
+
+[node name="Player" parent="World" instance=ExtResource("5_wlwgd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+top_level = true
+collision_priority = 2.0
 
 [node name="Environment" type="Node3D" parent="World"]
 
@@ -732,18 +733,6 @@ mesh = SubResource("BoxMesh_2f3dj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.87266, 0)
 shape = SubResource("ConcavePolygonShape3D_llfdw")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="World/Objects/test_objects" groups=["_is_floor"]]
-collision_layer = 7
-collision_mask = 5
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Objects/test_objects/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-mesh = SubResource("BoxMesh_llfdw")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/test_objects/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-shape = SubResource("ConcavePolygonShape3D_u2p2s")
-
 [node name="Entities" type="Node3D" parent="World"]
 
 [node name="delivery_point" type="Node3D" parent="World/Entities" node_paths=PackedStringArray("player")]
@@ -789,10 +778,12 @@ radius = 6.6
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.93537, 0)
 size = Vector3(15, 1, 15)
 
-[node name="Player" parent="World" instance=ExtResource("5_wlwgd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-top_level = true
-collision_priority = 2.0
+[node name="Terrain" type="Node3D" parent="World"]
+script = ExtResource("19_hbyw3")
+chunk_scene = ExtResource("20_ubvmu")
+chunk_size = 16.0
+
+[node name="chunk" parent="World/Terrain" instance=ExtResource("20_ubvmu")]
 
 [connection signal="body_entered" from="World/Objects/cart/cart_area_bottom_objects" to="World/Objects/cart" method="_on_cart_area_bottom_objects_body_entered"]
 [connection signal="body_exited" from="World/Objects/cart/cart_area_bottom_objects" to="World/Objects/cart" method="_on_cart_area_bottom_objects_body_exited"]

@@ -35,10 +35,6 @@ window/size/initial_position_type=0
 window/size/initial_position=Vector2i(0, 1000)
 window/vsync/vsync_mode=0
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/SimpleDungeons/plugin.cfg")
-
 [global_group]
 
 grabbable="object is grabbable"

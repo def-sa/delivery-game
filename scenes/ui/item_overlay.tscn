@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://r0lr0id6q0kw"]
 
 [ext_resource type="Texture2D" uid="uid://bk1cs84anbjv" path="res://assets/world/box/carton_box_04_closed_0.jpg" id="1_6bnwv"]
-[ext_resource type="Script" uid="uid://c2s6luioippuo" path="res://scenes/ui/item_overlay.gd" id="1_6pp8d"]
+[ext_resource type="Script" uid="uid://c2s6luioippuo" path="res://scripts/item_overlay.gd" id="1_6pp8d"]
 [ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="1_48na1"]
 [ext_resource type="Texture2D" uid="uid://cfroow2y4ieic" path="res://assets/light_cookie.png" id="3_de71s"]
 

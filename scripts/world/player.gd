@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+#region // references
 ##gui references
 @onready var grab_buffer_display: ProgressBar = $GUI_layer/GUI/crosshair_grabbing/ProgressBar
 @onready var health_bar: ProgressBar = $GUI_layer/GUI/health_bar
@@ -27,6 +28,7 @@ extends CharacterBody3D
 @onready var static_body: StaticBody3D = $camera_pivot/spring_arm_3d/camera/StaticBody3D
 
 @onready var no_fly_ray: RayCast3D = $no_fly_ray
+#endregion
 
 @export_category("Player variables")
 
@@ -53,8 +55,6 @@ var flashlight_toggle:bool = false:
 	set(v):
 		flashlight_toggle = v
 		flashlight.visible = flashlight_toggle
-		
-
 
 ## grabbing variables 
 var rotation_power = 0.05
@@ -86,7 +86,7 @@ var hovered_obj = null:
 				if hovered_obj.is_in_group("grabbable"):
 					item_overlay.set_to(hovered_obj, "hovering")
 		else:
-			item_overlay.set_to(carrying_obj, "off")
+			item_overlay.set_to(null, "off")
 var holding = false:
 	set(v):
 		holding = v
@@ -135,7 +135,8 @@ func _ready() -> void:
 	path_3d.curve.set_point_position(1, Vector3(path_3d.curve.get_point_position(1).x,path_3d.curve.get_point_position(1).y,-max_reach)) 
 
 
-#private functions
+
+#region // private functions 
 func _physics_process(delta: float) -> void:
 	_player_movement(delta)
 	_player_grabbing()
@@ -230,6 +231,7 @@ func _input(event: InputEvent) -> void:
 		holding = !holding
 func _player_grabbing():
 	hovered_obj = _ray_intersect_obj()
+	
 	#timer pauses instead of refreshing when not hovering. makes holding harder, might get removed/reworked
 	grab_buffer_timer.paused = (carrying_obj == hovered_obj and holding)
 	if carrying_obj:
@@ -321,7 +323,7 @@ func _zoom(zooming):
 		camera.fov = Settings.fov / 2.5
 	else:
 		camera.fov = Settings.fov
-
+#endregion
 
 #public functions
 func drop_object():
@@ -332,8 +334,7 @@ func player_dead():
 	health = 100
 	Global.score = 0
 
-
-#signal connects / settings updates
+#region // signal connects / settings updates 
 func _grab_buffer_updated(value):
 	if value == 0:
 		value = 1000000000
@@ -374,3 +375,4 @@ func _on_item_detection_area_body_entered(body: Node3D) -> void:
 func _on_item_detection_area_body_exited(body: Node3D) -> void:
 	item_detection_gui.item_exited_area(body)
 	item_detection_gui.objects_inside_area = item_detection_area.get_overlapping_bodies()
+#endregion
