@@ -1,6 +1,20 @@
 extends Node
 
 @export_category("Display")
+
+#region max_fps slider
+@export_group("max fps", "max_fps")
+#@export var brightness_name:String = "brightness"
+@export_range(0, 1, 0.01, "or_greater") var max_fps_min: int = 0
+@export_range(0, 8, 0.01, "or_greater") var max_fps_max: int = 512
+@export var max_fps_default:int = 0
+@export var max_fps_step: int = 1
+
+var max_fps:float = max_fps_default:
+	set(v):
+		max_fps = clamp(v, max_fps_min, max_fps_max)
+		Signalbus.max_fps_updated.emit(max_fps)
+#endregion
 #region brightness slider
 @export_group("brightness", "brightness")
 #@export var brightness_name:String = "brightness"
@@ -42,14 +56,54 @@ var saturation:float = saturation_default:
 #endregion
 #region window display type dropdown
 @export_group("window display type", "window_display_type")
-@export var window_display_type_selections:Array[String] = ["windowed", "fullscreen", "borderless windowed"]
+@export var window_display_type_selections:Array[String] = [
+	"windowed",
+	"minimized",
+	"maximized",
+	"fullscreen", 
+	"borderless_fullscreen"
+	]
 @export var window_display_type_default:String = window_display_type_selections[0]
 
 var window_display_type:String = window_display_type_default:
 	set(v):
 		if window_display_type_selections.has(v):
 			window_display_type = v
-		Signalbus.window_display_type_updated.emit(window_display_type)
+			Signalbus.window_display_type_updated.emit(window_display_type)
+#endregion
+#region vsync mode dropdown
+@export_group("vsync mode", "vsync_mode")
+@export var vsync_mode_selections:Array[String] = [
+	"disabled",
+	"enabled",
+	"adaptive",
+	"mailbox_(fast_vsync)"
+	]
+@export var vsync_mode_default:String = vsync_mode_selections[0]
+
+var vsync_mode:String = vsync_mode_default:
+	set(v):
+		if vsync_mode_selections.has(v):
+			vsync_mode = v
+			Signalbus.vsync_mode_updated.emit(vsync_mode)
+#endregion
+#region shadow_quality dropdown
+@export_group("shadow quality", "shadow_quality")
+@export var shadow_quality_selections:Array[String] = [
+	"hard_(fastest)",
+	"soft_very_low_(faster)",
+	"soft_low_(fast)",
+	"soft_medium_(average)",
+	"soft_high_(slow)",
+	"soft_ultra_(slowest)"
+	]
+@export var shadow_quality_default:String = shadow_quality_selections[3]
+
+var shadow_quality:String = shadow_quality_default:
+	set(v):
+		if shadow_quality_selections.has(v):
+			shadow_quality = v
+			Signalbus.shadow_quality_updated.emit(shadow_quality)
 #endregion
 
 @export_category("Gameplay")

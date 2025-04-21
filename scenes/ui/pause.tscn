@@ -96,6 +96,18 @@ theme_override_constants/separation = 16
 layout_mode = 2
 size_flags_horizontal = 4
 
+[node name="vsync_mode" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_4x8ym")]
+layout_mode = 2
+
+[node name="shadow_quality" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_4x8ym")]
+layout_mode = 2
+
+[node name="fov" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
+layout_mode = 2
+
+[node name="max_fps" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
+layout_mode = 2
+
 [node name="brightness" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
 size_flags_horizontal = 8
@@ -168,9 +180,6 @@ offset_right = 283.0
 offset_bottom = 266.0
 grow_horizontal = 2
 theme_override_constants/separation = 16
-
-[node name="fov" parent="MarginContainer/AspectRatioContainer/TabContainer/controls/VBoxContainer" instance=ExtResource("4_6ctfw")]
-layout_mode = 2
 
 [node name="sensitivity" parent="MarginContainer/AspectRatioContainer/TabContainer/controls/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2

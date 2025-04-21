@@ -8,6 +8,9 @@ func _ready() -> void:
 	Signalbus.contrast_updated.connect(_contrast_updated)
 	Signalbus.saturation_updated.connect(_saturation_updated)
 	Signalbus.window_display_type_updated.connect(_window_display_type_updated)
+	Signalbus.max_fps_updated.connect(_max_fps_updated)
+	Signalbus.vsync_mode_updated.connect(_vsync_mode_updated)
+	Signalbus.shadow_quality_updated.connect(_shadow_quality_updated)
 
 func _brightness_updated(value:float):
 	world.environment.adjustment_brightness = value
@@ -19,10 +22,34 @@ func _saturation_updated(value:float):
 	world.environment.adjustment_saturation = value
 	
 func _window_display_type_updated(value:String):
-	match value:
-		"windowed":
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		"fullscreen":
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-		"borderless_fullscreen":
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	var index = Settings.window_display_type_selections.find(value)
+	DisplayServer.window_set_mode(index)
+	#match value:
+		#"windowed":
+			#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		#"fullscreen":
+			#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		#"borderless_fullscreen":
+			#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+
+func _vsync_mode_updated(value:String):
+	var index = Settings.vsync_mode_selections.find(value)
+	DisplayServer.window_set_vsync_mode(index)
+	#match value:
+		#"disabled":
+			#DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+		#"enabled":
+			#DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+		#"adaptive":
+			#DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
+		#"mailbox_(fast_vsync)":
+			#DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_MAILBOX)
+
+func _max_fps_updated(value:int):
+	Engine.max_fps = value
+
+func _shadow_quality_updated(value:String):
+	var index = Settings.shadow_quality_selections.find(value)
+	ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality", index)
+	ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality", index)
+	
