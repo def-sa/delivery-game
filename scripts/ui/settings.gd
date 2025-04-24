@@ -64,6 +64,18 @@ var fov:int = fov_default:
 		fov = clamp(v, fov_min, fov_max)
 		Signalbus.fov_updated.emit(fov)
 #endregion
+
+#region show_fps toggle
+@export_group("show fps", "show_fps")
+@export var show_fps_default:bool = true
+var show_fps:bool = show_fps_default:
+	set(v):
+		show_fps = v
+		Signalbus.show_fps_updated.emit(show_fps)
+#endregion
+
+
+
 #region max_fps slider
 @export_group("max fps", "max_fps")
 @export var max_fps_min: int = 0

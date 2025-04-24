@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctkf7174d1xtu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ejgek"]
+size = Vector3(64, 1, 64)
+subdivide_width = 128
+subdivide_height = 128
+subdivide_depth = 128
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_sf3ug"]
+points = PackedVector3Array(32.5079, 1.02341, 32.5079, -32.5079, -1.00754, -32.5079, -32.5079, 1.02341, -32.5079, 32.5079, -1.00754, -32.5079, -32.5079, -1.00754, 32.5079, -32.5079, 1.02341, 32.5079, 32.5079, 1.02341, -32.5079, 32.5079, -1.00754, 32.5079)
+
+[node name="chunk" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_ejgek")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("ConvexPolygonShape3D_sf3ug")

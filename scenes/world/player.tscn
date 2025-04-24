@@ -1,7 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/world/player.gd" id="1_v666e"]
-[ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scripts/ui/gui.gd" id="2_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://cyfjd4773jfol" path="res://assets/ui/crosshair_grabbing.png" id="4_dqkch"]
 [ext_resource type="Texture2D" uid="uid://81ljda3073o0" path="res://assets/ui/crosshair.png" id="5_qlg0r"]
 [ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="5_tuyoq"]
@@ -26,6 +25,22 @@ _data = {
 point_count = 2
 
 [sub_resource type="BoxMesh" id="BoxMesh_dqkch"]
+
+[sub_resource type="GDScript" id="GDScript_dlnwf"]
+script/source = "extends Control
+
+@onready var fps: Label = $debug/fps
+
+func _process(delta: float) -> void:
+	fps.text = str(int(Engine.get_frames_per_second())) + \" fps\"
+
+
+func _ready() -> void:
+	Signalbus.show_fps_updated.connect(_show_fps_updated)
+
+func _show_fps_updated(value:bool):
+	fps.visible = value
+"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqkch"]
 bg_color = Color(0, 0, 0, 1)
@@ -70,7 +85,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("ConvexPolygonShape3D_qlg0r")
 
 [node name="camera_pivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
 
 [node name="spring_arm_3d" type="SpringArm3D" parent="camera_pivot"]
 spring_length = -1.0
@@ -78,7 +93,6 @@ spring_length = -1.0
 [node name="spring_position" type="Node3D" parent="camera_pivot/spring_arm_3d"]
 
 [node name="camera" type="Camera3D" parent="camera_pivot/spring_arm_3d"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0458374, 0)
 
 [node name="ray_interaction" type="RayCast3D" parent="camera_pivot/spring_arm_3d/camera"]
 auto_translate_mode = 1
@@ -112,6 +126,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.50045)
 layer = 4
 
 [node name="GUI" type="Control" parent="GUI_layer"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -122,7 +137,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
 theme = ExtResource("7_fjrip")
-script = ExtResource("2_qhqgy")
+script = SubResource("GDScript_dlnwf")
 
 [node name="score" type="RichTextLabel" parent="GUI_layer/GUI"]
 custom_minimum_size = Vector2(500, 100)
@@ -259,7 +274,26 @@ mouse_filter = 2
 theme = ExtResource("7_fjrip")
 metadata/_edit_use_anchors_ = true
 
+[node name="debug" type="Control" parent="GUI_layer/GUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="fps" type="Label" parent="GUI_layer/GUI/debug"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -204.0
+offset_bottom = 23.0
+grow_horizontal = 0
+horizontal_alignment = 2
+
 [node name="item_detection_area" type="Area3D" parent="."]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
 collision_layer = 2
 collision_mask = 2
 

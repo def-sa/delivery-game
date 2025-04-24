@@ -160,6 +160,14 @@ func _input(event: InputEvent) -> void:
 	##TODO: rope :)
 	#if event.is_action_pressed("toggle_rope"):
 	
+	if event.is_action_pressed("sprint"):
+		Settings.player_speed *= 1.5
+		Settings.fov *= 1.05
+	
+	if event.is_action_released("sprint"):
+		Settings.player_speed /= 1.5 
+		Settings.fov /= 1.05
+	
 	#hand scroll
 	if event.is_action_pressed("wheel_up"):
 		hand_scroll += 0.1

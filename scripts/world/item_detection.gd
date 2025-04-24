@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 		item_detection_timer.start()
 
 	if item_detection_timer.time_left > 0:
-		item_detection_area.scale = -Vector3(item_detection_timer.time_left,item_detection_timer.time_left,item_detection_timer.time_left)
+		item_detection_area.scale = Vector3(item_detection_timer.time_left,item_detection_timer.time_left,item_detection_timer.time_left)
 
 	
 	if objects_inside_area.is_empty():
@@ -242,4 +242,3 @@ func get_on_screen_notifier(object):
 
 func _on_item_detection_timer_timeout() -> void:
 	item_detection_area.scale = Vector3(0.01,0.01,0.01)
-	#item_detection_area.hide()

@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://cry40isryoncn"]
+
+[ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="1_abod8"]
+[ext_resource type="Script" uid="uid://dp7e415sy3rt8" path="res://scripts/ui/settings_toggle.gd" id="1_g5m6h"]
+[ext_resource type="Texture2D" uid="uid://ytj03voj4bf0" path="res://assets/ui/reset_arrow.png" id="2_g5m6h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lwwb1"]
+shader = ExtResource("1_abod8")
+
+[node name="settings_toggle" type="HBoxContainer"]
+offset_right = 175.0
+offset_bottom = 39.0
+script = ExtResource("1_g5m6h")
+
+[node name="toggle_text" type="Label" parent="."]
+material = SubResource("ShaderMaterial_lwwb1")
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 2
+
+[node name="toggle" type="CheckButton" parent="."]
+layout_mode = 2
+
+[node name="default_btn" type="TextureButton" parent="."]
+modulate = Color(0.764706, 0.764706, 0.764706, 1)
+show_behind_parent = true
+clip_children = 2
+material = SubResource("ShaderMaterial_lwwb1")
+custom_minimum_size = Vector2(35, 35)
+layout_direction = 1
+layout_mode = 2
+texture_normal = ExtResource("2_g5m6h")
+ignore_texture_size = true
+stretch_mode = 5
+flip_h = true
+
+[connection signal="toggled" from="toggle" to="." method="_on_toggle_toggled"]
+[connection signal="pressed" from="default_btn" to="." method="_on_default_btn_pressed"]

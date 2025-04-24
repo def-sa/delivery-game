@@ -3,10 +3,7 @@ extends HBoxContainer
 @onready var dropdown_text: Label = $dropdown_text
 @onready var dropdown_node: OptionButton = $dropdown
 @onready var default_btn: TextureButton = $default_btn
-
-
 @onready var dropdown_name:String = str(dropdown_node.get_parent().name).replace(" ", "_")
-@onready var dropdown_default_value:String = "Default"
 
 func _on_default_btn_pressed() -> void:
 	var default = Settings[dropdown_name+"_default"]

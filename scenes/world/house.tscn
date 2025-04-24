@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://dow0xo37i8ppn"]
+
+[ext_resource type="Script" uid="uid://dmqvlgboy3vq8" path="res://scenes/world/house.gd" id="1_i3i5o"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_y648w"]
+size = Vector3(64, 64, 64)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_y648w"]
+radius = 1.0
+height = 4.0
+
+[node name="house" type="StaticBody3D"]
+script = ExtResource("1_i3i5o")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32, 0)
+transparency = 0.9
+mesh = SubResource("BoxMesh_y648w")
+
+[node name="outer" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 25.4722, -10.5)
+use_collision = true
+size = Vector3(55, 51, 33)
+
+[node name="inner" type="CSGBox3D" parent="outer"]
+operation = 2
+use_collision = true
+size = Vector3(53, 49.5, 31)
+
+[node name="front_door" type="CSGBox3D" parent="outer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, -22, 16)
+operation = 2
+size = Vector3(3, 5, 2)
+
+[node name="front_deck_inner" type="CSGBox3D" parent="outer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -18, 11.5)
+operation = 2
+size = Vector3(56, 16, 11)
+
+[node name="front_deck_post_left" type="CSGBox3D" parent="outer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, -17, 15)
+size = Vector3(2, 16, 2)
+
+[node name="front_deck_post_right" type="CSGBox3D" parent="outer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.8669, -17, 15)
+size = Vector3(2, 16, 2)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
+light_color = Color(0.932858, 0.795945, 0.705426, 1)
+light_energy = 16.0
+omni_range = 22.407
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 2, 12)
+mesh = SubResource("CapsuleMesh_y648w")

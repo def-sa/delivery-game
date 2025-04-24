@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8qltnyl7h32m"]
+[gd_scene load_steps=7 format=3 uid="uid://c8qltnyl7h32m"]
 
 [ext_resource type="Script" uid="uid://benuwgl18ong4" path="res://scripts/ui/pause.gd" id="1_1s7ya"]
 [ext_resource type="Script" uid="uid://jgiklmrfl6wp" path="res://scripts/ui/settings.gd" id="2_jq7is"]
 [ext_resource type="Script" uid="uid://bk1ve08vdvu04" path="res://scripts/ui/settings_tab.gd" id="2_wen6a"]
 [ext_resource type="PackedScene" uid="uid://nnqguvlim14g" path="res://scenes/ui/settings_dropdown.tscn" id="4_4x8ym"]
 [ext_resource type="PackedScene" uid="uid://cl0ygjsp2yih7" path="res://scenes/ui/settings_slider.tscn" id="4_6ctfw"]
+[ext_resource type="PackedScene" uid="uid://cry40isryoncn" path="res://scenes/ui/settings_toggle.tscn" id="6_eq7dk"]
 
 [node name="pause_menu" type="Control"]
 z_index = 100
@@ -86,9 +87,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -283.0
-offset_right = 283.0
-offset_bottom = 204.0
+offset_left = -248.0
+offset_top = 21.0
+offset_right = 249.0
+offset_bottom = 610.0
 grow_horizontal = 2
 theme_override_constants/separation = 16
 
@@ -98,33 +100,43 @@ size_flags_horizontal = 4
 
 [node name="vsync_mode" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_4x8ym")]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="shadow_quality" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_4x8ym")]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="fov" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="show_fps" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("6_eq7dk")]
+layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="max_fps" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="viewport_width" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="viewport_height" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="brightness" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 
 [node name="contrast" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 
 [node name="saturation" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 
 [node name="audio" type="TabBar" parent="MarginContainer/AspectRatioContainer/TabContainer"]
 visible = false
@@ -146,6 +158,7 @@ theme_override_constants/separation = 16
 
 [node name="main_volume" parent="MarginContainer/AspectRatioContainer/TabContainer/audio/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="gameplay" type="TabBar" parent="MarginContainer/AspectRatioContainer/TabContainer"]
 visible = false

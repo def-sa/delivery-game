@@ -9,17 +9,18 @@ func _ready() -> void:
 		elements_in_tab.push_back(node)
 	_update_sliders()
 	_update_dropdowns()
-
+	_update_toggles()
+	
 func _update_sliders():
 	for element in elements_in_tab:
 		if element.get_child(1) is HSlider:
 			var slider = element
 			#[min, max, default, step]
 			slider.slider_text.text = (slider.name).capitalize()
-			slider.slider_min_value = Settings[slider.name+"_min"]
-			slider.slider_max_value = Settings[slider.name+"_max"]
-			slider.slider_default_value = Settings[slider.name+"_default"]
-			slider.slider_step = Settings[slider.name+"_step"]
+			slider.slider_node.min_value = Settings[slider.name+"_min"]
+			slider.slider_node.max_value = Settings[slider.name+"_max"]
+			slider.slider_node.value = Settings[slider.name+"_default"]
+			slider.slider_node.step = Settings[slider.name+"_step"]
 
 func _update_dropdowns():
 	for element in elements_in_tab:
@@ -33,3 +34,10 @@ func _update_dropdowns():
 			var index_of_default_option = Settings[element.name+"_selections"].find(default_option)
 			dropdown.select(index_of_default_option)
 			element.dropdown_text.text = (element.name).capitalize()
+
+func _update_toggles():
+	for element in elements_in_tab:
+		if element.get_child(1) is CheckButton:
+			var toggle = element.get_child(1)
+			toggle.button_pressed = Settings[element.name+"_default"]
+			element.toggle_text.text = (element.name).capitalize()
