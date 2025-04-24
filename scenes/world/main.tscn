@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=75 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/world/main.gd" id="1_md6cl"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/ui/pause.tscn" id="2_u2p2s"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://dvx8htg088q2w" path="res://assets/world/box/placeholder.jpg" id="18_llfdw"]
 [ext_resource type="Script" uid="uid://58aenjo516yf" path="res://scenes/world/terrain.gd" id="19_hbyw3"]
 [ext_resource type="PackedScene" uid="uid://ctkf7174d1xtu" path="res://scenes/chunk.tscn" id="20_ubvmu"]
+[ext_resource type="PackedScene" uid="uid://bqsrdsx27um0c" path="res://scenes/false_chunk.tscn" id="21_ubvmu"]
 [ext_resource type="Script" uid="uid://w0088ri165ve" path="res://scripts/world/delivery_point.gd" id="25_ij6fg"]
 
 [sub_resource type="Environment" id="Environment_0xlil"]
@@ -781,6 +782,7 @@ size = Vector3(15, 1, 15)
 [node name="Terrain" type="Node3D" parent="World"]
 script = ExtResource("19_hbyw3")
 chunk_scene = ExtResource("20_ubvmu")
+false_chunk_scene = ExtResource("21_ubvmu")
 chunk_size = 16.0
 
 [node name="chunk" parent="World/Terrain" instance=ExtResource("20_ubvmu")]

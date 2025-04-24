@@ -114,8 +114,6 @@ var holding_perspective_toggle = false:
 
 
 func _ready() -> void:
-	print(Configfilehandler.load_video_settings())
-	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	Signalbus.grab_buffer_expired.connect(_grab_buffer_expired)
@@ -223,6 +221,7 @@ func _input(event: InputEvent) -> void:
 	
 	#handle obj rotation
 	if event.is_action_pressed("rmb"):
+		
 		if carrying_obj:
 			camera_locked_in = true
 	if event.is_action_released("rmb"):

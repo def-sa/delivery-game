@@ -4,6 +4,10 @@ extends Control
 @onready var camera: Camera3D = $"../../../camera_pivot/spring_arm_3d/camera"
 @onready var offscreen_reticle: TextureRect = $offscreen_reticle
 @onready var negative_shader = preload("res://shaders/negative.gdshader")
+@onready var item_detection_timer: Timer = $"../../../item_detection_timer"
+@onready var item_detection_area: Area3D = $"../../../item_detection_area"
+
+
 
 #object
 var objects_inside_area = []:
@@ -20,10 +24,17 @@ var connected_nodes_array = []
 @onready var max_reticle_position = viewport_center - border_offset
 var reticle_offset = Vector2(32, 32)
 
-
 #object reticle, thank you 
 # https://www.youtube.com/watch?v=EKVYfF8oG0s
 func _process(delta: float) -> void:
+
+	if Input.is_action_pressed("rmb"):
+		item_detection_timer.start()
+
+	if item_detection_timer.time_left > 0:
+		item_detection_area.scale = -Vector3(item_detection_timer.time_left,item_detection_timer.time_left,item_detection_timer.time_left)
+
+	
 	if objects_inside_area.is_empty():
 		offscreen_reticle.hide()
 	
@@ -227,3 +238,8 @@ func get_on_screen_notifier(object):
 				for child in object.get_children():
 					if child is VisibleOnScreenNotifier3D:
 						return child
+
+
+func _on_item_detection_timer_timeout() -> void:
+	item_detection_area.scale = Vector3(0.01,0.01,0.01)
+	#item_detection_area.hide()

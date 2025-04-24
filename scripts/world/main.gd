@@ -16,7 +16,7 @@ func _ready() -> void:
 	Signalbus.viewport_height_updated.connect(_viewport_height_updated)
 	Signalbus.is_paused.connect(_is_paused)
 	
-	
+
 func _brightness_updated(value:float):
 	world.environment.adjustment_brightness = value
 

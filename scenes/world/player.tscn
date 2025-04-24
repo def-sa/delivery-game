@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=23 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/world/player.gd" id="1_v666e"]
 [ext_resource type="Script" uid="uid://cm3nhds7ybkkb" path="res://scripts/ui/gui.gd" id="2_qhqgy"]
@@ -42,7 +42,12 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kgc2y"]
 shader = ExtResource("5_tuyoq")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7psdb"]
+blend_mode = 2
+depth_draw_mode = 1
+
 [sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
+flip_faces = true
 radius = 24.0
 height = 48.0
 radial_segments = 8
@@ -259,7 +264,8 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="item_detection_area"]
-visible = false
+material_override = SubResource("StandardMaterial3D_7psdb")
+transparency = 0.85
 mesh = SubResource("SphereMesh_qlg0r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="item_detection_area"]
@@ -288,7 +294,12 @@ wait_time = 0.25
 wait_time = 2.0
 one_shot = true
 
+[node name="item_detection_timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="body_entered" from="item_detection_area" to="." method="_on_item_detection_area_body_entered"]
 [connection signal="body_exited" from="item_detection_area" to="." method="_on_item_detection_area_body_exited"]
 [connection signal="timeout" from="box_open_timer" to="." method="_on_box_open_timer_timeout"]
 [connection signal="timeout" from="grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]
+[connection signal="timeout" from="item_detection_timer" to="GUI_layer/GUI/item_detection" method="_on_item_detection_timer_timeout"]

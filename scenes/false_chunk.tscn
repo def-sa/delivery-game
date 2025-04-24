@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqsrdsx27um0c"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_kta8s"]
+size = Vector3(16, 0.25, 16)
+subdivide_width = 14
+subdivide_height = 14
+subdivide_depth = 14
+
+[node name="Node3D" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_kta8s")
