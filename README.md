@@ -1,28 +1,26 @@
 # delivery game
  
-haiiiiii    this is my pill game for now
-
-
-placeholder assets:
-thx https://kenney.nl/
-thx "Carton Box_04_Closed" (https://skfb.ly/oWqPW) by Molfgang is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-
-addons:
-thx https://github.com/majikayogames/SimpleDungeons 
-
-
-
+haiiiiii this is my first Real game project. dont look too closely or else u will find out i suck at programming
 
 Features:
-- pause menu with Three (3) settings
-- perspective change via keybind  R and/or scroll in/out
-- grabbing objects (with hold buffer)
-- adjustable grab power
-- infinite terrain in -z axis
-- basic random structure generation using simple dungeons
-- the fog (came)
-- f For flashlight
-- more ?
+- working pause, lots of display options
+- perspective change via keybind (r) and/or scroll in/out
+- grabbing objects (with hold buffer), and scroll in and out to adjust grab length
+- open boxes (lmb), rotate object (rmb)
+- infinite terrain in -z axis, 3 lanes, procedurally generated structures (WIP)
+- object "scanning", with a 3d range around player. 
+- object 3d overlay (WIP)
+- basic player movement, sprint, jump, ect 
+
+coming soon:
+- custom 3d main menu / pause rework? (No)
+- rope system
+- tutorial/spawn area warehouse
+- remake item detection for christ sake
+- link up spawned objects with their respective destination
+- handle block changes
+- currency system
+
 
 todo:
 - the rest of the owl

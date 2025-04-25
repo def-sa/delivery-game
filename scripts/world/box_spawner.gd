@@ -79,11 +79,10 @@ func _ready() -> void:
 # id
 # pos to delivery point
 
-func spawn_box(new_modifiers:Dictionary):
+func spawn_box(new_modifiers):
 	
 	if !modifiers:
 		modifiers = new_modifiers
-	
 	var rigidbody = RigidBody3D.new()
 	rigidbody.set_collision_layer_value(2, true)
 	rigidbody.set_collision_mask_value(2, true)

@@ -332,8 +332,8 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 
-[connection signal="body_entered" from="item_detection_area" to="." method="_on_item_detection_area_body_entered"]
-[connection signal="body_exited" from="item_detection_area" to="." method="_on_item_detection_area_body_exited"]
+[connection signal="body_entered" from="item_detection_area" to="GUI_layer/GUI/item_detection" method="_on_item_detection_area_body_entered"]
+[connection signal="body_exited" from="item_detection_area" to="GUI_layer/GUI/item_detection" method="_on_item_detection_area_body_exited"]
 [connection signal="timeout" from="box_open_timer" to="." method="_on_box_open_timer_timeout"]
 [connection signal="timeout" from="grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]
 [connection signal="timeout" from="item_detection_timer" to="GUI_layer/GUI/item_detection" method="_on_item_detection_timer_timeout"]

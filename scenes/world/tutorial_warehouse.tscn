@@ -1,0 +1,106 @@
+[gd_scene load_steps=18 format=3 uid="uid://cllvttystqrdp"]
+
+[ext_resource type="Texture2D" uid="uid://c22xymxsuidjb" path="res://assets/tutorial.png" id="1_wyb0i"]
+[ext_resource type="Script" uid="uid://caw4vf3r4hxht" path="res://scenes/world/tutorial_warehouse.gd" id="1_ytsgy"]
+[ext_resource type="Texture2D" uid="uid://cge5s3hbqvov0" path="res://assets/AR square.png" id="3_oa7mv"]
+[ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/world/box_spawner.gd" id="4_lc5nb"]
+[ext_resource type="Texture2D" uid="uid://dh7sc50uo06op" path="res://assets/icon.svg" id="5_8dlnr"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3p7as"]
+flip_faces = true
+size = Vector3(64, 64, 64)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wyb0i"]
+size = Vector3(45, 20, 12)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_be005"]
+points = PackedVector3Array(-21.5873, -9.78174, -6, 21.0794, 9.55159, 6, 21.5873, 9.78174, -6, 21.5873, -9.78174, -6, -21.5873, 9.78174, -6, -21.0794, -9.55159, 6, 21.0794, -9.55159, 6, -21.0794, 9.55159, 6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5se1w"]
+size = Vector3(12, 26, 55)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_04fms"]
+points = PackedVector3Array(6.65873, 13.627, 27.9365, -6, -12.5344, -26.0741, 6.65873, -13.4365, -27.9365, 6.65873, 13.627, -27.9365, 6.65873, -13.4365, 27.9365, -6, 12.7249, 26.0741, -6, 12.7249, -26.0741, -6, -12.5344, 26.0741)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ytsgy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oa7mv"]
+albedo_texture = ExtResource("1_wyb0i")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lc5nb"]
+size = Vector2(12, 12)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5eq7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ef2ut"]
+albedo_texture = ExtResource("3_oa7mv")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mjmhs"]
+size = Vector2(3, 3)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ytsgy"]
+points = PackedVector3Array(1.52351, 0.0238049, 1.52351, -1.52351, -0.0238049, -1.52351, -1.52351, 0.0238049, -1.52351, 1.52351, -0.0238049, -1.52351, -1.52351, -0.0238049, 1.52351, -1.52351, 0.0238049, 1.52351, 1.52351, 0.0238049, -1.52351, 1.52351, -0.0238049, 1.52351)
+
+[node name="Node3D" type="StaticBody3D"]
+script = ExtResource("1_ytsgy")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32, 0)
+transparency = 0.56
+mesh = SubResource("BoxMesh_3p7as")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 10, -18)
+mesh = SubResource("BoxMesh_wyb0i")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 10, -18)
+shape = SubResource("ConvexPolygonShape3D_be005")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 13, 16)
+mesh = SubResource("BoxMesh_5se1w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 13, 16)
+shape = SubResource("ConvexPolygonShape3D_04fms")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 6.98947, 9, 0)
+material_override = SubResource("StandardMaterial3D_ytsgy")
+material_overlay = SubResource("StandardMaterial3D_oa7mv")
+mesh = SubResource("PlaneMesh_lc5nb")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="." groups=["detectable"]]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 6.91264, 7, 26)
+collision_layer = 2
+collision_mask = 2
+freeze = true
+freeze_mode = 1
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="RigidBody3D2"]
+material_override = SubResource("StandardMaterial3D_y5eq7")
+material_overlay = SubResource("StandardMaterial3D_ef2ut")
+mesh = SubResource("PlaneMesh_mjmhs")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2"]
+shape = SubResource("ConvexPolygonShape3D_ytsgy")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 10, 23)
+mesh = SubResource("BoxMesh_wyb0i")
+
+[node name="box" type="Node3D" parent="."]
+script = ExtResource("4_lc5nb")
+tier = 3
+modifiers = {
+"deliverable": true,
+"detectable": true,
+"grabbable": true,
+"openable": true
+}
+box_size = Vector3(2, 1, 2)
+box_texture = ExtResource("5_8dlnr")

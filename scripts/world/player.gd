@@ -377,11 +377,4 @@ func _box_open_timer_expired():
 		drop_object()
 func _on_box_open_timer_timeout() -> void:
 	Signalbus.box_open_timer_expired.emit()
-@onready var item_detection_area: Area3D = $item_detection_area
-func _on_item_detection_area_body_entered(body: Node3D) -> void:
-	item_detection_gui.item_entered_area(body)
-	item_detection_gui.objects_inside_area = item_detection_area.get_overlapping_bodies()
-func _on_item_detection_area_body_exited(body: Node3D) -> void:
-	item_detection_gui.item_exited_area(body)
-	item_detection_gui.objects_inside_area = item_detection_area.get_overlapping_bodies()
 #endregion

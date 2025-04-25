@@ -26,7 +26,7 @@ var window_display_type:String = window_display_type_default:
 	"adaptive",
 	"mailbox_(fast_vsync)"
 	]
-@export var vsync_mode_default:String = vsync_mode_selections[0]
+@export var vsync_mode_default:String = vsync_mode_selections[3]
 
 var vsync_mode:String = vsync_mode_default:
 	set(v):

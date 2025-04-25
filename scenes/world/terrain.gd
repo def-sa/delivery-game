@@ -5,7 +5,7 @@ var seed_name: String = "a"
 @export var chunk_scene: PackedScene
 @export var false_chunk_scene: PackedScene
 @export var house: PackedScene
-
+@export var tutorial_warehouse: PackedScene
 
 
 @export var chunk_size: int = 64
@@ -127,7 +127,14 @@ func _create_chunk(position: Vector3, scene: PackedScene):
 	if scene == chunk_scene:
 		var left_lane_x = lane_min_index * chunk_size
 		var right_lane_x = lane_max_index * chunk_size
-
+		
+		if position.z == 0 and position.x == left_lane_x:
+			var tutorial_inst = tutorial_warehouse.instantiate()
+			tutorial_inst.rotate_y(deg_to_rad(90))
+			chunk.add_child(tutorial_inst)
+			add_child(chunk)
+			return
+		
 		# If this chunk sits exactly at a lane boundary, add houses or other features.
 		if position.x == left_lane_x:
 			if randf() < 0.1:

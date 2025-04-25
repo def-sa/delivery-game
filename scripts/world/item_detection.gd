@@ -8,7 +8,6 @@ extends Control
 @onready var item_detection_area: Area3D = $"../../../item_detection_area"
 
 
-
 #object
 var objects_inside_area = []:
 	set(v):
@@ -86,13 +85,15 @@ func _physics_process(delta: float) -> void:
 				child = child.get_children()[0]
 				if child.name == "item_name_bg":
 					child.size.x = bounding_box.size.x
-					child.visible = current_object.is_discovered
+					if "is_discovered" in child:
+						child.visible = current_object.is_discovered
 				if player.carrying_obj == current_object:
 					child = child.get_children()[0]
 					if child.name == "item_name":
 						child.text = str(current_object.id)
-						child.visible = current_object.is_discovered
-						current_object.is_discovered = true
+						if "is_discovered" in child:
+							child.visible = current_object.is_discovered
+							current_object.is_discovered = true
 					########
 
 
@@ -101,10 +102,11 @@ func item_entered_area(object):
 	for node in connected_nodes_array:
 		if object == node[0]:
 			return
-	
+	#print(object)
 	if object.is_in_group("detectable"):
 		var tier_color = Color("ff5252")
-		if object.tier:
+		
+		if "tier" in object and object.tier:
 			tier_color = Global.TIER_COLORS[Global.TIER_COLORS.keys()[object.tier]]
 			#print(tier_color)
 		
@@ -142,10 +144,11 @@ func item_entered_area(object):
 		
 		
 		#item_name.clip_text = true
-		if object.is_discovered == true:
-			item_name.text = str(object.id)
-		else:
-			item_name.text = "???"
+		if "is_discovered" in object:
+			if object.is_discovered == true:
+				item_name.text = str(object.id)
+			else:
+				item_name.text = "???"
 		
 		var ui_container = Node2D.new()
 		
@@ -162,7 +165,7 @@ func item_entered_area(object):
 		var visible_on_screen_notifier = get_on_screen_notifier(object)
 		if visible_on_screen_notifier == null:
 			visible_on_screen_notifier = VisibleOnScreenNotifier3D.new()
-			visible_on_screen_notifier.aabb = object.mesh.get_aabb()
+			visible_on_screen_notifier.aabb = current_object_mesh.get_aabb()
 			object.add_child(visible_on_screen_notifier)
 		
 		connected_nodes_array.push_front([object, ui_container])
@@ -242,3 +245,13 @@ func get_on_screen_notifier(object):
 
 func _on_item_detection_timer_timeout() -> void:
 	item_detection_area.scale = Vector3(0.01,0.01,0.01)
+
+
+func _on_item_detection_area_body_entered(body: Node3D) -> void:
+	print(body)
+	item_entered_area(body)
+	objects_inside_area = item_detection_area.get_overlapping_bodies()
+
+func _on_item_detection_area_body_exited(body: Node3D) -> void:
+	item_exited_area(body)
+	objects_inside_area = item_detection_area.get_overlapping_bodies()

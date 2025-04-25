@@ -28,11 +28,6 @@ Configfilehandler="*res://scripts/configfilehandler.gd"
 
 gdscript/warnings/unused_signal=0
 
-[display]
-
-window/size/viewport_width=1700
-window/size/viewport_height=900
-
 [global_group]
 
 grabbable="object is grabbable"

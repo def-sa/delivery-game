@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=77 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/world/main.gd" id="1_md6cl"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/ui/pause.tscn" id="2_u2p2s"]
@@ -20,7 +20,8 @@
 [ext_resource type="Script" uid="uid://58aenjo516yf" path="res://scenes/world/terrain.gd" id="19_hbyw3"]
 [ext_resource type="PackedScene" uid="uid://ctkf7174d1xtu" path="res://scenes/world/chunk.tscn" id="20_ubvmu"]
 [ext_resource type="PackedScene" uid="uid://bqsrdsx27um0c" path="res://scenes/world/false_chunk.tscn" id="21_ubvmu"]
-[ext_resource type="PackedScene" uid="uid://dow0xo37i8ppn" path="res://scenes/world/house.tscn" id="22_6gnby"]
+[ext_resource type="PackedScene" uid="uid://dow0xo37i8ppn" path="res://scenes/world/big_house.tscn" id="22_6gnby"]
+[ext_resource type="PackedScene" uid="uid://cllvttystqrdp" path="res://scenes/world/tutorial_warehouse.tscn" id="23_wrw41"]
 [ext_resource type="Script" uid="uid://w0088ri165ve" path="res://scripts/world/delivery_point.gd" id="25_ij6fg"]
 
 [sub_resource type="Environment" id="Environment_0xlil"]
@@ -263,7 +264,7 @@ theme = ExtResource("3_llfdw")
 script = ExtResource("6_4m2ge")
 
 [node name="Player" parent="World" instance=ExtResource("5_wlwgd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 4, 12)
 top_level = true
 collision_priority = 2.0
 
@@ -785,6 +786,7 @@ script = ExtResource("19_hbyw3")
 chunk_scene = ExtResource("20_ubvmu")
 false_chunk_scene = ExtResource("21_ubvmu")
 house = ExtResource("22_6gnby")
+tutorial_warehouse = ExtResource("23_wrw41")
 
 [node name="chunk" parent="World/Terrain" instance=ExtResource("20_ubvmu")]
 
