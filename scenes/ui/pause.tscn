@@ -53,186 +53,269 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/side_margin = 29
 theme_override_font_sizes/font_size = 32
-current_tab = 1
+current_tab = 0
 
 [node name="paused" type="TabBar" parent="MarginContainer/AspectRatioContainer/TabContainer"]
-visible = false
 layout_mode = 2
 mouse_force_pass_scroll_events = false
+scrolling_enabled = false
 metadata/_tab_index = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/paused"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/paused"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="MarginContainer/AspectRatioContainer/TabContainer/paused/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/paused/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/paused/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/AspectRatioContainer/TabContainer/paused/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
 text = "PAUSED"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="display" type="TabBar" parent="MarginContainer/AspectRatioContainer/TabContainer"]
+visible = false
 layout_mode = 2
 mouse_force_pass_scroll_events = false
+scrolling_enabled = false
 script = ExtResource("2_wen6a")
 metadata/_tab_index = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/display"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/display"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -248.0
-offset_top = 21.0
-offset_right = 249.0
-offset_bottom = 610.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="window_display_type" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_4x8ym")]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="---display and window---" type="Label" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "display / window
+-------------------------------------------------"
+horizontal_alignment = 1
+
+[node name="window_display_type" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("4_4x8ym")]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="vsync_mode" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_4x8ym")]
+[node name="vsync_mode" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("4_4x8ym")]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="shadow_quality" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_4x8ym")]
+[node name="viewport_width" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="fov" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="viewport_height" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="show_fps" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("6_eq7dk")]
+[node name="max_fps" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="max_fps" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="fov" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="viewport_width" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="---graphics---" type="Label" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "graphics
+-------------------------------------------------"
+horizontal_alignment = 1
+
+[node name="shadow_quality" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("4_4x8ym")]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="viewport_height" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="brightness" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="brightness" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="contrast" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="contrast" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="saturation" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="saturation" parent="MarginContainer/AspectRatioContainer/TabContainer/display/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="---other---" type="Label" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "other
+-------------------------------------------------"
+horizontal_alignment = 1
+
+[node name="show_fps" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("6_eq7dk")]
 layout_mode = 2
 size_flags_horizontal = 4
 
 [node name="audio" type="TabBar" parent="MarginContainer/AspectRatioContainer/TabContainer"]
 visible = false
 layout_mode = 2
+scrolling_enabled = false
 script = ExtResource("2_wen6a")
 metadata/_tab_index = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/audio"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/audio"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -283.0
-offset_top = 21.0
-offset_right = 283.0
-offset_bottom = 170.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/audio/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="main_volume" parent="MarginContainer/AspectRatioContainer/TabContainer/audio/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/audio/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="main_volume" parent="MarginContainer/AspectRatioContainer/TabContainer/audio/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="gameplay" type="TabBar" parent="MarginContainer/AspectRatioContainer/TabContainer"]
 visible = false
 layout_mode = 2
 mouse_force_pass_scroll_events = false
+scrolling_enabled = false
 script = ExtResource("2_wen6a")
 metadata/_tab_index = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/gameplay"]
-layout_mode = 2
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -283.0
-offset_top = 21.0
-offset_right = 283.0
-offset_bottom = 170.0
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/gameplay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/gameplay/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="render_distance" parent="MarginContainer/AspectRatioContainer/TabContainer/gameplay/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/gameplay/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
+
+[node name="render_distance" parent="MarginContainer/AspectRatioContainer/TabContainer/gameplay/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="controls" type="TabBar" parent="MarginContainer/AspectRatioContainer/TabContainer"]
 visible = false
 layout_mode = 2
 mouse_force_pass_scroll_events = false
+scrolling_enabled = false
 script = ExtResource("2_wen6a")
 metadata/_tab_index = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/controls"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/controls"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -283.0
-offset_top = 21.0
-offset_right = 283.0
-offset_bottom = 266.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/controls/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="sensitivity" parent="MarginContainer/AspectRatioContainer/TabContainer/controls/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/controls/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
+
+[node name="sensitivity" parent="MarginContainer/AspectRatioContainer/TabContainer/controls/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="debug" type="TabBar" parent="MarginContainer/AspectRatioContainer/TabContainer"]
 visible = false
 layout_mode = 2
 mouse_force_pass_scroll_events = false
+scrolling_enabled = false
 script = ExtResource("2_wen6a")
 metadata/_tab_index = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/debug"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/debug"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -283.0
-offset_top = 21.0
-offset_right = 283.0
-offset_bottom = 266.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="player_speed" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
-[node name="player_jump" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="player_speed" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="grab_buffer" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="player_jump" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="max_grab_length" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="grab_buffer" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="box_open_timer" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/VBoxContainer" instance=ExtResource("4_6ctfw")]
+[node name="max_grab_length" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="box_open_timer" parent="MarginContainer/AspectRatioContainer/TabContainer/debug/ScrollContainer/VBoxContainer" instance=ExtResource("4_6ctfw")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4

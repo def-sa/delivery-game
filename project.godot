@@ -152,22 +152,4 @@ jolt_physics_3d/limits/max_angular_velocity=23.5619
 
 [rendering]
 
-occlusion_culling/bvh_build_quality=0
-occlusion_culling/jitter_projection=false
-rendering_device/fallback_to_vulkan=false
-rendering_device/fallback_to_opengl3=false
-global_illumination/gi/use_half_resolution=true
-shading/overrides/force_vertex_shading=true
-shading/overrides/force_lambert_over_burley=true
-camera/depth_of_field/depth_of_field_bokeh_shape=0
-camera/depth_of_field/depth_of_field_bokeh_quality=0
-environment/ssao/quality=0
-environment/ssil/quality=0
-viewport/hdr_2d=true
-anti_aliasing/screen_space_roughness_limiter/enabled=false
-environment/glow/upscale_mode=0
-environment/screen_space_reflection/roughness_quality=0
-environment/subsurface_scattering/subsurface_scattering_quality=0
 global_illumination/sdfgi/frames_to_converge=0
-environment/volumetric_fog/use_filter=0
-environment/defaults/default_clear_color=Color(0.475626, 0.582206, 0.688341, 1)

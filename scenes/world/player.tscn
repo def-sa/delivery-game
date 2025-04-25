@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=22 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/world/player.gd" id="1_v666e"]
 [ext_resource type="Texture2D" uid="uid://cyfjd4773jfol" path="res://assets/ui/crosshair_grabbing.png" id="4_dqkch"]
@@ -8,7 +8,6 @@
 [ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/themes/new_theme.tres" id="7_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bhdmrq6le812t" path="res://assets/ui/up_arrow.png" id="8_smehm"]
 [ext_resource type="PackedScene" uid="uid://r0lr0id6q0kw" path="res://scenes/ui/item_overlay.tscn" id="9_7psdb"]
-[ext_resource type="Texture2D" uid="uid://cfroow2y4ieic" path="res://assets/light_cookie.png" id="9_dlnwf"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xqg4r"]
 radius = 1.0
@@ -59,7 +58,12 @@ shader = ExtResource("5_tuyoq")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7psdb"]
 blend_mode = 2
-depth_draw_mode = 1
+vertex_color_is_srgb = true
+albedo_color = Color(1, 1, 0, 1)
+albedo_texture_force_srgb = true
+albedo_texture_msdf = true
+disable_receive_shadows = true
+shadow_to_opacity = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
 flip_faces = true
@@ -300,7 +304,7 @@ collision_mask = 2
 [node name="MeshInstance3D" type="MeshInstance3D" parent="item_detection_area"]
 layers = 2
 material_override = SubResource("StandardMaterial3D_7psdb")
-transparency = 0.85
+transparency = 0.5
 mesh = SubResource("SphereMesh_qlg0r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="item_detection_area"]
@@ -325,17 +329,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 visible = false
 layers = 7
 light_color = Color(0.999034, 0.742873, 0.685015, 1)
-light_energy = 4.0
+light_energy = 1.653
 light_indirect_energy = 4.0
-light_projector = ExtResource("9_dlnwf")
 light_cull_mask = 4294967293
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_length = 50.0
 spot_range = 137.381
-spot_attenuation = 0.28
 spot_angle = 27.11
-spot_angle_attenuation = 1.7411
+spot_angle_attenuation = 3.4822
 
 [node name="box_open_timer" type="Timer" parent="."]
 wait_time = 0.25

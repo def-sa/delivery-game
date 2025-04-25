@@ -98,7 +98,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0)
 projection = 1
 current = true
 fov = 97.1
-size = 1.8
+size = 2.5
 
 [node name="light" type="SpotLight3D" parent="SubViewportContainer/SubViewport/item_overlay_camera"]
 spot_range = 10.184

@@ -64,7 +64,6 @@ var fov:int = fov_default:
 		fov = clamp(v, fov_min, fov_max)
 		Signalbus.fov_updated.emit(fov)
 #endregion
-
 #region show_fps toggle
 @export_group("show fps", "show_fps")
 @export var show_fps_default:bool = true
@@ -73,9 +72,6 @@ var show_fps:bool = show_fps_default:
 		show_fps = v
 		Signalbus.show_fps_updated.emit(show_fps)
 #endregion
-
-
-
 #region max_fps slider
 @export_group("max fps", "max_fps")
 @export var max_fps_min: int = 0
@@ -112,6 +108,8 @@ var viewport_height:float = viewport_height_default:
 		viewport_height = clamp(v, viewport_height_min, viewport_height_max)
 		Signalbus.viewport_height_updated.emit(viewport_height)
 #endregion
+
+
 #region brightness slider
 @export_group("brightness", "brightness")
 @export var brightness_min: float = 0.001
@@ -148,6 +146,9 @@ var saturation:float = saturation_default:
 		saturation = clamp(v, saturation_min, saturation_max)
 		Signalbus.saturation_updated.emit(saturation)
 #endregion
+
+
+
 
 @export_category("Gameplay")
 #region render distance slider
