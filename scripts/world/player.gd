@@ -20,6 +20,8 @@ extends CharacterBody3D
 @onready var spring_position: Node3D = $camera_pivot/spring_arm_3d/spring_position
 @onready var camera: Camera3D = $camera_pivot/spring_arm_3d/camera
 @onready var flashlight: SpotLight3D = $flashlight
+@onready var scan_light: SpotLight3D = $scan_light
+
 @onready var ray_interaction: RayCast3D = $camera_pivot/spring_arm_3d/camera/ray_interaction
 @onready var player_hand: Marker3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D/hand
 @onready var path_3d: Path3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D
@@ -85,7 +87,7 @@ var hovered_obj = null:
 			else:
 				if hovered_obj.is_in_group("grabbable"):
 					item_overlay.set_to(hovered_obj, "hovering")
-		else:
+		elif !carrying_obj:
 			item_overlay.set_to(null, "off")
 var holding = false:
 	set(v):
@@ -222,6 +224,8 @@ func _input(event: InputEvent) -> void:
 			# -PI/2 = min vertical angle, PI/4 = max vertical angle
 			camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, -PI/2, PI/1.75)
 			flashlight.rotation = camera_pivot.rotation
+			scan_light.rotation = camera_pivot.rotation
+			
 	else: #camera locked
 		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			static_body.rotate_x(deg_to_rad(event.relative.y * rotation_power))

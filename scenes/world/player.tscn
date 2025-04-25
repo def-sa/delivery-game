@@ -194,7 +194,7 @@ grow_vertical = 2
 
 [node name="crosshair" type="TextureRect" parent="GUI_layer/GUI/MarginContainer"]
 material = SubResource("ShaderMaterial_fjrip")
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -298,6 +298,7 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="item_detection_area"]
+layers = 2
 material_override = SubResource("StandardMaterial3D_7psdb")
 transparency = 0.85
 mesh = SubResource("SphereMesh_qlg0r")
@@ -305,21 +306,36 @@ mesh = SubResource("SphereMesh_qlg0r")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="item_detection_area"]
 shape = SubResource("ConvexPolygonShape3D_tuyoq")
 
-[node name="flashlight" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.91644, 0)
-visible = false
-light_color = Color(0.79903, 0.707115, 0.61987, 1)
-light_energy = 16.0
-light_indirect_energy = 1.84
-light_volumetric_fog_energy = 6.59
-light_projector = ExtResource("9_dlnwf")
-light_size = 1.0
-shadow_enabled = true
-spot_range = 11.065
-spot_angle = 55.21
-
 [node name="no_fly_ray" type="RayCast3D" parent="."]
 target_position = Vector3(0, -6, 0)
+
+[node name="scan_light" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+light_color = Color(0, 0, 1, 1)
+light_energy = 200.0
+light_indirect_energy = 200.0
+light_cull_mask = 4294967293
+shadow_enabled = true
+spot_range = 4096.0
+spot_attenuation = -10.0
+spot_angle = 2.0
+
+[node name="flashlight" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+visible = false
+layers = 7
+light_color = Color(0.999034, 0.742873, 0.685015, 1)
+light_energy = 4.0
+light_indirect_energy = 4.0
+light_projector = ExtResource("9_dlnwf")
+light_cull_mask = 4294967293
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_length = 50.0
+spot_range = 137.381
+spot_attenuation = 0.28
+spot_angle = 27.11
+spot_angle_attenuation = 1.7411
 
 [node name="box_open_timer" type="Timer" parent="."]
 wait_time = 0.25

@@ -12,12 +12,18 @@ size = Vector3(64, 64, 64)
 
 [sub_resource type="BoxMesh" id="BoxMesh_wyb0i"]
 size = Vector3(45, 20, 12)
+subdivide_width = 16
+subdivide_height = 16
+subdivide_depth = 16
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_be005"]
 points = PackedVector3Array(-21.5873, -9.78174, -6, 21.0794, 9.55159, 6, 21.5873, 9.78174, -6, 21.5873, -9.78174, -6, -21.5873, 9.78174, -6, -21.0794, -9.55159, 6, 21.0794, -9.55159, 6, -21.0794, 9.55159, 6)
 
 [sub_resource type="BoxMesh" id="BoxMesh_5se1w"]
 size = Vector3(12, 26, 55)
+subdivide_width = 16
+subdivide_height = 16
+subdivide_depth = 16
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_04fms"]
 points = PackedVector3Array(6.65873, 13.627, 27.9365, -6, -12.5344, -26.0741, 6.65873, -13.4365, -27.9365, 6.65873, 13.627, -27.9365, 6.65873, -13.4365, 27.9365, -6, 12.7249, 26.0741, -6, 12.7249, -26.0741, -6, -12.5344, 26.0741)
@@ -29,6 +35,8 @@ albedo_texture = ExtResource("1_wyb0i")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_lc5nb"]
 size = Vector2(12, 12)
+subdivide_width = 16
+subdivide_depth = 16
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5eq7"]
 

@@ -6,6 +6,7 @@ extends Control
 @onready var negative_shader = preload("res://shaders/negative.gdshader")
 @onready var item_detection_timer: Timer = $"../../../item_detection_timer"
 @onready var item_detection_area: Area3D = $"../../../item_detection_area"
+@onready var scan_light: SpotLight3D = $"../../../scan_light"
 
 
 #object
@@ -26,13 +27,18 @@ var reticle_offset = Vector2(32, 32)
 #object reticle, thank you 
 # https://www.youtube.com/watch?v=EKVYfF8oG0s
 func _process(delta: float) -> void:
-
+	
 	if Input.is_action_pressed("rmb"):
 		item_detection_timer.start()
-
+		scan_light.spot_range = 4096
+		scan_light.visible = false
+	
 	if item_detection_timer.time_left > 0:
+		scan_light.visible = true
+		scan_light.spot_range -= item_detection_area.scale.x * 14.05 # this lines up almost perfectly scaling with the item detection timer
 		item_detection_area.scale = Vector3(item_detection_timer.time_left,item_detection_timer.time_left,item_detection_timer.time_left)
-
+	else:
+		scan_light.spot_range = 0
 	
 	if objects_inside_area.is_empty():
 		offscreen_reticle.hide()
@@ -248,7 +254,6 @@ func _on_item_detection_timer_timeout() -> void:
 
 
 func _on_item_detection_area_body_entered(body: Node3D) -> void:
-	print(body)
 	item_entered_area(body)
 	objects_inside_area = item_detection_area.get_overlapping_bodies()
 

@@ -2,6 +2,10 @@
  
 haiiiiii this is my first Real game project. dont look too closely or else u will find out i suck at programming
 
+The FontStruction “4x3-Pixel” (https://fontstruct.com/fontstructions/show/325977) by “epigeios” is licensed under a Creative Commons Attribution license (http://creativecommons.org/licenses/by/3.0/).
+
+
+
 Features:
 - working pause, lots of display options
 - perspective change via keybind (r) and/or scroll in/out
@@ -15,6 +19,7 @@ Features:
 coming soon:
 - custom 3d main menu / pause rework? (No)
 - rope system
+- scan upgrade
 - tutorial/spawn area warehouse
 - remake item detection for christ sake
 - link up spawned objects with their respective destination

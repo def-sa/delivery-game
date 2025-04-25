@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://r0lr0id6q0kw"]
+[gd_scene load_steps=8 format=3 uid="uid://r0lr0id6q0kw"]
 
 [ext_resource type="Texture2D" uid="uid://bk1cs84anbjv" path="res://assets/world/box/carton_box_04_closed_0.jpg" id="1_6bnwv"]
 [ext_resource type="Script" uid="uid://c2s6luioippuo" path="res://scripts/item_overlay.gd" id="1_6pp8d"]
 [ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="1_48na1"]
-[ext_resource type="Texture2D" uid="uid://cfroow2y4ieic" path="res://assets/light_cookie.png" id="3_de71s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6pp8d"]
 shader = ExtResource("1_48na1")
@@ -72,12 +71,14 @@ size = Vector2i(256, 256)
 render_target_update_mode = 4
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(0.0567843, 0.628216, -0.775964, 0.605976, 0.595997, 0.52686, 0.793454, -0.500133, -0.34684, -3.32825, 0, 0)
+transform = Transform3D(0.0567843, 0.628216, -0.775964, 0.605976, 0.595997, 0.52686, 0.793454, -0.500133, -0.34684, 0, 13, 0)
+visible = false
 light_color = Color(0.31889, 0.491401, 0.677286, 1)
 light_energy = 2.883
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(-0.0574767, -0.166493, 0.984366, -3.44373e-09, 0.985996, 0.166769, -0.998347, 0.00958531, -0.0566718, 0, 0, 0)
+transform = Transform3D(-0.0574767, -0.166493, 0.984366, -3.44373e-09, 0.985996, 0.166769, -0.998347, 0.00958531, -0.0566718, 0, 13, 0)
+visible = false
 light_color = Color(0.452574, 0.384917, 0.505313, 1)
 light_energy = 3.958
 shadow_bias = 0.464
@@ -87,28 +88,28 @@ directional_shadow_max_distance = 25.0
 sky_mode = 1
 
 [node name="DirectionalLight3D3" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
+visible = false
 light_color = Color(0.823777, 0.618614, 0.518154, 1)
 light_energy = 1.208
 
 [node name="item_overlay_camera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17.25, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0)
 projection = 1
-size = 1.85
+current = true
+fov = 97.1
+size = 1.8
 
 [node name="light" type="SpotLight3D" parent="SubViewportContainer/SubViewport/item_overlay_camera"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0153489, 0.154216, -0.42613)
-light_color = Color(0.833199, 0.751289, 0.673868, 1)
-light_energy = 8.52
-light_indirect_energy = 0.0
-light_volumetric_fog_energy = 0.0
-light_projector = ExtResource("3_de71s")
-shadow_enabled = true
-spot_range = 4.054
-spot_attenuation = 1.17
-spot_angle = 35.54
+spot_range = 10.184
+spot_attenuation = -0.64
+spot_angle = 35.0
+
+[node name="item_container" type="Node3D" parent="SubViewportContainer/SubViewport/item_overlay_camera"]
+transform = Transform3D(0.707107, 2.38418e-07, 0.707106, 0.353553, 0.866025, -0.353554, -0.612372, 0.5, 0.612373, 0, 0, -6)
 
 [node name="box" type="RigidBody3D" parent="SubViewportContainer/SubViewport" groups=["grabbable"]]
-transform = Transform3D(0.707107, 2.38418e-07, 0.707106, 0.353553, 0.866025, -0.353554, -0.612372, 0.5, 0.612373, 0, 0, 0)
+transform = Transform3D(0.707107, 2.38418e-07, 0.707106, 0.353553, 0.866025, -0.353554, -0.612372, 0.5, 0.612373, 0, 0, -6)
 visible = false
 gravity_scale = 0.0
 freeze = true
@@ -120,6 +121,3 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/box"]
 shape = SubResource("ConvexPolygonShape3D_w8jie")
-
-[node name="item_container" type="Node3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(0.707107, 2.38418e-07, 0.707106, 0.353553, 0.866025, -0.353554, -0.612372, 0.5, 0.612373, 0, 0, 0)

@@ -21,6 +21,7 @@ func _update_sliders():
 			slider.slider_node.max_value = Settings[slider.name+"_max"]
 			slider.slider_node.value = Settings[slider.name+"_default"]
 			slider.slider_node.step = Settings[slider.name+"_step"]
+			slider.slider_node.scrollable = false
 
 func _update_dropdowns():
 	for element in elements_in_tab:
