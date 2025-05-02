@@ -35,8 +35,8 @@ extends CharacterBody3D
 @export_category("Player variables")
 
 ##player variables
-@export var speed:int = 8
-@export var jump_velocity:float = 4.5
+@export var speed:int = Settings.player_speed
+@export var jump_velocity:float = Settings.player_jump
 @export var health:int = 100:
 	set(v):
 		health = v

@@ -1,6 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=28 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/world/player.gd" id="1_v666e"]
+[ext_resource type="Texture2D" uid="uid://giomt62psa5v" path="res://assets/hud.png" id="2_dlnwf"]
+[ext_resource type="Shader" uid="uid://ckt82618yxucc" path="res://shaders/hud.gdshader" id="3_7psdb"]
+[ext_resource type="Shader" uid="uid://dnhwmsdv1c1be" path="res://scenes/world/hud2.gdshader" id="3_wu7tt"]
 [ext_resource type="Texture2D" uid="uid://cyfjd4773jfol" path="res://assets/ui/crosshair_grabbing.png" id="4_dqkch"]
 [ext_resource type="Texture2D" uid="uid://81ljda3073o0" path="res://assets/ui/crosshair.png" id="5_qlg0r"]
 [ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="5_tuyoq"]
@@ -27,11 +30,12 @@ point_count = 2
 
 [sub_resource type="GDScript" id="GDScript_dlnwf"]
 script/source = "extends Control
-
+# thx https://godotshaders.com/shader/camcorder-horror-shader/
 @onready var fps: Label = $debug/fps
-
-func _process(delta: float) -> void:
-	fps.text = str(int(Engine.get_frames_per_second())) + \" fps\"
+@onready var player: CharacterBody3D = $\"../..\"
+@onready var long_ray: RayCast3D = $\"../../long_ray\"
+@onready var camera_pivot: Node3D = $\"../../camera_pivot\"
+@onready var illusions: ColorRect = $illusions
 
 
 func _ready() -> void:
@@ -39,7 +43,76 @@ func _ready() -> void:
 
 func _show_fps_updated(value:bool):
 	fps.visible = value
+
+
+# Adjust these values as needed for your effect.
+var min_distance = 0.0  # Effect is fully applied if closer than this.
+var max_distance = 100.0  # Effect fades out completely if beyond this.
+
+#func _process(delta):
+	#long_ray.rotation = camera_pivot.rotation
+	#fps.text = str(int(Engine.get_frames_per_second())) + \" fps\"
+	#
+	#if player.carrying_obj:
+		#return
+	#var blend_factor = 0.0  # Default to no effect.
+	#if long_ray.is_colliding():
+		#var collision_point = long_ray.get_collision_point()
+		#var origin = player.global_transform.origin
+		#var distance = origin.distance_to(collision_point)
+		#blend_factor = clamp(1.0 - ((distance - min_distance) / (max_distance - min_distance)), 0.0, 1.0)
+		#blend_factor += .25
+	#else:
+		#return
+	#illusions.material.set_shader_parameter(\"blend_factor\", blend_factor)
 "
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b014x"]
+shader = ExtResource("3_wu7tt")
+shader_parameter/distortion_strength = 0.363
+shader_parameter/distortion_radius = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jgsvk"]
+shader = ExtResource("3_7psdb")
+shader_parameter/color_bleed_enabled = true
+shader_parameter/chromatic_abberation_enabled = true
+shader_parameter/film_grain_enabled = true
+shader_parameter/sharpness_enabled = true
+shader_parameter/chromatic_abberation_seperation = 0.016
+shader_parameter/chromatic_abberation_intensity = 1.5
+shader_parameter/chromatic_abberation_blur_strength = 1.0
+shader_parameter/film_grain_intensity = 1.0
+shader_parameter/grain_size = 2.0
+shader_parameter/darkness_clamp = 0.28
+shader_parameter/sharpness_size = 1.0
+shader_parameter/sharpness_intensity = 0.7
+shader_parameter/color_bleed_seperation = 0.02
+shader_parameter/color_bleed_intensity = 0.2
+shader_parameter/anti_bleed_intensity = 1.8
+shader_parameter/color_bleed_blur_strength = 1.0
+shader_parameter/color_bleed_quality = 5
+shader_parameter/blend_factor = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wu7tt"]
+shader = ExtResource("3_7psdb")
+shader_parameter/color_bleed_enabled = true
+shader_parameter/chromatic_abberation_enabled = false
+shader_parameter/film_grain_enabled = false
+shader_parameter/sharpness_enabled = false
+shader_parameter/chromatic_abberation_seperation = 0.016
+shader_parameter/chromatic_abberation_intensity = 1.5
+shader_parameter/chromatic_abberation_blur_strength = 1.0
+shader_parameter/film_grain_intensity = 0.0
+shader_parameter/grain_size = 2.0
+shader_parameter/darkness_clamp = 0.28
+shader_parameter/sharpness_size = 1.0
+shader_parameter/sharpness_intensity = 0.7
+shader_parameter/color_bleed_seperation = 1.0
+shader_parameter/color_bleed_intensity = 3.0
+shader_parameter/anti_bleed_intensity = 1.0
+shader_parameter/color_bleed_blur_strength = 1.0
+shader_parameter/color_bleed_quality = 4
+shader_parameter/blend_factor = 0.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqkch"]
 bg_color = Color(0, 0, 0, 1)
@@ -76,8 +149,7 @@ rings = 8
 points = PackedVector3Array(14.8662, 18.1499, -1.8302, -22.8497, -5.07139, -1.10259, -22.862, -5.07412, 1.07047, 10.5453, -21.1214, 0.343042, 1.07189, 5.08072, 22.8591, 1.07047, -5.07412, -22.862, -14.1562, 18.8549, -1.10335, 22.8591, -5.08072, 1.07189, -6.926, -21.8195, 6.16195, -0.375473, 11.6401, -20.7601, 17.0803, -4.36167, -15.6547, 16.294, -5.79447, 16.294, -14.97, -10.9387, -14.97, -15.658, 4.36135, 17.0791, 1.0716, 18.8715, 14.1405, -0.37594, -11.6552, 20.7544, -16.2967, 5.78382, -16.2967, 1.07085, -18.8585, -14.1634, 14.8081, 11.5679, 14.8081, -1.84615, 22.7618, -6.25759, -14.9781, -10.9446, 14.9454, 14.0733, 13.0067, -14.1105, 22.8591, 5.08072, 1.07189, -20.7601, 11.6401, -0.375473, -14.1562, -18.8549, -1.10335, 10.5251, -18.1709, 11.247, -10.5532, 18.1629, 11.2421, 14.0733, -13.0067, -14.1105, -11.9487, 16.6319, -11.9487, 4.76777, 22.8111, 4.76777, -4.05101, -22.7314, -5.51652, 20.7642, -11.6653, 0.343406)
 
 [node name="Player" type="CharacterBody3D"]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 2
 script = ExtResource("1_v666e")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -142,6 +214,41 @@ size_flags_vertical = 4
 mouse_filter = 1
 theme = ExtResource("7_fjrip")
 script = SubResource("GDScript_dlnwf")
+
+[node name="hud2" type="TextureRect" parent="GUI_layer/GUI"]
+visible = false
+material = SubResource("ShaderMaterial_b014x")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dlnwf")
+
+[node name="hud" type="TextureRect" parent="GUI_layer/GUI"]
+visible = false
+top_level = true
+material = SubResource("ShaderMaterial_jgsvk")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dlnwf")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="illusions" type="ColorRect" parent="GUI_layer/GUI"]
+visible = false
+material = SubResource("ShaderMaterial_wu7tt")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="score" type="RichTextLabel" parent="GUI_layer/GUI"]
 custom_minimum_size = Vector2(500, 100)
@@ -309,6 +416,14 @@ mesh = SubResource("SphereMesh_qlg0r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="item_detection_area"]
 shape = SubResource("ConvexPolygonShape3D_tuyoq")
+
+[node name="long_ray" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+exclude_parent = false
+target_position = Vector3(0, 0, -100)
+collision_mask = 3
+debug_shape_custom_color = Color(1, 1, 1, 1)
+debug_shape_thickness = 5
 
 [node name="no_fly_ray" type="RayCast3D" parent="."]
 target_position = Vector3(0, -6, 0)

@@ -1,6 +1,14 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ds7d7egnskxum"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://ds7d7egnskxum"]
 
 [ext_resource type="FontFile" uid="uid://cbmorh8hcgijx" path="res://assets/themes/RobotoMono-Italic-VariableFont_wght.ttf" id="1_6pma3"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iepjh"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0, 0, 1)
+
 [resource]
 default_font = ExtResource("1_6pma3")
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_iepjh")

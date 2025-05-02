@@ -1,0 +1,72 @@
+[gd_scene load_steps=7 format=3 uid="uid://bfs8do3yam35f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fnf2h"]
+size = Vector3(1.93933, 3, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qatcg"]
+size = Vector3(0.5, 1.25, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fnf2h"]
+size = Vector3(3, 5, 0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fnf2h"]
+points = PackedVector3Array(1.46712, 2.39362, 0.25, -1.53968, -2.53869, -0.289683, -1.45125, -2.39362, 0.25, -1.53968, 2.53869, -0.289683, 1.55556, -2.53869, -0.289683, 1.55556, 2.53869, -0.289683, -1.45125, 2.39362, 0.25, 1.46712, -2.39362, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kkvvt"]
+size = Vector3(0.25, 5, 0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_eej0e"]
+data = PackedVector3Array(-0.125, 2.5, 0.25, 0.125, 2.5, 0.25, -0.125, -2.5, 0.25, 0.125, 2.5, 0.25, 0.125, -2.5, 0.25, -0.125, -2.5, 0.25, 0.125, 2.5, -0.25, -0.125, 2.5, -0.25, 0.125, -2.5, -0.25, -0.125, 2.5, -0.25, -0.125, -2.5, -0.25, 0.125, -2.5, -0.25, 0.125, 2.5, 0.25, 0.125, 2.5, -0.25, 0.125, -2.5, 0.25, 0.125, 2.5, -0.25, 0.125, -2.5, -0.25, 0.125, -2.5, 0.25, -0.125, 2.5, -0.25, -0.125, 2.5, 0.25, -0.125, -2.5, -0.25, -0.125, 2.5, 0.25, -0.125, -2.5, 0.25, -0.125, -2.5, -0.25, 0.125, 2.5, 0.25, -0.125, 2.5, 0.25, 0.125, 2.5, -0.25, -0.125, 2.5, 0.25, -0.125, 2.5, -0.25, 0.125, 2.5, -0.25, -0.125, -2.5, 0.25, 0.125, -2.5, 0.25, -0.125, -2.5, -0.25, 0.125, -2.5, 0.25, 0.125, -2.5, -0.25, -0.125, -2.5, -0.25)
+
+[node name="door" type="Node3D"]
+
+[node name="door_handle" type="RigidBody3D" parent="." groups=["grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+collision_layer = 3
+collision_mask = 3
+mass = 0.001
+gravity_scale = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="door_handle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.530334, 0, 0)
+shape = SubResource("BoxShape3D_fnf2h")
+
+[node name="physics_door" type="RigidBody3D" parent="."]
+mass = 0.001
+gravity_scale = 0.0
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="physics_door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_qatcg")
+skeleton = NodePath("../../door_handle")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="physics_door"]
+mesh = SubResource("BoxMesh_fnf2h")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="physics_door"]
+shape = SubResource("ConvexPolygonShape3D_fnf2h")
+
+[node name="door_frame" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="door_frame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65, 0, 0)
+mesh = SubResource("BoxMesh_kkvvt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="door_frame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_eej0e")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.65514, 0, 0)
+node_a = NodePath("../physics_door")
+node_b = NodePath("../door_frame")
+angular_limit/enable = true
+angular_limit/upper = 2.53073
+angular_limit/lower = -2.53073
+angular_limit/bias = 0.99
+angular_limit/relaxation = 0.01
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+node_a = NodePath("../door_handle")
+node_b = NodePath("../physics_door")

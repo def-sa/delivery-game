@@ -23,10 +23,15 @@ Global="*res://scripts/global.gd"
 Settings="*res://scripts/ui/settings.gd"
 Signalbus="*res://scripts/signalbus.gd"
 Configfilehandler="*res://scripts/configfilehandler.gd"
+DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 
 [debug]
 
 gdscript/warnings/unused_signal=0
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg")
 
 [global_group]
 
@@ -152,4 +157,32 @@ jolt_physics_3d/limits/max_angular_velocity=23.5619
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
+reflections/reflection_atlas/reflection_size=64
+reflections/reflection_atlas/reflection_count=16
+global_illumination/gi/use_half_resolution=true
+shading/overrides/force_vertex_shading=true
+shading/overrides/force_lambert_over_burley=true
+textures/default_filters/use_nearest_mipmap_filter=true
+textures/default_filters/anisotropic_filtering_level=0
+camera/depth_of_field/depth_of_field_bokeh_shape=0
+camera/depth_of_field/depth_of_field_bokeh_quality=0
+environment/ssao/quality=0
+environment/ssil/quality=0
+anti_aliasing/screen_space_roughness_limiter/enabled=false
+textures/decals/filter=0
+textures/light_projectors/filter=0
+environment/glow/upscale_mode=0
+environment/screen_space_reflection/roughness_quality=0
+environment/subsurface_scattering/subsurface_scattering_quality=0
+lightmapping/lightmap_gi/use_bicubic_filter=false
+global_illumination/sdfgi/probe_ray_count=0
 global_illumination/sdfgi/frames_to_converge=0
+global_illumination/sdfgi/frames_to_update_lights=4
+environment/volumetric_fog/volume_size=16
+environment/volumetric_fog/volume_depth=16
+environment/volumetric_fog/use_filter=0
+viewport/transparent_background=true
+occlusion_culling/use_occlusion_culling=true

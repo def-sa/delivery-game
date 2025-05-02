@@ -1,0 +1,89 @@
+[gd_scene load_steps=6 format=3 uid="uid://daf5q3nsag6xs"]
+
+[ext_resource type="PackedScene" uid="uid://bfs8do3yam35f" path="res://scenes/world/door.tscn" id="1_i3i5o"]
+[ext_resource type="Script" uid="uid://y1m6odkwnyir" path="res://scenes/world/house.gd" id="1_tuevy"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_y648w"]
+flip_faces = true
+size = Vector3(64, 64, 64)
+
+[sub_resource type="PrismMesh" id="PrismMesh_tuevy"]
+size = Vector3(22, 8, 22)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_i3i5o"]
+radius = 1.0
+height = 4.0
+
+[node name="house" type="StaticBody3D"]
+script = ExtResource("1_tuevy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32, 0)
+transparency = 0.56
+mesh = SubResource("BoxMesh_y648w")
+
+[node name="house" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 7, -0.5)
+use_collision = true
+size = Vector3(22, 14, 22)
+
+[node name="inner" type="CSGBox3D" parent="house"]
+operation = 2
+size = Vector3(21, 13, 21)
+
+[node name="windows" type="CSGCombiner3D" parent="house"]
+operation = 2
+
+[node name="front_window" type="CSGBox3D" parent="house/windows"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -3, 11)
+size = Vector3(6, 4, 1)
+
+[node name="right_window" type="CSGBox3D" parent="house/windows"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -2, 6)
+size = Vector3(1, 6, 6)
+
+[node name="right_window2" type="CSGBox3D" parent="house/windows"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -3.03131, -2)
+size = Vector3(1, 3.93738, 6)
+
+[node name="left_window" type="CSGBox3D" parent="house/windows"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -2, -4)
+size = Vector3(1, 6, 6)
+
+[node name="roof" type="CSGMesh3D" parent="house"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, 0)
+mesh = SubResource("PrismMesh_tuevy")
+
+[node name="chimney" type="CSGBox3D" parent="house/roof"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -6, -9)
+size = Vector3(3, 23, 3)
+
+[node name="chimney_hole" type="CSGBox3D" parent="house/roof/chimney"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+operation = 2
+size = Vector3(2.5, 23, 2.5)
+
+[node name="chimney_hole2" type="CSGBox3D" parent="house/roof/chimney"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.5, 1.25)
+operation = 2
+size = Vector3(2.5, 3, 2)
+
+[node name="front_door" type="CSGBox3D" parent="house"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, -3, 10.5)
+operation = 2
+size = Vector3(3, 5, 2)
+
+[node name="door" parent="house/front_door" instance=ExtResource("1_i3i5o")]
+transform = Transform3D(0.875, 0, 0, 0, 0.975, 0, 0, 0, 1, 0.0999999, 0, 0)
+
+[node name="back_door" type="CSGBox3D" parent="house"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -3, -10.5)
+operation = 2
+size = Vector3(3, 5, 2)
+
+[node name="door2" parent="house/back_door" instance=ExtResource("1_i3i5o")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 2, 19)
+mesh = SubResource("CapsuleMesh_i3i5o")

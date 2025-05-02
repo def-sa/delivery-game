@@ -4,8 +4,10 @@ var seed_name: String = "a"
 
 @export var chunk_scene: PackedScene
 @export var false_chunk_scene: PackedScene
+@export var big_house: PackedScene
 @export var house: PackedScene
 @export var tutorial_warehouse: PackedScene
+@export var sidewalk_pavement: PackedScene
 
 
 @export var chunk_size: int = 64
@@ -47,6 +49,7 @@ func _set_seed(seed_name):
 
 
 @export var lane_min_index: int = -1		   # Lane region start index
+@export var middle_lane_index: int = 0
 @export var lane_max_index: int = 1			# Lane region end index
 
 var current_chunk_index_x: int = 0
@@ -135,18 +138,29 @@ func _create_chunk(position: Vector3, scene: PackedScene):
 			add_child(chunk)
 			return
 		
+		if position.x == middle_lane_index:
+			var sidewalk_pavement_inst = sidewalk_pavement.instantiate()
+			#sidewalk_pavement_inst.rotate_y(deg_to_rad(90))
+			chunk.add_child(sidewalk_pavement_inst)
+		
 		# If this chunk sits exactly at a lane boundary, add houses or other features.
 		if position.x == left_lane_x:
 			if randf() < 0.1:
-				var house_inst = house.instantiate()
-				house_inst.rotate_y(deg_to_rad(90))
-				chunk.add_child(house_inst)
+				#var amount_of_scenes = 2
+				#if randf() < 1/amount_of_scenes:
+				var big_house_inst = big_house.instantiate()
+				big_house_inst.rotate_y(deg_to_rad(90))
+				chunk.add_child(big_house_inst)
+				
 		
 		if position.x == right_lane_x:
 			if randf() < 0.5:
-				var house_inst = house.instantiate()
-				house_inst.rotate_y(deg_to_rad(-90))
-				chunk.add_child(house_inst)
+				var scenes = [big_house, house]
+				var random_scene = scenes.pick_random()
+				
+				var scene_inst = random_scene.instantiate()
+				scene_inst.rotate_y(deg_to_rad(-90))
+				chunk.add_child(scene_inst)
 	# For both lane and outside chunks, add the chunk to the scene tree.
 	add_child(chunk)
 

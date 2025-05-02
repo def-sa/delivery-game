@@ -17,7 +17,17 @@ signal brightness_updated(value:float)
 signal contrast_updated(value:float)
 signal saturation_updated(value:float)
 
+signal occlusion_culling_updated(value:String)
+signal texture_filter_updated(value: String)
+signal reflections_updated(value: String)
 
+
+signal bilinear_filtering_updated(value: bool)
+
+signal screen_space_reflections_updated(value: bool)
+signal screen_space_ambient_occlusion_updated(value: bool)
+signal screen_space_indirect_lighting_updated(value: bool)
+signal sdfgi_updated(value: bool)
 ##Control Settings
 signal sensitivity_updated(value:int)
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dow0xo37i8ppn"]
+[gd_scene load_steps=9 format=3 uid="uid://dow0xo37i8ppn"]
 
-[ext_resource type="Script" uid="uid://dmqvlgboy3vq8" path="res://scenes/world/house.gd" id="1_i3i5o"]
+[ext_resource type="Script" uid="uid://dmqvlgboy3vq8" path="res://scenes/world/big_house.gd" id="1_i3i5o"]
+[ext_resource type="ArrayOccluder3D" uid="uid://5ndmmsstp2gy" path="res://scenes/world/big_house.occ" id="2_8elsv"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_y648w"]
 flip_faces = true
@@ -25,6 +26,10 @@ size = Vector2(8, 27)
 
 [node name="house" type="StaticBody3D"]
 script = ExtResource("1_i3i5o")
+
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
+occluder = ExtResource("2_8elsv")
+bake_simplification_distance = 0.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32, 0)

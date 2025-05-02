@@ -1,21 +1,13 @@
 extends StaticBody3D
 
-@onready var csg_boxes: CSGBox3D = $outer
 
-@export var front_deck_chance: Dictionary = {"front_deck": 0.3}
-@export var front_door_chance: Dictionary = {"front_door": 1.0}
+@onready var house: CSGBox3D = $house
 
-@onready var all_variables: Array = [
-	front_deck_chance,
-	front_door_chance
-]
+
+@onready var random_offset_min = 0.0
+@onready var random_offset_max = 23
 
 func _ready() -> void:
-	for child in csg_boxes.get_children():
-		# For each chance dictionary, match the key with part of the child's name
-		for chance_option in all_variables:
-			var key: String = chance_option.keys()[0]
-			if child.get_name().contains(key):
-				# Directly use the chance value for visibility.
-				var probability: float = chance_option[key]
-				child.visible = randf() < probability
+	var x = randf_range(random_offset_min, random_offset_max)
+	var z = randf_range(random_offset_min, random_offset_max)
+	house.position += Vector3(x,0,z)

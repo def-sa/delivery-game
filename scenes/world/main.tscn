@@ -1,11 +1,13 @@
-[gd_scene load_steps=77 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=81 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/world/main.gd" id="1_md6cl"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/ui/pause.tscn" id="2_u2p2s"]
 [ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/themes/new_theme.tres" id="3_llfdw"]
+[ext_resource type="PackedScene" uid="uid://cggqb75a8w8r" path="res://addons/debug_menu/debug_menu.tscn" id="3_md6cl"]
 [ext_resource type="PackedScene" uid="uid://d0dymr70087q8" path="res://scenes/world/player.tscn" id="5_wlwgd"]
 [ext_resource type="Script" uid="uid://4meaxqmy35g5" path="res://scripts/world/world.gd" id="6_4m2ge"]
 [ext_resource type="Script" uid="uid://b0i8cf6e8k2sm" path="res://scripts/world/cart.gd" id="7_exqdm"]
+[ext_resource type="Texture2D" uid="uid://b1v32xhdwxnxc" path="res://assets/glass_viewjpg.jpg" id="7_md6cl"]
 [ext_resource type="Texture2D" uid="uid://b8afy7ss5kxee" path="res://assets/world/box/carton_box_04_closed_1.png" id="8_713oj"]
 [ext_resource type="Texture2D" uid="uid://owvdch0pwqd5" path="res://GLB format/Textures/wall_lines.png" id="9_r3w6i"]
 [ext_resource type="Texture2D" uid="uid://bm6u1og3wfoj4" path="res://GLB format/Textures/concrete.png" id="10_ggkmy"]
@@ -23,19 +25,18 @@
 [ext_resource type="PackedScene" uid="uid://dow0xo37i8ppn" path="res://scenes/world/big_house.tscn" id="22_6gnby"]
 [ext_resource type="PackedScene" uid="uid://cllvttystqrdp" path="res://scenes/world/tutorial_warehouse.tscn" id="23_wrw41"]
 [ext_resource type="Script" uid="uid://w0088ri165ve" path="res://scripts/world/delivery_point.gd" id="25_ij6fg"]
+[ext_resource type="PackedScene" uid="uid://daf5q3nsag6xs" path="res://scenes/world/house.tscn" id="25_u2p2s"]
+[ext_resource type="PackedScene" uid="uid://dvhvacx07dg8e" path="res://sidewalk_pavement.tscn" id="27_llfdw"]
 
 [sub_resource type="Environment" id="Environment_0xlil"]
 background_mode = 1
 background_color = Color(0.235294, 0.235294, 0.235294, 1)
-sdfgi_bounce_feedback = 0.0
-sdfgi_cascades = 1
-sdfgi_min_cell_size = 0.00078125
-sdfgi_cascade0_distance = 0.05
-sdfgi_max_distance = 0.1
-sdfgi_y_scale = 0
-sdfgi_energy = 0.0
-sdfgi_normal_bias = 0.0
-sdfgi_probe_bias = 0.0
+sdfgi_use_occlusion = true
+glow_enabled = true
+glow_strength = 2.0
+glow_bloom = 0.12
+glow_map_strength = 0.0
+glow_map = ExtResource("7_md6cl")
 fog_enabled = true
 fog_light_color = Color(0.235294, 0.235294, 0.235294, 1)
 fog_depth_begin = 0.0
@@ -252,6 +253,8 @@ collision_bounce = 1.0
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_md6cl")
+
+[node name="CanvasLayer2" parent="." instance=ExtResource("3_md6cl")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -787,8 +790,10 @@ size = Vector3(15, 1, 15)
 script = ExtResource("19_hbyw3")
 chunk_scene = ExtResource("20_ubvmu")
 false_chunk_scene = ExtResource("21_ubvmu")
-house = ExtResource("22_6gnby")
+big_house = ExtResource("22_6gnby")
+house = ExtResource("25_u2p2s")
 tutorial_warehouse = ExtResource("23_wrw41")
+sidewalk_pavement = ExtResource("27_llfdw")
 
 [node name="chunk" parent="World/Terrain" instance=ExtResource("20_ubvmu")]
 

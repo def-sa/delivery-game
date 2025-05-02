@@ -1,10 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://cllvttystqrdp"]
+[gd_scene load_steps=19 format=3 uid="uid://cllvttystqrdp"]
 
 [ext_resource type="Texture2D" uid="uid://c22xymxsuidjb" path="res://assets/tutorial.png" id="1_wyb0i"]
 [ext_resource type="Script" uid="uid://caw4vf3r4hxht" path="res://scenes/world/tutorial_warehouse.gd" id="1_ytsgy"]
 [ext_resource type="Texture2D" uid="uid://cge5s3hbqvov0" path="res://assets/AR square.png" id="3_oa7mv"]
 [ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/world/box_spawner.gd" id="4_lc5nb"]
 [ext_resource type="Texture2D" uid="uid://dh7sc50uo06op" path="res://assets/icon.svg" id="5_8dlnr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc5nb"]
+albedo_color = Color(0.666569, 0.666569, 0.666569, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_3p7as"]
 flip_faces = true
@@ -54,11 +57,13 @@ script = ExtResource("1_ytsgy")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32, 0)
+material_override = SubResource("StandardMaterial3D_lc5nb")
 transparency = 0.56
 mesh = SubResource("BoxMesh_3p7as")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 10, -18)
+material_override = SubResource("StandardMaterial3D_lc5nb")
 mesh = SubResource("BoxMesh_wyb0i")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
@@ -67,6 +72,7 @@ shape = SubResource("ConvexPolygonShape3D_be005")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 13, 16)
+material_override = SubResource("StandardMaterial3D_lc5nb")
 mesh = SubResource("BoxMesh_5se1w")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -99,6 +105,7 @@ shape = SubResource("ConvexPolygonShape3D_ytsgy")
 
 [node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 10, 23)
+material_override = SubResource("StandardMaterial3D_lc5nb")
 mesh = SubResource("BoxMesh_wyb0i")
 
 [node name="box" type="Node3D" parent="."]
