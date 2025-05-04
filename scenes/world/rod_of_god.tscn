@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4eycnkeaxybi"]
+
+[ext_resource type="Script" uid="uid://dbtd4156wgwuh" path="res://rod_of_god.gd" id="1_7g70u"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kff4p"]
+radius = 4.0
+height = 72.0
+radial_segments = 4
+rings = 0
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_81v8u"]
+data = PackedVector3Array(0, 36, 0, 0, 36, 0, 0, 32, -4, 0, 36, 0, -4, 32, 0, 0, 32, -4, 0, 36, 0, 0, 36, 0, -4, 32, 0, 0, 36, 0, 0, 32, 4, -4, 32, 0, 0, 36, 0, 0, 36, 0, 0, 32, 4, 0, 36, 0, 4, 32, 0, 0, 32, 4, 0, 36, 0, 0, 36, 0, 4, 32, 0, 0, 36, 0, 0, 32, -4, 4, 32, 0, 0, 32, -4, -4, 32, 0, 0, -32, -4, -4, 32, 0, -4, -32, 0, 0, -32, -4, -4, 32, 0, 0, 32, 4, -4, -32, 0, 0, 32, 4, 0, -32, 4, -4, -32, 0, 0, 32, 4, 4, 32, 0, 0, -32, 4, 4, 32, 0, 4, -32, 0, 0, -32, 4, 4, 32, 0, 0, 32, -4, 4, -32, 0, 0, 32, -4, 0, -32, -4, 4, -32, 0, 0, -32, -4, -4, -32, 0, 0, -36, 0, -4, -32, 0, 0, -36, 0, 0, -36, 0, -4, -32, 0, 0, -32, 4, 0, -36, 0, 0, -32, 4, 0, -36, 0, 0, -36, 0, 0, -32, 4, 4, -32, 0, 0, -36, 0, 4, -32, 0, 0, -36, 0, 0, -36, 0, 4, -32, 0, 0, -32, -4, 0, -36, 0, 0, -32, -4, 0, -36, 0, 0, -36, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_672vg"]
+flip_faces = true
+size = Vector3(64, 64, 64)
+
+[node name="rod" type="StaticBody3D"]
+script = ExtResource("1_7g70u")
+
+[node name="ground" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -17, 0)
+use_collision = true
+size = Vector3(80, 32, 80)
+
+[node name="hole1" type="CSGSphere3D" parent="ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.31081, 13.5903, -19.2397)
+operation = 2
+radius = 16.85
+
+[node name="hole2" type="CSGSphere3D" parent="ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.310805, 18.5903, 0.760262)
+operation = 2
+radius = 16.0
+
+[node name="hole3" type="CSGSphere3D" parent="ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.19885, 20.4303, -17.2946)
+operation = 2
+radius = 16.85
+
+[node name="hole4" type="CSGSphere3D" parent="ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9319, 9.19909, -5.42241)
+operation = 2
+radius = 12.22
+
+[node name="hole5" type="CSGSphere3D" parent="ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.94571, 9.19909, 17.6224)
+operation = 2
+radius = 17.4436
+
+[node name="rod_of_god" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.965926, 0.258819, 0, -0.224144, 0.836516, -0.5, -0.12941, 0.482963, 0.866025, 0, -1, -10)
+mesh = SubResource("CapsuleMesh_kff4p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.965926, 0.258819, 0, -0.224144, 0.836516, -0.5, -0.12941, 0.482963, 0.866025, 0, -1, -10)
+shape = SubResource("ConcavePolygonShape3D_81v8u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32, 0)
+visible = false
+transparency = 0.56
+mesh = SubResource("BoxMesh_672vg")

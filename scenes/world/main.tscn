@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=82 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/world/main.gd" id="1_md6cl"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/ui/pause.tscn" id="2_u2p2s"]
@@ -27,6 +27,7 @@
 [ext_resource type="Script" uid="uid://w0088ri165ve" path="res://scripts/world/delivery_point.gd" id="25_ij6fg"]
 [ext_resource type="PackedScene" uid="uid://daf5q3nsag6xs" path="res://scenes/world/house.tscn" id="25_u2p2s"]
 [ext_resource type="PackedScene" uid="uid://dvhvacx07dg8e" path="res://sidewalk_pavement.tscn" id="27_llfdw"]
+[ext_resource type="PackedScene" uid="uid://c4eycnkeaxybi" path="res://scenes/world/rod_of_god.tscn" id="28_80eyj"]
 
 [sub_resource type="Environment" id="Environment_0xlil"]
 background_mode = 1
@@ -794,6 +795,7 @@ big_house = ExtResource("22_6gnby")
 house = ExtResource("25_u2p2s")
 tutorial_warehouse = ExtResource("23_wrw41")
 sidewalk_pavement = ExtResource("27_llfdw")
+rod_of_god_scene = ExtResource("28_80eyj")
 
 [node name="chunk" parent="World/Terrain" instance=ExtResource("20_ubvmu")]
 

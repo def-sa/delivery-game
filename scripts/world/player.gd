@@ -30,6 +30,9 @@ extends CharacterBody3D
 @onready var static_body: StaticBody3D = $camera_pivot/spring_arm_3d/camera/StaticBody3D
 
 @onready var no_fly_ray: RayCast3D = $no_fly_ray
+
+@onready var player_mesh: MeshInstance3D = $MeshInstance3D
+
 #endregion
 
 @export_category("Player variables")
@@ -145,6 +148,8 @@ func _physics_process(delta: float) -> void:
 	
 	#turn off ray interaction if not in first person mode
 	ray_interaction.enabled = bool(perspective == "first")
+	player_mesh.visible = !bool(perspective == "first")
+	#player_mesh.look_at(player_hand.global_position)
 	
 	#handle click ray if mouse visible
 	if Input.is_action_pressed("tab"):

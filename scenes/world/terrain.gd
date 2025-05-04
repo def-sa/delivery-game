@@ -1,6 +1,6 @@
 extends Node3D
 
-var seed_name: String = "a"
+var seed_name: String = "abcd"
 
 @export var chunk_scene: PackedScene
 @export var false_chunk_scene: PackedScene
@@ -8,6 +8,7 @@ var seed_name: String = "a"
 @export var house: PackedScene
 @export var tutorial_warehouse: PackedScene
 @export var sidewalk_pavement: PackedScene
+@export var rod_of_god_scene: PackedScene
 
 
 @export var chunk_size: int = 64
@@ -66,7 +67,7 @@ func _generate_initial_chunks():
 	# Loop over rows and columns to fill a square grid.
 	for dz in range(-view_distance, view_distance + 1):
 		var z = (player_z_index + dz) * chunk_size
-		for dx in range(-view_distance, view_distance + 1):
+		for dx in range(-view_distance/3, view_distance/3 + 1):
 			var x_index = player_x_index + dx
 			var x = x_index * chunk_size
 			var pos = Vector3(x, 0, z)
@@ -74,14 +75,14 @@ func _generate_initial_chunks():
 			# Create a lane chunk if within the designated lane indices;
 			# otherwise, create an outside (false) chunk.
 			if x_index >= lane_min_index and x_index <= lane_max_index:
-				_create_chunk(pos, chunk_scene)
+				_handle_inside_chunks(pos)
 			else:
-				_create_chunk(pos, false_chunk_scene)
-				
+				_handle_outside_chunks(pos)
 
 
 func _update_chunks():
 	var player_pos = player.global_transform.origin
+	print(player_pos)
 	var new_chunk_index_x = int(player_pos.x / chunk_size)
 	var new_chunk_index_z = int(player_pos.z / chunk_size)
 	
@@ -95,15 +96,15 @@ func _update_chunks():
 func _generate_chunks_from_index(center_x_index: int, center_z_index: int):
 	for dz in range(-view_distance, view_distance + 1):
 		var z = (center_z_index + dz) * chunk_size
-		for dx in range(-view_distance, view_distance + 1):
+		for dx in range(-view_distance/3, view_distance/3 + 1):
 			var x_index = center_x_index + dx
 			var x = x_index * chunk_size
 			var pos = Vector3(x, 0, z)
 			if not chunks.has(pos):
 				if x_index >= lane_min_index and x_index <= lane_max_index:
-					_create_chunk(pos, chunk_scene)
+					_handle_inside_chunks(pos)
 				else:
-					_create_chunk(pos, false_chunk_scene)
+					_handle_outside_chunks(pos)
 
 
 func _free_chunks():
@@ -163,6 +164,13 @@ func _create_chunk(position: Vector3, scene: PackedScene):
 				chunk.add_child(scene_inst)
 	# For both lane and outside chunks, add the chunk to the scene tree.
 	add_child(chunk)
+
+func _handle_outside_chunks(pos):
+	var chunks: Array = [false_chunk_scene]
+	_create_chunk(pos, chunks.pick_random())
+
+func _handle_inside_chunks(pos):
+	_create_chunk(pos, chunk_scene)
 
 
 #settings slider changed

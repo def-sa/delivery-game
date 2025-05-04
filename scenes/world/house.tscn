@@ -1,89 +1,200 @@
-[gd_scene load_steps=6 format=3 uid="uid://daf5q3nsag6xs"]
+[gd_scene load_steps=9 format=3 uid="uid://daf5q3nsag6xs"]
 
 [ext_resource type="PackedScene" uid="uid://bfs8do3yam35f" path="res://scenes/world/door.tscn" id="1_i3i5o"]
 [ext_resource type="Script" uid="uid://y1m6odkwnyir" path="res://scenes/world/house.gd" id="1_tuevy"]
+[ext_resource type="Material" uid="uid://by8r2hk02stp" path="res://scenes/world/fence.tres" id="3_oy3ob"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_y648w"]
 flip_faces = true
 size = Vector3(64, 64, 64)
 
-[sub_resource type="PrismMesh" id="PrismMesh_tuevy"]
-size = Vector3(22, 8, 22)
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_i3i5o"]
 radius = 1.0
 height = 4.0
 
-[node name="house" type="StaticBody3D"]
+[sub_resource type="PrismMesh" id="PrismMesh_tuevy"]
+size = Vector3(22, 8, 22)
+
+[sub_resource type="PrismMesh" id="PrismMesh_oy3ob"]
+size = Vector3(21, 8, 21)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oy3ob"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="house_static_body" type="StaticBody3D"]
 script = ExtResource("1_tuevy")
+
+[node name="light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
+light_color = Color(0.568908, 0.418719, 0.0847236, 1)
+light_energy = 4.525
+shadow_enabled = true
+omni_range = 51.818
+omni_attenuation = 0.013
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32, 0)
+visible = false
 transparency = 0.56
 mesh = SubResource("BoxMesh_y648w")
-
-[node name="house" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 7, -0.5)
-use_collision = true
-size = Vector3(22, 14, 22)
-
-[node name="inner" type="CSGBox3D" parent="house"]
-operation = 2
-size = Vector3(21, 13, 21)
-
-[node name="windows" type="CSGCombiner3D" parent="house"]
-operation = 2
-
-[node name="front_window" type="CSGBox3D" parent="house/windows"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -3, 11)
-size = Vector3(6, 4, 1)
-
-[node name="right_window" type="CSGBox3D" parent="house/windows"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -2, 6)
-size = Vector3(1, 6, 6)
-
-[node name="right_window2" type="CSGBox3D" parent="house/windows"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -3.03131, -2)
-size = Vector3(1, 3.93738, 6)
-
-[node name="left_window" type="CSGBox3D" parent="house/windows"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -2, -4)
-size = Vector3(1, 6, 6)
-
-[node name="roof" type="CSGMesh3D" parent="house"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, 0)
-mesh = SubResource("PrismMesh_tuevy")
-
-[node name="chimney" type="CSGBox3D" parent="house/roof"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, -6, -9)
-size = Vector3(3, 23, 3)
-
-[node name="chimney_hole" type="CSGBox3D" parent="house/roof/chimney"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-operation = 2
-size = Vector3(2.5, 23, 2.5)
-
-[node name="chimney_hole2" type="CSGBox3D" parent="house/roof/chimney"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.5, 1.25)
-operation = 2
-size = Vector3(2.5, 3, 2)
-
-[node name="front_door" type="CSGBox3D" parent="house"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, -3, 10.5)
-operation = 2
-size = Vector3(3, 5, 2)
-
-[node name="door" parent="house/front_door" instance=ExtResource("1_i3i5o")]
-transform = Transform3D(0.875, 0, 0, 0, 0.975, 0, 0, 0, 1, 0.0999999, 0, 0)
-
-[node name="back_door" type="CSGBox3D" parent="house"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -3, -10.5)
-operation = 2
-size = Vector3(3, 5, 2)
-
-[node name="door2" parent="house/back_door" instance=ExtResource("1_i3i5o")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 2, 19)
 mesh = SubResource("CapsuleMesh_i3i5o")
+
+[node name="house" type="Node3D" parent="."]
+
+[node name="house_outer" type="CSGCombiner3D" parent="house"]
+use_collision = true
+
+[node name="roof" type="CSGMesh3D" parent="house/house_outer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 18, -0.5)
+mesh = SubResource("PrismMesh_tuevy")
+
+[node name="house_cutout" type="CSGBox3D" parent="house/house_outer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 7, -0.5)
+use_collision = true
+size = Vector3(22, 14, 22)
+
+[node name="windows" type="CSGCombiner3D" parent="house/house_outer/house_cutout"]
+operation = 2
+
+[node name="front_window" type="CSGBox3D" parent="house/house_outer/house_cutout/windows"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -3, 11)
+size = Vector3(6, 4, 1)
+
+[node name="right_window" type="CSGBox3D" parent="house/house_outer/house_cutout/windows"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -2, 6)
+size = Vector3(1, 6, 6)
+
+[node name="right_window2" type="CSGBox3D" parent="house/house_outer/house_cutout/windows"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -3.03131, -2)
+size = Vector3(1, 3.93738, 6)
+
+[node name="left_window" type="CSGBox3D" parent="house/house_outer/house_cutout/windows"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -2, -4)
+size = Vector3(1, 6, 6)
+
+[node name="front_door" type="CSGBox3D" parent="house/house_outer/house_cutout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, -3, 10.5)
+operation = 2
+size = Vector3(3, 5, 2)
+
+[node name="door" parent="house/house_outer/house_cutout/front_door" instance=ExtResource("1_i3i5o")]
+transform = Transform3D(0.875, 0, 0, 0, 0.975, 0, 0, 0, 1, 0.0999999, 0, 0)
+
+[node name="back_door" type="CSGBox3D" parent="house/house_outer/house_cutout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -3, -10.5)
+operation = 2
+size = Vector3(3, 5, 2)
+
+[node name="door2" parent="house/house_outer/house_cutout/back_door" instance=ExtResource("1_i3i5o")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="cutout" type="CSGCombiner3D" parent="house/house_outer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 7, -0.5)
+operation = 2
+
+[node name="inner" type="CSGBox3D" parent="house/house_outer/cutout"]
+size = Vector3(21, 13, 21)
+
+[node name="roof" type="CSGMesh3D" parent="house/house_outer/cutout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+mesh = SubResource("PrismMesh_oy3ob")
+
+[node name="chimney_hole" type="CSGBox3D" parent="house/house_outer/cutout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 11, -9)
+size = Vector3(2.5, 10, 2.5)
+
+[node name="chimney" type="CSGBox3D" parent="house"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 12, -9.5)
+use_collision = true
+size = Vector3(3, 23, 3)
+
+[node name="chimney_hole" type="CSGBox3D" parent="house/chimney"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+operation = 2
+size = Vector3(2.5, 23, 2.5)
+
+[node name="chimney_hole2" type="CSGBox3D" parent="house/chimney"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.5, 1.25)
+operation = 2
+size = Vector3(2.5, 3, 2)
+
+[node name="shed" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -16.2172)
+
+[node name="shed_outer" type="CSGCombiner3D" parent="shed"]
+use_collision = true
+
+[node name="shed_cutout" type="CSGBox3D" parent="shed/shed_outer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 3, -9.5)
+use_collision = true
+size = Vector3(6, 7, 12)
+
+[node name="front_door" type="CSGBox3D" parent="shed/shed_outer/shed_cutout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 5.5)
+operation = 2
+size = Vector3(3, 5, 2)
+
+[node name="door" parent="shed/shed_outer/shed_cutout/front_door" instance=ExtResource("1_i3i5o")]
+transform = Transform3D(0.875, 0, 0, 0, 0.975, 0, 0, 0, 1, 0.0999999, 0, 0)
+
+[node name="cutout" type="CSGCombiner3D" parent="shed/shed_outer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 7, -0.5)
+operation = 2
+
+[node name="inner" type="CSGBox3D" parent="shed/shed_outer/cutout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -4, -9)
+size = Vector3(5, 6, 11)
+
+[node name="fence_bounding_box" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 7.25, 45)
+operation = 1
+use_collision = true
+size = Vector3(66, 16, 26)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="fence_bounding_box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.5, 10)
+operation = 1
+
+[node name="lawn_fence_left" type="CSGPolygon3D" parent="fence_bounding_box/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, -26.75, -23)
+polygon = PackedVector2Array(0, 0, 0, 3, 128, 3, 128, 0)
+depth = 0.15
+material = ExtResource("3_oy3ob")
+
+[node name="lawn_fence_right" type="CSGPolygon3D" parent="fence_bounding_box/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 31.5, -26.75, -23.0122)
+polygon = PackedVector2Array(0, 0, 0, 3, 64, 3, 64, 0)
+depth = 0.15
+material = ExtResource("3_oy3ob")
+
+[node name="fence_right" type="CSGPolygon3D" parent="fence_bounding_box"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, -7.25, -77)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 3, 64, 3, 64, 0)
+depth = 0.15
+material = ExtResource("3_oy3ob")
+
+[node name="fence_left" type="CSGPolygon3D" parent="fence_bounding_box"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 31.5, -7.25, -77)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 3, 64, 3, 64, 0)
+depth = 0.15
+material = ExtResource("3_oy3ob")
+
+[node name="pavement_bounding_box" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 25.3762)
+operation = 1
+use_collision = true
+size = Vector3(60, 4, 65.25)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="pavement_bounding_box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -21.8762)
+operation = 1
+
+[node name="pavement" type="CSGBox3D" parent="pavement_bounding_box/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 52.9288)
+size = Vector3(6, 1, 91)
+material = SubResource("StandardMaterial3D_oy3ob")
