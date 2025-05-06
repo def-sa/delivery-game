@@ -9,12 +9,20 @@ extends Control
 @onready var scan_light: SpotLight3D = $"../../../scan_light"
 
 
+const ITEM_DETECTION_RECT = preload("res://scenes/ui/item_detection_rect.tscn")
+
 #object
 var objects_inside_area = []:
 	set(v):
 		# NOTE: ONLY PASS ARRAYS INTO THIS
 		v.erase(player)
 		objects_inside_area = v
+		print(objects_inside_area)
+
+#[object, current ui container]
+var items_detected_dict:Array[Dictionary]
+	#set(v):
+		#print(connected_nodes_array)
 
 #[object, current ui container]
 var connected_nodes_array = []
@@ -73,6 +81,10 @@ func _physics_process(delta: float) -> void:
 		var current_object = obj
 		
 		for node in connected_nodes_array:
+			
+					
+					#if !rectangle and !colored_bg and !item_text: return
+					
 			if current_object == node[0]:
 				var current_ui_container = node[1]
 				if obj_on_screen == true:
@@ -86,6 +98,17 @@ func _physics_process(delta: float) -> void:
 				#this really sucks but it works for now i guess
 				var child = current_ui_container.get_children()[0]
 				if child.name == "rectangle":
+					if Settings.scanner_flashing and obj_on_screen:
+						await get_tree().create_timer(randf_range(0, 0.25)).timeout
+						if !child: return
+						child.position += Vector2(randf_range(-4,4),randf_range(-4,4))
+						bounding_box.size += Vector2(randf_range(-1,1),randf_range(-1,1))
+						bounding_box.position += Vector2(randf_range(-1,1),randf_range(-1,1))
+						
+						if child.position.distance_to(bounding_box.position) <= 6:
+							child.visible = true
+						else:
+							child.visible = false
 					child.position = bounding_box.position
 					child.size = bounding_box.size
 				child = child.get_children()[0]
@@ -140,7 +163,6 @@ func item_entered_area(object):
 		
 		var item_name = Label.new()
 		var item_name_theme = Theme.new()
-		#item_name_theme.default_font = load("res://assets/RobotoMono-Italic-VariableFont_wght.ttf")
 		item_name.theme = item_name_theme
 		item_name.name = "item_name"
 		item_name.add_theme_color_override("font_color", Color(0,0,0))
@@ -192,6 +214,13 @@ func item_exited_area(object):
 			current_ui_container.queue_free()
 			connected_nodes_array.erase(node)
 			#print("deleted:   ", current_object)
+
+
+
+
+
+
+
 
 func get_2d_bounding_box(mesh_instance: MeshInstance3D) -> Rect2:
 	# Get the bounding box (AABB) of the 3D object

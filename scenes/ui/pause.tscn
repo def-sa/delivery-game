@@ -300,6 +300,10 @@ text = "other
 -------------------------------------------------"
 horizontal_alignment = 1
 
+[node name="scanner_flashing" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("6_eq7dk")]
+layout_mode = 2
+size_flags_horizontal = 4
+
 [node name="show_fps" parent="MarginContainer/AspectRatioContainer/TabContainer/display/ScrollContainer/VBoxContainer" instance=ExtResource("6_eq7dk")]
 layout_mode = 2
 size_flags_horizontal = 4

@@ -82,7 +82,7 @@ func _generate_initial_chunks():
 
 func _update_chunks():
 	var player_pos = player.global_transform.origin
-	print(player_pos)
+	#print(player_pos)
 	var new_chunk_index_x = int(player_pos.x / chunk_size)
 	var new_chunk_index_z = int(player_pos.z / chunk_size)
 	

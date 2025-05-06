@@ -28,6 +28,10 @@ signal screen_space_reflections_updated(value: bool)
 signal screen_space_ambient_occlusion_updated(value: bool)
 signal screen_space_indirect_lighting_updated(value: bool)
 signal sdfgi_updated(value: bool)
+signal scanner_flashing_updated(value: bool)
+
+
+
 ##Control Settings
 signal sensitivity_updated(value:int)
 

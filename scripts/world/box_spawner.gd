@@ -37,9 +37,9 @@ var is_inside_box: bool
 const box_script = preload("res://scripts/world/box.gd")
 const decal_script = preload("res://scripts/world/decal.gd")
 const box_spawner_script = preload("res://scripts/world/box_spawner.gd")
-const hollow_box_obj = preload("res://assets/world/box/hollow_box.obj")
+#const hollow_box_obj = preload("res://assets/world/box/hollow_box.obj")
 #const hollow_obj = preload("res://assets/world/box/hollow_obj.tscn")
-const hollow_box_collision = preload("res://assets/world/box/hollow_box_collision.tscn")
+#const hollow_box_collision = preload("res://assets/world/box/hollow_box_collision.tscn")
 
 #TODO : link up id with delivery point
 var id 
@@ -54,14 +54,14 @@ func _ready() -> void:
 	
 	if box_size and !box_weight:
 		box_weight = (box_size.x + box_size.y + box_size.z)/3
-	if inside_box_size and !inside_box_weight:
-		inside_box_weight = (inside_box_size.x + inside_box_size.y + inside_box_size.z)/3
+	#if inside_box_size and !inside_box_weight:
+		#inside_box_weight = (inside_box_size.x + inside_box_size.y + inside_box_size.z)/3
 	
-	if has_box_inside:
-		is_hollow_box = true
+	#if has_box_inside:
+		#is_hollow_box = true
 	
-	if is_hollow_box:
-		box_size = Vector3(1,1,1)
+	#if is_hollow_box:
+		#box_size = Vector3(1,1,1)
 	#print(modifiers)
 	#TODO: modifiers not being applied correctly? 
 	#spawn_box(modifiers)
@@ -93,13 +93,13 @@ func spawn_box(new_modifiers):
 		rigidbody.continuous_cd = true
 	
 	var mesh = MeshInstance3D.new()
-	if is_hollow_box:
-		mesh.mesh = hollow_box_obj
-		mesh.transparency = .5
-	else:
-		var box_mesh = BoxMesh.new()
-		box_mesh.size = box_size
-		mesh.mesh = box_mesh
+	#if is_hollow_box:
+		#mesh.mesh = hollow_box_obj
+		#mesh.transparency = .5
+	#else:
+	var box_mesh = BoxMesh.new()
+	box_mesh.size = box_size
+	mesh.mesh = box_mesh
 		
 	if box_texture:
 		var material = StandardMaterial3D.new()
@@ -108,48 +108,48 @@ func spawn_box(new_modifiers):
 	
 	
 	
-	if is_hollow_box:
-		var collision_shapes = hollow_box_collision.instantiate().get_children()
-		for shape in collision_shapes:
-			rigidbody.add_child(shape.duplicate())
-	else:
-		var collision = CollisionShape3D.new()
-		var box_shape = BoxShape3D.new()
-		box_shape.extents = box_size / 2  # BoxShape3D uses half-extents
-		collision.shape = box_shape
-		rigidbody.add_child(collision)
+	#if is_hollow_box:
+		#var collision_shapes = hollow_box_collision.instantiate().get_children()
+		#for shape in collision_shapes:
+			#rigidbody.add_child(shape.duplicate())
+	#else:
+	var collision = CollisionShape3D.new()
+	var box_shape = BoxShape3D.new()
+	box_shape.extents = box_size / 2  # BoxShape3D uses half-extents
+	collision.shape = box_shape
+	rigidbody.add_child(collision)
 	
 	rigidbody.mass = box_weight
 	
-	if has_box_inside:
-		var spawner_node = Node3D.new()
-		spawner_node.set_script(box_spawner_script)
-		add_child(spawner_node)
-		spawner_node.is_inside_box = true
-		spawner_node.box_size = inside_box_size
-		spawner_node.box_texture = inside_box_texture
-		spawner_node.box_mass = inside_box_mass
-		
-		var obj_spawned = spawner_node.spawn_box(inside_box_modifiers)
-		#obj_spawned.gravity_scale = 0
-		
-		var remote_transform = RemoteTransform3D.new()
-		remote_transform.remote_path = spawner_node.get_path()
-		remote_transform.update_rotation = false
-		remote_transform.update_scale = false
-		rigidbody.add_child(remote_transform)
-		
-		var area_3d = Area3D.new()
-		area_3d.set_collision_layer_value(2, true)
-		area_3d.set_collision_mask_value(2, true)
-		var area_3d_collision = CollisionShape3D.new()
-		var box_shape = BoxShape3D.new()
-		box_shape.size = box_size
-		area_3d_collision.shape = box_shape
-		area_3d.add_child(area_3d_collision)
-		
-		area_3d.connect("body_exited", _body_exited_box_with_item.bind(obj_spawned, rigidbody))
-		rigidbody.add_child(area_3d)
+	#if has_box_inside:
+		#var spawner_node = Node3D.new()
+		#spawner_node.set_script(box_spawner_script)
+		#add_child(spawner_node)
+		#spawner_node.is_inside_box = true
+		#spawner_node.box_size = inside_box_size
+		#spawner_node.box_texture = inside_box_texture
+		#spawner_node.box_mass = inside_box_mass
+		#
+		#var obj_spawned = spawner_node.spawn_box(inside_box_modifiers)
+		##obj_spawned.gravity_scale = 0
+		#
+		#var remote_transform = RemoteTransform3D.new()
+		#remote_transform.remote_path = spawner_node.get_path()
+		#remote_transform.update_rotation = false
+		#remote_transform.update_scale = false
+		#rigidbody.add_child(remote_transform)
+		#
+		#var area_3d = Area3D.new()
+		#area_3d.set_collision_layer_value(2, true)
+		#area_3d.set_collision_mask_value(2, true)
+		#var area_3d_collision = CollisionShape3D.new()
+		#var box_shape = BoxShape3D.new()
+		#box_shape.size = box_size
+		#area_3d_collision.shape = box_shape
+		#area_3d.add_child(area_3d_collision)
+		#
+		#area_3d.connect("body_exited", _body_exited_box_with_item.bind(obj_spawned, rigidbody))
+		#rigidbody.add_child(area_3d)
 	
 	
 	var shadow_decal = Decal.new()

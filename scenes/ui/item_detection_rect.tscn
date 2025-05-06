@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://boywqd4l35qdl"]
+
+[ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="1_n3cug"]
+[ext_resource type="Script" uid="uid://tdeguy8qfe7t" path="res://scenes/ui/item_detection_rect.gd" id="1_uhsky"]
+[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/themes/new_theme.tres" id="2_uhsky"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a4367"]
+shader = ExtResource("1_n3cug")
+
+[node name="item_detection_rect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uhsky")
+
+[node name="rectangle" type="ReferenceRect" parent="."]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+editor_only = false
+
+[node name="colored_bg" type="ColorRect" parent="rectangle"]
+layout_mode = 0
+offset_bottom = 25.0
+color = Color(1, 0, 0, 1)
+
+[node name="item_text" type="Label" parent="rectangle/colored_bg"]
+material = SubResource("ShaderMaterial_a4367")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("2_uhsky")
+text = "testing waaaaow"
+clip_text = true

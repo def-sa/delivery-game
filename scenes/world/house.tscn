@@ -158,14 +158,14 @@ size = Vector3(66, 16, 26)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.5, 10)
 operation = 1
 
-[node name="lawn_fence_left" type="CSGPolygon3D" parent="fence_bounding_box/CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, -26.75, -23)
-polygon = PackedVector2Array(0, 0, 0, 3, 128, 3, 128, 0)
+[node name="lawn_fence_right" type="CSGPolygon3D" parent="fence_bounding_box/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 31.5, -26.75, -23.0122)
+polygon = PackedVector2Array(0, 0, 0, 3, 64, 3, 64, 0)
 depth = 0.15
 material = ExtResource("3_oy3ob")
 
-[node name="lawn_fence_right" type="CSGPolygon3D" parent="fence_bounding_box/CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 31.5, -26.75, -23.0122)
+[node name="lawn_fence_right2" type="CSGPolygon3D" parent="fence_bounding_box/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, -26.75, -23.012)
 polygon = PackedVector2Array(0, 0, 0, 3, 64, 3, 64, 0)
 depth = 0.15
 material = ExtResource("3_oy3ob")

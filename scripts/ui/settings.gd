@@ -238,6 +238,21 @@ var sdfgi:bool = sdfgi_default:
 #endregion
 
 
+#scanner_flashing
+
+#region scanner_flashing toggle
+@export_group("scanner_flashing", "scanner_flashing")
+@export var scanner_flashing_default:bool = true
+var scanner_flashing_name:String = "scanner flashing"
+var scanner_flashing_tooltip:String = "toggle Signed Distance Field Global Illumination"
+
+
+var scanner_flashing:bool = scanner_flashing_default:
+	set(v):
+		scanner_flashing = v
+		Signalbus.scanner_flashing_updated.emit(scanner_flashing)
+#endregion
+
 
 
 
