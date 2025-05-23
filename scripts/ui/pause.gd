@@ -4,6 +4,11 @@ extends Control
 @onready var revert_timer: Timer = $revert_changes/VBoxContainer/revert_timer
 @onready var revert_changes: ColorRect = $revert_changes
 @onready var reverting_in_label: Label = $revert_changes/VBoxContainer/reverting_in_label
+@onready var player: CharacterBody3D = $"../../World/Player"
+#@onready var dialogue: RichTextLabel = $"../npc_name/dialogue"
+@onready var npc_name: RichTextLabel = $"../npc_name"
+const BALLOON = preload("res://scenes/balloon.tscn")
+#@onready var dialogue: CanvasLayer = $"../npc_name/dialogue"
 
 var paused: bool = false:
 	set(v):
@@ -12,20 +17,57 @@ var paused: bool = false:
 @onready var world: Node3D = $"../../World"
 @onready var pause_menu: Control = $"."
 
-# Called when the node enters the scene tree for the first time.
+var dialogue_started = false
+
 func _ready() -> void:
+	#pause_mode = Node.PAUSE_MODE_PROCESS  # Ensure input is received even when paused
 	pause_menu.hide()
+	DialogueManager.dialogue_ended.connect(_dialogue_ended)
+	#Signalbus.is_interact_pressed.connect(_is_interact_pressed)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		paused = !paused
-		pause_menu.visible = paused
-		world.get_tree().paused = paused
-		
-		if paused:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		elif !paused:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		pause(!paused, true)
+		#if dialogue.in_dialogue:
+			#npc_name.visible = false
+			#dialogue.in_dialogue = false
+	#handle obj movement
+	if event.is_action_pressed("interact"):
+		var obj = player._ray_intersect_obj()
+		if obj and obj.is_in_group("interactable") and obj.is_in_group("NPC"):
+			_is_interact_pressed(obj)
+			#Signalbus.is_interact_pressed.emit(obj)
+			#return
+
+
+func pause(set_paused: bool, menu_visible: bool):
+	paused = set_paused
+	pause_menu.visible = menu_visible and paused
+	get_tree().paused = paused
+	if paused:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func _is_interact_pressed(npc):
+	if !npc: return
+	if dialogue_started: return
+	
+	pause(true, false)
+	
+	if FileAccess.file_exists("res://dialogue/"+String(npc.name)+".dialogue"):
+		var dialogue = load("res://dialogue/"+String(npc.name)+".dialogue")
+		var new_balloon = BALLOON.instantiate()
+		dialogue_started = true
+		npc_name.add_child(new_balloon)
+		new_balloon.start(dialogue, "start")
+
+func _dialogue_ended(resource):
+	dialogue_started = false
+	pause(false, false)
+
+
+
 
 
 func _process(delta: float) -> void:

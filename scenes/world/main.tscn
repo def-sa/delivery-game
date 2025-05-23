@@ -1,14 +1,16 @@
-[gd_scene load_steps=82 format=4 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=86 format=4 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="Script" uid="uid://ct2d7mnkth3mi" path="res://scripts/world/main.gd" id="1_md6cl"]
 [ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/ui/pause.tscn" id="2_u2p2s"]
 [ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/themes/new_theme.tres" id="3_llfdw"]
 [ext_resource type="PackedScene" uid="uid://cggqb75a8w8r" path="res://addons/debug_menu/debug_menu.tscn" id="3_md6cl"]
+[ext_resource type="Script" uid="uid://begf8htsj65k" path="res://scenes/world/character_speech_label.gd" id="5_4m2ge"]
 [ext_resource type="PackedScene" uid="uid://d0dymr70087q8" path="res://scenes/world/player.tscn" id="5_wlwgd"]
 [ext_resource type="Script" uid="uid://4meaxqmy35g5" path="res://scripts/world/world.gd" id="6_4m2ge"]
 [ext_resource type="Script" uid="uid://b0i8cf6e8k2sm" path="res://scripts/world/cart.gd" id="7_exqdm"]
 [ext_resource type="Texture2D" uid="uid://b1v32xhdwxnxc" path="res://assets/glass_viewjpg.jpg" id="7_md6cl"]
 [ext_resource type="Texture2D" uid="uid://b8afy7ss5kxee" path="res://assets/world/box/carton_box_04_closed_1.png" id="8_713oj"]
+[ext_resource type="PackedScene" uid="uid://djidwgxbgfrk5" path="res://scenes/balloon.tscn" id="8_r3w6i"]
 [ext_resource type="Texture2D" uid="uid://owvdch0pwqd5" path="res://GLB format/Textures/wall_lines.png" id="9_r3w6i"]
 [ext_resource type="Texture2D" uid="uid://bm6u1og3wfoj4" path="res://GLB format/Textures/concrete.png" id="10_ggkmy"]
 [ext_resource type="Script" uid="uid://csg6h0wweg7cj" path="res://scripts/world/box_spawner.gd" id="11_28gua"]
@@ -202,6 +204,13 @@ albedo_color = Color(0.890196, 0, 0, 1)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_llfdw"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
+[sub_resource type="SphereMesh" id="SphereMesh_80eyj"]
+radius = 2.425
+height = 11.265
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1notw"]
+points = PackedVector3Array(2.30773, 1.6541, 0.156222, -2.31029, -1.47916, -0.336895, -2.31261, -1.48065, 0.320032, 0.834933, -5.23178, 0.328395, 0.483425, -1.31334, -2.30672, -0.343648, 4.86614, 1.16579, 0.486675, -1.32202, 2.30517, -0.341219, 4.33099, -1.50733, -1.95702, 2.43559, 0.965509, -0.855628, -5.25342, 0.160244, -1.62627, -0.323377, -1.78815, -1.14731, -0.813398, 2.10628, 2.14458, -2.48438, -0.33935, 1.46251, 3.5966, -1.15299, -0.341217, -4.33098, -1.50732, 0.979276, 3.45844, 1.63786, 1.9477, -1.46651, 1.29493, -1.8323, 3.48229, -0.505599, 0.834934, 5.23178, 0.328395, -0.503807, -3.96555, 1.64323, 1.77184, -1.77996, -1.46511, -0.661211, 2.28484, 2.11347, 0.483426, 1.31334, -2.30672, 0.993231, -4.34229, -1.17752, -0.855628, 5.25342, 0.160244, -1.64248, -3.43204, -0.988926, 1.13872, -3.93442, 1.30227, -1.64718, -3.44191, 0.974555, 2.10628, 0.813398, -1.14731, -0.983034, 1.46145, -2.12021, 1.29493, 1.46651, 1.9477, -0.664197, -2.13193, -2.14037)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ld40"]
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
@@ -266,6 +275,49 @@ process_mode = 3
 z_index = 1000
 size_flags_horizontal = 0
 theme = ExtResource("3_llfdw")
+
+[node name="npc_name" type="RichTextLabel" parent="CanvasLayer"]
+process_mode = 3
+visible = false
+custom_minimum_size = Vector2(0, 254.54)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_llfdw")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+horizontal_alignment = 1
+
+[node name="dialogue_old" type="RichTextLabel" parent="CanvasLayer/npc_name"]
+process_mode = 3
+visible = false
+z_index = 3
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_llfdw")
+theme_override_font_sizes/normal_font_size = 65
+bbcode_enabled = true
+text = "awawawawaww"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_4m2ge")
+
+[node name="Timer" type="Timer" parent="CanvasLayer/npc_name/dialogue_old"]
+process_mode = 3
+
+[node name="dialogue" parent="CanvasLayer/npc_name" instance=ExtResource("8_r3w6i")]
+process_mode = 3
+visible = false
 
 [node name="World" type="Node3D" parent="."]
 script = ExtResource("6_4m2ge")
@@ -742,6 +794,21 @@ mesh = SubResource("BoxMesh_2f3dj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.87266, 0)
 shape = SubResource("ConcavePolygonShape3D_llfdw")
 
+[node name="npc" type="Node3D" parent="World/Objects/test_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+
+[node name="TXT_DUMMY_0" type="RigidBody3D" parent="World/Objects/test_objects/npc" groups=["NPC", "interactable"]]
+collision_layer = 3
+collision_mask = 3
+freeze = true
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Objects/test_objects/npc/TXT_DUMMY_0"]
+mesh = SubResource("SphereMesh_80eyj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Objects/test_objects/npc/TXT_DUMMY_0"]
+shape = SubResource("ConvexPolygonShape3D_1notw")
+
 [node name="Entities" type="Node3D" parent="World"]
 
 [node name="delivery_point" type="Node3D" parent="World/Entities" node_paths=PackedStringArray("player")]
@@ -799,6 +866,7 @@ rod_of_god_scene = ExtResource("28_80eyj")
 
 [node name="chunk" parent="World/Terrain" instance=ExtResource("20_ubvmu")]
 
+[connection signal="timeout" from="CanvasLayer/npc_name/dialogue_old/Timer" to="CanvasLayer/npc_name/dialogue_old" method="_on_timer_timeout"]
 [connection signal="body_entered" from="World/Objects/cart/cart_area_bottom_objects" to="World/Objects/cart" method="_on_cart_area_bottom_objects_body_entered"]
 [connection signal="body_exited" from="World/Objects/cart/cart_area_bottom_objects" to="World/Objects/cart" method="_on_cart_area_bottom_objects_body_exited"]
 [connection signal="body_entered" from="World/Objects/test_objects/hurt_area" to="World/Objects/test_objects/hurt_area" method="_on_body_entered"]

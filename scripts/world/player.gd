@@ -20,7 +20,8 @@ extends CharacterBody3D
 @onready var spring_position: Node3D = $camera_pivot/spring_arm_3d/spring_position
 @onready var camera: Camera3D = $camera_pivot/spring_arm_3d/camera
 @onready var flashlight: SpotLight3D = $flashlight
-@onready var scan_light: SpotLight3D = $scan_light
+@onready var far_scan_light: SpotLight3D = $far_scan_light
+@onready var short_scan_light: OmniLight3D = $short_scan_light
 
 @onready var ray_interaction: RayCast3D = $camera_pivot/spring_arm_3d/camera/ray_interaction
 @onready var player_hand: Marker3D = $camera_pivot/spring_arm_3d/camera/ray_interaction/Path3D/PathFollow3D/hand
@@ -32,6 +33,14 @@ extends CharacterBody3D
 @onready var no_fly_ray: RayCast3D = $no_fly_ray
 
 @onready var player_mesh: MeshInstance3D = $MeshInstance3D
+
+
+@onready var dialogue: RichTextLabel = $"../../CanvasLayer/dialogue"
+
+
+@onready var pause_menu: Control = $"../../CanvasLayer/pause_menu"
+
+
 
 #endregion
 
@@ -79,34 +88,40 @@ var hand_scroll = .35:
 var carrying_obj = null: #object itself
 	set(v):
 		carrying_obj = v
+		grab_buffer_display.visible = carrying_obj != null
 		if carrying_obj:
-			carrying_obj.can_sleep = !holding
+			carrying_obj.can_sleep = !carrying_obj
+			_pick_up_object()
+		else:
+			rotate_to_player_joint.set_node_b(rotate_to_player_joint.get_path())
+
+
 var hovered_obj = null:
 	set(v):
 		hovered_obj = v
 		if hovered_obj:
-			if hovered_obj == carrying_obj and holding:
+			if hovered_obj == carrying_obj:
 				item_overlay.set_to(carrying_obj, "holding")
 			else:
 				if hovered_obj.is_in_group("grabbable"):
 					item_overlay.set_to(hovered_obj, "hovering")
 		elif !carrying_obj:
 			item_overlay.set_to(null, "off")
-var holding = false:
-	set(v):
-		holding = v
-		if holding == false:
-			#item_overlay.set_to(carrying_obj, "off")
-			carrying_obj = null
-			grab_buffer_display.hide()
-			rotate_to_player_joint.set_node_b(rotate_to_player_joint.get_path())
-			holding = null #so we dont keep running these ^^^ 
-		if holding == true:
-			#start_buffer_timer()
-			item_overlay.set_to(carrying_obj, "holding")
-			grab_buffer_timer.start()
-			grab_buffer_display.show()
-			_pick_up_object()
+
+
+
+#var holding = false:
+	#set(v):
+		#holding = v
+		#if holding == false:
+			#
+			#holding = null #so we dont keep running these ^^^ 
+		#if holding == true:
+			#_pick_up_object()
+		#
+		#
+
+
 var clicked_obj = null
 
 ##perspective toggle vars
@@ -119,6 +134,7 @@ var holding_perspective_toggle = false:
 
 
 func _ready() -> void:
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	Signalbus.grab_buffer_expired.connect(_grab_buffer_expired)
@@ -130,6 +146,7 @@ func _ready() -> void:
 	Signalbus.box_open_timer_updated.connect(_box_open_timer_updated)
 	Signalbus.box_open_timer_expired.connect(_box_open_timer_expired)
 	
+	
 	_box_open_timer_updated(Settings.box_open_timer_default)
 	_grab_buffer_updated(Settings.grab_buffer_default)
 	
@@ -138,11 +155,16 @@ func _ready() -> void:
 	
 	path_follow_3d.progress_ratio = hand_scroll
 	path_3d.curve.set_point_position(1, Vector3(path_3d.curve.get_point_position(1).x,path_3d.curve.get_point_position(1).y,-max_reach)) 
-
+	
+	#pause_menu.pause(true, false)
+	#dialogue.set_speech_text("[wave amp=50.0 freq=5.0 connected=1]waaaaaaoooowwww[/wave]")
+	
 
 
 #region // private functions 
 func _physics_process(delta: float) -> void:
+	hovered_obj = _ray_intersect_obj()
+	
 	_player_movement(delta)
 	_player_grabbing()
 	
@@ -229,7 +251,7 @@ func _input(event: InputEvent) -> void:
 			# -PI/2 = min vertical angle, PI/4 = max vertical angle
 			camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, -PI/2, PI/1.75)
 			flashlight.rotation = camera_pivot.rotation
-			scan_light.rotation = camera_pivot.rotation
+			far_scan_light.rotation = camera_pivot.rotation
 			
 	else: #camera locked
 		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -238,7 +260,6 @@ func _input(event: InputEvent) -> void:
 	
 	#handle obj rotation
 	if event.is_action_pressed("rmb"):
-		
 		if carrying_obj:
 			camera_locked_in = true
 	if event.is_action_released("rmb"):
@@ -246,12 +267,21 @@ func _input(event: InputEvent) -> void:
 	
 	#handle obj movement
 	if event.is_action_pressed("interact"):
-		holding = !holding
+		if !carrying_obj:
+			_pick_up_object()
+		else:
+			drop_object()
+		
+		var obj = _ray_intersect_obj()
+		if obj and obj.is_in_group("interactable"):
+			Signalbus.is_interact_pressed.emit(obj)
+			return
+		#holding = !holding
+
+
 func _player_grabbing():
-	hovered_obj = _ray_intersect_obj()
-	
 	#timer pauses instead of refreshing when not hovering. makes holding harder, might get removed/reworked
-	grab_buffer_timer.paused = (carrying_obj == hovered_obj and holding)
+	grab_buffer_timer.paused = (carrying_obj == hovered_obj)
 	if carrying_obj:
 		grab_buffer_display.value = grab_buffer_timer.time_left
 		box_open_bar.value = box_open_timer.time_left
@@ -303,11 +333,17 @@ func _ray_intersect_obj():
 		var obj = ray_interaction.get_collider()
 		return obj
 func _pick_up_object():
+	
+	grab_buffer_timer.start()
+	#grab_buffer_display.visible = bool(carrying_obj)
+	#grab_buffer_display.visible = holding
 	if carrying_obj:
 		return
 	var obj = _ray_intersect_obj()
+	#grab_buffer_display.visible = bool(obj and obj.is_in_group("grabbable"))
 	if obj and obj.is_in_group("grabbable"):
 		carrying_obj = obj
+		item_overlay.set_to(carrying_obj, "holding")
 		rotate_to_player_joint.set_node_b(obj.get_path())
 		if hovered_obj and hovered_obj != carrying_obj:
 			rotate_to_player_joint.set_node_b(rotate_to_player_joint.get_path())
@@ -346,7 +382,7 @@ func _zoom(zooming):
 #public functions
 func drop_object():
 	carrying_obj = null
-	holding = false
+	#holding = false
 func player_dead():
 	position = Vector3(0, 6, 0)
 	health = 100
@@ -386,4 +422,16 @@ func _box_open_timer_expired():
 		drop_object()
 func _on_box_open_timer_timeout() -> void:
 	Signalbus.box_open_timer_expired.emit()
+
+
+	#in_dialogue = !in_dialogue
+	#character_speech_label.visible = in_dialogue
+	##pause_menu.in_dialogue = in_dialogue
+	#character_speech_label.text = "[wave amp=50.0 freq=5.0]"+String(Global.dialogues[object.name][0])+"[/wave]"
+	#pause_menu.pause(in_dialogue, false)
+	#set_dialogue(object.name)
+	
 #endregion
+
+#func set_dialogue(name):
+	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=29 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/world/player.gd" id="1_v666e"]
 [ext_resource type="Texture2D" uid="uid://giomt62psa5v" path="res://assets/hud.png" id="2_dlnwf"]
@@ -12,6 +12,8 @@
 [ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/themes/new_theme.tres" id="7_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bhdmrq6le812t" path="res://assets/ui/up_arrow.png" id="8_smehm"]
 [ext_resource type="PackedScene" uid="uid://r0lr0id6q0kw" path="res://scenes/ui/item_overlay.tscn" id="9_7psdb"]
+[ext_resource type="Material" uid="uid://dmkvvgibsyxsa" path="res://scenes/world/item_detection_bubble.tres" id="13_0hnxi"]
+[ext_resource type="Script" uid="uid://qdthnow5jlah" path="res://scenes/world/item_detection_bubble.gd" id="14_u4ha7"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qlg0r"]
 points = PackedVector3Array(-0.25041, -1.06559, -0.961001, 0.0455663, 0.952141, 0.997768, 0.339426, 1.11829, 0.928346, 0.462089, -1.60714, 0.640893, 0.814783, 1.30203, -0.487023, -0.965635, 1.18975, 0.164435, -0.725713, -1.36458, 0.579376, 0.93809, -1.30906, -0.132543, -0.254891, 1.68542, -0.676214, -0.786851, -1.36785, -0.489421, 0.876492, 1.24659, 0.401691, 0.1683, 1.95497, 0.229596, -0.13641, -1.95298, -0.25855, 0.401111, -1.12629, -0.902936, -0.371062, 1.19093, -0.906971, -0.546702, 1.18449, 0.815474, -0.013873, -0.953646, 0.999321, 0.75168, -1.17729, 0.633943, 0.223164, 1.12615, -0.962382, -0.834529, 1.05577, -0.541012, -0.969147, -1.19401, -0.133028, -0.559494, 1.81712, 0.106672, -0.50041, -1.76148, 0.41065, 0.527294, -1.80554, -0.254789, 0.58675, 1.7431, -0.3144, 0.746805, -1.05261, -0.656476, 0.999325, 0.953283, -0.0137771, 0.106212, 1.75002, 0.649411, -0.309093, -1.18174, 0.931782, -0.194551, -1.56465, -0.796341, -0.7753, -0.996346, 0.631302, -0.601378, -1.17603, -0.777827)
@@ -125,15 +127,6 @@ bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kgc2y"]
 shader = ExtResource("5_tuyoq")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7psdb"]
-blend_mode = 2
-vertex_color_is_srgb = true
-albedo_color = Color(1, 1, 0, 1)
-albedo_texture_force_srgb = true
-albedo_texture_msdf = true
-disable_receive_shadows = true
-shadow_to_opacity = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
 flip_faces = true
@@ -405,9 +398,10 @@ collision_mask = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="item_detection_area"]
 layers = 2
-material_override = SubResource("StandardMaterial3D_7psdb")
 transparency = 0.5
 mesh = SubResource("SphereMesh_qlg0r")
+surface_material_override/0 = ExtResource("13_0hnxi")
+script = ExtResource("14_u4ha7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="item_detection_area"]
 shape = SubResource("ConvexPolygonShape3D_tuyoq")
@@ -423,8 +417,16 @@ debug_shape_thickness = 5
 [node name="no_fly_ray" type="RayCast3D" parent="."]
 target_position = Vector3(0, -6, 0)
 
-[node name="scan_light" type="SpotLight3D" parent="."]
+[node name="short_scan_light" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+visible = false
+layers = 7
+light_color = Color(0.354818, 0.7681, 1, 1)
+omni_range = 15.0
+
+[node name="far_scan_light" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+visible = false
 light_color = Color(0, 0, 1, 1)
 light_energy = 200.0
 light_indirect_energy = 200.0

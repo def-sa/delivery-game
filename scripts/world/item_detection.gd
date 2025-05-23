@@ -1,4 +1,5 @@
 extends Control
+
 @onready var player: CharacterBody3D = $"../../.."
 #@onready var box: RigidBody3D = $World/box
 @onready var camera: Camera3D = $"../../../camera_pivot/spring_arm_3d/camera"
@@ -6,8 +7,8 @@ extends Control
 @onready var negative_shader = preload("res://shaders/negative.gdshader")
 @onready var item_detection_timer: Timer = $"../../../item_detection_timer"
 @onready var item_detection_area: Area3D = $"../../../item_detection_area"
-@onready var scan_light: SpotLight3D = $"../../../scan_light"
-
+@onready var far_scan_light: SpotLight3D = $"../../../far_scan_light"
+@onready var short_scan_light: OmniLight3D = $"../../../short_scan_light"
 
 const ITEM_DETECTION_RECT = preload("res://scenes/ui/item_detection_rect.tscn")
 
@@ -38,15 +39,18 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_pressed("rmb"):
 		item_detection_timer.start()
-		scan_light.spot_range = 4096
-		scan_light.visible = false
+		far_scan_light.spot_range = 4096
+		short_scan_light.light_energy = 5
+		far_scan_light.visible = false
 	
 	if item_detection_timer.time_left > 0:
-		scan_light.visible = true
-		scan_light.spot_range -= item_detection_area.scale.x * 14.05 # this lines up almost perfectly scaling with the item detection timer
+		far_scan_light.visible = true
+		if short_scan_light.light_energy > 0:
+			short_scan_light.light_energy -= item_detection_area.scale.x / 14
+		far_scan_light.spot_range -= item_detection_area.scale.x * 14.05 # this lines up almost perfectly scaling with the item detection timer
 		item_detection_area.scale = Vector3(item_detection_timer.time_left,item_detection_timer.time_left,item_detection_timer.time_left)
 	else:
-		scan_light.spot_range = 0
+		far_scan_light.spot_range = 0
 	
 	if objects_inside_area.is_empty():
 		offscreen_reticle.hide()

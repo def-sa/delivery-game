@@ -15,8 +15,12 @@ const TIER_COLORS = {
 
 @onready var score_node = get_node("/root/main/World/Player/GUI_layer/GUI/score")
 
-
 var score = 0:
 	set(v):
 		score = v
 		score_node.text = str(score)
+
+var dialogues = {
+	"TXT_DUMMY": ["Hello, traveler!", "Beware of the dangers ahead.", "Take this map, it will help you."],
+	"merchant": ["Welcome to my shop!", "I have the finest goods in town."]
+}

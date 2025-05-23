@@ -1,5 +1,6 @@
 extends Node
 signal is_paused(value:bool)
+signal is_interact_pressed(object)
 
 #signal settings_slider(slider_name:String, is_default:bool, value:float)
 #signal settings_dropdown(dropdown_name:String, is_default:bool, value:String)
