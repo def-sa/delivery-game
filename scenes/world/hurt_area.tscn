@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://b40cnyd6dm5gr"]
+
+[ext_resource type="Script" uid="uid://jqsmym6pakn0" path="res://scenes/world/hurt_area.gd" id="1_hw4es"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_og1vs"]
+albedo_color = Color(0.890196, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2f3dj"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_llfdw"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="hurt_area" type="Area3D"]
+transform = Transform3D(3.738, 0, 0, 0, 3.738, 0, 0, 0, 3.738, 0, 0, 0)
+script = ExtResource("1_hw4es")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.87266, 0)
+material_override = SubResource("StandardMaterial3D_og1vs")
+transparency = 0.8
+mesh = SubResource("BoxMesh_2f3dj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.87266, 0)
+shape = SubResource("ConcavePolygonShape3D_llfdw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

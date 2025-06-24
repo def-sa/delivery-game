@@ -24,14 +24,16 @@ editor_only = false
 
 [node name="colored_bg" type="ColorRect" parent="rectangle"]
 layout_mode = 0
+offset_right = 100.0
 offset_bottom = 25.0
 color = Color(1, 0, 0, 1)
 
 [node name="item_text" type="Label" parent="rectangle/colored_bg"]
 material = SubResource("ShaderMaterial_a4367")
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 99.0
+offset_bottom = 100.0
 theme = ExtResource("2_uhsky")
 text = "testing waaaaow"
+autowrap_mode = 3
 clip_text = true

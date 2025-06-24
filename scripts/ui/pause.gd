@@ -4,9 +4,10 @@ extends Control
 @onready var revert_timer: Timer = $revert_changes/VBoxContainer/revert_timer
 @onready var revert_changes: ColorRect = $revert_changes
 @onready var reverting_in_label: Label = $revert_changes/VBoxContainer/reverting_in_label
-@onready var player: CharacterBody3D = $"../../World/Player"
+@onready var player: CharacterBody3D = $"../.."
+
 #@onready var dialogue: RichTextLabel = $"../npc_name/dialogue"
-@onready var npc_name: RichTextLabel = $"../npc_name"
+#@onready var npc_name: RichTextLabel = $"../npc_name"
 const BALLOON = preload("res://scenes/balloon.tscn")
 #@onready var dialogue: CanvasLayer = $"../npc_name/dialogue"
 
@@ -59,7 +60,7 @@ func _is_interact_pressed(npc):
 		var dialogue = load("res://dialogue/"+String(npc.name)+".dialogue")
 		var new_balloon = BALLOON.instantiate()
 		dialogue_started = true
-		npc_name.add_child(new_balloon)
+		add_child(new_balloon)
 		new_balloon.start(dialogue, "start")
 
 func _dialogue_ended(resource):
@@ -70,33 +71,34 @@ func _dialogue_ended(resource):
 
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if revert_changes.visible:
 		reverting_in_label.text = "reverting in "+str(int(revert_timer.time_left))+"..."
 
-func add_to_restart_list(value:String):
-	var label = Label.new()
-	label.text = value
-	restart_container.add_child(label)
-	restart_container.visible = bool(restart_container.get_child_count() >= 2)
-
-func remove_from_restart_list(value:String):
-	for child in restart_container.get_children():
-		if str(child.text).contains(value):
-			child.queue_free()
-	restart_container.visible = bool(restart_container.get_child_count() >= 2)
+#func add_to_restart_list(value:String):
+	#var label = Label.new()
+	#label.text = value
+	#restart_container.add_child(label)
+	#restart_container.visible = bool(restart_container.get_child_count() >= 2)
+#
+#func remove_from_restart_list(value:String):
+	#for child in restart_container.get_children():
+		#if str(child.text).contains(value):
+			#child.queue_free()
+	#restart_container.visible = bool(restart_container.get_child_count() >= 2)
 
 var previous_value
 var current_value
 var current_setting
 
-func revert_changes_popup(value, p_value, setting_string):
-	revert_timer.start()
-	revert_changes.visible = true
-	current_value = value
-	previous_value = p_value
-	current_setting = setting_string
-	return true
+#func revert_changes_popup(value, p_value, setting_string):
+	#
+	#revert_timer.start()
+	#revert_changes.visible = true
+	#current_value = value
+	#previous_value = p_value
+	#current_setting = setting_string
+	#return true
 
 func _on_revert_button_pressed() -> void:
 	if previous_value:

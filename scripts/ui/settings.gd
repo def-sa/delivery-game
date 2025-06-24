@@ -24,7 +24,6 @@ var window_display_type:String = window_display_type_default:
 			Signalbus.window_display_type_updated.emit(window_display_type)
 #endregion
 
-
 #region vsync mode dropdown
 @export_group("vsync mode", "vsync_mode")
 @export var vsync_mode_selections:Array[String] = [
@@ -56,7 +55,6 @@ var vsync_mode:String = vsync_mode_default:
 			Signalbus.vsync_mode_updated.emit(vsync_mode)
 #endregion
 
-
 #region shadow_quality dropdown
 @export_group("shadow quality", "shadow_quality")
 @export var shadow_quality_selections:Array[String] = [
@@ -80,7 +78,6 @@ var shadow_quality:String = shadow_quality_default:
 			Signalbus.shadow_quality_updated.emit(shadow_quality)
 #endregion
 
-
 #region fov slider
 @export_group("fov", "fov")
 @export var fov_min: int = 1
@@ -98,7 +95,6 @@ var fov:int = fov_default:
 		Signalbus.fov_updated.emit(fov)
 #endregion
 
-
 #region show_fps toggle
 @export_group("show fps", "show_fps")
 @export var show_fps_default:bool = true
@@ -111,7 +107,6 @@ var show_fps:bool = show_fps_default:
 		show_fps = v
 		Signalbus.show_fps_updated.emit(show_fps)
 #endregion
-
 
 #region max_fps slider
 @export_group("max fps", "max_fps")
@@ -130,7 +125,6 @@ var max_fps:float = max_fps_default:
 		Signalbus.max_fps_updated.emit(max_fps)
 #endregion
 
-
 #region viewport width slider
 @export_group("viewport width", "viewport_width")
 @export var viewport_width_min: int = 1
@@ -147,7 +141,6 @@ var viewport_width:float = viewport_width_default:
 		viewport_width = clamp(v, viewport_width_min, viewport_width_max)
 		Signalbus.viewport_width_updated.emit(viewport_width)
 #endregion
-
 
 #region viewport height slider
 @export_group("viewport height", "viewport_height")
@@ -166,7 +159,6 @@ var viewport_height:float = viewport_height_default:
 		Signalbus.viewport_height_updated.emit(viewport_height)
 #endregion
 
-
 #region bilinear filtering toggle
 @export_group("bi/tri linear filtering", "bilinear_filtering")
 @export var bilinear_filtering_default:bool = true
@@ -179,7 +171,6 @@ var bilinear_filtering:bool = bilinear_filtering_default:
 		bilinear_filtering = v
 		Signalbus.bilinear_filtering_updated.emit(bilinear_filtering)
 #endregion
-
 
 #region screen_space_reflections toggle
 @export_group("screen_space_reflections", "screen_space_reflections")
@@ -221,7 +212,6 @@ var screen_space_indirect_lighting:bool = screen_space_indirect_lighting_default
 		Signalbus.screen_space_indirect_lighting_updated.emit(screen_space_indirect_lighting)
 #endregion
 
-
 #Signed Distance Field Global Illumination
 
 #region sdfgi toggle
@@ -237,9 +227,7 @@ var sdfgi:bool = sdfgi_default:
 		Signalbus.sdfgi_updated.emit(sdfgi)
 #endregion
 
-
-#scanner_flashing
-
+## TODO: put in "accessibility" section
 #region scanner_flashing toggle
 @export_group("scanner_flashing", "scanner_flashing")
 @export var scanner_flashing_default:bool = true
@@ -252,9 +240,6 @@ var scanner_flashing:bool = scanner_flashing_default:
 		scanner_flashing = v
 		Signalbus.scanner_flashing_updated.emit(scanner_flashing)
 #endregion
-
-
-
 
 #region occlusion_culling dropdown
 @export_group("occlusion culling", "occlusion_culling")
@@ -274,7 +259,6 @@ var occlusion_culling:String = occlusion_culling_default:
 			occlusion_culling = v
 			Signalbus.occlusion_culling_updated.emit(occlusion_culling)
 #endregion
-
 
 #region texture_filter dropdown
 @export_group("texture filter", "texture_filter_name")
@@ -315,7 +299,6 @@ var reflections:String = reflections_default:
 			Signalbus.reflections_updated.emit(reflections)
 #endregion
 
-
 #region brightness slider
 @export_group("brightness", "brightness")
 @export var brightness_min: float = 0.001
@@ -330,7 +313,6 @@ var brightness:float = brightness_default:
 		brightness = clamp(v, brightness_min, brightness_max)
 		Signalbus.brightness_updated.emit(brightness)
 #endregion
-
 
 #region contrast slider
 @export_group("contrast", "contrast")
@@ -347,7 +329,6 @@ var contrast:float = contrast_default:
 		Signalbus.contrast_updated.emit(contrast)
 #endregion
 
-
 #region saturation slider
 @export_group("saturation", "saturation")
 @export var saturation_min: float = 0.001
@@ -362,9 +343,6 @@ var saturation:float = saturation_default:
 		saturation = clamp(v, saturation_min, saturation_max)
 		Signalbus.saturation_updated.emit(saturation)
 #endregion
-
-
-
 
 @export_category("Gameplay")
 #region render distance slider
@@ -430,7 +408,6 @@ var player_speed:int = sensitivity_default:
 		Signalbus.player_speed_updated.emit(player_speed)
 #endregion
 
-
 #region player jump slider
 @export_group("player jump", "player_jump")
 @export var player_jump_min: float = 1
@@ -445,7 +422,6 @@ var player_jump:float = player_jump_default:
 		player_jump = clamp(v, player_jump_min, player_jump_max)
 		Signalbus.player_jump_updated.emit(player_jump)
 #endregion
-
 
 #region grab buffer slider
 @export_group("grab buffer", "grab_buffer")
@@ -462,7 +438,6 @@ var grab_buffer:float = grab_buffer_default:
 		Signalbus.grab_buffer_updated.emit(grab_buffer)
 #endregion
 
-
 #region max grab length slider
 @export_group("max grab length", "max_grab_length")
 @export var max_grab_length_min: float = 0
@@ -478,7 +453,6 @@ var max_grab_length:float = max_grab_length_default:
 		Signalbus.max_grab_length_updated.emit(max_grab_length)
 #endregion
 
-
 #region box open timer slider
 @export_group("box open timer", "box_open_timer")
 @export var box_open_timer_min: float = 0
@@ -493,3 +467,158 @@ var box_open_timer:float = box_open_timer_default:
 		box_open_timer = clamp(v, box_open_timer_min, box_open_timer_max)
 		Signalbus.box_open_timer_updated.emit(box_open_timer)
 #endregion
+
+
+#/////
+
+
+@onready var world: WorldEnvironment = get_node("/root/main/World/Environment/WorldEnvironment")
+@onready var pause_menu: Control = get_node("/root/main/World/Player/pause_gui/pause_menu")
+@onready var requires_restart: ColorRect = get_node("/root/main/World/Player/pause_gui/pause_menu/requires_restart")
+
+func _ready() -> void:
+	DebugMenu.style = 2
+	connect_signals()
+
+func connect_signals():
+	Signalbus.brightness_updated.connect(_brightness_updated)
+	Signalbus.contrast_updated.connect(_contrast_updated)
+	Signalbus.saturation_updated.connect(_saturation_updated)
+	Signalbus.window_display_type_updated.connect(_window_display_type_updated)
+	Signalbus.max_fps_updated.connect(_max_fps_updated)
+	Signalbus.vsync_mode_updated.connect(_vsync_mode_updated)
+	Signalbus.shadow_quality_updated.connect(_shadow_quality_updated)
+	#Signalbus.viewport_width_updated.connect(_viewport_width_updated)
+	#Signalbus.viewport_height_updated.connect(_viewport_height_updated)
+	Signalbus.occlusion_culling_updated.connect(_occlusion_culling_updated)
+	Signalbus.texture_filter_updated.connect(_texture_filter_updated)
+	Signalbus.reflections_updated.connect(_reflections_updated)
+	Signalbus.bilinear_filtering_updated.connect(_bilinear_filtering_updated)
+	Signalbus.screen_space_reflections_updated.connect(_screen_space_reflections_updated)
+	Signalbus.screen_space_ambient_occlusion_updated.connect(_screen_space_ambient_occlusion_updated)
+	Signalbus.screen_space_indirect_lighting_updated.connect(_screen_space_indirect_lighting_updated)
+	Signalbus.sdfgi_updated.connect(_sdfgi_updated)
+	#Signalbus.is_paused.connect(_is_paused)
+
+func _brightness_updated(value:float):
+	world.environment.adjustment_brightness = value
+
+func _contrast_updated(value:float):
+	world.environment.adjustment_contrast = value
+
+func _saturation_updated(value:float):
+	world.environment.adjustment_saturation = value
+	
+func _window_display_type_updated(value:String):
+	var index = Settings.window_display_type_selections.find(value)
+	DisplayServer.window_set_mode(index)
+	
+func _vsync_mode_updated(value:String):
+	var index = Settings.vsync_mode_selections.find(value)
+	DisplayServer.window_set_vsync_mode(index)
+
+func _max_fps_updated(value:int):
+	Engine.max_fps = value
+
+func _shadow_quality_updated(value:String):
+	var index = Settings.shadow_quality_selections.find(value)
+	var is_below_soft_low = bool(index <= 2)
+	var default_size = get_window().get_viewport().positional_shadow_atlas_size*2
+	
+	RenderingServer.positional_soft_shadow_filter_set_quality(index)
+	RenderingServer.directional_soft_shadow_filter_set_quality(index)
+	var new_size = default_size
+	if index == 0:
+		new_size = 0
+	else:
+		new_size = default_size * index/3
+	
+	if is_below_soft_low:
+		get_window().get_viewport().set_positional_shadow_atlas_16_bits(is_below_soft_low)
+		ProjectSettings.set("rendering/lights_and_shadows/directional_shadow/16_bits", is_below_soft_low)
+		for i in range(0,3):
+			RenderingServer.viewport_set_positional_shadow_atlas_quadrant_subdivision(get_window().get_viewport(),i,0)
+	
+	RenderingServer.viewport_set_positional_shadow_atlas_size(get_window().get_viewport(),new_size)
+	ProjectSettings.save()
+
+var screen_size = DisplayServer.screen_get_size()
+var popup_triggered = null
+var previous_value = null
+
+#func _viewport_width_updated(value:int):
+	#if !popup_triggered:
+		#popup_triggered = pause_menu.revert_changes_popup(value, previous_value, Settings.viewport_width_name.replace(" ","_"))
+		#previous_value = null
+	#else:
+		#if value >= screen_size.x:
+			#value = screen_size.x
+		#DisplayServer.window_set_size(Vector2i(value, DisplayServer.window_get_size().y))
+		#previous_value = value
+		#popup_triggered = null
+
+#func _viewport_height_updated(value:int):
+	#if !popup_triggered:
+		#popup_triggered = pause_menu.revert_changes_popup(value, previous_value, Settings.viewport_height_name.replace(" ","_"))
+		#previous_value = null
+	#else:
+		#if value >= screen_size.y:
+			#value = screen_size.y
+		#DisplayServer.window_set_size(Vector2i(DisplayServer.window_get_size().x, value))
+
+#func _is_paused(value:bool):
+
+
+#TODO: doesnt need the popup, but keep for testing 
+func _occlusion_culling_updated(value:String):
+	if !popup_triggered:
+		popup_triggered = pause_menu.revert_changes_popup(value, previous_value, Settings.occlusion_culling_name.replace(" ","_"))
+		previous_value = null
+	else:
+		var index = Settings.occlusion_culling_selections.find(value)
+		RenderingServer.viewport_set_occlusion_culling_build_quality(index)
+		previous_value = value
+		popup_triggered = null
+
+func _texture_filter_updated(value: String):
+	var index = Settings.texture_filter_selections.find(value)
+	get_viewport().set_default_canvas_item_texture_filter(index)
+
+
+func _reflections_updated(value: String):
+	match value:
+		"lowest":
+			pass
+		"low":
+			pass
+		"default":
+			pass
+		"high":
+			pass
+		"ultra":
+			pass
+
+##TODO: fix
+func _bilinear_filtering_updated(value: bool):
+	#pause_menu.remove_from_restart_list(Settings.bilinear_filtering_name)
+	#pause_menu.add_to_restart_list(Settings.bilinear_filtering_name)
+	ProjectSettings.set("rendering/textures/default_filters/use_nearest_mipmap_filter", value)
+	
+
+func _screen_space_reflections_updated(value: bool):
+	world.environment.ssr_enabled = value
+
+func _screen_space_ambient_occlusion_updated(value: bool):
+	world.environment.ssao_enabled = value
+
+func _screen_space_indirect_lighting_updated(value: bool):
+	world.environment.ssil_enabled = value
+	
+func _sdfgi_updated(value: bool):
+	world.environment.sdfgi_enabled = value
+
+	#"lowest",
+	#"low",
+	#"default",
+	#"high",
+	#"ultra"

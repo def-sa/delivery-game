@@ -2,17 +2,17 @@ extends CharacterBody3D
 
 #region // references
 ##gui references
-@onready var grab_buffer_display: ProgressBar = $GUI_layer/GUI/crosshair_grabbing/ProgressBar
-@onready var health_bar: ProgressBar = $GUI_layer/GUI/health_bar
-@onready var box_open_bar: ProgressBar = $GUI_layer/GUI/MarginContainer/box_open_bar
+@onready var grab_buffer_display: ProgressBar = $gui/crosshair_grabbing/ProgressBar
+@onready var health_bar: ProgressBar = $gui/health_bar
+@onready var box_open_bar: ProgressBar = $gui/MarginContainer/box_open_bar
 
 ##timers
 @onready var grab_buffer_timer: Timer = $grab_buffer_timer
 @onready var box_open_timer: Timer = $box_open_timer
 
 ##item overlay
-@onready var item_overlay: Control = $GUI_layer/GUI/item_overlay
-@onready var item_detection_gui: Control = $GUI_layer/GUI/item_detection
+@onready var item_overlay: Control = $gui/item_overlay
+@onready var item_detection_gui: Control = $gui/item_detection
 
 ##camera references
 @onready var camera_pivot: Node3D = $camera_pivot
@@ -32,13 +32,13 @@ extends CharacterBody3D
 
 @onready var no_fly_ray: RayCast3D = $no_fly_ray
 
-@onready var player_mesh: MeshInstance3D = $MeshInstance3D
+@onready var player_mesh: MeshInstance3D = $player_mesh
 
 
-@onready var dialogue: RichTextLabel = $"../../CanvasLayer/dialogue"
+@onready var dialogue: RichTextLabel = $"../../pause_gui/dialogue"
 
 
-@onready var pause_menu: Control = $"../../CanvasLayer/pause_menu"
+@onready var pause_menu: Control = $"../../pause_gui/pause_menu"
 
 
 
@@ -187,7 +187,8 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	
 	##TODO: rope :)
-	#if event.is_action_pressed("toggle_rope"):
+	if event.is_action_pressed("toggle_rope"):
+		carrying_obj.get_parent().is_on_rope = true
 	
 	if event.is_action_pressed("sprint"):
 		Settings.player_speed *= 1.5
@@ -283,6 +284,17 @@ func _player_grabbing():
 	#timer pauses instead of refreshing when not hovering. makes holding harder, might get removed/reworked
 	grab_buffer_timer.paused = (carrying_obj == hovered_obj)
 	if carrying_obj:
+		
+		##TODO: items with a certain momentum should do damage to enemies
+		#var obj_mass = carrying_obj.mass
+		#var obj_velocity = carrying_obj.linear_velocity
+		#var obj_momentum = obj_mass * obj_velocity
+		##print(obj_momentum)
+		#if obj_momentum.x >= 40 or obj_momentum.y >= 40 or obj_momentum.z >= 40:
+			#const hurt_area_scene = preload("res://scenes/world/hurt_area.tscn")
+			#var hurt_area = hurt_area_scene.instantiate()
+			#hurt_area.position = carrying_obj.position
+			#carrying_obj.add_child(hurt_area)
 		grab_buffer_display.value = grab_buffer_timer.time_left
 		box_open_bar.value = box_open_timer.time_left
 		var a = carrying_obj.global_transform.origin

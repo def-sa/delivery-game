@@ -2,7 +2,7 @@ extends Control
 
 @onready var rectangle_node: ReferenceRect = $rectangle
 @onready var colored_bg_node: ColorRect = $rectangle/colored_bg
-@onready var item_text_node: Label = $rectangle/item_name_bg/item_text
+@onready var item_text_node: Label = $rectangle/colored_bg/item_text
 
 
 

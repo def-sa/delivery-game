@@ -56,7 +56,7 @@ func _set_seed(seed_name):
 var current_chunk_index_x: int = 0
 var current_chunk_index_z: int = 0
 
-func _process(delta):
+func _process(_delta):
 	_update_chunks()
 
 func _generate_initial_chunks():

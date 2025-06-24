@@ -1,6 +1,6 @@
 extends Control
 
-@onready var player: CharacterBody3D = $"../../.."
+@onready var player: CharacterBody3D = $"../.."
 
 @onready var camera: Camera3D = $SubViewportContainer/SubViewport/item_overlay_camera
 @onready var sub_viewport: SubViewport = $SubViewportContainer/SubViewport
@@ -13,7 +13,7 @@ var current_obj
 var current_visiblity
 var duplicated_current_obj
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if duplicated_current_obj:
 		if player.spin_locked:
 				duplicated_current_obj.set_angular_velocity(Vector3(-1,-1,-1))

@@ -13,7 +13,14 @@ const TIER_COLORS = {
 	"EXPORT": Color("ffff52")
 }
 
-@onready var score_node = get_node("/root/main/World/Player/GUI_layer/GUI/score")
+const MODIFIERS = {
+	"GRABBALBE": "Can be grabbed",
+	"DELIVERABLE": "Can be delivered to a delivery point",
+	"DETECTABLE": "Can be detected by your scanner",
+	"OPENABLE": "Can be opened"
+}
+
+@onready var score_node = get_node("/root/main/World/Player/gui/score")
 
 var score = 0:
 	set(v):

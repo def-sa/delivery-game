@@ -1,70 +1,55 @@
-[gd_scene load_steps=29 format=3 uid="uid://d0dymr70087q8"]
+[gd_scene load_steps=65 format=3 uid="uid://d0dymr70087q8"]
 
 [ext_resource type="Script" uid="uid://b4gi0reo2agfg" path="res://scripts/world/player.gd" id="1_v666e"]
 [ext_resource type="Texture2D" uid="uid://giomt62psa5v" path="res://assets/hud.png" id="2_dlnwf"]
 [ext_resource type="ArrayMesh" uid="uid://ckbsx4f8303fv" path="res://assets/bunny_blend.obj" id="2_jgsvk"]
+[ext_resource type="PackedScene" uid="uid://c8qltnyl7h32m" path="res://scenes/ui/pause.tscn" id="2_u4ha7"]
 [ext_resource type="Shader" uid="uid://ckt82618yxucc" path="res://shaders/hud.gdshader" id="3_7psdb"]
 [ext_resource type="Shader" uid="uid://dnhwmsdv1c1be" path="res://scenes/world/hud2.gdshader" id="3_wu7tt"]
+[ext_resource type="Script" uid="uid://cus8idyaquhpy" path="res://scripts/ui/gui.gd" id="4_2hoio"]
 [ext_resource type="Texture2D" uid="uid://cyfjd4773jfol" path="res://assets/ui/crosshair_grabbing.png" id="4_dqkch"]
 [ext_resource type="Texture2D" uid="uid://81ljda3073o0" path="res://assets/ui/crosshair.png" id="5_qlg0r"]
 [ext_resource type="Shader" uid="uid://wq4btflo30w7" path="res://shaders/negative.gdshader" id="5_tuyoq"]
 [ext_resource type="Script" uid="uid://bnn5y78er1wbb" path="res://scripts/world/item_detection.gd" id="6_tuyoq"]
 [ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/themes/new_theme.tres" id="7_fjrip"]
-[ext_resource type="Texture2D" uid="uid://bhdmrq6le812t" path="res://assets/ui/up_arrow.png" id="8_smehm"]
 [ext_resource type="PackedScene" uid="uid://r0lr0id6q0kw" path="res://scenes/ui/item_overlay.tscn" id="9_7psdb"]
+[ext_resource type="Shader" uid="uid://bi7h5qfs7c8sg" path="res://shaders/noise_alpha.gdshader" id="12_8caxf"]
+[ext_resource type="Texture2D" uid="uid://f7uck6c34qsu" path="res://assets/ui/cube spin/frame_00_delay-0.03s.png" id="12_kmpoy"]
 [ext_resource type="Material" uid="uid://dmkvvgibsyxsa" path="res://scenes/world/item_detection_bubble.tres" id="13_0hnxi"]
+[ext_resource type="Texture2D" uid="uid://doprap4eqtmlg" path="res://assets/ui/cube spin/frame_01_delay-0.03s.png" id="13_8caxf"]
 [ext_resource type="Script" uid="uid://qdthnow5jlah" path="res://scenes/world/item_detection_bubble.gd" id="14_u4ha7"]
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qlg0r"]
-points = PackedVector3Array(-0.25041, -1.06559, -0.961001, 0.0455663, 0.952141, 0.997768, 0.339426, 1.11829, 0.928346, 0.462089, -1.60714, 0.640893, 0.814783, 1.30203, -0.487023, -0.965635, 1.18975, 0.164435, -0.725713, -1.36458, 0.579376, 0.93809, -1.30906, -0.132543, -0.254891, 1.68542, -0.676214, -0.786851, -1.36785, -0.489421, 0.876492, 1.24659, 0.401691, 0.1683, 1.95497, 0.229596, -0.13641, -1.95298, -0.25855, 0.401111, -1.12629, -0.902936, -0.371062, 1.19093, -0.906971, -0.546702, 1.18449, 0.815474, -0.013873, -0.953646, 0.999321, 0.75168, -1.17729, 0.633943, 0.223164, 1.12615, -0.962382, -0.834529, 1.05577, -0.541012, -0.969147, -1.19401, -0.133028, -0.559494, 1.81712, 0.106672, -0.50041, -1.76148, 0.41065, 0.527294, -1.80554, -0.254789, 0.58675, 1.7431, -0.3144, 0.746805, -1.05261, -0.656476, 0.999325, 0.953283, -0.0137771, 0.106212, 1.75002, 0.649411, -0.309093, -1.18174, 0.931782, -0.194551, -1.56465, -0.796341, -0.7753, -0.996346, 0.631302, -0.601378, -1.17603, -0.777827)
-
-[sub_resource type="Curve3D" id="Curve3D_qhqgy"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10),
-"tilts": PackedFloat32Array(0, 0)
-}
-point_count = 2
-
-[sub_resource type="BoxMesh" id="BoxMesh_dqkch"]
-
-[sub_resource type="GDScript" id="GDScript_dlnwf"]
-script/source = "extends Control
-# thx https://godotshaders.com/shader/camcorder-horror-shader/
-@onready var fps: Label = $debug/fps
-@onready var player: CharacterBody3D = $\"../..\"
-@onready var long_ray: RayCast3D = $\"../../long_ray\"
-@onready var camera_pivot: Node3D = $\"../../camera_pivot\"
-@onready var illusions: ColorRect = $illusions
-
-
-func _ready() -> void:
-	Signalbus.show_fps_updated.connect(_show_fps_updated)
-
-func _show_fps_updated(value:bool):
-	fps.visible = value
-
-
-# Adjust these values as needed for your effect.
-var min_distance = 0.0  # Effect is fully applied if closer than this.
-var max_distance = 100.0  # Effect fades out completely if beyond this.
-
-#func _process(delta):
-	#long_ray.rotation = camera_pivot.rotation
-	#fps.text = str(int(Engine.get_frames_per_second())) + \" fps\"
-	#
-	#if player.carrying_obj:
-		#return
-	#var blend_factor = 0.0  # Default to no effect.
-	#if long_ray.is_colliding():
-		#var collision_point = long_ray.get_collision_point()
-		#var origin = player.global_transform.origin
-		#var distance = origin.distance_to(collision_point)
-		#blend_factor = clamp(1.0 - ((distance - min_distance) / (max_distance - min_distance)), 0.0, 1.0)
-		#blend_factor += .25
-	#else:
-		#return
-	#illusions.material.set_shader_parameter(\"blend_factor\", blend_factor)
-"
+[ext_resource type="Texture2D" uid="uid://cudp5gc68m6ot" path="res://assets/ui/cube spin/frame_10_delay-0.03s.png" id="14_uqf3y"]
+[ext_resource type="Texture2D" uid="uid://bdihrxr5py50d" path="res://assets/ui/cube spin/frame_11_delay-0.03s.png" id="15_0s2uv"]
+[ext_resource type="Texture2D" uid="uid://vlcvvau1fuua" path="res://assets/ui/cube spin/frame_12_delay-0.03s.png" id="16_ok17f"]
+[ext_resource type="Texture2D" uid="uid://bhohog5yap8jf" path="res://assets/ui/cube spin/frame_13_delay-0.03s.png" id="17_2jfcb"]
+[ext_resource type="Texture2D" uid="uid://c233xuxh4iepm" path="res://assets/ui/cube spin/frame_14_delay-0.03s.png" id="18_5818o"]
+[ext_resource type="Texture2D" uid="uid://cfq7opkydeh23" path="res://assets/ui/cube spin/frame_15_delay-0.03s.png" id="19_523nu"]
+[ext_resource type="Texture2D" uid="uid://b862y1mg4s61w" path="res://assets/ui/cube spin/frame_16_delay-0.04s.png" id="20_h4hpu"]
+[ext_resource type="Texture2D" uid="uid://774nu721sx70" path="res://assets/ui/cube spin/frame_17_delay-0.03s.png" id="21_dxadb"]
+[ext_resource type="Texture2D" uid="uid://8saakrwu031i" path="res://assets/ui/cube spin/frame_18_delay-0.03s.png" id="22_b4yfv"]
+[ext_resource type="Texture2D" uid="uid://wmyhphytdckn" path="res://assets/ui/cube spin/frame_19_delay-0.03s.png" id="23_dq70k"]
+[ext_resource type="Texture2D" uid="uid://dnkh616aw33g7" path="res://assets/ui/cube spin/frame_02_delay-0.03s.png" id="24_v47s1"]
+[ext_resource type="Texture2D" uid="uid://sseb6yv0ho0f" path="res://assets/ui/cube spin/frame_20_delay-0.03s.png" id="25_ddijx"]
+[ext_resource type="Texture2D" uid="uid://5igivjgpluqj" path="res://assets/ui/cube spin/frame_21_delay-0.03s.png" id="26_74uxd"]
+[ext_resource type="Texture2D" uid="uid://dr6xccwv7p2da" path="res://assets/ui/cube spin/frame_22_delay-0.03s.png" id="27_6lntr"]
+[ext_resource type="Texture2D" uid="uid://dgldi7tdm2q72" path="res://assets/ui/cube spin/frame_23_delay-0.03s.png" id="28_dhbll"]
+[ext_resource type="Texture2D" uid="uid://este6x6erh30" path="res://assets/ui/cube spin/frame_24_delay-0.03s.png" id="29_gbwt3"]
+[ext_resource type="Texture2D" uid="uid://b17mggx8mdt8g" path="res://assets/ui/cube spin/frame_25_delay-0.03s.png" id="30_t1tce"]
+[ext_resource type="Texture2D" uid="uid://ravg7odeqyrh" path="res://assets/ui/cube spin/frame_26_delay-0.03s.png" id="31_44jbg"]
+[ext_resource type="Texture2D" uid="uid://yomin00bnrfy" path="res://assets/ui/cube spin/frame_27_delay-0.03s.png" id="32_te58a"]
+[ext_resource type="Texture2D" uid="uid://1ed5l415w0mm" path="res://assets/ui/cube spin/frame_28_delay-0.03s.png" id="33_8sslb"]
+[ext_resource type="Texture2D" uid="uid://bvudxyrhpmxiu" path="res://assets/ui/cube spin/frame_29_delay-0.03s.png" id="34_2hvly"]
+[ext_resource type="Texture2D" uid="uid://qkux4iac1qau" path="res://assets/ui/cube spin/frame_03_delay-0.03s.png" id="35_rc6p5"]
+[ext_resource type="Texture2D" uid="uid://bqjpstx1sal4q" path="res://assets/ui/cube spin/frame_30_delay-0.03s.png" id="36_3icbx"]
+[ext_resource type="Texture2D" uid="uid://dw8n7brn3880g" path="res://assets/ui/cube spin/frame_31_delay-0.03s.png" id="37_cj4kf"]
+[ext_resource type="Texture2D" uid="uid://mqo8024dufjk" path="res://assets/ui/cube spin/frame_32_delay-0.03s.png" id="38_fhqdh"]
+[ext_resource type="Texture2D" uid="uid://bq71kowut3y7" path="res://assets/ui/cube spin/frame_33_delay-0.03s.png" id="39_3wv8i"]
+[ext_resource type="Texture2D" uid="uid://crxsnhp1omxhg" path="res://assets/ui/cube spin/frame_04_delay-0.03s.png" id="40_6y7y4"]
+[ext_resource type="Texture2D" uid="uid://dvavd7djtafix" path="res://assets/ui/cube spin/frame_05_delay-0.03s.png" id="41_t6cdq"]
+[ext_resource type="Texture2D" uid="uid://bj0nhxvbxn1ts" path="res://assets/ui/cube spin/frame_06_delay-0.03s.png" id="42_7x1q2"]
+[ext_resource type="Texture2D" uid="uid://b5455jbvyfpbt" path="res://assets/ui/cube spin/frame_07_delay-0.03s.png" id="43_wdmtj"]
+[ext_resource type="Texture2D" uid="uid://c4e0kjiffm2q0" path="res://assets/ui/cube spin/frame_08_delay-0.03s.png" id="44_pl456"]
+[ext_resource type="Texture2D" uid="uid://cdd0f8fu6tbmr" path="res://assets/ui/cube spin/frame_09_delay-0.03s.png" id="45_pralx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b014x"]
 shader = ExtResource("3_wu7tt")
@@ -125,8 +110,95 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ur7pv"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kgc2y"]
-shader = ExtResource("5_tuyoq")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uqf3y"]
+shader = ExtResource("12_8caxf")
+shader_parameter/noise_strength = 1.0
+shader_parameter/noise_scale = 1.0
+shader_parameter/noise_speed = 0.03
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_q2187"]
+frames = 34
+speed_scale = 0.8
+frame_0/texture = ExtResource("12_kmpoy")
+frame_0/duration = 0.03
+frame_1/texture = ExtResource("13_8caxf")
+frame_1/duration = 0.03
+frame_2/texture = ExtResource("24_v47s1")
+frame_2/duration = 0.03
+frame_3/texture = ExtResource("35_rc6p5")
+frame_3/duration = 0.03
+frame_4/texture = ExtResource("40_6y7y4")
+frame_4/duration = 0.03
+frame_5/texture = ExtResource("41_t6cdq")
+frame_5/duration = 0.03
+frame_6/texture = ExtResource("42_7x1q2")
+frame_6/duration = 0.03
+frame_7/texture = ExtResource("43_wdmtj")
+frame_7/duration = 0.03
+frame_8/texture = ExtResource("44_pl456")
+frame_8/duration = 0.03
+frame_9/texture = ExtResource("45_pralx")
+frame_9/duration = 0.03
+frame_10/texture = ExtResource("14_uqf3y")
+frame_10/duration = 0.03
+frame_11/texture = ExtResource("15_0s2uv")
+frame_11/duration = 0.03
+frame_12/texture = ExtResource("16_ok17f")
+frame_12/duration = 0.03
+frame_13/texture = ExtResource("17_2jfcb")
+frame_13/duration = 0.03
+frame_14/texture = ExtResource("18_5818o")
+frame_14/duration = 0.03
+frame_15/texture = ExtResource("19_523nu")
+frame_15/duration = 0.03
+frame_16/texture = ExtResource("20_h4hpu")
+frame_16/duration = 0.03
+frame_17/texture = ExtResource("21_dxadb")
+frame_17/duration = 0.03
+frame_18/texture = ExtResource("22_b4yfv")
+frame_18/duration = 0.03
+frame_19/texture = ExtResource("23_dq70k")
+frame_19/duration = 0.03
+frame_20/texture = ExtResource("25_ddijx")
+frame_20/duration = 0.03
+frame_21/texture = ExtResource("26_74uxd")
+frame_21/duration = 0.03
+frame_22/texture = ExtResource("27_6lntr")
+frame_22/duration = 0.03
+frame_23/texture = ExtResource("28_dhbll")
+frame_23/duration = 0.03
+frame_24/texture = ExtResource("29_gbwt3")
+frame_24/duration = 0.03
+frame_25/texture = ExtResource("30_t1tce")
+frame_25/duration = 0.03
+frame_26/texture = ExtResource("31_44jbg")
+frame_26/duration = 0.03
+frame_27/texture = ExtResource("32_te58a")
+frame_27/duration = 0.03
+frame_28/texture = ExtResource("33_8sslb")
+frame_28/duration = 0.03
+frame_29/texture = ExtResource("34_2hvly")
+frame_29/duration = 0.03
+frame_30/texture = ExtResource("36_3icbx")
+frame_30/duration = 0.03
+frame_31/texture = ExtResource("37_cj4kf")
+frame_31/duration = 0.03
+frame_32/texture = ExtResource("38_fhqdh")
+frame_32/duration = 0.03
+frame_33/texture = ExtResource("39_3wv8i")
+frame_33/duration = 0.03
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qlg0r"]
+points = PackedVector3Array(-0.25041, -1.06559, -0.961001, 0.0455663, 0.952141, 0.997768, 0.339426, 1.11829, 0.928346, 0.462089, -1.60714, 0.640893, 0.814783, 1.30203, -0.487023, -0.965635, 1.18975, 0.164435, -0.725713, -1.36458, 0.579376, 0.93809, -1.30906, -0.132543, -0.254891, 1.68542, -0.676214, -0.786851, -1.36785, -0.489421, 0.876492, 1.24659, 0.401691, 0.1683, 1.95497, 0.229596, -0.13641, -1.95298, -0.25855, 0.401111, -1.12629, -0.902936, -0.371062, 1.19093, -0.906971, -0.546702, 1.18449, 0.815474, -0.013873, -0.953646, 0.999321, 0.75168, -1.17729, 0.633943, 0.223164, 1.12615, -0.962382, -0.834529, 1.05577, -0.541012, -0.969147, -1.19401, -0.133028, -0.559494, 1.81712, 0.106672, -0.50041, -1.76148, 0.41065, 0.527294, -1.80554, -0.254789, 0.58675, 1.7431, -0.3144, 0.746805, -1.05261, -0.656476, 0.999325, 0.953283, -0.0137771, 0.106212, 1.75002, 0.649411, -0.309093, -1.18174, 0.931782, -0.194551, -1.56465, -0.796341, -0.7753, -0.996346, 0.631302, -0.601378, -1.17603, -0.777827)
+
+[sub_resource type="Curve3D" id="Curve3D_qhqgy"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_dqkch"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_qlg0r"]
 flip_faces = true
@@ -142,12 +214,191 @@ points = PackedVector3Array(14.8662, 18.1499, -1.8302, -22.8497, -5.07139, -1.10
 collision_layer = 2
 script = ExtResource("1_v666e")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="pause_gui" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 100
+
+[node name="pause_menu" parent="pause_gui" instance=ExtResource("2_u4ha7")]
+process_mode = 3
+z_index = 1000
+size_flags_horizontal = 0
+theme = ExtResource("7_fjrip")
+
+[node name="gui" type="CanvasLayer" parent="."]
+layer = 4
+script = ExtResource("4_2hoio")
+
+[node name="hud2" type="TextureRect" parent="gui"]
+visible = false
+material = SubResource("ShaderMaterial_b014x")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = -216.0
+offset_right = 384.0
+offset_bottom = 216.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dlnwf")
+
+[node name="hud" type="TextureRect" parent="gui"]
+visible = false
+top_level = true
+material = SubResource("ShaderMaterial_jgsvk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dlnwf")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="illusions" type="ColorRect" parent="gui"]
+visible = false
+material = SubResource("ShaderMaterial_wu7tt")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="score" type="RichTextLabel" parent="gui"]
+custom_minimum_size = Vector2(500, 100)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -500.0
+offset_bottom = 100.0
+grow_horizontal = 0
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 75
+text = "0"
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="crosshair_grabbing" type="TextureRect" parent="gui"]
+clip_children = 1
+clip_contents = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.0
+offset_top = -49.5
+offset_right = 463.0
+offset_bottom = 462.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.19, 0.19)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_dqkch")
+stretch_mode = 5
+
+[node name="ProgressBar" type="ProgressBar" parent="gui/crosshair_grabbing"]
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 512.0
+mouse_filter = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_dqkch")
+fill_mode = 3
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="gui"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="crosshair" type="TextureRect" parent="gui/MarginContainer"]
+material = SubResource("ShaderMaterial_fjrip")
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_qlg0r")
+expand_mode = 3
+
+[node name="box_open_bar" type="ProgressBar" parent="gui/MarginContainer"]
+visible = false
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="health_bar" type="ProgressBar" parent="gui"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -57.0
+offset_right = 500.0
+offset_bottom = 1.0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 22
+theme_override_font_sizes/font_size = 42
+theme_override_styles/background = SubResource("StyleBoxFlat_smehm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ur7pv")
+step = 1.0
+value = 100.0
+
+[node name="item_detection" type="Control" parent="gui"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_tuyoq")
+
+[node name="cube_behind" type="TextureRect" parent="gui"]
+modulate = Color(1, 1, 1, 0.00784314)
+self_modulate = Color(1, 1, 1, 0.0313726)
+z_index = -1
+material = SubResource("ShaderMaterial_uqf3y")
+offset_right = 100.0
+offset_bottom = 100.0
+texture = SubResource("AnimatedTexture_q2187")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="item_overlay" parent="gui" instance=ExtResource("9_7psdb")]
+process_mode = 1
+z_as_relative = false
+mouse_filter = 2
+theme = ExtResource("7_fjrip")
+metadata/_edit_use_anchors_ = true
+
+[node name="debug" type="Control" parent="gui"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="fps" type="Label" parent="gui/debug"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -204.0
+offset_bottom = 23.0
+grow_horizontal = 0
+horizontal_alignment = 2
+
+[node name="player_mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 ignore_occlusion_culling = true
 mesh = ExtResource("2_jgsvk")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="player_collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("ConvexPolygonShape3D_qlg0r")
 
@@ -165,6 +416,7 @@ spring_length = -1.0
 auto_translate_mode = 1
 target_position = Vector3(0, 0, -10)
 collision_mask = 2
+debug_shape_thickness = 1
 
 [node name="Path3D" type="Path3D" parent="camera_pivot/spring_arm_3d/camera/ray_interaction"]
 curve = SubResource("Curve3D_qhqgy")
@@ -189,208 +441,6 @@ linear_limit_z/enabled = false
 [node name="StaticBody3D" type="StaticBody3D" parent="camera_pivot/spring_arm_3d/camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.50045)
 
-[node name="GUI_layer" type="CanvasLayer" parent="."]
-layer = 4
-
-[node name="GUI" type="Control" parent="GUI_layer"]
-process_mode = 3
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 1
-theme = ExtResource("7_fjrip")
-script = SubResource("GDScript_dlnwf")
-
-[node name="hud2" type="TextureRect" parent="GUI_layer/GUI"]
-visible = false
-material = SubResource("ShaderMaterial_b014x")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_dlnwf")
-
-[node name="hud" type="TextureRect" parent="GUI_layer/GUI"]
-visible = false
-top_level = true
-material = SubResource("ShaderMaterial_jgsvk")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_dlnwf")
-expand_mode = 3
-stretch_mode = 5
-
-[node name="illusions" type="ColorRect" parent="GUI_layer/GUI"]
-visible = false
-material = SubResource("ShaderMaterial_wu7tt")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="score" type="RichTextLabel" parent="GUI_layer/GUI"]
-custom_minimum_size = Vector2(500, 100)
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -1.0
-offset_bottom = 2.0
-grow_horizontal = 0
-mouse_filter = 1
-theme_override_font_sizes/normal_font_size = 75
-text = "0"
-scroll_active = false
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="crosshair_grabbing" type="TextureRect" parent="GUI_layer/GUI"]
-clip_children = 1
-clip_contents = true
-layout_mode = 2
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -49.0
-offset_top = -49.5
-offset_right = 463.0
-offset_bottom = 462.5
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.19, 0.19)
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("4_dqkch")
-stretch_mode = 5
-
-[node name="ProgressBar" type="ProgressBar" parent="GUI_layer/GUI/crosshair_grabbing"]
-layout_mode = 0
-offset_right = 512.0
-offset_bottom = 512.0
-mouse_filter = 1
-theme_override_styles/fill = SubResource("StyleBoxFlat_dqkch")
-fill_mode = 3
-show_percentage = false
-
-[node name="MarginContainer" type="MarginContainer" parent="GUI_layer/GUI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="crosshair" type="TextureRect" parent="GUI_layer/GUI/MarginContainer"]
-material = SubResource("ShaderMaterial_fjrip")
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("5_qlg0r")
-expand_mode = 3
-
-[node name="box_open_bar" type="ProgressBar" parent="GUI_layer/GUI/MarginContainer"]
-visible = false
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-max_value = 1.0
-fill_mode = 3
-show_percentage = false
-
-[node name="health_bar" type="ProgressBar" parent="GUI_layer/GUI"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -26.0
-offset_right = 500.0
-grow_vertical = 0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 22
-theme_override_font_sizes/font_size = 42
-theme_override_styles/background = SubResource("StyleBoxFlat_smehm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ur7pv")
-step = 1.0
-value = 100.0
-
-[node name="item_detection" type="Control" parent="GUI_layer/GUI"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("6_tuyoq")
-
-[node name="rectangle" type="ReferenceRect" parent="GUI_layer/GUI/item_detection"]
-layout_mode = 0
-offset_right = 100.0
-offset_bottom = 100.0
-editor_only = false
-
-[node name="item_name_bg" type="ColorRect" parent="GUI_layer/GUI/item_detection/rectangle"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(1, 0, 0, 1)
-
-[node name="Label" type="Label" parent="GUI_layer/GUI/item_detection/rectangle/item_name_bg"]
-material = SubResource("ShaderMaterial_kgc2y")
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-theme = ExtResource("7_fjrip")
-text = "testing waaaaow"
-clip_text = true
-
-[node name="offscreen_reticle" type="TextureRect" parent="GUI_layer/GUI/item_detection"]
-layout_mode = 0
-offset_right = 100.0
-offset_bottom = 100.0
-texture = ExtResource("8_smehm")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="item_overlay" parent="GUI_layer/GUI" instance=ExtResource("9_7psdb")]
-process_mode = 1
-z_as_relative = false
-layout_mode = 1
-mouse_filter = 2
-theme = ExtResource("7_fjrip")
-metadata/_edit_use_anchors_ = true
-
-[node name="debug" type="Control" parent="GUI_layer/GUI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="fps" type="Label" parent="GUI_layer/GUI/debug"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -204.0
-offset_bottom = 23.0
-grow_horizontal = 0
-horizontal_alignment = 2
-
 [node name="item_detection_area" type="Area3D" parent="."]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
 collision_layer = 2
@@ -411,11 +461,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
 exclude_parent = false
 target_position = Vector3(0, 0, -100)
 collision_mask = 3
-debug_shape_custom_color = Color(1, 1, 1, 1)
-debug_shape_thickness = 5
+debug_shape_thickness = 1
 
 [node name="no_fly_ray" type="RayCast3D" parent="."]
 target_position = Vector3(0, -6, 0)
+debug_shape_custom_color = Color(1, 1, 0, 1)
+debug_shape_thickness = 1
 
 [node name="short_scan_light" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
@@ -462,8 +513,8 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 
-[connection signal="body_entered" from="item_detection_area" to="GUI_layer/GUI/item_detection" method="_on_item_detection_area_body_entered"]
-[connection signal="body_exited" from="item_detection_area" to="GUI_layer/GUI/item_detection" method="_on_item_detection_area_body_exited"]
+[connection signal="body_entered" from="item_detection_area" to="gui/item_detection" method="_on_item_detection_area_body_entered"]
+[connection signal="body_exited" from="item_detection_area" to="gui/item_detection" method="_on_item_detection_area_body_exited"]
 [connection signal="timeout" from="box_open_timer" to="." method="_on_box_open_timer_timeout"]
 [connection signal="timeout" from="grab_buffer_timer" to="." method="_on_grab_buffer_timer_timeout"]
-[connection signal="timeout" from="item_detection_timer" to="GUI_layer/GUI/item_detection" method="_on_item_detection_timer_timeout"]
+[connection signal="timeout" from="item_detection_timer" to="gui/item_detection" method="_on_item_detection_timer_timeout"]

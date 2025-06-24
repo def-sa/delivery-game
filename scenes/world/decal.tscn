@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://crhhcw5vshrmf"]
+
+[ext_resource type="Script" uid="uid://coe7nbe4f4y5f" path="res://scripts/world/decal.gd" id="1_lr861"]
+
+[sub_resource type="Gradient" id="Gradient_lr861"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3d7rr"]
+gradient = SubResource("Gradient_lr861")
+width = 1
+
+[node name="Decal" type="Decal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.5, 0)
+size = Vector3(2, 20, 2)
+texture_albedo = SubResource("GradientTexture1D_3d7rr")
+modulate = Color(0, 0, 0, 1)
+upper_fade = 0.5
+lower_fade = 0.2
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+distance_fade_length = 20.0
+script = ExtResource("1_lr861")
