@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dcpt5m6we4os2"]
+[gd_scene load_steps=31 format=3 uid="uid://dcpt5m6we4os2"]
 
 [ext_resource type="PackedScene" uid="uid://cggqb75a8w8r" path="res://addons/debug_menu/debug_menu.tscn" id="3_md6cl"]
 [ext_resource type="PackedScene" uid="uid://b40cnyd6dm5gr" path="res://scenes/world/hurt_area.tscn" id="5_i5mec"]
@@ -40,7 +40,9 @@ points = PackedVector3Array(1.11085, 10.6067, -0.140865, -2.4787, 2.49442, -0.15
 
 [sub_resource type="BoxMesh" id="BoxMesh_r1kpy"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_r1kpy"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_i5mec"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5bu78"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_i5mec"]
 
@@ -153,7 +155,7 @@ mesh = ExtResource("20_wlwgd")
 shape = SubResource("ConvexPolygonShape3D_1notw")
 
 [node name="cube" type="Node3D" parent="World/Objects/test_objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.3341, 9.8105, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.1825, 0, -25.525)
 script = ExtResource("6_u2p2s")
 tiers = {
 "BUISNESS": false,
@@ -164,18 +166,19 @@ tiers = {
 "STANDARD": false
 }
 modifiers = {
+"BREAKABLE": true,
 "DELIVERABLE": true,
 "DETECTABLE": true,
 "GRABBABLE": true,
-"OPENABLE": false
+"OPENABLE": false,
+"SCANNABLE": false
 }
 box_mesh = SubResource("BoxMesh_r1kpy")
-box_weight = 1.0
-id = "cube yay"
+id = "box!"
 metadata/_custom_type_script = "uid://bou2h1ka6lks6"
 
-[node name="pill" type="Node3D" parent="World/Objects/test_objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.9997, 9.26099, 0)
+[node name="pilllllllll" type="Node3D" parent="World/Objects/test_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.8024, 14.2185, -0.165646)
 script = ExtResource("6_u2p2s")
 tiers = {
 "BUISNESS": false,
@@ -189,15 +192,15 @@ modifiers = {
 "DELIVERABLE": false,
 "DETECTABLE": true,
 "GRABBABLE": true,
-"OPENABLE": false
+"OPENABLE": false,
+"SCANNABLE": false
 }
-box_mesh = SubResource("CapsuleMesh_r1kpy")
+box_mesh = SubResource("CapsuleMesh_i5mec")
 shadow_type = "circle"
-id = "pillllll"
 metadata/_custom_type_script = "uid://bou2h1ka6lks6"
 
-[node name="long box" type="Node3D" parent="World/Objects/test_objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.9997, 9.26099, 0)
+[node name="box" type="Node3D" parent="World/Objects/test_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.0579, 17.3265, 0)
 script = ExtResource("6_u2p2s")
 tiers = {
 "BUISNESS": false,
@@ -208,14 +211,39 @@ tiers = {
 "STANDARD": false
 }
 modifiers = {
-"DELIVERABLE": false,
+"BREAKABLE": true,
+"DELIVERABLE": true,
 "DETECTABLE": true,
 "GRABBABLE": true,
-"OPENABLE": false
+"OPENABLE": false,
+"SCANNABLE": false
 }
-box_size = Vector3(2, 5, 1)
+box_mesh = SubResource("BoxMesh_5bu78")
+box_size = Vector3(5, 2, 1)
+box_max_health = 200.0
+metadata/_custom_type_script = "uid://bou2h1ka6lks6"
+
+[node name="static" type="Node3D" parent="World/Objects/test_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3983, 25.9365, 0)
+script = ExtResource("6_u2p2s")
+tiers = {
+"BUISNESS": false,
+"COMMON": false,
+"EXPORT": false,
+"FIRST_CLASS": false,
+"PREMIUM": true,
+"STANDARD": false
+}
+modifiers = {
+"DELIVERABLE": false,
+"DETECTABLE": true,
+"GRABBABLE": false,
+"OPENABLE": false,
+"SCANNABLE": true
+}
 box_mesh = SubResource("BoxMesh_i5mec")
-id = "longbox"
+box_size = Vector3(0.1, 1, 1)
+shadow_type = "none"
 metadata/_custom_type_script = "uid://bou2h1ka6lks6"
 
 [node name="Entities" type="Node3D" parent="World"]

@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://dfbuo3n61xvsl"]
+
+[ext_resource type="Script" uid="uid://dop4wf51sb3ou" path="res://scripts/healthbar.gd" id="1_kl70x"]
+[ext_resource type="Shader" uid="uid://bi7h5qfs7c8sg" path="res://shaders/noise_alpha.gdshader" id="2_jrqwi"]
+[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://assets/themes/new_theme.tres" id="2_kl70x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jrqwi"]
+shader = ExtResource("2_jrqwi")
+shader_parameter/noise_strength = 1.0
+shader_parameter/noise_scale = 13.877
+shader_parameter/noise_speed = 0.387
+shader_parameter/blend_factor = 0.365
+
+[sub_resource type="Gradient" id="Gradient_jrqwi"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mx1f1"]
+gradient = SubResource("Gradient_jrqwi")
+width = 256
+height = 37
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jrqwi"]
+bg_color = Color(0, 0, 0, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mx1f1"]
+bg_color = Color(0, 1, 0, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_r6iu6"]
+viewport_path = NodePath(".")
+
+[node name="Viewport" type="SubViewport"]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(256, 40)
+script = ExtResource("1_kl70x")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_jrqwi")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -20.0
+offset_right = 129.0
+offset_bottom = 17.515
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_mx1f1")
+stretch_mode = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="TextureRect"]
+show_behind_parent = true
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_kl70x")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/background = SubResource("StyleBoxFlat_jrqwi")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mx1f1")
+
+[node name="Sprite3D" type="Sprite3D" parent="TextureRect"]
+cast_shadow = 0
+ignore_occlusion_culling = true
+offset = Vector2(0, 20)
+billboard = 1
+no_depth_test = true
+alpha_cut = 2
+texture_filter = 0
+texture = SubResource("ViewportTexture_r6iu6")

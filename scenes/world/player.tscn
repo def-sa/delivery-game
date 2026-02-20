@@ -115,6 +115,7 @@ shader = ExtResource("12_8caxf")
 shader_parameter/noise_strength = 1.0
 shader_parameter/noise_scale = 1.0
 shader_parameter/noise_speed = 0.03
+shader_parameter/blend_factor = 0.0
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_q2187"]
 frames = 34

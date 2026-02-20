@@ -55,14 +55,14 @@ func _process(_delta: float) -> void:
 func item_entered_area(object):
 	if object == player: return
 	var parent = object.get_parent()
-	if "is_detected" in parent:
-		parent.is_detected = true
+	if "current_box" in parent:
+		parent.current_state = parent.STATE_DETECTED
 
 func item_exited_area(object):
 	if object == player: return
 	var parent = object.get_parent()
-	if "is_detected" in parent:
-		parent.is_detected = false
+	if "current_box" in parent:
+		parent.current_state = parent.STATE_IDLE
 
 
 

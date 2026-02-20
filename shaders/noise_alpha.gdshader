@@ -4,6 +4,7 @@ render_mode blend_mix, unshaded;
 uniform float noise_strength : hint_range(0.0, 1.0) = 0.2; // Controls the intensity of the noise effect
 uniform float noise_scale : hint_range(1.0, 500.0) = 100.0;  // Determines the granularity of the noise
 uniform float noise_speed : hint_range(0.0, 5.0) = 1.0;      // Adjusts how quickly the noise animates
+uniform float blend_factor;
 
 // Pseudo-random function based on UV coordinates
 float rand(vec2 co) {
@@ -22,5 +23,6 @@ void fragment() {
     vec3 noisy_color = tex_color.rgb + (noise_value - 0.5) * noise_strength;
     
     // Output the final color, ensuring that transparency remains intact
-    COLOR = vec4(noisy_color, tex_color.a);
+	
+	COLOR = mix(vec4(noisy_color, tex_color.a), vec4(0.0, 0.0, 0.0, 0.0), blend_factor);
 }

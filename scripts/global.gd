@@ -20,6 +20,10 @@ const MODIFIERS = {
 	"OPENABLE": "Can be opened"
 }
 
+const AR_CODES = {
+	"SCAN_LIGHT": ""
+}
+
 @onready var score_node = get_node("/root/main/World/Player/gui/score")
 
 var score = 0:

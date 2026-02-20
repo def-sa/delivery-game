@@ -46,9 +46,10 @@ spawner="item can spawn here"
 openable="openable box"
 deliverable="object can be delivered"
 detectable="item can be detected with item_detection"
-_is_floor=""
 interactable=""
 NPC=""
+scannable="can be scanned, ar codes & stuff"
+breakable=""
 
 [input]
 
