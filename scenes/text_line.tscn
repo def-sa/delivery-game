@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://b80n4m373xfno"]
+
+[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://themes/default.tres" id="1_mcuiy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mcuiy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gguqp"]
+content_margin_left = 6.0
+bg_color = Color(0, 0, 0, 0.458824)
+anti_aliasing = false
+
+[node name="text_line" type="RichTextLabel"]
+focus_mode = 2
+theme = ExtResource("1_mcuiy")
+theme_override_styles/background = SubResource("StyleBoxFlat_mcuiy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_gguqp")
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+selection_enabled = true
+text_direction = 1

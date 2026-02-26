@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://rhubibb8ttf7"]
+
+[ext_resource type="Script" uid="uid://cexnog7ni754x" path="res://scripts/player.gd" id="1_o5qli"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0wfyh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sugp2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jyhfs"]
+size = Vector3(5, 0.1, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tbgi4"]
+size = Vector3(5, 0.1, 5)
+
+[node name="main" type="Node3D"]
+
+[node name="players" type="Node3D" parent="."]
+
+[node name="player_1" type="CharacterBody3D" parent="players"]
+script = ExtResource("1_o5qli")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="players/player_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_0wfyh")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="players/player_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_sugp2")
+
+[node name="entities" type="Node3D" parent="."]
+
+[node name="world_entities" type="Node3D" parent="entities"]
+
+[node name="enemies" type="Node3D" parent="entities"]
+
+[node name="terrain" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="terrain"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="terrain/StaticBody3D"]
+mesh = SubResource("BoxMesh_jyhfs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="terrain/StaticBody3D"]
+shape = SubResource("BoxShape3D_tbgi4")

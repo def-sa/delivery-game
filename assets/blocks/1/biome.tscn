@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://mguvqshvl52j"]
+
+[ext_resource type="Script" uid="uid://b8hq6uemlo16x" path="res://scenes/biome_region.gd" id="1_fio3u"]
+
+[sub_resource type="Gradient" id="Gradient_fio3u"]
+colors = PackedColorArray(0.981154, 0.811962, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3esr1"]
+gradient = SubResource("Gradient_fio3u")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yc10j"]
+noise_type = 0
+frequency = 0.0425
+fractal_octaves = 1
+cellular_return_type = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gqmmt"]
+
+[node name="biome_ara" type="Area3D"]
+monitoring = false
+monitorable = false
+script = ExtResource("1_fio3u")
+texture = SubResource("GradientTexture2D_3esr1")
+noise = SubResource("FastNoiseLite_yc10j")
+noise_scale = 0.1
+subdivisions = 6
+metadata/_custom_type_script = "uid://b8hq6uemlo16x"
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_gqmmt")

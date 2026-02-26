@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxjd3whcfjg0g"]
+
+[ext_resource type="Script" uid="uid://b8hq6uemlo16x" path="res://scenes/biome_region.gd" id="1_01ocq"]
+[ext_resource type="Texture2D" uid="uid://c8kitl7tak6lg" path="res://assets/concrete.png" id="2_nb6wu"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pm3ni"]
+frequency = 0.0417
+fractal_octaves = 1
+fractal_ping_pong_strength = -4.84
+cellular_return_type = 3
+domain_warp_fractal_type = 0
+domain_warp_fractal_octaves = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y6deb"]
+
+[node name="sidewalk_area" type="Area3D"]
+monitoring = false
+monitorable = false
+priority = 2
+script = ExtResource("1_01ocq")
+texture = ExtResource("2_nb6wu")
+noise = SubResource("FastNoiseLite_pm3ni")
+noise_scale = 0.225
+subdivisions = 12
+metadata/_custom_type_script = "uid://b8hq6uemlo16x"
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_y6deb")

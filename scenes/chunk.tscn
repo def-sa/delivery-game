@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://drnymc1qr47jb"]
+
+[ext_resource type="Script" uid="uid://bnib4a1c15ba5" path="res://chunk.gd" id="1_jas4a"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_jas4a"]
+radius = 13.395
+height = 13.815
+radial_segments = 7
+rings = 3
+is_hemisphere = true
+
+[node name="chunk" type="Node3D"]
+script = ExtResource("1_jas4a")
+
+[node name="csg_combiner_3d" type="CSGCombiner3D" parent="."]
+visible = false
+use_collision = true
+
+[node name="csg_box_3d" type="CSGBox3D" parent="csg_combiner_3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -29.3, 0)
+visible = false
+size = Vector3(32, 4.8, 32)
+
+[node name="csg_mesh_3d" type="CSGMesh3D" parent="csg_combiner_3d"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 47.1, 0)
+visible = false
+mesh = SubResource("SphereMesh_jas4a")

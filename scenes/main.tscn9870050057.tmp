@@ -1,0 +1,418 @@
+[gd_scene load_steps=28 format=3 uid="uid://rhubibb8ttf7"]
+
+[ext_resource type="Script" uid="uid://cexnog7ni754x" path="res://scripts/player.gd" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://e8wpjwpgg6uk" path="res://assets/mouse.png" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://bttf6jg06mqcp" path="res://assets/cat paw texture.png" id="2_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://tp8nb72wff2h" path="res://assets/checker_black_512x512.png" id="3_sugp2"]
+[ext_resource type="ArrayMesh" uid="uid://cl3rjebhbds7c" path="res://assets/robot cat paw1.obj" id="3_tefeu"]
+[ext_resource type="Script" uid="uid://g3qapqwiix0" path="res://scripts/physics_item.gd" id="5_tefeu"]
+
+[sub_resource type="Curve3D" id="Curve3D_tbgi4"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_0wfyh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("3d_gui/camera:h_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("3d_gui/camera:v_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("3d_gui/helmet:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 2, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("3d_gui:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("gui/mouse:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.328, 0.234)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("gui/mouse:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.610865]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("gui/mouse:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-7, 5)]
+}
+
+[sub_resource type="Animation" id="Animation_sugp2"]
+resource_name = "idle_bob"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("3d_gui/camera:h_offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.55568, 3),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [0.0, 0.013, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("3d_gui/camera:v_offset")
+tracks/1/interp = 2
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.55568, 3),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [0.0, -0.005, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("3d_gui/helmet:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.55575, 3),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector3(0, 2, 0), Vector3(0, 2.013, 0), Vector3(0, 2, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tbgi4"]
+resource_name = "sprinting_bob_loop"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("3d_gui:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.236598, 0.5),
+"transitions": PackedFloat32Array(-2, -2, -0.5),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.225, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jyhfs"]
+resource_name = "walking_bob_loop"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("3d_gui:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.195677, 0.4),
+"transitions": PackedFloat32Array(-2, -2, -0.5),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.085, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tefeu"]
+resource_name = "mouse_click"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("gui/mouse:scale")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.126267, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.328, 0.234), Vector2(0.408, 0.291), Vector2(0.328, 0.234)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("gui/mouse:rotation")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.128719),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.610865]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("gui/mouse:position")
+tracks/2/interp = 0
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.128719, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-6, 4), Vector2(-7, 5), Vector2(-6, 4)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jyhfs"]
+_data = {
+&"RESET": SubResource("Animation_0wfyh"),
+&"idle_bob_loop": SubResource("Animation_sugp2"),
+&"mouse_click": SubResource("Animation_tefeu"),
+&"sprinting_bob_loop": SubResource("Animation_tbgi4"),
+&"walking_bob_loop": SubResource("Animation_jyhfs")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6xl0"]
+albedo_texture = ExtResource("2_tbgi4")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tbgi4"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tbgi4"]
+noise_type = 2
+seed = 10
+frequency = 0.005
+fractal_type = 2
+fractal_octaves = 1
+cellular_distance_function = 2
+cellular_return_type = 0
+domain_warp_type = 1
+domain_warp_fractal_octaves = 10
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tefeu"]
+generate_mipmaps = false
+seamless = true
+seamless_blend_skirt = 1.0
+as_normal_map = true
+noise = SubResource("FastNoiseLite_tbgi4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tbgi4"]
+render_priority = 1
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.8, 0.8, 0.854902, 0.0588235)
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_tefeu")
+heightmap_texture = SubResource("NoiseTexture2D_tbgi4")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tefeu"]
+lightmap_size_hint = Vector2i(256, 256)
+flip_faces = true
+radius = 0.234
+height = 0.587
+radial_segments = 18
+rings = 2
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0wfyh"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0wfyh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sugp2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_tbgi4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tefeu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jyhfs"]
+albedo_texture = ExtResource("3_sugp2")
+uv1_scale = Vector3(100, 100, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jyhfs"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tbgi4"]
+size = Vector3(100, 0.1, 100)
+
+[node name="main" type="Node3D"]
+
+[node name="players" type="Node3D" parent="."]
+
+[node name="player" type="CharacterBody3D" parent="players"]
+script = ExtResource("1_o5qli")
+
+[node name="hand_raycast" type="RayCast3D" parent="players/player"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, 0)
+target_position = Vector3(0, -10, 0)
+
+[node name="path_3d" type="Path3D" parent="players/player/hand_raycast"]
+curve = SubResource("Curve3D_tbgi4")
+
+[node name="path_follow" type="PathFollow3D" parent="players/player/hand_raycast/path_3d"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 0, 0)
+loop = false
+
+[node name="hand" type="Marker3D" parent="players/player/hand_raycast/path_3d/path_follow"]
+transform = Transform3D(1, -1.64203e-15, 0, -1.64203e-15, 1, 0, 0, 0, 1, 0, 0, -10)
+
+[node name="player_animation" type="AnimationPlayer" parent="players/player"]
+libraries = {
+&"": SubResource("AnimationLibrary_jyhfs")
+}
+autoplay = "idle_bob_loop"
+
+[node name="3d_gui" type="Node3D" parent="players/player"]
+
+[node name="camera" type="Camera3D" parent="players/player/3d_gui"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+fov = 90.0
+
+[node name="hand_3d" type="StaticBody3D" parent="players/player/3d_gui"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 0.160589, 0.0274622, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="players/player/3d_gui/hand_3d"]
+transform = Transform3D(-0.1, 0, -8.74228e-09, 8.74228e-09, 4.37114e-09, -0.1, 0, -0.1, -4.37114e-09, 0.858286, 1, 0.0718355)
+material_override = SubResource("StandardMaterial3D_o6xl0")
+mesh = ExtResource("3_tefeu")
+
+[node name="helmet" type="StaticBody3D" parent="players/player/3d_gui"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="players/player/3d_gui/helmet"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+material_override = SubResource("StandardMaterial3D_tbgi4")
+mesh = SubResource("CapsuleMesh_tefeu")
+
+[node name="gui" type="Control" parent="players/player"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -4.0
+offset_top = 3.0
+offset_right = 36.0
+offset_bottom = 43.0
+scale = Vector2(0.323, 0.234)
+pivot_offset = Vector2(-5, 3)
+
+[node name="pause_menu" type="TextureRect" parent="players/player/gui"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_0wfyh")
+
+[node name="mouse" type="TextureRect" parent="players/player/gui"]
+process_mode = 3
+modulate = Color(0.333333, 1, 1, 1)
+top_level = true
+texture_filter = 1
+layout_mode = 0
+offset_left = -7.0
+offset_top = 5.0
+offset_right = 26.0
+offset_bottom = 89.0
+rotation = -0.610865
+scale = Vector2(0.328, 0.234)
+pivot_offset = Vector2(1.115, -1.28)
+texture = ExtResource("2_0wfyh")
+
+[node name="player_mesh" type="MeshInstance3D" parent="players/player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_0wfyh")
+skeleton = NodePath("../../..")
+
+[node name="player_collision" type="CollisionShape3D" parent="players/player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_sugp2")
+
+[node name="entities" type="Node3D" parent="."]
+
+[node name="world_entities" type="Node3D" parent="entities"]
+
+[node name="enemies" type="Node3D" parent="entities"]
+
+[node name="boxes" type="Node3D" parent="entities"]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="entities/boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -13)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="entities/boxes/RigidBody3D"]
+mesh = SubResource("BoxMesh_tbgi4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="entities/boxes/RigidBody3D"]
+shape = SubResource("BoxShape3D_tefeu")
+
+[node name="physics_item" type="Node" parent="entities/boxes"]
+script = ExtResource("5_tefeu")
+metadata/_custom_type_script = "uid://g3qapqwiix0"
+
+[node name="terrain" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="terrain"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="terrain/StaticBody3D"]
+material_override = SubResource("StandardMaterial3D_jyhfs")
+mesh = SubResource("BoxMesh_jyhfs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="terrain/StaticBody3D"]
+shape = SubResource("BoxShape3D_tbgi4")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
+light_energy = 13.06
+omni_range = 17.0

@@ -1,0 +1,1070 @@
+[gd_scene load_steps=58 format=3 uid="uid://rhubibb8ttf7"]
+
+[ext_resource type="Script" uid="uid://cexnog7ni754x" path="res://scripts/player.gd" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://e8wpjwpgg6uk" path="res://assets/mouse.png" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://omev5l30lg5o" path="res://scripts/area_3d.gd" id="2_eb6dy"]
+[ext_resource type="Texture2D" uid="uid://bttf6jg06mqcp" path="res://assets/cat paw texture.png" id="2_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://com4hejbnslmu" path="res://assets/stripe_pixel.png" id="2_ya4ey"]
+[ext_resource type="Texture2D" uid="uid://tp8nb72wff2h" path="res://assets/checker_black_512x512.png" id="3_sugp2"]
+[ext_resource type="ArrayMesh" uid="uid://cl3rjebhbds7c" path="res://assets/robot cat paw1.obj" id="3_tefeu"]
+[ext_resource type="Script" uid="uid://b84m4brl8s428" path="res://scripts/gui.gd" id="5_85g3d"]
+[ext_resource type="Texture2D" uid="uid://duv7iw3kjlosh" path="res://assets/circle transparent.png" id="5_o6xl0"]
+[ext_resource type="Script" uid="uid://g3qapqwiix0" path="res://scripts/physics_item.gd" id="5_tefeu"]
+[ext_resource type="Shader" uid="uid://ckmx6krcxpj04" path="res://shaders/negative.gdshader" id="5_tipki"]
+[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://themes/default.tres" id="6_choun"]
+[ext_resource type="Texture2D" uid="uid://coji2wymb0uk5" path="res://assets/placeholder.jpg" id="13_a8y0u"]
+[ext_resource type="ArrayMesh" uid="uid://cpeivlly0yjlc" path="res://assets/metal sheet1.obj" id="13_trceg"]
+[ext_resource type="PackedScene" uid="uid://b6jx8cfbre88x" path="res://scenes/object_slot.tscn" id="16_jbj1t"]
+[ext_resource type="Script" uid="uid://b0dgvv36683df" path="res://scripts/cart.gd" id="16_muem4"]
+[ext_resource type="Script" uid="uid://b8hq6uemlo16x" path="res://scenes/biome_region.gd" id="19_0ld40"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a8y0u"]
+transparency = 4
+blend_mode = 1
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0.2, 0.796078, 1, 0.313726)
+albedo_texture = ExtResource("2_ya4ey")
+albedo_texture_msdf = true
+uv1_scale = Vector3(800, 800, 800)
+texture_filter = 2
+
+[sub_resource type="SphereMesh" id="SphereMesh_jkv2x"]
+material = SubResource("StandardMaterial3D_a8y0u")
+flip_faces = true
+radius = 8.0
+height = 16.0
+radial_segments = 32
+rings = 16
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jbj1t"]
+radius = 8.0
+
+[sub_resource type="Curve3D" id="Curve3D_tbgi4"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -7.5),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_tipki"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85g3d"]
+transparency = 1
+cull_mode = 1
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+albedo_color = Color(1, 1, 0, 0.203922)
+albedo_texture = ExtResource("3_sugp2")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="Animation" id="Animation_0wfyh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("3d_gui/camera:h_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("3d_gui/camera:v_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("3d_gui/helmet:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 2, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("3d_gui:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("gui/mouse:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.328, 0.234)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("gui/mouse:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.610865]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("gui/mouse:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-7, 5)]
+}
+
+[sub_resource type="Animation" id="Animation_sugp2"]
+resource_name = "idle_bob"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("3d_gui/camera:h_offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.55568, 3),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [0.0, 0.013, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("3d_gui/camera:v_offset")
+tracks/1/interp = 2
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.55568, 3),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [0.0, -0.005, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("3d_gui/helmet:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.55575, 3),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector3(0, 2, 0), Vector3(0, 2.013, 0), Vector3(0, 2, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tefeu"]
+resource_name = "mouse_click"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("gui/mouse:scale")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.126267, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.328, 0.234), Vector2(0.408, 0.291), Vector2(0.328, 0.234)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("gui/mouse:rotation")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.128719),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.610865]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("gui/mouse:position")
+tracks/2/interp = 0
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.128719, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-6, 4), Vector2(-7, 5), Vector2(-6, 4)]
+}
+
+[sub_resource type="Animation" id="Animation_tbgi4"]
+resource_name = "sprinting_bob_loop"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("3d_gui:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.236598, 0.5),
+"transitions": PackedFloat32Array(-2, -2, -0.5),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.225, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jyhfs"]
+resource_name = "walking_bob_loop"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("3d_gui:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.195677, 0.4),
+"transitions": PackedFloat32Array(-2, -2, -0.5),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.085, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jyhfs"]
+_data = {
+&"RESET": SubResource("Animation_0wfyh"),
+&"idle_bob_loop": SubResource("Animation_sugp2"),
+&"mouse_click": SubResource("Animation_tefeu"),
+&"sprinting_bob_loop": SubResource("Animation_tbgi4"),
+&"walking_bob_loop": SubResource("Animation_jyhfs")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6xl0"]
+albedo_texture = ExtResource("2_tbgi4")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jkv2x"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jbj1t"]
+noise_type = 2
+seed = 10
+frequency = 0.005
+fractal_type = 2
+fractal_octaves = 1
+cellular_distance_function = 2
+cellular_return_type = 0
+domain_warp_type = 1
+domain_warp_fractal_octaves = 10
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_muem4"]
+generate_mipmaps = false
+seamless = true
+seamless_blend_skirt = 1.0
+as_normal_map = true
+noise = SubResource("FastNoiseLite_jbj1t")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dp3eg"]
+render_priority = 1
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.0901961)
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_muem4")
+heightmap_texture = SubResource("NoiseTexture2D_jkv2x")
+billboard_mode = 2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tefeu"]
+lightmap_size_hint = Vector2i(512, 512)
+flip_faces = true
+radius = 0.234
+height = 0.587
+radial_segments = 18
+rings = 2
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0wfyh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_85g3d"]
+shader = ExtResource("5_tipki")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0wfyh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sugp2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_eb6dy"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_trceg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_a8y0u"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jkv2x"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dp3eg"]
+size = Vector3(2, 0.5, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0ld40"]
+size = Vector3(2, 0.5, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dp3eg"]
+size = Vector3(2, 0.7, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jbj1t"]
+albedo_texture = ExtResource("3_sugp2")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jbj1t"]
+material = SubResource("StandardMaterial3D_jbj1t")
+top_radius = 0.4
+bottom_radius = 0.4
+height = 0.15
+
+[sub_resource type="GDScript" id="GDScript_muem4"]
+script/source = "# terrain_spawner.gd
+# Spawns a grid of subdivided PlaneMesh chunks, shades them in world-space,
+# and adds a single global HeightMapShape3D collision matching the heightmap.
+
+extends Node3D
+
+@export var heightmap	   : Texture2D
+@export var detail_texture  : Texture2D
+
+# How many chunks to spawn in X,Z around origin
+@export var spawn_radius	: int	   = 1
+
+# Plane chunk dimensions (world units)
+@export var plane_size	  : Vector2   = Vector2(10, 10)
+@export var subdivisions_x  : int	   = 64
+@export var subdivisions_z  : int	   = 64
+
+# Shader parameters
+@export var tile_size	   : float	 = 4.0
+@export var height_scale	: float	 = 10.0
+
+# Cached from heightmap
+var resolution			 : Vector2
+
+func _ready() -> void:
+	if not heightmap:
+		push_error(\"terrain_spawner: assign a heightmap texture\")
+		return
+
+	# cache resolution
+	resolution = Vector2(
+		heightmap.get_width(),
+		heightmap.get_height()
+	)
+
+	# 1) create global collision from heightmap
+	_create_global_heightmap_collision()
+
+	# 2) spawn visible chunks
+	for x in range(-spawn_radius, spawn_radius + 1):
+		for z in range(-spawn_radius, spawn_radius + 1):
+			_spawn_chunk(Vector2i(x, z))
+
+
+func _create_global_heightmap_collision() -> void:
+	# Extract red channel heights into a flat array
+	var img = heightmap.get_image()
+	img.lock()
+	var w = img.get_width()
+	var h = img.get_height()
+	var heights = PackedFloat32Array()
+	heights.resize(w * h)
+	for y in h:
+		for x in w:
+			var r = img.get_pixel(x, y).r
+			heights[x + y * w] = r * height_scale
+	img.unlock()
+
+	# Build HeightMapShape3D
+	var hm_shape = HeightMapShape3D.new()
+	hm_shape.map_width	 = w
+	hm_shape.map_depth	 = h
+	hm_shape.heights	   = heights
+	hm_shape.height_scale  = height_scale
+
+	# Create the StaticBody3D + CollisionShape3D
+	var body = StaticBody3D.new()
+	var col  = CollisionShape3D.new()
+	col.shape = hm_shape
+	body.add_child(col)
+	add_child(body)
+
+
+func _spawn_chunk(coords: Vector2i) -> MeshInstance3D:
+	# 1) build a subdivided plane mesh
+	var mesh = PlaneMesh.new()
+	mesh.size			 = plane_size
+	mesh.subdivide_width  = subdivisions_x
+	mesh.subdivide_depth  = subdivisions_z
+
+	# 2) make a MeshInstance3D
+	var mi = MeshInstance3D.new()
+	mi.mesh = mesh
+
+	# 3) assign our world-space shader
+	var mat = ShaderMaterial.new()
+	mat.shader = preload(\"res://shaders/terrain_height.gdshader\")
+	mat.set_shader_parameter(\"heightmap\",	heightmap)
+	mat.set_shader_parameter(\"albedo_tex\",   detail_texture)
+	mat.set_shader_parameter(\"resolution\",   resolution)
+	mat.set_shader_parameter(\"tile_size\",	tile_size)
+	mat.set_shader_parameter(\"height_scale\", height_scale)
+	mi.material_override = mat
+
+	# 4) position it in world space
+	mi.translation = Vector3(
+		coords.x * plane_size.x,
+		0,
+		coords.y * plane_size.y
+	)
+
+	add_child(mi)
+	return mi
+"
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0ld40"]
+sky_top_color = Color(0.510762, 0.58234, 0.948742, 1)
+sky_horizon_color = Color(1, 1, 1, 1)
+sky_curve = 0.19484
+ground_bottom_color = Color(0.613028, 0.545176, 0.466889, 1)
+ground_horizon_color = Color(0.252028, 0.252028, 0.252028, 1)
+ground_curve = 4.15876
+use_debanding = false
+
+[sub_resource type="Sky" id="Sky_gqmmt"]
+sky_material = SubResource("ProceduralSkyMaterial_0ld40")
+radiance_size = 0
+
+[sub_resource type="Environment" id="Environment_dp3eg"]
+background_mode = 2
+background_energy_multiplier = 0.25
+sky = SubResource("Sky_gqmmt")
+ssao_radius = 0.5
+ssao_intensity = 11.45
+ssao_power = 0.401915
+ssil_radius = 1.1
+ssil_intensity = 5.98
+ssil_sharpness = 1.0
+sdfgi_use_occlusion = true
+sdfgi_read_sky_light = false
+sdfgi_cascades = 6
+sdfgi_max_distance = 819.2
+sdfgi_y_scale = 0
+fog_enabled = true
+fog_light_color = Color(0.481406, 0.51629, 0.571113, 1)
+fog_light_energy = 0.45
+fog_density = 0.0193
+fog_aerial_perspective = 0.407
+fog_sky_affect = 0.919
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jyhfs"]
+albedo_texture = ExtResource("3_sugp2")
+uv1_scale = Vector3(100, 100, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jyhfs"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tbgi4"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0ld40"]
+fractal_type = 3
+fractal_octaves = 1
+fractal_ping_pong_strength = 0.655
+cellular_distance_function = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0ld40"]
+size = Vector3(100, 5, 100)
+
+[node name="main" type="Node3D"]
+
+[node name="players" type="Node3D" parent="."]
+
+[node name="illy" type="CharacterBody3D" parent="players"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.3, 0)
+collision_priority = 3.0
+wall_min_slide_angle = 0.0
+floor_stop_on_slope = false
+floor_max_angle = 1.13446
+script = ExtResource("1_o5qli")
+jump_velocity = 17.155
+speed = 14.0
+
+[node name="area_3d" type="Area3D" parent="players/illy"]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+monitorable = false
+priority = 1
+script = ExtResource("2_eb6dy")
+
+[node name="mesh_instance_3d" type="MeshInstance3D" parent="players/illy/area_3d"]
+transparency = 0.62
+mesh = SubResource("SphereMesh_jkv2x")
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="players/illy/area_3d"]
+shape = SubResource("SphereShape3D_jbj1t")
+
+[node name="hand_raycast" type="RayCast3D" parent="players/illy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+target_position = Vector3(0, 0, -7.5)
+collision_mask = 2
+
+[node name="path_3d" type="Path3D" parent="players/illy/hand_raycast"]
+curve = SubResource("Curve3D_tbgi4")
+
+[node name="path_follow" type="PathFollow3D" parent="players/illy/hand_raycast/path_3d"]
+loop = false
+
+[node name="hand" type="Marker3D" parent="players/illy/hand_raycast/path_3d"]
+transform = Transform3D(1, -1.64203e-15, 0, -1.64203e-15, 1, 0, 0, 0, 1, 0, 0, -7.5)
+
+[node name="hand_overlay" type="MeshInstance3D" parent="players/illy/hand_raycast/path_3d/hand"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+visible = false
+mesh = SubResource("BoxMesh_tipki")
+surface_material_override/0 = SubResource("StandardMaterial3D_85g3d")
+
+[node name="player_animation" type="AnimationPlayer" parent="players/illy"]
+libraries = {
+&"": SubResource("AnimationLibrary_jyhfs")
+}
+autoplay = "idle_bob_loop"
+
+[node name="timers" type="Node" parent="players/illy"]
+
+[node name="scan_speed_timer" type="Timer" parent="players/illy/timers"]
+one_shot = true
+
+[node name="3d_gui" type="Node3D" parent="players/illy"]
+
+[node name="camera" type="Camera3D" parent="players/illy/3d_gui"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+
+[node name="right_hand" type="StaticBody3D" parent="players/illy/3d_gui"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 0.160589, 0.0274622, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="players/illy/3d_gui/right_hand"]
+transform = Transform3D(-0.1, 0, -8.74228e-09, 8.74228e-09, 4.37114e-09, -0.1, 0, -0.1, -4.37114e-09, 0.858286, 1, 0.0718355)
+material_override = SubResource("StandardMaterial3D_o6xl0")
+mesh = ExtResource("3_tefeu")
+
+[node name="left_hand" type="StaticBody3D" parent="players/illy/3d_gui"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 0.160589, 0.0274622, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="players/illy/3d_gui/left_hand"]
+transform = Transform3D(-0.1, 0, -8.74228e-09, 8.74228e-09, 4.37114e-09, -0.1, 0, -0.1, -4.37114e-09, 0.858286, 1, 0.0718355)
+material_override = SubResource("StandardMaterial3D_o6xl0")
+mesh = ExtResource("3_tefeu")
+
+[node name="helmet" type="StaticBody3D" parent="players/illy/3d_gui"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+collision_layer = 0
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="players/illy/3d_gui/helmet"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+layers = 2
+material_override = SubResource("StandardMaterial3D_dp3eg")
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_tefeu")
+
+[node name="gui" type="Control" parent="players/illy"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(-5, 3)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+script = ExtResource("5_85g3d")
+
+[node name="detected_overlay_container" type="Control" parent="players/illy/gui"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="module_container" type="HFlowContainer" parent="players/illy/gui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="chat_container" type="VBoxContainer" parent="players/illy/gui/module_container"]
+custom_minimum_size = Vector2(250, 500)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+
+[node name="text_edit" type="TextEdit" parent="players/illy/gui/module_container/chat_container"]
+layout_mode = 2
+theme = ExtResource("6_choun")
+placeholder_text = "click or press T to type..."
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[node name="pause_menu" type="TextureRect" parent="players/illy/gui"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("PlaceholderTexture2D_0wfyh")
+
+[node name="mouse" type="TextureRect" parent="players/illy/gui"]
+process_mode = 3
+visible = false
+modulate = Color(0.333333, 1, 1, 1)
+top_level = true
+texture_filter = 1
+layout_mode = 0
+offset_left = -7.0
+offset_top = 5.0
+offset_right = 26.0
+offset_bottom = 89.0
+rotation = -0.610865
+scale = Vector2(0.328, 0.234)
+pivot_offset = Vector2(1.115, -1.28)
+mouse_filter = 2
+texture = ExtResource("2_0wfyh")
+
+[node name="crosshair" type="TextureRect" parent="players/illy/gui"]
+z_index = 3
+texture_filter = 1
+material = SubResource("ShaderMaterial_85g3d")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_o6xl0")
+stretch_mode = 3
+
+[node name="player_mesh" type="MeshInstance3D" parent="players/illy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_0wfyh")
+skeleton = NodePath("../../..")
+
+[node name="player_collision" type="CollisionShape3D" parent="players/illy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_sugp2")
+
+[node name="flashlight" type="SpotLight3D" parent="players/illy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
+spot_range = 438.705
+spot_angle = 54.94
+spot_angle_attenuation = 0.210224
+
+[node name="entities" type="Node3D" parent="."]
+
+[node name="world_entities" type="Node3D" parent="entities"]
+
+[node name="object_slot" parent="entities/world_entities" instance=ExtResource("16_jbj1t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7, 2.7, 0)
+is_delivery_point = true
+
+[node name="enemies" type="Node3D" parent="entities"]
+
+[node name="boxes" type="Node3D" parent="entities"]
+
+[node name="box" type="Node3D" parent="entities/boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.76362, 1.31317, -9.48092)
+script = ExtResource("5_tefeu")
+id = "box1"
+tiers = {
+"BUISNESS": true,
+"COMMON": false,
+"EXPORT": false,
+"FIRST_CLASS": false,
+"PREMIUM": false,
+"STANDARD": false
+}
+modifiers = {
+"BREAKABLE": true,
+"DELIVERABLE": true,
+"DETECTABLE": true,
+"GRABBABLE": true,
+"OPENABLE": false,
+"SCANNABLE": false
+}
+box_mesh = SubResource("BoxMesh_eb6dy")
+metadata/_custom_type_script = "uid://g3qapqwiix0"
+
+[node name="box2" type="Node3D" parent="entities/boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.95713, -11.0432)
+script = ExtResource("5_tefeu")
+id = "box2"
+tiers = {
+"BUISNESS": false,
+"COMMON": false,
+"EXPORT": false,
+"FIRST_CLASS": true,
+"PREMIUM": false,
+"STANDARD": false
+}
+modifiers = {
+"BREAKABLE": true,
+"DELIVERABLE": true,
+"DETECTABLE": true,
+"GRABBABLE": true,
+"OPENABLE": false,
+"SCANNABLE": false
+}
+box_mesh = SubResource("BoxMesh_trceg")
+box_size = Vector3(2, 1, 1)
+box_max_health = 200.0
+metadata/_custom_type_script = "uid://g3qapqwiix0"
+
+[node name="metal sheet" type="Node3D" parent="entities/boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -9)
+script = ExtResource("5_tefeu")
+id = "metal sheet"
+tiers = {
+"BUISNESS": false,
+"COMMON": true,
+"EXPORT": false,
+"FIRST_CLASS": false,
+"PREMIUM": false,
+"STANDARD": false
+}
+modifiers = {
+"BREAKABLE": false,
+"DELIVERABLE": false,
+"DETECTABLE": false,
+"GRABBABLE": true,
+"OPENABLE": false,
+"SCANNABLE": false
+}
+box_mesh = ExtResource("13_trceg")
+box_size = Vector3(1.5, 0.15, 2)
+metadata/_custom_type_script = "uid://g3qapqwiix0"
+
+[node name="fragile_box" type="Node3D" parent="entities/boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -11)
+script = ExtResource("5_tefeu")
+tiers = {
+"BUISNESS": false,
+"COMMON": true,
+"EXPORT": false,
+"FIRST_CLASS": false,
+"PREMIUM": false,
+"STANDARD": false
+}
+modifiers = {
+"BREAKABLE": true,
+"DELIVERABLE": false,
+"DETECTABLE": true,
+"GRABBABLE": true,
+"OPENABLE": false,
+"SCANNABLE": false
+}
+box_mesh = SubResource("BoxMesh_a8y0u")
+box_texture = ExtResource("13_a8y0u")
+box_scale = Vector3(2, 2, 2)
+box_damage_sensitivity = 12.0
+metadata/_custom_type_script = "uid://g3qapqwiix0"
+
+[node name="fragile_box_2" type="Node3D" parent="entities/boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -11)
+script = ExtResource("5_tefeu")
+tiers = {
+"BUISNESS": false,
+"COMMON": true,
+"EXPORT": false,
+"FIRST_CLASS": false,
+"PREMIUM": false,
+"STANDARD": false
+}
+modifiers = {
+"BREAKABLE": true,
+"DELIVERABLE": false,
+"DETECTABLE": true,
+"GRABBABLE": true,
+"OPENABLE": false,
+"SCANNABLE": false
+}
+box_mesh = SubResource("BoxMesh_a8y0u")
+box_texture = ExtResource("13_a8y0u")
+box_size = Vector3(2, 0.5, 1)
+box_damage_sensitivity = 12.0
+metadata/_custom_type_script = "uid://g3qapqwiix0"
+
+[node name="fragile_box_3" type="Node3D" parent="entities/boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -11)
+script = ExtResource("5_tefeu")
+tiers = {
+"BUISNESS": false,
+"COMMON": true,
+"EXPORT": false,
+"FIRST_CLASS": false,
+"PREMIUM": false,
+"STANDARD": false
+}
+modifiers = {
+"BREAKABLE": true,
+"DELIVERABLE": false,
+"DETECTABLE": true,
+"GRABBABLE": true,
+"OPENABLE": false,
+"SCANNABLE": false
+}
+box_mesh = SubResource("BoxMesh_a8y0u")
+box_texture = ExtResource("5_o6xl0")
+box_damage_sensitivity = 12.0
+metadata/_custom_type_script = "uid://g3qapqwiix0"
+
+[node name="fragile_box_4" type="Node3D" parent="entities/boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -11)
+script = ExtResource("5_tefeu")
+tiers = {
+"BUISNESS": false,
+"COMMON": true,
+"EXPORT": false,
+"FIRST_CLASS": false,
+"PREMIUM": false,
+"STANDARD": false
+}
+modifiers = {
+"BREAKABLE": true,
+"DELIVERABLE": false,
+"DETECTABLE": true,
+"GRABBABLE": true,
+"OPENABLE": false,
+"SCANNABLE": false
+}
+box_mesh = SubResource("BoxMesh_a8y0u")
+box_texture = ExtResource("5_o6xl0")
+box_damage_sensitivity = 12.0
+metadata/_custom_type_script = "uid://g3qapqwiix0"
+
+[node name="fragile_box_5" type="Node3D" parent="entities/boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -11)
+script = ExtResource("5_tefeu")
+tiers = {
+"BUISNESS": false,
+"COMMON": true,
+"EXPORT": false,
+"FIRST_CLASS": false,
+"PREMIUM": false,
+"STANDARD": false
+}
+modifiers = {
+"BREAKABLE": true,
+"DELIVERABLE": false,
+"DETECTABLE": true,
+"GRABBABLE": true,
+"OPENABLE": false,
+"SCANNABLE": false
+}
+box_mesh = SubResource("BoxMesh_a8y0u")
+box_size = Vector3(2, 0.5, 1)
+box_damage_sensitivity = 12.0
+metadata/_custom_type_script = "uid://g3qapqwiix0"
+
+[node name="physics_item" type="Node3D" parent="entities/boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.10257, 10.9239)
+script = ExtResource("5_tefeu")
+tiers = {
+"BUISNESS": false,
+"COMMON": true,
+"EXPORT": false,
+"FIRST_CLASS": false,
+"PREMIUM": false,
+"STANDARD": false
+}
+modifiers = {
+"BREAKABLE": true,
+"DELIVERABLE": false,
+"DETECTABLE": true,
+"GRABBABLE": true,
+"OPENABLE": false,
+"SCANNABLE": false
+}
+box_mesh = SubResource("BoxMesh_jkv2x")
+box_scale = Vector3(3, 3, 3)
+box_max_health = 300.0
+box_damage_sensitivity = 20.0
+metadata/_custom_type_script = "uid://g3qapqwiix0"
+
+[node name="box_2" type="Node3D" parent="entities/boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.45198, 1.94381, -7.20581)
+script = ExtResource("5_tefeu")
+box_name = "The Box"
+id = "box1"
+box_description = "description test 1 yayayyayay"
+tiers = {
+"BUISNESS": true,
+"COMMON": false,
+"EXPORT": false,
+"FIRST_CLASS": false,
+"PREMIUM": false,
+"STANDARD": false
+}
+modifiers = {
+"BREAKABLE": true,
+"DELIVERABLE": false,
+"DETECTABLE": true,
+"GRABBABLE": true,
+"OPENABLE": false,
+"SCANNABLE": false
+}
+box_mesh = SubResource("BoxMesh_eb6dy")
+metadata/_custom_type_script = "uid://g3qapqwiix0"
+
+[node name="cart" type="RigidBody3D" parent="entities" node_paths=PackedStringArray("wheels")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.6, 0)
+collision_layer = 2
+collision_mask = 3
+collision_priority = 2.0
+mass = 50.0
+linear_damp = 2.0
+angular_damp = 2.0
+script = ExtResource("16_muem4")
+acceleration = 0.0
+deceleration = 0.0
+max_speed = 1.0
+wheels = [NodePath("wheel_fl"), NodePath("wheel_rl"), NodePath("wheel_fr"), NodePath("wheel_rr")]
+spring_strength = 5000.0
+spring_damping = 120.0
+rest_dist = 0.4
+
+[node name="mesh_instance_3d" type="MeshInstance3D" parent="entities/cart"]
+mesh = SubResource("BoxMesh_dp3eg")
+
+[node name="mesh_instance_3d_2" type="MeshInstance3D" parent="entities/cart/mesh_instance_3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 1.8)
+mesh = SubResource("BoxMesh_0ld40")
+skeleton = NodePath("../..")
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="entities/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0999999, 0)
+shape = SubResource("BoxShape3D_dp3eg")
+
+[node name="wheel_fl" type="RayCast3D" parent="entities/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, -1.3)
+enabled = false
+
+[node name="wheel" type="MeshInstance3D" parent="entities/cart/wheel_fl"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("CylinderMesh_jbj1t")
+
+[node name="wheel_rl" type="RayCast3D" parent="entities/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, 1.3)
+enabled = false
+
+[node name="wheel" type="MeshInstance3D" parent="entities/cart/wheel_rl"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("CylinderMesh_jbj1t")
+
+[node name="wheel_fr" type="RayCast3D" parent="entities/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, -1.3)
+enabled = false
+
+[node name="wheel" type="MeshInstance3D" parent="entities/cart/wheel_fr"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("CylinderMesh_jbj1t")
+
+[node name="wheel_rr" type="RayCast3D" parent="entities/cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, 1.3)
+enabled = false
+
+[node name="wheel" type="MeshInstance3D" parent="entities/cart/wheel_rr"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("CylinderMesh_jbj1t")
+
+[node name="object_slot" parent="entities/cart" instance=ExtResource("16_jbj1t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 1)
+is_cart_slot = true
+
+[node name="object_slot_2" parent="entities/cart" instance=ExtResource("16_jbj1t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+is_cart_slot = true
+
+[node name="object_slot_3" parent="entities/cart" instance=ExtResource("16_jbj1t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -1)
+is_cart_slot = true
+
+[node name="terrain" type="Node3D" parent="."]
+script = SubResource("GDScript_muem4")
+
+[node name="world_environment" type="WorldEnvironment" parent="terrain"]
+environment = SubResource("Environment_dp3eg")
+
+[node name="test_spawn" type="StaticBody3D" parent="terrain"]
+visible = false
+collision_mask = 3
+collision_priority = 3.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="terrain/test_spawn"]
+material_override = SubResource("StandardMaterial3D_jyhfs")
+mesh = SubResource("BoxMesh_jyhfs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="terrain/test_spawn"]
+shape = SubResource("BoxShape3D_tbgi4")
+
+[node name="test_spawn_light" type="OmniLight3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
+light_energy = 13.06
+omni_range = 17.0
+
+[node name="biome_region" type="Area3D" parent="terrain"]
+monitoring = false
+monitorable = false
+script = ExtResource("19_0ld40")
+noise = SubResource("FastNoiseLite_0ld40")
+texture = ExtResource("3_sugp2")
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="terrain/biome_region"]
+shape = SubResource("BoxShape3D_0ld40")
+
+[connection signal="body_entered" from="players/illy/area_3d" to="players/illy/area_3d" method="_on_body_entered"]
+[connection signal="body_exited" from="players/illy/area_3d" to="players/illy/area_3d" method="_on_body_exited"]
+[connection signal="child_entered_tree" from="players/illy/gui/module_container/chat_container" to="players/illy/gui" method="_on_chat_container_child_entered_tree"]
+[connection signal="child_order_changed" from="players/illy/gui/module_container/chat_container" to="players/illy/gui" method="_on_chat_container_child_order_changed"]
+[connection signal="focus_entered" from="players/illy/gui/module_container/chat_container/text_edit" to="players/illy/gui" method="_on_text_edit_focus_entered"]
+[connection signal="focus_exited" from="players/illy/gui/module_container/chat_container/text_edit" to="players/illy" method="_on_text_edit_focus_exited"]
+[connection signal="gui_input" from="players/illy/gui/module_container/chat_container/text_edit" to="players/illy/gui" method="_on_text_edit_gui_input"]
+[connection signal="text_changed" from="players/illy/gui/module_container/chat_container/text_edit" to="players/illy/gui" method="_on_text_edit_text_changed"]

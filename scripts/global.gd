@@ -1,8 +1,11 @@
 extends Node
 
-var street = 0
 var delivered = 0
 var total_boxes_spawned = 0
+var current_block = 0
+
+
+
 
 const TIER_COLORS = {
 	"COMMON": Color("999999"),
@@ -34,4 +37,31 @@ var score = 0:
 var dialogues = {
 	"TXT_DUMMY": ["Hello, traveler!", "Beware of the dangers ahead.", "Take this map, it will help you."],
 	"merchant": ["Welcome to my shop!", "I have the finest goods in town."]
+}
+
+
+enum PLAYER_STATES {
+		IDLE,
+		WALKING,
+		SPRINTING,
+		JUMPING,
+		CROUCHING,
+		CLIMBING,
+		TYPING
+}
+
+enum OVERLAY_STATES {
+	UNDETECTED,
+	DETECTED,
+	HELD,
+	MOUSE_CLICKED,
+	MOUSE_HOVERED
+	}
+
+enum BOX_STATES {
+	IDLE,
+	DELIVERED,
+	ON_CART,
+	ON_ROPE,
+	SCANNED
 }

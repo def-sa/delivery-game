@@ -1,0 +1,51 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cuxigyvfrpnqe"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_aaphh"]
+noise_type = 2
+seed = 20
+frequency = 0.02
+fractal_type = 2
+fractal_octaves = 1
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_020kj"]
+noise = SubResource("FastNoiseLite_aaphh")
+seamless = true
+invert = true
+in_3d_space = true
+as_normal_map = true
+seamless_blend_skirt = 1.0
+bump_strength = 32.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tbgi4"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tbgi4"]
+noise_type = 2
+seed = 20
+frequency = 0.02
+fractal_type = 2
+fractal_octaves = 1
+cellular_distance_function = 1
+cellular_return_type = 0
+domain_warp_type = 1
+domain_warp_fractal_octaves = 10
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tefeu"]
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_tbgi4")
+seamless = true
+in_3d_space = true
+as_normal_map = true
+seamless_blend_skirt = 1.0
+bump_strength = 32.0
+
+[resource]
+render_priority = 1
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.027451)
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_tefeu")
+heightmap_texture = SubResource("NoiseTexture2D_tbgi4")
+detail_enabled = true
+detail_mask = SubResource("NoiseTexture2D_020kj")
+detail_blend_mode = 2

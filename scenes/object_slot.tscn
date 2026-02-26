@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6jx8cfbre88x"]
+
+[ext_resource type="Script" uid="uid://25uhke3jdyq2" path="res://scripts/object_slot.gd" id="1_c1o2y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jkv2x"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.0392157)
+texture_filter = 2
+texture_repeat = false
+
+[sub_resource type="BoxMesh" id="BoxMesh_muem4"]
+material = SubResource("StandardMaterial3D_jkv2x")
+flip_faces = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_muem4"]
+
+[node name="object_slot" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_muem4")
+skeleton = NodePath("../..")
+script = ExtResource("1_c1o2y")
+
+[node name="area_3d" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+linear_damp_space_override = 3
+linear_damp = 6.0
+angular_damp_space_override = 3
+angular_damp = 6.0
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="area_3d"]
+shape = SubResource("BoxShape3D_muem4")
+
+[connection signal="body_entered" from="area_3d" to="." method="_on_slot_entered"]
+[connection signal="body_exited" from="area_3d" to="." method="_on_slot_exited"]

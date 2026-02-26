@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://vcto8egxpx02"]
+
+[ext_resource type="Script" uid="uid://bjoli5nggigu4" path="res://explosion.gd" id="1_17npe"]
+
+[sub_resource type="Curve" id="Curve_nfeox"]
+_limits = [0.0, 5.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.553892, 5), 0.0, 0.0, 0, 0, Vector2(0.55988, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_17npe"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+metadata/_snap_enabled = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aw4cw"]
+radius = 0.001
+
+[node name="area_3d" type="Area3D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_17npe")
+size_curve = SubResource("Curve_nfeox")
+falloff_curve = SubResource("Curve_17npe")
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_aw4cw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

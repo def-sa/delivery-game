@@ -1,0 +1,15 @@
+[gd_resource type="Theme" format=3 uid="uid://ds7d7egnskxum"]
+
+[ext_resource type="FontFile" uid="uid://bgckeahwlkws" path="res://themes/fonts/RobotoMono-Italic-VariableFont_wght.ttf" id="1_2g1ym"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iepjh"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0, 0, 1)
+
+[resource]
+default_font = ExtResource("1_2g1ym")
+TooltipPanel/fonts/title_font = ExtResource("1_2g1ym")
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_iepjh")

@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://boywqd4l35qdl"]
+
+[ext_resource type="Script" uid="uid://b6hbhdjgmibrn" path="res://scripts/item_detection_rect.gd" id="1_uhsky"]
+[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://themes/default.tres" id="2_uhsky"]
+
+[node name="box_detected_overlay" type="Control" unique_id=402137049 node_paths=PackedStringArray("rectangle_node", "left_bar_node", "right_bar_node", "top_bar_node", "bottom_bar_node", "description_label", "name_label")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 256.0
+offset_bottom = 256.0
+script = ExtResource("1_uhsky")
+rectangle_node = NodePath("rectangle")
+left_bar_node = NodePath("rectangle/left_bar")
+right_bar_node = NodePath("rectangle/right_bar")
+top_bar_node = NodePath("rectangle/top_bar")
+bottom_bar_node = NodePath("rectangle/bottom_bar")
+description_label = NodePath("rectangle/right_bar/description_label")
+name_label = NodePath("rectangle/top_bar/name_label")
+
+[node name="rectangle" type="ReferenceRect" parent="." unique_id=52850892]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+editor_only = false
+
+[node name="left_bar" type="ColorRect" parent="rectangle" unique_id=186777005]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 16.0
+grow_vertical = 2
+color = Color(0, 1, 1, 0)
+
+[node name="right_bar" type="ColorRect" parent="rectangle" unique_id=1752751273]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0, 1, 0, 0)
+
+[node name="description_label" type="RichTextLabel" parent="rectangle/right_bar" unique_id=1931379938]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 41.0
+offset_right = 328.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_uhsky")
+theme_override_font_sizes/normal_font_size = 32
+fit_content = true
+scroll_active = false
+
+[node name="top_bar" type="ColorRect" parent="rectangle" unique_id=1203661870]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+color = Color(1, 0, 0, 1)
+
+[node name="name_label" type="Label" parent="rectangle/top_bar" unique_id=28058293]
+custom_minimum_size = Vector2(32, 16)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme = ExtResource("2_uhsky")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+horizontal_alignment = 1
+autowrap_mode = 3
+clip_text = true
+
+[node name="bottom_bar" type="ColorRect" parent="rectangle" unique_id=1236953030]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(1, 1, 0, 0)
