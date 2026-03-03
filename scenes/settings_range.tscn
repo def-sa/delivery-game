@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dmxq6kj2n6mhi"]
+
+[ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://themes/default.tres" id="1_hktuf"]
+
+[node name="settings_range" type="Control" unique_id=2124562098]
+custom_minimum_size = Vector2(575.435, 50)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="h_slider" type="HSlider" parent="." unique_id=1180430791]
+layout_mode = 0
+offset_left = 286.0
+offset_top = 14.0
+offset_right = 543.0
+offset_bottom = 37.0
+scrollable = false
+
+[node name="label" type="Label" parent="." unique_id=1867195200]
+layout_mode = 0
+offset_right = 286.0
+offset_bottom = 51.0
+theme = ExtResource("1_hktuf")
+theme_override_font_sizes/font_size = 32
+text = "settings_name :"

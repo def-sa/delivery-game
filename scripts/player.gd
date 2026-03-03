@@ -173,8 +173,8 @@ func _input(event: InputEvent) -> void:
 				#event.relative.x * rotation_power,0),0.1)
 			return
 		
-		yaw -= event.relative.x * Settings.mouse_senstivity / 10000.0
-		pitch -= event.relative.y * Settings.mouse_senstivity / 10000.0
+		yaw -= event.relative.x * Settings.sensitivity / 10000.0
+		pitch -= event.relative.y * Settings.sensitivity / 10000.0
 		
 		hand_raycast.rotation.y = wrapf(yaw,0, TAU)
 		hand_raycast.rotation.x = clamp(pitch, -PI/2 + 0.1 , PI/2 - 0.1)
@@ -226,7 +226,6 @@ func _process(delta: float) -> void:
 func _set_player_state(current_player_state, new_player_state) -> void:
 	if not current_player_state and not new_player_state: return
 	
-	ui.is_mouse_pointing = false
 	player_animation.stop()
 	#collision.shape.height = height
 	create_tween().tween_property(collision.shape, "height", height, 0.25)

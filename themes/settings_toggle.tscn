@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://d4d0daa6gahi2"]
+
+[ext_resource type="Shader" uid="uid://ckmx6krcxpj04" path="res://shaders/negative.gdshader" id="1_abod8"]
+[ext_resource type="Script" uid="uid://dp7cu5h5ls6b0" path="res://scripts/settings_toggle.gd" id="1_g5m6h"]
+[ext_resource type="Texture2D" uid="uid://ytj03voj4bf0" path="res://scenes/reset_arrow.png" id="2_g5m6h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lwwb1"]
+shader = ExtResource("1_abod8")
+
+[node name="settings_toggle" type="HBoxContainer" unique_id=334020775]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -143.5
+offset_top = -19.5
+offset_right = 143.5
+offset_bottom = 19.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 10
+script = ExtResource("1_g5m6h")
+
+[node name="toggle_text" type="Label" parent="." unique_id=170398814]
+material = SubResource("ShaderMaterial_lwwb1")
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="." unique_id=959629304]
+layout_mode = 2
+alignment = 1
+
+[node name="default_btn" type="TextureButton" parent="." unique_id=941504302]
+modulate = Color(0.764706, 0.764706, 0.764706, 1)
+show_behind_parent = true
+clip_children = 2
+material = SubResource("ShaderMaterial_lwwb1")
+custom_minimum_size = Vector2(35, 35)
+layout_direction = 1
+layout_mode = 2
+texture_normal = ExtResource("2_g5m6h")
+ignore_texture_size = true
+stretch_mode = 5
+flip_h = true
+
+[connection signal="toggled" from="toggle" to="." method="_on_toggle_toggled"]
+[connection signal="pressed" from="default_btn" to="." method="_on_default_btn_pressed"]

@@ -20,19 +20,13 @@
 [ext_resource type="Texture2D" uid="uid://coji2wymb0uk5" path="res://assets/placeholder.jpg" id="18_og1vs"]
 [ext_resource type="Script" uid="uid://b8hq6uemlo16x" path="res://scenes/biome_region.gd" id="19_0ld40"]
 [ext_resource type="Script" uid="uid://0tav4nkn53ku" path="res://scenes/3d_gui.gd" id="19_2wyq8"]
-[ext_resource type="Script" uid="uid://b32vmfwqyv3bm" path="res://scenes/text_box.gd" id="19_fv21b"]
 [ext_resource type="PackedScene" uid="uid://bxjd3whcfjg0g" path="res://assets/blocks/1/sidewalk.tscn" id="20_yc10j"]
 [ext_resource type="Script" uid="uid://rypbihwb2l8v" path="res://scenes/ui.gd" id="21_og1vs"]
 [ext_resource type="PackedScene" uid="uid://iwe7kli50i2d" path="res://scenes/world_border.tscn" id="22_jscy8"]
 [ext_resource type="Script" uid="uid://dwwubpdfsofem" path="res://scenes/main_menu.gd" id="22_pm3ni"]
-[ext_resource type="PackedScene" uid="uid://dilioh7sgfwee" path="res://animated_text.tscn" id="24_2f3dj"]
 [ext_resource type="Texture2D" uid="uid://bbg6xtkbdlsut" path="res://assets/images/start.png" id="24_2wyq8"]
-[ext_resource type="Script" uid="uid://b5bjjfkmbio4c" path="res://scenes/pause_menu.gd" id="25_tel4y"]
 [ext_resource type="Texture2D" uid="uid://ddil4sxebrkow" path="res://assets/images/options.png" id="25_vxglm"]
 [ext_resource type="Texture2D" uid="uid://cbgpfj68iibj" path="res://assets/images/exit.png" id="26_2f3dj"]
-[ext_resource type="PackedScene" uid="uid://d4d0daa6gahi2" path="res://themes/settings_toggle.tscn" id="26_5q0nq"]
-[ext_resource type="PackedScene" uid="uid://dloorkx8j1485" path="res://scripts/settings_dropdown.tscn" id="26_dgi5k"]
-[ext_resource type="PackedScene" uid="uid://cl0ygjsp2yih7" path="res://scenes/settings_slider.tscn" id="27_tel4y"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a8y0u"]
 transparency = 4
@@ -395,6 +389,70 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_85g3d"]
 shader = ExtResource("5_tipki")
+
+[sub_resource type="Animation" id="Animation_2f3dj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("paused:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("options:visible_ratio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_yq6so"]
+resource_name = "options"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("options:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_fv21b"]
+resource_name = "paused"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("paused:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tel4y"]
+_data = {
+&"RESET": SubResource("Animation_2f3dj"),
+&"options": SubResource("Animation_yq6so"),
+&"paused": SubResource("Animation_fv21b")
+}
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6xl0"]
 albedo_texture = ExtResource("2_tbgi4")
@@ -810,21 +868,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
 light_energy = 13.06
 omni_range = 17.0
 
-[node name="ui" type="Control" parent="." unique_id=1166662516 node_paths=PackedStringArray("pause_menu", "mouse", "camera")]
+[node name="ui" type="Control" parent="." unique_id=1166662516 node_paths=PackedStringArray("module_container", "chat_container", "player", "text_box", "pause_menu", "mouse", "camera", "player_animation")]
 process_mode = 3
-process_priority = 2
-z_index = 17
+process_priority = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 script = ExtResource("21_og1vs")
-pause_menu = NodePath("canvas_layer/pause_menu")
+module_container = NodePath("text_box")
+chat_container = NodePath("text_box/chat_container")
+player = NodePath("../game/player")
+text_box = NodePath("text_box")
+pause_menu = NodePath("pause_menu")
 mouse = NodePath("mouse")
 camera = NodePath("3d_gui/camera")
+player_animation = NodePath("player_animation")
 
 [node name="ui_animation" type="AnimationPlayer" parent="ui" unique_id=1889009943]
 
@@ -836,7 +897,6 @@ autoplay = &"idle_bob_loop"
 process_mode = 3
 modulate = Color(0.333333, 1, 1, 1)
 top_level = true
-z_index = 999
 texture_filter = 1
 layout_mode = 0
 offset_left = -7.0
@@ -870,8 +930,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("19_fv21b")
 
 [node name="chat_container" type="VBoxContainer" parent="ui/text_box" unique_id=1935680343]
 custom_minimum_size = Vector2(250, 500)
@@ -895,7 +953,6 @@ anchor_bottom = 0.349
 offset_left = 0.48791504
 offset_right = 1.0
 offset_bottom = 285.848
-mouse_filter = 2
 
 [node name="sub_viewport" type="SubViewport" parent="ui/sub_viewport_container_testing" unique_id=1570799322]
 handle_input_locally = false
@@ -912,250 +969,45 @@ buttons_names = Array[String](["start", "options", "exit"])
 button_textures = Array[CompressedTexture2D]([ExtResource("24_2wyq8"), ExtResource("25_vxglm"), ExtResource("26_2f3dj")])
 button_texture_uv1_scale = Vector3(2.775, 1.585, 1)
 
-[node name="canvas_layer" type="CanvasLayer" parent="ui" unique_id=510612241]
-
-[node name="pause_menu" type="ColorRect" parent="ui/canvas_layer" unique_id=1517646696 node_paths=PackedStringArray("pause_menu", "v_box_container", "ui")]
+[node name="pause_menu" type="ColorRect" parent="ui" unique_id=1517646696]
 process_mode = 3
-z_index = 200
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_default_cursor_shape = 8
-theme = ExtResource("6_choun")
-color = Color(0, 0, 0, 0.63529414)
-script = ExtResource("25_tel4y")
-pause_menu = NodePath(".")
-v_box_container = NodePath("left")
-ui = NodePath("../..")
+color = Color(1, 1, 1, 0.16862746)
 
-[node name="options_menu" type="TabContainer" parent="ui/canvas_layer/pause_menu" unique_id=1181504449]
-z_index = 989
-custom_minimum_size = Vector2(500, 500)
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -373.5
-offset_right = 373.5
-offset_bottom = 500.0
-grow_horizontal = 2
-size_flags_vertical = 6
-theme = ExtResource("6_choun")
-theme_override_font_sizes/font_size = 26
-current_tab = 0
+[node name="pause_animations" type="AnimationPlayer" parent="ui/pause_menu" unique_id=59099506]
+libraries/ = SubResource("AnimationLibrary_tel4y")
+autoplay = &"options"
 
-[node name="display" type="ScrollContainer" parent="ui/canvas_layer/pause_menu/options_menu" unique_id=1534260513]
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="vertical_display" type="VBoxContainer" parent="ui/canvas_layer/pause_menu/options_menu/display" unique_id=1252466963]
-layout_mode = 2
-theme = ExtResource("6_choun")
-theme_override_constants/separation = 35
-
-[node name="window_display_type" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=660414518 instance=ExtResource("26_dgi5k")]
-custom_minimum_size = Vector2(0, 85)
-layout_mode = 2
-
-[node name="vsync_mode" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1106129447 instance=ExtResource("26_dgi5k")]
-layout_mode = 2
-
-[node name="shadow_quality" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=354675919 instance=ExtResource("26_dgi5k")]
-layout_mode = 2
-
-[node name="show_fps" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1614300315 instance=ExtResource("26_5q0nq")]
-layout_mode = 2
-
-[node name="fov" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1392009054 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="max_fps" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=859196231 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="bilinear_filtering" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=334020775 instance=ExtResource("26_5q0nq")]
-layout_mode = 2
-
-[node name="screen_space_reflections" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1285660089 instance=ExtResource("26_5q0nq")]
-layout_mode = 2
-
-[node name="screen_space_ambient_occlusion" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=2112940491 instance=ExtResource("26_5q0nq")]
-layout_mode = 2
-
-[node name="screen_space_indirect_lighting" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1846481173 instance=ExtResource("26_5q0nq")]
-layout_mode = 2
-
-[node name="sdfgi" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1055333698 instance=ExtResource("26_5q0nq")]
-layout_mode = 2
-
-[node name="scanner_flashing" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=152126975 instance=ExtResource("26_5q0nq")]
-layout_mode = 2
-
-[node name="occlusion_culling" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=744074664 instance=ExtResource("26_dgi5k")]
-layout_mode = 2
-
-[node name="texture_filter" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=668896407 instance=ExtResource("26_dgi5k")]
-layout_mode = 2
-
-[node name="reflections" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1866354834 instance=ExtResource("26_dgi5k")]
-layout_mode = 2
-
-[node name="brightness" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1676225463 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="contrast" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1386237313 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="saturation" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1041487397 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="gameplay" type="VBoxContainer" parent="ui/canvas_layer/pause_menu/options_menu" unique_id=817432247]
-visible = false
-layout_mode = 2
-theme = ExtResource("6_choun")
-metadata/_tab_index = 1
-
-[node name="render_distance" parent="ui/canvas_layer/pause_menu/options_menu/gameplay" unique_id=1194191573 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="audio" type="VBoxContainer" parent="ui/canvas_layer/pause_menu/options_menu" unique_id=476420667]
-visible = false
-layout_mode = 2
-theme = ExtResource("6_choun")
-metadata/_tab_index = 2
-
-[node name="main_volume" parent="ui/canvas_layer/pause_menu/options_menu/audio" unique_id=473467933 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="controls" type="VBoxContainer" parent="ui/canvas_layer/pause_menu/options_menu" unique_id=542558857]
-visible = false
-layout_mode = 2
-theme = ExtResource("6_choun")
-metadata/_tab_index = 3
-
-[node name="sensitivity" parent="ui/canvas_layer/pause_menu/options_menu/controls" unique_id=665876872 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="debug" type="VBoxContainer" parent="ui/canvas_layer/pause_menu/options_menu" unique_id=864684338]
-visible = false
-layout_mode = 2
-theme = ExtResource("6_choun")
-metadata/_tab_index = 4
-
-[node name="player_speed" parent="ui/canvas_layer/pause_menu/options_menu/debug" unique_id=598782794 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="player_jump" parent="ui/canvas_layer/pause_menu/options_menu/debug" unique_id=366611794 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="grab_buffer" parent="ui/canvas_layer/pause_menu/options_menu/debug" unique_id=765010524 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="max_grab_length" parent="ui/canvas_layer/pause_menu/options_menu/debug" unique_id=1619856321 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="box_open_timer" parent="ui/canvas_layer/pause_menu/options_menu/debug" unique_id=795803432 instance=ExtResource("27_tel4y")]
-z_index = 989
-layout_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 2
-theme = ExtResource("6_choun")
-
-[node name="left" type="VBoxContainer" parent="ui/canvas_layer/pause_menu" unique_id=1880267581]
+[node name="paused" type="RichTextLabel" parent="ui/pause_menu" unique_id=492408764]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.549
-anchor_bottom = 1.0
-offset_right = -0.44799805
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("6_choun")
-alignment = 1
-
-[node name="resume" parent="ui/canvas_layer/pause_menu/left" unique_id=1391259264 instance=ExtResource("24_2f3dj")]
-process_mode = 3
-z_index = 479
-layout_mode = 2
-theme = ExtResource("6_choun")
-
-[node name="achievements" parent="ui/canvas_layer/pause_menu/left" unique_id=2124387080 instance=ExtResource("24_2f3dj")]
-process_mode = 3
-z_index = 479
-custom_minimum_size = Vector2(0, 150.735)
-layout_mode = 2
-theme = ExtResource("6_choun")
-
-[node name="options" parent="ui/canvas_layer/pause_menu/left" unique_id=644130435 instance=ExtResource("24_2f3dj")]
-process_mode = 3
-z_index = 479
-layout_mode = 2
-theme = ExtResource("6_choun")
-
-[node name="exit" parent="ui/canvas_layer/pause_menu/left" unique_id=1520174009 instance=ExtResource("24_2f3dj")]
-process_mode = 3
-z_index = 479
-layout_mode = 2
-theme = ExtResource("6_choun")
-
-[node name="right" type="HBoxContainer" parent="ui/canvas_layer/pause_menu" unique_id=695849940]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("6_choun")
+anchor_bottom = 0.5
+offset_right = 1.0
+theme_override_font_sizes/normal_font_size = 132
+text = "paused"
+fit_content = true
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="options" type="RichTextLabel" parent="ui/pause_menu" unique_id=1097032634]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 184.0
+offset_right = 1.0
+offset_bottom = 184.0
+theme_override_font_sizes/normal_font_size = 132
+text = "options"
+fit_content = true
+visible_characters = 0
+visible_ratio = 0.0
 
 [node name="3d_gui" type="Node3D" parent="ui" unique_id=1902433884]
 script = ExtResource("19_2wyq8")
@@ -1204,14 +1056,13 @@ grow_vertical = 2
 pivot_offset = Vector2(-5, 3)
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+mouse_filter = 1
 script = ExtResource("5_85g3d")
 
 [node name="detected_overlay_container" type="Control" parent="ui/in_world_ui" unique_id=1023503216]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-mouse_filter = 2
 
 [connection signal="body_entered" from="game/player/area_3d" to="game/player/area_3d" method="_on_body_entered"]
 [connection signal="body_exited" from="game/player/area_3d" to="game/player/area_3d" method="_on_body_exited"]
@@ -1221,5 +1072,4 @@ mouse_filter = 2
 [connection signal="focus_exited" from="ui/text_box/chat_container/text_edit" to="game/player" method="_on_text_edit_focus_exited"]
 [connection signal="gui_input" from="ui/text_box/chat_container/text_edit" to="ui/in_world_ui" method="_on_text_edit_gui_input"]
 [connection signal="text_changed" from="ui/text_box/chat_container/text_edit" to="ui/in_world_ui" method="_on_text_edit_text_changed"]
-[connection signal="gui_input" from="ui/canvas_layer/pause_menu" to="ui/canvas_layer/pause_menu" method="_on_background_input"]
-[connection signal="visibility_changed" from="ui/canvas_layer/pause_menu" to="ui/canvas_layer/pause_menu" method="_on_pause_menu_visibility_changed"]
+[connection signal="visibility_changed" from="ui/pause_menu" to="ui" method="_on_pause_menu_visibility_changed"]
