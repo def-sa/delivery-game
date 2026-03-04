@@ -52,6 +52,7 @@ var show_overlay = false:
 
 
 func _ready() -> void:
+	set_as_top_level(true)
 	overlay_state = OVERLAY_STATES.UNDETECTED
 	set_color(Color(1,1,1,.5))
 	set_name_text("???")
@@ -138,7 +139,7 @@ func _position_ui():
 
 	var rect_vars = _get_2d_bounding_box(connected_box.box_mesh_instance)
 	position = rect_vars.position
-
+	
 	rectangle_node.size = rect_vars.size
 	name_label.size = rect_vars.size
 	top_bar_node.size.x = rect_vars.size.x

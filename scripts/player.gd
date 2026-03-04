@@ -74,6 +74,8 @@ enum PLAYER_STATES {
 var yaw = 0.0
 var pitch = 0.0
 var locked_camera:bool = false
+var sensitivity:float = Settings.sensitivity_default
+
 
 ##grabbing
 var held_object:
@@ -106,7 +108,7 @@ var hand_scroll:float = 0.35:
 		hand_scroll = clamp(v, 0.15, 1)
 var rotation_power = 0.5
 
-var max_grab_reach:float = 7.5:
+var max_grab_reach:float = Settings.max_grab_length_default:
 	set(v):
 		max_grab_reach = v
 		hand_raycast.target_position.z = max_grab_reach
@@ -126,6 +128,15 @@ func _ready() -> void:
 	#init
 	player_state = PLAYER_STATES.IDLE
 	
+	#doesnt work for some reason?
+	#Signalbus.max_grab_length_updated.connect(func(x): max_grab_reach = x)
+	Signalbus.player_jump_updated.connect(func(x): jump_velocity = x)
+	Signalbus.player_speed_updated.connect(func(x): speed = x)
+	Signalbus.fov_updated.connect(func(x): camera.fov = x)
+	Signalbus.sensitivity_updated.connect(func(x): sensitivity = x)
+	
+
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("flashlight"):
 		flashlight.visible = !flashlight.visible
@@ -173,8 +184,8 @@ func _input(event: InputEvent) -> void:
 				#event.relative.x * rotation_power,0),0.1)
 			return
 		
-		yaw -= event.relative.x * Settings.sensitivity / 10000.0
-		pitch -= event.relative.y * Settings.sensitivity / 10000.0
+		yaw -= event.relative.x * sensitivity / 10000.0
+		pitch -= event.relative.y * sensitivity / 10000.0
 		
 		hand_raycast.rotation.y = wrapf(yaw,0, TAU)
 		hand_raycast.rotation.x = clamp(pitch, -PI/2 + 0.1 , PI/2 - 0.1)
@@ -219,7 +230,7 @@ func _process(delta: float) -> void:
 	
 	area_3d.visible = scan_speed_timer.time_left > 0
 	if scan_speed_timer.time_left > 0:
-		var time_left = ((scan_speed_timer.time_left* 100) * delta) + 0.01
+		var time_left = ((scan_speed_timer.time_left* 10) * 0.1)
 		area_3d.scale = Vector3(time_left,time_left,time_left)
 
 	

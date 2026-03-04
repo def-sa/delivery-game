@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://dilioh7sgfwee"]
+[gd_scene format=3 uid="uid://b6vblcfao2v1b"]
 
 [ext_resource type="FontFile" uid="uid://bgckeahwlkws" path="res://themes/fonts/RobotoMono-Italic-VariableFont_wght.ttf" id="1_07eco"]
-[ext_resource type="Script" uid="uid://nardov2uj3c1" path="res://animated_text.gd" id="2_fnj1x"]
+[ext_resource type="Script" path="res://animated_text.gd" id="2_fnj1x"]
 [ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://themes/default.tres" id="3_4d7ac"]
 
 [sub_resource type="FontVariation" id="FontVariation_emah2"]

@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://tp8nb72wff2h" path="res://assets/checker_black_512x512.png" id="3_sugp2"]
 [ext_resource type="ArrayMesh" uid="uid://cl3rjebhbds7c" path="res://assets/robot cat paw1.obj" id="3_tefeu"]
 [ext_resource type="Script" uid="uid://b84m4brl8s428" path="res://scripts/gui.gd" id="5_85g3d"]
-[ext_resource type="Texture2D" uid="uid://duv7iw3kjlosh" path="res://assets/circle transparent.png" id="5_o6xl0"]
 [ext_resource type="Script" uid="uid://g3qapqwiix0" path="res://scripts/physics_item.gd" id="5_tefeu"]
 [ext_resource type="Shader" uid="uid://ckmx6krcxpj04" path="res://shaders/negative.gdshader" id="5_tipki"]
 [ext_resource type="Theme" uid="uid://ds7d7egnskxum" path="res://themes/default.tres" id="6_choun"]
@@ -16,16 +15,11 @@
 [ext_resource type="PackedScene" uid="uid://b6jx8cfbre88x" path="res://scenes/object_slot.tscn" id="16_jbj1t"]
 [ext_resource type="Script" uid="uid://b0dgvv36683df" path="res://scripts/cart.gd" id="16_muem4"]
 [ext_resource type="Script" uid="uid://dys8po7uosg01" path="res://scenes/terrain.gd" id="17_dp3eg"]
-[ext_resource type="PackedScene" uid="uid://drnymc1qr47jb" path="res://scenes/chunk.tscn" id="17_y6deb"]
-[ext_resource type="Texture2D" uid="uid://coji2wymb0uk5" path="res://assets/placeholder.jpg" id="18_og1vs"]
-[ext_resource type="Script" uid="uid://b8hq6uemlo16x" path="res://scenes/biome_region.gd" id="19_0ld40"]
 [ext_resource type="Script" uid="uid://0tav4nkn53ku" path="res://scenes/3d_gui.gd" id="19_2wyq8"]
 [ext_resource type="Script" uid="uid://b32vmfwqyv3bm" path="res://scenes/text_box.gd" id="19_fv21b"]
-[ext_resource type="PackedScene" uid="uid://bxjd3whcfjg0g" path="res://assets/blocks/1/sidewalk.tscn" id="20_yc10j"]
 [ext_resource type="Script" uid="uid://rypbihwb2l8v" path="res://scenes/ui.gd" id="21_og1vs"]
-[ext_resource type="PackedScene" uid="uid://iwe7kli50i2d" path="res://scenes/world_border.tscn" id="22_jscy8"]
 [ext_resource type="Script" uid="uid://dwwubpdfsofem" path="res://scenes/main_menu.gd" id="22_pm3ni"]
-[ext_resource type="PackedScene" uid="uid://dilioh7sgfwee" path="res://animated_text.tscn" id="24_2f3dj"]
+[ext_resource type="PackedScene" uid="uid://b6vblcfao2v1b" path="res://animated_text.tscn" id="24_2f3dj"]
 [ext_resource type="Texture2D" uid="uid://bbg6xtkbdlsut" path="res://assets/images/start.png" id="24_2wyq8"]
 [ext_resource type="Script" uid="uid://b5bjjfkmbio4c" path="res://scenes/pause_menu.gd" id="25_tel4y"]
 [ext_resource type="Texture2D" uid="uid://ddil4sxebrkow" path="res://assets/images/options.png" id="25_vxglm"]
@@ -107,10 +101,6 @@ top_radius = 0.4
 bottom_radius = 0.4
 height = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_pm3ni"]
-noise_type = 0
-seed = 1503400767
-
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0ld40"]
 sky_top_color = Color(0.510762, 0.58234, 0.948742, 1)
 sky_horizon_color = Color(1, 1, 1, 1)
@@ -143,57 +133,13 @@ fog_light_energy = 0.27
 fog_density = 0.0193
 fog_aerial_perspective = 0.407
 fog_sky_affect = 0.919
+adjustment_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_2wyq8"]
 size = Vector3(9, 11.735, 23.06)
 subdivide_width = 2
 subdivide_height = 2
 subdivide_depth = 2
-
-[sub_resource type="Gradient" id="Gradient_yc10j"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_jscy8"]
-gradient = SubResource("Gradient_yc10j")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_jscy8"]
-fractal_type = 3
-fractal_octaves = 1
-fractal_ping_pong_strength = -1.58
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_pm3ni"]
-size = Vector3(2000, 150, 251.8)
-
-[sub_resource type="Gradient" id="Gradient_pm3ni"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_y6deb"]
-gradient = SubResource("Gradient_pm3ni")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0ld40"]
-frequency = 0.0346
-fractal_type = 3
-fractal_octaves = 1
-fractal_ping_pong_strength = 6.02
-cellular_distance_function = 1
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_0ld40"]
-size = Vector3(2000, 5, 100)
-
-[sub_resource type="Gradient" id="Gradient_jscy8"]
-colors = PackedColorArray(0, 0, 0, 1, 0, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_pm3ni"]
-gradient = SubResource("Gradient_jscy8")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_yc10j"]
-noise_type = 2
-frequency = 0.018
-fractal_type = 3
-fractal_octaves = 1
-fractal_ping_pong_strength = 2.245
-cellular_return_type = 6
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_y6deb"]
-size = Vector3(46.7, 13.2, 200)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jyhfs"]
 albedo_texture = ExtResource("3_sugp2")
@@ -204,6 +150,42 @@ size = Vector3(100, 1, 100)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tbgi4"]
 size = Vector3(100, 1, 100)
+
+[sub_resource type="Animation" id="Animation_2f3dj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pause/pause_menu:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.27450982)]
+}
+
+[sub_resource type="Animation" id="Animation_yq6so"]
+resource_name = "pause_fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pause/pause_menu:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0.7019608)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fv21b"]
+_data = {
+&"RESET": SubResource("Animation_2f3dj"),
+&"pause_fade_in": SubResource("Animation_yq6so")
+}
 
 [sub_resource type="Animation" id="Animation_0wfyh"]
 length = 2.0968
@@ -246,7 +228,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("mouse:scale")
+tracks/3/path = NodePath("top_layer_ui/mouse:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -258,7 +240,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("mouse:rotation")
+tracks/4/path = NodePath("top_layer_ui/mouse:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -270,7 +252,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("mouse:position")
+tracks/5/path = NodePath("top_layer_ui/mouse:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -315,7 +297,7 @@ length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("mouse:scale")
+tracks/0/path = NodePath("top_layer_ui/mouse:scale")
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -327,7 +309,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("mouse:rotation")
+tracks/1/path = NodePath("top_layer_ui/mouse:rotation")
 tracks/1/interp = 0
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -339,7 +321,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("mouse:position")
+tracks/2/path = NodePath("top_layer_ui/mouse:position")
 tracks/2/interp = 0
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -395,6 +377,13 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_85g3d"]
 shader = ExtResource("5_tipki")
+
+[sub_resource type="Gradient" id="Gradient_vxglm"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2f3dj"]
+gradient = SubResource("Gradient_vxglm")
+width = 2
+height = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6xl0"]
 albedo_texture = ExtResource("2_tbgi4")
@@ -717,9 +706,6 @@ is_cart_slot = true
 
 [node name="terrain" type="Node3D" parent="game" unique_id=745316506]
 script = ExtResource("17_dp3eg")
-chunk_scene = ExtResource("17_y6deb")
-texture = ExtResource("18_og1vs")
-noise = SubResource("FastNoiseLite_pm3ni")
 
 [node name="world_environment" type="WorldEnvironment" parent="game/terrain" unique_id=990750128]
 environment = SubResource("Environment_dp3eg")
@@ -738,62 +724,6 @@ operation = 2
 use_collision = true
 mesh = SubResource("BoxMesh_2wyq8")
 
-[node name="node_3d" type="Node3D" parent="game/terrain" unique_id=1791695410]
-visible = false
-
-[node name="biome_region_4" parent="game/terrain/node_3d" unique_id=1564379180 instance=ExtResource("20_yc10j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.300003, 0, -104.2)
-visible = false
-subdivisions = 4
-biome_priority = 10
-
-[node name="biome_region_3" type="Area3D" parent="game/terrain/node_3d" unique_id=842415008]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 321.9)
-visible = false
-monitoring = false
-monitorable = false
-script = ExtResource("19_0ld40")
-texture = SubResource("GradientTexture2D_jscy8")
-noise = SubResource("FastNoiseLite_jscy8")
-metadata/_custom_type_script = "uid://b8hq6uemlo16x"
-
-[node name="collision_shape_3d" type="CollisionShape3D" parent="game/terrain/node_3d/biome_region_3" unique_id=1662299307]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -94.32)
-shape = SubResource("BoxShape3D_pm3ni")
-
-[node name="biome_region" type="Area3D" parent="game/terrain/node_3d" unique_id=2085279507]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 66.7)
-visible = false
-monitoring = false
-monitorable = false
-script = ExtResource("19_0ld40")
-texture = SubResource("GradientTexture2D_y6deb")
-noise = SubResource("FastNoiseLite_0ld40")
-noise_scale = 5.0
-
-[node name="collision_shape_3d" type="CollisionShape3D" parent="game/terrain/node_3d/biome_region" unique_id=1181398115]
-shape = SubResource("BoxShape3D_0ld40")
-
-[node name="biome_region_5" parent="game/terrain/node_3d" unique_id=1751359124 instance=ExtResource("22_jscy8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180.3, 0, -80.5)
-visible = false
-
-[node name="biome_region_2" type="Area3D" parent="game/terrain/node_3d" unique_id=1870984253]
-transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -69.4, 0, 0)
-visible = false
-monitoring = false
-monitorable = false
-script = ExtResource("19_0ld40")
-texture = SubResource("GradientTexture2D_pm3ni")
-noise = SubResource("FastNoiseLite_yc10j")
-noise_scale = 2.0
-subdivisions = 14
-metadata/_custom_type_script = "uid://b8hq6uemlo16x"
-
-[node name="collision_shape_3d" type="CollisionShape3D" parent="game/terrain/node_3d/biome_region_2" unique_id=112960511]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.35, -0.3, 0)
-shape = SubResource("BoxShape3D_y6deb")
-
 [node name="test_spawn" type="StaticBody3D" parent="game/terrain" unique_id=1021960646]
 collision_mask = 3
 collision_priority = 3.0
@@ -810,7 +740,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
 light_energy = 13.06
 omni_range = 17.0
 
-[node name="ui" type="Control" parent="." unique_id=1166662516 node_paths=PackedStringArray("pause_menu", "mouse", "camera")]
+[node name="ui" type="Control" parent="." unique_id=1166662516 node_paths=PackedStringArray("pause_menu", "mouse", "camera", "crosshair")]
 process_mode = 3
 process_priority = 2
 z_index = 17
@@ -822,23 +752,29 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("21_og1vs")
-pause_menu = NodePath("canvas_layer/pause_menu")
-mouse = NodePath("mouse")
+pause_menu = NodePath("pause/pause_menu")
+mouse = NodePath("top_layer_ui/mouse")
 camera = NodePath("3d_gui/camera")
+crosshair = NodePath("top_layer_ui/crosshair")
 
 [node name="ui_animation" type="AnimationPlayer" parent="ui" unique_id=1889009943]
+libraries/ = SubResource("AnimationLibrary_fv21b")
 
 [node name="player_animation" type="AnimationPlayer" parent="ui" unique_id=1041966126]
 libraries/ = SubResource("AnimationLibrary_jyhfs")
 autoplay = &"idle_bob_loop"
 
-[node name="mouse" type="TextureRect" parent="ui" unique_id=627211840]
+[node name="top_layer_ui" type="CanvasLayer" parent="ui" unique_id=1500962939]
+layer = 2
+
+[node name="mouse" type="TextureRect" parent="ui/top_layer_ui" unique_id=627211840]
 process_mode = 3
+process_priority = 2
 modulate = Color(0.333333, 1, 1, 1)
 top_level = true
-z_index = 999
+z_index = 4096
+z_as_relative = false
 texture_filter = 1
-layout_mode = 0
 offset_left = -7.0
 offset_top = 5.0
 offset_right = 26.0
@@ -849,18 +785,25 @@ pivot_offset = Vector2(1.115, -1.28)
 mouse_filter = 2
 texture = ExtResource("2_0wfyh")
 
-[node name="crosshair" type="TextureRect" parent="ui" unique_id=374410441]
+[node name="crosshair" type="TextureRect" parent="ui/top_layer_ui" unique_id=374410441]
 z_index = 3
 texture_filter = 1
 material = SubResource("ShaderMaterial_85g3d")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_filter = 2
-texture = ExtResource("5_o6xl0")
+texture = SubResource("GradientTexture2D_2f3dj")
 stretch_mode = 3
 
 [node name="text_box" type="HFlowContainer" parent="ui" unique_id=533983022]
@@ -912,10 +855,11 @@ buttons_names = Array[String](["start", "options", "exit"])
 button_textures = Array[CompressedTexture2D]([ExtResource("24_2wyq8"), ExtResource("25_vxglm"), ExtResource("26_2f3dj")])
 button_texture_uv1_scale = Vector3(2.775, 1.585, 1)
 
-[node name="canvas_layer" type="CanvasLayer" parent="ui" unique_id=510612241]
+[node name="pause" type="CanvasLayer" parent="ui" unique_id=510612241]
 
-[node name="pause_menu" type="ColorRect" parent="ui/canvas_layer" unique_id=1517646696 node_paths=PackedStringArray("pause_menu", "v_box_container", "ui")]
+[node name="pause_menu" type="ColorRect" parent="ui/pause" unique_id=1517646696 node_paths=PackedStringArray("pause_menu", "v_box_container", "ui")]
 process_mode = 3
+process_priority = 2
 z_index = 200
 anchors_preset = 15
 anchor_right = 1.0
@@ -924,193 +868,208 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_default_cursor_shape = 8
 theme = ExtResource("6_choun")
-color = Color(0, 0, 0, 0.63529414)
+color = Color(0, 0, 0, 0.27450982)
 script = ExtResource("25_tel4y")
 pause_menu = NodePath(".")
 v_box_container = NodePath("left")
 ui = NodePath("../..")
 
-[node name="options_menu" type="TabContainer" parent="ui/canvas_layer/pause_menu" unique_id=1181504449]
+[node name="options_menu" type="TabContainer" parent="ui/pause/pause_menu" unique_id=1181504449]
 z_index = 989
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -373.5
+offset_top = -250.0
 offset_right = 373.5
-offset_bottom = 500.0
+offset_bottom = 250.0
 grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 6
 theme = ExtResource("6_choun")
 theme_override_font_sizes/font_size = 26
 current_tab = 0
 
-[node name="display" type="ScrollContainer" parent="ui/canvas_layer/pause_menu/options_menu" unique_id=1534260513]
+[node name="display" type="ScrollContainer" parent="ui/pause/pause_menu/options_menu" unique_id=1534260513]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="vertical_display" type="VBoxContainer" parent="ui/canvas_layer/pause_menu/options_menu/display" unique_id=1252466963]
+[node name="vertical_display" type="VBoxContainer" parent="ui/pause/pause_menu/options_menu/display" unique_id=1252466963]
 layout_mode = 2
+size_flags_horizontal = 6
 theme = ExtResource("6_choun")
 theme_override_constants/separation = 35
 
-[node name="window_display_type" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=660414518 instance=ExtResource("26_dgi5k")]
+[node name="window_display_type" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=660414518 instance=ExtResource("26_dgi5k")]
+visible = false
 custom_minimum_size = Vector2(0, 85)
 layout_mode = 2
 
-[node name="vsync_mode" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1106129447 instance=ExtResource("26_dgi5k")]
+[node name="vsync_mode" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=1106129447 instance=ExtResource("26_dgi5k")]
 layout_mode = 2
 
-[node name="shadow_quality" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=354675919 instance=ExtResource("26_dgi5k")]
+[node name="shadow_quality" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=354675919 instance=ExtResource("26_dgi5k")]
+visible = false
 layout_mode = 2
 
-[node name="show_fps" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1614300315 instance=ExtResource("26_5q0nq")]
+[node name="show_fps" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=1614300315 instance=ExtResource("26_5q0nq")]
 layout_mode = 2
 
-[node name="fov" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1392009054 instance=ExtResource("27_tel4y")]
+[node name="fov" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=1392009054 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="max_fps" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=859196231 instance=ExtResource("27_tel4y")]
+[node name="max_fps" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=859196231 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="bilinear_filtering" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=334020775 instance=ExtResource("26_5q0nq")]
+[node name="bilinear_filtering" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=334020775 instance=ExtResource("26_5q0nq")]
+visible = false
 layout_mode = 2
 
-[node name="screen_space_reflections" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1285660089 instance=ExtResource("26_5q0nq")]
+[node name="screen_space_reflections" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=1285660089 instance=ExtResource("26_5q0nq")]
+visible = false
 layout_mode = 2
 
-[node name="screen_space_ambient_occlusion" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=2112940491 instance=ExtResource("26_5q0nq")]
+[node name="screen_space_ambient_occlusion" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=2112940491 instance=ExtResource("26_5q0nq")]
+visible = false
 layout_mode = 2
 
-[node name="screen_space_indirect_lighting" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1846481173 instance=ExtResource("26_5q0nq")]
+[node name="screen_space_indirect_lighting" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=1846481173 instance=ExtResource("26_5q0nq")]
+visible = false
 layout_mode = 2
 
-[node name="sdfgi" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1055333698 instance=ExtResource("26_5q0nq")]
+[node name="sdfgi" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=1055333698 instance=ExtResource("26_5q0nq")]
 layout_mode = 2
 
-[node name="scanner_flashing" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=152126975 instance=ExtResource("26_5q0nq")]
+[node name="scanner_flashing" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=152126975 instance=ExtResource("26_5q0nq")]
+visible = false
 layout_mode = 2
 
-[node name="occlusion_culling" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=744074664 instance=ExtResource("26_dgi5k")]
+[node name="occlusion_culling" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=744074664 instance=ExtResource("26_dgi5k")]
+visible = false
 layout_mode = 2
 
-[node name="texture_filter" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=668896407 instance=ExtResource("26_dgi5k")]
+[node name="texture_filter" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=668896407 instance=ExtResource("26_dgi5k")]
+visible = false
 layout_mode = 2
 
-[node name="reflections" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1866354834 instance=ExtResource("26_dgi5k")]
+[node name="reflections" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=1866354834 instance=ExtResource("26_dgi5k")]
+visible = false
 layout_mode = 2
 
-[node name="brightness" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1676225463 instance=ExtResource("27_tel4y")]
+[node name="brightness" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=1676225463 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="contrast" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1386237313 instance=ExtResource("27_tel4y")]
+[node name="contrast" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=1386237313 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="saturation" parent="ui/canvas_layer/pause_menu/options_menu/display/vertical_display" unique_id=1041487397 instance=ExtResource("27_tel4y")]
+[node name="saturation" parent="ui/pause/pause_menu/options_menu/display/vertical_display" unique_id=1041487397 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="gameplay" type="VBoxContainer" parent="ui/canvas_layer/pause_menu/options_menu" unique_id=817432247]
+[node name="gameplay" type="VBoxContainer" parent="ui/pause/pause_menu/options_menu" unique_id=817432247]
 visible = false
 layout_mode = 2
 theme = ExtResource("6_choun")
 metadata/_tab_index = 1
 
-[node name="render_distance" parent="ui/canvas_layer/pause_menu/options_menu/gameplay" unique_id=1194191573 instance=ExtResource("27_tel4y")]
+[node name="render_distance" parent="ui/pause/pause_menu/options_menu/gameplay" unique_id=1194191573 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="audio" type="VBoxContainer" parent="ui/canvas_layer/pause_menu/options_menu" unique_id=476420667]
+[node name="audio" type="VBoxContainer" parent="ui/pause/pause_menu/options_menu" unique_id=476420667]
 visible = false
 layout_mode = 2
 theme = ExtResource("6_choun")
 metadata/_tab_index = 2
 
-[node name="main_volume" parent="ui/canvas_layer/pause_menu/options_menu/audio" unique_id=473467933 instance=ExtResource("27_tel4y")]
+[node name="main_volume" parent="ui/pause/pause_menu/options_menu/audio" unique_id=473467933 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="controls" type="VBoxContainer" parent="ui/canvas_layer/pause_menu/options_menu" unique_id=542558857]
+[node name="controls" type="VBoxContainer" parent="ui/pause/pause_menu/options_menu" unique_id=542558857]
 visible = false
 layout_mode = 2
 theme = ExtResource("6_choun")
 metadata/_tab_index = 3
 
-[node name="sensitivity" parent="ui/canvas_layer/pause_menu/options_menu/controls" unique_id=665876872 instance=ExtResource("27_tel4y")]
+[node name="sensitivity" parent="ui/pause/pause_menu/options_menu/controls" unique_id=665876872 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="debug" type="VBoxContainer" parent="ui/canvas_layer/pause_menu/options_menu" unique_id=864684338]
+[node name="debug" type="VBoxContainer" parent="ui/pause/pause_menu/options_menu" unique_id=864684338]
 visible = false
 layout_mode = 2
 theme = ExtResource("6_choun")
 metadata/_tab_index = 4
 
-[node name="player_speed" parent="ui/canvas_layer/pause_menu/options_menu/debug" unique_id=598782794 instance=ExtResource("27_tel4y")]
+[node name="player_speed" parent="ui/pause/pause_menu/options_menu/debug" unique_id=598782794 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="player_jump" parent="ui/canvas_layer/pause_menu/options_menu/debug" unique_id=366611794 instance=ExtResource("27_tel4y")]
+[node name="player_jump" parent="ui/pause/pause_menu/options_menu/debug" unique_id=366611794 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="grab_buffer" parent="ui/canvas_layer/pause_menu/options_menu/debug" unique_id=765010524 instance=ExtResource("27_tel4y")]
+[node name="grab_buffer" parent="ui/pause/pause_menu/options_menu/debug" unique_id=765010524 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="max_grab_length" parent="ui/canvas_layer/pause_menu/options_menu/debug" unique_id=1619856321 instance=ExtResource("27_tel4y")]
+[node name="max_grab_length" parent="ui/pause/pause_menu/options_menu/debug" unique_id=1619856321 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="box_open_timer" parent="ui/canvas_layer/pause_menu/options_menu/debug" unique_id=795803432 instance=ExtResource("27_tel4y")]
+[node name="box_open_timer" parent="ui/pause/pause_menu/options_menu/debug" unique_id=795803432 instance=ExtResource("27_tel4y")]
 z_index = 989
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("6_choun")
 
-[node name="left" type="VBoxContainer" parent="ui/canvas_layer/pause_menu" unique_id=1880267581]
+[node name="left" type="VBoxContainer" parent="ui/pause/pause_menu" unique_id=1880267581]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.549
@@ -1121,32 +1080,32 @@ mouse_filter = 2
 theme = ExtResource("6_choun")
 alignment = 1
 
-[node name="resume" parent="ui/canvas_layer/pause_menu/left" unique_id=1391259264 instance=ExtResource("24_2f3dj")]
+[node name="resume" parent="ui/pause/pause_menu/left" unique_id=1391259264 instance=ExtResource("24_2f3dj")]
 process_mode = 3
 z_index = 479
 layout_mode = 2
 theme = ExtResource("6_choun")
 
-[node name="achievements" parent="ui/canvas_layer/pause_menu/left" unique_id=2124387080 instance=ExtResource("24_2f3dj")]
+[node name="achievements" parent="ui/pause/pause_menu/left" unique_id=2124387080 instance=ExtResource("24_2f3dj")]
 process_mode = 3
 z_index = 479
 custom_minimum_size = Vector2(0, 150.735)
 layout_mode = 2
 theme = ExtResource("6_choun")
 
-[node name="options" parent="ui/canvas_layer/pause_menu/left" unique_id=644130435 instance=ExtResource("24_2f3dj")]
+[node name="options" parent="ui/pause/pause_menu/left" unique_id=644130435 instance=ExtResource("24_2f3dj")]
 process_mode = 3
 z_index = 479
 layout_mode = 2
 theme = ExtResource("6_choun")
 
-[node name="exit" parent="ui/canvas_layer/pause_menu/left" unique_id=1520174009 instance=ExtResource("24_2f3dj")]
+[node name="exit" parent="ui/pause/pause_menu/left" unique_id=1520174009 instance=ExtResource("24_2f3dj")]
 process_mode = 3
 z_index = 479
 layout_mode = 2
 theme = ExtResource("6_choun")
 
-[node name="right" type="HBoxContainer" parent="ui/canvas_layer/pause_menu" unique_id=695849940]
+[node name="right" type="HBoxContainer" parent="ui/pause/pause_menu" unique_id=695849940]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -1221,5 +1180,5 @@ mouse_filter = 2
 [connection signal="focus_exited" from="ui/text_box/chat_container/text_edit" to="game/player" method="_on_text_edit_focus_exited"]
 [connection signal="gui_input" from="ui/text_box/chat_container/text_edit" to="ui/in_world_ui" method="_on_text_edit_gui_input"]
 [connection signal="text_changed" from="ui/text_box/chat_container/text_edit" to="ui/in_world_ui" method="_on_text_edit_text_changed"]
-[connection signal="gui_input" from="ui/canvas_layer/pause_menu" to="ui/canvas_layer/pause_menu" method="_on_background_input"]
-[connection signal="visibility_changed" from="ui/canvas_layer/pause_menu" to="ui/canvas_layer/pause_menu" method="_on_pause_menu_visibility_changed"]
+[connection signal="gui_input" from="ui/pause/pause_menu" to="ui/pause/pause_menu" method="_on_background_input"]
+[connection signal="visibility_changed" from="ui/pause/pause_menu" to="ui/pause/pause_menu" method="_on_pause_menu_visibility_changed"]

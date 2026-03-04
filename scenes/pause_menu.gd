@@ -4,6 +4,18 @@ extends ColorRect
 @export var v_box_container: VBoxContainer
 @export var ui: Control
 
+@onready var resume: Control = $left/resume
+@onready var achievements: Control = $left/achievements
+@onready var options: Control = $left/options
+@onready var exit: Control = $left/exit
+@onready var options_menu: TabContainer = $options_menu
+@onready var left: VBoxContainer = $left
+@onready var right: HBoxContainer = $right
+@onready var ui_animation: AnimationPlayer = $"../../ui_animation"
+@onready var game: Node3D = $"../../../game"
+
+
+
 
 func _input(event: InputEvent) -> void:
 	#pause ____________
@@ -17,8 +29,12 @@ func _process(delta: float) -> void:
 
 func pause():
 	get_tree().paused = !get_tree().paused
+	ui_animation.play("pause_fade_in")
 	pause_menu.visible = get_tree().paused
 	ui.is_mouse_pointing = get_tree().paused
+	options_menu.visible = false
+	left.visible = true
+	right.visible = false
 
 func _on_pause_menu_visibility_changed() -> void:
 	for child in v_box_container.get_children():
@@ -36,17 +52,7 @@ func _ready():
 			child.button_selected.connect(_on_button_selected)
 
 
-@onready var resume: Control = $left/resume
-@onready var achievements: Control = $left/achievements
-@onready var options: Control = $left/options
-@onready var exit: Control = $left/exit
 
-
-@onready var options_menu: TabContainer = $options_menu
-
-
-@onready var left: VBoxContainer = $left
-@onready var right: HBoxContainer = $right
 
 
 

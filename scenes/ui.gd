@@ -3,7 +3,7 @@ extends Control
 @export var pause_menu: ColorRect
 @export var mouse: TextureRect
 @export var camera: Camera3D
-
+@export var crosshair: TextureRect
 
 var mouse_raycast: RayCast3D
 var pointer_target
@@ -14,17 +14,20 @@ var is_mouse_pointing: bool = false:
 		is_mouse_pointing = v
 
 
-func process(delta: float) -> void:
+func _process(delta: float) -> void:
 	if is_mouse_pointing == true: _mouse_overlay()
 	
 
+
 func _ready() -> void:
 	#mouse ____________
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	mouse.set_as_top_level(true)
+	
 
 #mouse
 func _set_mouse_state(current_mouse_state, new_mouse_state) -> void:
 	if not current_mouse_state and not new_mouse_state: return
+	crosshair.visible = not get_tree().paused
 	
 	#from pointing -> free look
 	if current_mouse_state == true and new_mouse_state == false:
@@ -36,6 +39,7 @@ func _set_mouse_state(current_mouse_state, new_mouse_state) -> void:
 		mouse.visible = true
 
 func _mouse_overlay():
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	if not mouse_raycast:
 		mouse_raycast = RayCast3D.new()
 		add_child(mouse_raycast)
@@ -52,7 +56,7 @@ func _mouse_overlay():
 	var result = space_state.intersect_ray(params)
 	
 	mouse.modulate = Color(1,1,1,1)
-	mouse.position = mouse_pos + Vector2(-4, 3)
+	mouse.global_position = mouse_pos + Vector2(-4, 3)
 	
 	if Input.is_action_pressed("lmb"):
 		mouse.scale.y = 0.158
